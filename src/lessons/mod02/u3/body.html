@@ -1,0 +1,490 @@
+<header class="hero">
+  <div class="badge">Модуль 2 · Урок 3 из 3 · ~20 минут</div>
+  <h1>Разделение смесей: лаборатория чистоты</h1>
+  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="entry.html">Вход</a> · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Тест</a></p>
+<!--QA-->
+</header><!-- ==================== УРОК 4: РАЗДЕЛЕНИЕ СМЕСЕЙ ==================== -->
+<section class="section">
+  <div class="stage s4 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">4</div>
+      <div>
+        <div class="stage-title">Способы разделения смесей</div>
+        <div class="stage-subtitle">Шесть методов — от простого отстаивания до точной хроматографии</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Если смесь состоит из нескольких компонентов, её можно <b>разделить</b>. При этом каждое
+      вещество остаётся <b>самим собой</b> — оно не превращается в новое. Способ разделения зависит
+      от того, из чего состоит смесь: твёрдое + жидкость, жидкость + жидкость, два твёрдых и т.д.
+    </p>
+
+    <h3 class="subhead">⚗️ Шесть основных способов</h3>
+    <p class="subhead-sub">
+      <span class="cta">👆 Нажми на карточку</span>, чтобы увидеть, как работает метод, и прочитать подробности.
+    </p>
+
+    <div class="method-grid" id="separationGrid">
+
+      <!-- ФИЛЬТРОВАНИЕ -->
+      <div class="method-card" data-method="0">
+        <div class="mc-head">
+          <div class="mc-icon">🕳</div>
+          <div>
+            <div class="mc-name">Фильтрование</div>
+            <div class="mc-short">Твёрдое + жидкость. Отделяем нерастворимый осадок.</div>
+          </div>
+        </div>
+        <div class="mc-visual-wrap">
+          <svg viewBox="0 0 320 200">
+            <path d="M 100 130 L 100 180 Q 100 188 108 188 L 212 188 Q 220 188 220 180 L 220 130" fill="#e0f2fe" fill-opacity="0.5" stroke="#0284c7" stroke-width="2"/>
+            <rect x="104" y="150" width="112" height="34" fill="#7dd3fc" opacity="0.6"/>
+            <polygon points="160,40 100,130 220,130" fill="#f1f5f9" stroke="#475569" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="160,55 115,125 205,125" fill="#fff" stroke="#94a3b8" stroke-width="1.5" stroke-linejoin="round"/>
+            <circle cx="145" cy="110" r="3" fill="#b45309"/>
+            <circle cx="160" cy="105" r="3" fill="#b45309"/>
+            <circle cx="175" cy="112" r="3" fill="#b45309"/>
+            <circle cx="155" cy="118" r="2.5" fill="#7c2d12"/>
+            <circle cx="168" cy="115" r="2.5" fill="#7c2d12"/>
+            <circle cx="150" cy="100" r="2" fill="#b45309"/>
+            <circle cx="172" cy="100" r="2" fill="#b45309"/>
+            <circle cx="160" cy="140" r="3" fill="#7dd3fc">
+              <animate attributeName="cy" values="132;182;132" dur="1.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;1;0" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="160" cy="140" r="3" fill="#7dd3fc">
+              <animate attributeName="cy" values="132;182;132" dur="1.5s" begin="0.75s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;1;0" dur="1.5s" begin="0.75s" repeatCount="indefinite"/>
+            </circle>
+            <text x="245" y="115" font-size="11" fill="#475569" font-family="Inter, sans-serif">фильтр</text>
+            <text x="225" y="150" font-size="11" fill="#0284c7" font-family="Inter, sans-serif">чистая</text>
+            <text x="225" y="165" font-size="11" fill="#0284c7" font-family="Inter, sans-serif">жидкость</text>
+            <text x="55" y="115" font-size="11" fill="#92400e" font-family="Inter, sans-serif">осадок</text>
+          </svg>
+        </div>
+        <div class="mc-detail">
+          <b>Что делаем:</b> пропускаем смесь через фильтр — специальную бумагу с мелкими порами.
+          Жидкость проходит, твёрдые частицы оседают на фильтре.
+          <br><br><b>Пример:</b> очистка воды от песка, отделение чаинок от чая.
+        </div>
+      </div>
+
+      <!-- ВЫПАРИВАНИЕ -->
+      <div class="method-card" data-method="1">
+        <div class="mc-head">
+          <div class="mc-icon">🔥</div>
+          <div>
+            <div class="mc-name">Выпаривание</div>
+            <div class="mc-short">Растворённое твёрдое + жидкость. Получаем соль обратно.</div>
+          </div>
+        </div>
+        <div class="mc-visual-wrap">
+          <svg viewBox="0 0 320 200">
+            <path d="M 120 175 Q 125 160 130 175" fill="#f97316" opacity="0.9">
+              <animate attributeName="d" values="M 120 175 Q 125 160 130 175;M 120 175 Q 125 155 130 175;M 120 175 Q 125 160 130 175" dur="0.6s" repeatCount="indefinite"/>
+            </path>
+            <path d="M 150 175 Q 155 158 160 175" fill="#fbbf24" opacity="0.9">
+              <animate attributeName="d" values="M 150 175 Q 155 158 160 175;M 150 175 Q 155 152 160 175;M 150 175 Q 155 158 160 175" dur="0.5s" repeatCount="indefinite"/>
+            </path>
+            <path d="M 180 175 Q 185 160 190 175" fill="#f97316" opacity="0.9">
+              <animate attributeName="d" values="M 180 175 Q 185 160 190 175;M 180 175 Q 185 155 190 175;M 180 175 Q 185 160 190 175" dur="0.7s" repeatCount="indefinite"/>
+            </path>
+            <path d="M 80 120 Q 80 170 100 170 L 220 170 Q 240 170 240 120 Z" fill="#f1f5f9" stroke="#475569" stroke-width="2"/>
+            <path d="M 90 130 Q 90 160 105 160 L 215 160 Q 230 160 230 130 Z" fill="#7dd3fc" opacity="0.5"/>
+            <circle cx="120" cy="110" r="3" fill="#bae6fd" opacity="0.8">
+              <animate attributeName="cy" values="115;40;115" dur="3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.8;0;0.8" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="160" cy="110" r="3.5" fill="#bae6fd" opacity="0.8">
+              <animate attributeName="cy" values="115;30;115" dur="3.3s" begin="0.5s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.8;0;0.8" dur="3.3s" begin="0.5s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="200" cy="110" r="3" fill="#bae6fd" opacity="0.8">
+              <animate attributeName="cy" values="115;45;115" dur="2.8s" begin="1s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0.8;0;0.8" dur="2.8s" begin="1s" repeatCount="indefinite"/>
+            </circle>
+            <rect x="115" y="155" width="5" height="5" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
+            <rect x="135" y="153" width="5" height="5" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
+            <rect x="155" y="156" width="5" height="5" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
+            <rect x="175" y="154" width="5" height="5" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
+            <rect x="195" y="157" width="5" height="5" fill="#fff" stroke="#94a3b8" stroke-width="0.5"/>
+            <text x="250" y="100" font-size="11" fill="#0369a1" font-family="Inter, sans-serif">пар</text>
+            <text x="250" y="165" font-size="11" fill="#475569" font-family="Inter, sans-serif">соль</text>
+            <text x="60" y="185" font-size="11" fill="#c2410c" font-family="Inter, sans-serif">нагрев</text>
+          </svg>
+        </div>
+        <div class="mc-detail">
+          <b>Что делаем:</b> нагреваем раствор в фарфоровой чашке. Жидкость испаряется,
+          а твёрдое вещество остаётся на дне в виде кристаллов.
+          <br><br><b>Пример:</b> получение соли из морской воды, получение сахара из сиропа.
+        </div>
+      </div>
+
+      <!-- ДИСТИЛЛЯЦИЯ -->
+      <div class="method-card" data-method="2">
+        <div class="mc-head">
+          <div class="mc-icon">💧</div>
+          <div>
+            <div class="mc-name">Дистилляция</div>
+            <div class="mc-short">Две жидкости с разной температурой кипения.</div>
+          </div>
+        </div>
+        <div class="mc-visual-wrap">
+          <svg viewBox="0 0 320 200">
+            <path d="M 40 60 L 40 100 Q 40 140 70 140 Q 100 140 100 100 L 100 60" fill="#e0f2fe" fill-opacity="0.5" stroke="#0284c7" stroke-width="2"/>
+            <rect x="44" y="105" width="52" height="33" fill="#7dd3fc" opacity="0.6"/>
+            <path d="M 60 150 Q 65 140 70 150" fill="#f97316">
+              <animate attributeName="d" values="M 60 150 Q 65 140 70 150;M 60 150 Q 65 135 70 150;M 60 150 Q 65 140 70 150" dur="0.6s" repeatCount="indefinite"/>
+            </path>
+            <path d="M 80 150 Q 85 140 90 150" fill="#fbbf24">
+              <animate attributeName="d" values="M 80 150 Q 85 140 90 150;M 80 150 Q 85 135 90 150;M 80 150 Q 85 140 90 150" dur="0.5s" repeatCount="indefinite"/>
+            </path>
+            <path d="M 70 60 L 70 40 Q 70 30 80 30 L 220 30 Q 230 30 230 40 L 230 100" fill="none" stroke="#475569" stroke-width="3" stroke-linejoin="round"/>
+            <circle cx="100" cy="30" r="3" fill="#bae6fd" opacity="0.8">
+              <animate attributeName="cx" values="80;220" dur="3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="140" cy="30" r="3" fill="#bae6fd" opacity="0.8">
+              <animate attributeName="cx" values="80;220" dur="3s" begin="1s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="180" cy="30" r="3" fill="#bae6fd" opacity="0.8">
+              <animate attributeName="cx" values="80;220" dur="3s" begin="2s" repeatCount="indefinite"/>
+            </circle>
+            <rect x="180" y="55" width="40" height="45" fill="#bae6fd" opacity="0.5" stroke="#0284c7" stroke-width="1.5" rx="3"/>
+            <text x="200" y="82" text-anchor="middle" font-size="9" fill="#0369a1" font-family="Inter, sans-serif">холод</text>
+            <path d="M 210 100 L 210 170 Q 210 180 220 180 L 290 180 Q 300 180 300 170 L 300 100" fill="#e0f2fe" fill-opacity="0.5" stroke="#0284c7" stroke-width="2"/>
+            <rect x="214" y="140" width="82" height="38" fill="#7dd3fc" opacity="0.6"/>
+            <circle cx="240" cy="105" r="2.5" fill="#7dd3fc">
+              <animate attributeName="cy" values="105;140;105" dur="1.2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;1;0" dur="1.2s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="240" cy="105" r="2.5" fill="#7dd3fc">
+              <animate attributeName="cy" values="105;140;105" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="0;1;0" dur="1.2s" begin="0.6s" repeatCount="indefinite"/>
+            </circle>
+            <text x="60" y="170" text-anchor="middle" font-size="10" fill="#475569" font-family="Inter, sans-serif">смесь</text>
+            <text x="255" y="195" text-anchor="middle" font-size="10" fill="#475569" font-family="Inter, sans-serif">чистое вещество</text>
+          </svg>
+        </div>
+        <div class="mc-detail">
+          <b>Что делаем:</b> нагреваем смесь. Жидкость с меньшей температурой кипения
+          испаряется первой, пар охлаждается в холодильнике и собирается в отдельный сосуд.
+          <br><br><b>Пример:</b> получение дистиллированной воды, разделение спирта и воды.
+        </div>
+      </div>
+
+      <!-- ОТСТАИВАНИЕ -->
+      <div class="method-card" data-method="3">
+        <div class="mc-head">
+          <div class="mc-icon">⏳</div>
+          <div>
+            <div class="mc-name">Отстаивание</div>
+            <div class="mc-short">Твёрдое медленно оседает на дно.</div>
+          </div>
+        </div>
+        <div class="mc-visual-wrap">
+          <svg viewBox="0 0 320 200">
+            <path d="M 110 30 L 110 170 Q 110 180 120 180 L 200 180 Q 210 180 210 170 L 210 30" fill="#e0f2fe" fill-opacity="0.4" stroke="#0284c7" stroke-width="2"/>
+            <rect x="113" y="50" width="94" height="127" fill="#fbbf24" opacity="0.35"/>
+            <circle cx="140" cy="70" r="3.5" fill="#b45309" opacity="0.9">
+              <animate attributeName="cy" values="60;165;60" dur="4s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="165" cy="80" r="3" fill="#b45309" opacity="0.9">
+              <animate attributeName="cy" values="65;165;65" dur="4.5s" begin="0.3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="185" cy="90" r="4" fill="#7c2d12" opacity="0.9">
+              <animate attributeName="cy" values="70;165;70" dur="4.2s" begin="0.6s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="130" cy="95" r="3" fill="#92400e" opacity="0.9">
+              <animate attributeName="cy" values="75;165;75" dur="4.8s" begin="1s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="175" cy="110" r="3.5" fill="#b45309" opacity="0.9">
+              <animate attributeName="cy" values="85;165;85" dur="4.3s" begin="1.3s" repeatCount="indefinite"/>
+            </circle>
+            <circle cx="150" cy="125" r="3" fill="#7c2d12" opacity="0.9">
+              <animate attributeName="cy" values="95;165;95" dur="4.6s" begin="1.6s" repeatCount="indefinite"/>
+            </circle>
+            <rect x="114" y="160" width="92" height="17" fill="#92400e" opacity="0.8"/>
+            <rect x="114" y="157" width="92" height="4" fill="#b45309" opacity="0.6"/>
+            <text x="240" y="55" font-size="11" fill="#0369a1" font-family="Inter, sans-serif">чистая</text>
+            <text x="240" y="70" font-size="11" fill="#0369a1" font-family="Inter, sans-serif">жидкость</text>
+            <text x="240" y="170" font-size="11" fill="#92400e" font-family="Inter, sans-serif">осадок</text>
+          </svg>
+        </div>
+        <div class="mc-detail">
+          <b>Что делаем:</b> оставляем смесь в покое. Тяжёлые частицы оседают на дно,
+          лёгкие остаются сверху. Затем аккуратно сливаем чистую жидкость с осадка.
+          <br><br><b>Пример:</b> очистка воды от глины, отделение масла от воды.
+        </div>
+      </div>
+
+      <!-- МАГНИТ -->
+      <div class="method-card" data-method="4">
+        <div class="mc-head">
+          <div class="mc-icon">🧲</div>
+          <div>
+            <div class="mc-name">Действие магнитом</div>
+            <div class="mc-short">Один из компонентов — железо или его сплав.</div>
+          </div>
+        </div>
+        <div class="mc-visual-wrap">
+          <svg viewBox="0 0 320 200">
+            <rect x="110" y="15" width="100" height="30" rx="4" fill="#94a3b8" stroke="#475569" stroke-width="1.5"/>
+            <rect x="110" y="15" width="30" height="30" fill="#dc2626" stroke="#475569" stroke-width="1"/>
+            <rect x="180" y="15" width="30" height="30" fill="#2563eb" stroke="#475569" stroke-width="1"/>
+            <text x="125" y="35" text-anchor="middle" font-size="12" fill="#fff" font-weight="700" font-family="Inter, sans-serif">N</text>
+            <text x="195" y="35" text-anchor="middle" font-size="12" fill="#fff" font-weight="700" font-family="Inter, sans-serif">S</text>
+            <path d="M 60 100 Q 60 180 160 180 Q 260 180 260 100" fill="#f1f5f9" stroke="#475569" stroke-width="2"/>
+            <circle cx="100" cy="160" r="5" fill="#fbbf24"/>
+            <circle cx="130" cy="165" r="5" fill="#fbbf24"/>
+            <circle cx="200" cy="162" r="5" fill="#fbbf24"/>
+            <circle cx="230" cy="158" r="5" fill="#fbbf24"/>
+            <circle cx="165" cy="170" r="5" fill="#fbbf24"/>
+            <circle cx="115" cy="150" r="4" fill="#fbbf24"/>
+            <circle cx="215" cy="152" r="4" fill="#fbbf24"/>
+            <circle r="5" fill="#475569">
+              <animate attributeName="cx" values="140;140" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="cy" values="170;55;170" dur="2s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;0" dur="2s" repeatCount="indefinite"/>
+            </circle>
+            <circle r="5" fill="#475569">
+              <animate attributeName="cx" values="170;170" dur="2.2s" begin="0.3s" repeatCount="indefinite"/>
+              <animate attributeName="cy" values="175;55;175" dur="2.2s" begin="0.3s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;0" dur="2.2s" begin="0.3s" repeatCount="indefinite"/>
+            </circle>
+            <circle r="4.5" fill="#334155">
+              <animate attributeName="cx" values="150;150" dur="1.9s" begin="0.6s" repeatCount="indefinite"/>
+              <animate attributeName="cy" values="178;55;178" dur="1.9s" begin="0.6s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;0" dur="1.9s" begin="0.6s" repeatCount="indefinite"/>
+            </circle>
+            <circle r="4.5" fill="#334155">
+              <animate attributeName="cx" values="185;185" dur="2.1s" begin="0.9s" repeatCount="indefinite"/>
+              <animate attributeName="cy" values="172;55;172" dur="2.1s" begin="0.9s" repeatCount="indefinite"/>
+              <animate attributeName="opacity" values="1;1;0" dur="2.1s" begin="0.9s" repeatCount="indefinite"/>
+            </circle>
+            <text x="270" y="90" font-size="11" fill="#475569" font-family="Inter, sans-serif">магнит</text>
+            <text x="270" y="150" font-size="11" fill="#92400e" font-family="Inter, sans-serif">сера</text>
+            <text x="35" y="145" font-size="11" fill="#334155" font-family="Inter, sans-serif">железо</text>
+          </svg>
+        </div>
+        <div class="mc-detail">
+          <b>Что делаем:</b> подносим магнит к смеси. Железные частицы притягиваются,
+          остальные остаются на месте.
+          <br><br><b>Пример:</b> отделение железных опилок от серы, извлечение гвоздей из песка.
+        </div>
+      </div>
+
+      <!-- ХРОМАТОГРАФИЯ -->
+      <div class="method-card" data-method="5">
+        <div class="mc-head">
+          <div class="mc-icon">🎨</div>
+          <div>
+            <div class="mc-name">Хроматография</div>
+            <div class="mc-short">Разделение растворимых красителей на компоненты.</div>
+          </div>
+        </div>
+        <div class="mc-visual-wrap">
+          <svg viewBox="0 0 320 200">
+            <path d="M 120 80 L 120 180 Q 120 188 128 188 L 192 188 Q 200 188 200 180 L 200 80" fill="#e0f2fe" fill-opacity="0.4" stroke="#0284c7" stroke-width="2"/>
+            <rect x="124" y="130" width="72" height="55" fill="#7dd3fc" opacity="0.5"/>
+            <rect x="150" y="20" width="20" height="160" fill="#fef9c3" stroke="#a16207" stroke-width="1"/>
+            <ellipse cx="160" cy="155" rx="6" ry="3" fill="#7c3aed" opacity="0.9"/>
+            <ellipse cx="160" rx="5" ry="3" fill="#dc2626" opacity="0.9">
+              <animate attributeName="cy" values="150;75;150" dur="5s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="160" rx="5" ry="3" fill="#facc15" opacity="0.9">
+              <animate attributeName="cy" values="150;95;150" dur="5s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="160" rx="5" ry="3" fill="#2563eb" opacity="0.9">
+              <animate attributeName="cy" values="150;120;150" dur="5s" repeatCount="indefinite"/>
+            </ellipse>
+            <ellipse cx="160" rx="5" ry="3" fill="#16a34a" opacity="0.9">
+              <animate attributeName="cy" values="150;110;150" dur="5s" repeatCount="indefinite"/>
+            </ellipse>
+            <line x1="120" y1="130" x2="200" y2="130" stroke="#0284c7" stroke-width="1" stroke-dasharray="3 3"/>
+            <text x="215" y="120" font-size="11" fill="#0369a1" font-family="Inter, sans-serif">растворитель</text>
+            <text x="215" y="55" font-size="11" fill="#92400e" font-family="Inter, sans-serif">разделение</text>
+            <text x="50" y="160" font-size="11" fill="#7c3aed" font-family="Inter, sans-serif">смесь</text>
+          </svg>
+        </div>
+        <div class="mc-detail">
+          <b>Что делаем:</b> ставим каплю смеси на полоску бумаги и опускаем её край
+          в растворитель. Разные красители движутся по бумаге с разной скоростью и разделяются на цветные полосы.
+          <br><br><b>Пример:</b> анализ чернил, разделение пигментов листа.
+        </div>
+      </div>
+
+    </div>
+
+    <div class="callout callout-note" style="margin-top:18px;">
+      <b>Как выбрать способ?</b> Посмотри на состав смеси и свойства компонентов:
+      если твёрдое нерастворимо — фильтрование или отстаивание;
+      если растворимо — выпаривание;
+      если две жидкости — дистилляция или отстаивание (если они не смешиваются);
+      если есть железо — магнит;
+      если это красители — хроматография.
+    </div>
+
+    <div class="game-area">
+      <h4>🎮 Мини-игра: какой способ разделения?</h4>
+      <p class="game-hint">
+        <span class="cta">Перетащи каждую смесь</span> в корзину с подходящим способом разделения.
+        Если перетаскивание не работает — <span class="cta">нажми на карточку, а затем на корзину</span>.
+      </p>
+
+      <div class="game-pool" id="separationPool"></div>
+
+      <div class="six-basket">
+        <div class="basket" data-cat="filter">
+          <div class="basket-title">🕳 Фильтрование</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="evaporate">
+          <div class="basket-title">🔥 Выпаривание</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="distill">
+          <div class="basket-title">💧 Дистилляция</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="settle">
+          <div class="basket-title">⏳ Отстаивание</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="magnet">
+          <div class="basket-title">🧲 Магнит</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="chrom">
+          <div class="basket-title">🎨 Хроматография</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px;">
+        <button class="reset-btn" id="resetSeparation">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbSeparation"></div>
+    </div>
+
+    <div class="callout callout-idea" style="margin-top:18px;">
+      <b>Важно понять:</b> при разделении смеси <b>не происходит химических реакций</b>.
+      Мы просто разделяем уже существующие вещества, используя их <b>физические различия</b>:
+      размер частиц, растворимость, температуру кипения, магнитные свойства, скорость движения в растворителе.
+    </div>
+  </div>
+</section><!-- ==================== ПРАКТИКУМ ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: очистка загрязнённой соли</div>
+        <div class="stage-subtitle">Реальная задача из лаборатории — пройди её шаг за шагом</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      В лаборатории выдали <b>загрязнённую соль</b> — она смешана с песком. Нужно её очистить.
+      Это классическая задача из курса химии. Пройди 4 шага, выбирая правильные действия.
+    </p>
+
+    <div id="practicalTask"></div>
+    <div class="callout callout-note" style="margin-top:16px;">
+      <b>📝 В тетрадь:</b> запиши 4 шага очистки соли своими словами. Это задание проверит учитель.
+    </div>
+  </div>
+</section><!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🧠</div>
+      <div>
+        <div class="stage-title">Рефлексия по Фейнману</div>
+        <div class="stage-subtitle">Объясни своими словами и запиши в тетрадь — проверит учитель</div>
+      </div>
+    </div>
+    <p style="font-size:16.5px;line-height:1.8;">
+      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
+      Объясни вслух — сыну, дочке, брату или сестре, а затем <b>запиши в тетрадь</b>.
+    </p>
+    <div class="callout callout-note">
+      <b>📝 Задание в тетрадь — ответь письменно на три вопроса:</b>
+      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+        <li>Почему масло не смешивается с водой, а соль — растворяется? Объясни через свойства.</li>
+        <li>Почему пар занимает весь сосуд, а вода — только часть? Что делают частицы?</li>
+        <li>Как из морской воды получить соль? Опиши шаги по порядку.</li>
+      </ol>
+    </div>
+    <div class="callout callout-idea">
+      <b>Как понять, что получилось:</b> перечитай написанное и спроси себя —
+      поймёт ли это младший школьник? Где запнулся — вернись к теме.
+    </div>
+  </div>
+</section>
+<!-- ==================== ЗАДАЧКА НА ПОДУМАТЬ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">★</div>
+      <div>
+        <div class="stage-title">Задачка на подумать</div>
+        <div class="stage-subtitle">Без ответа в файле — разбираем на уроке</div>
+      </div>
+    </div>
+    <p style="font-size:16.5px;line-height:1.8;">
+      Стакан с мутной водой: глина никак не оседает. Предложи <b>два способа</b> сделать
+      воду прозрачной и объясни, на каком свойстве смеси основан каждый способ.
+      Подсказка: один способ — из этого урока, второй — придумай сам.
+    </p>
+  </div>
+</section>
+<!-- ==================== КАРТОЧКА-ВЫЖИМКА ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📇</div>
+      <div>
+        <div class="stage-title">Выжимка модуля: самое главное</div>
+        <div class="stage-subtitle">Перепиши в тетрадь — это твой конспект</div>
+      </div>
+    </div>
+    <div class="callout callout-ok">
+      <b>5 тезисов модуля:</b>
+      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+        <li>Одно и то же вещество бывает твёрдым, жидким и газообразным — состояние зависит от условий.</li>
+        <li>Переходы: плавление, кипение, конденсация, замерзание, сублимация. Плато на графике — энергия идёт на разрыв связей между частицами.</li>
+        <li>Чистое вещество состоит из одинаковых частиц; смесь — из разных. Смеси бывают гомогенные и гетерогенные.</li>
+        <li>Смеси разделяют по различию свойств: отстаивание, фильтрование, магнит, выпаривание, дистилляция.</li>
+        <li>При физических способах разделения состав веществ не меняется — это не химические превращения.</li>
+      </ol>
+    </div>
+    <div class="callout callout-note">
+      <b>Новые термины:</b> агрегатное состояние · плавление · кипение · конденсация ·
+      замерзание · сублимация · чистое вещество · смесь · гомогенная и гетерогенная смеси ·
+      фильтрование · выпаривание · дистилляция.
+    </div>
+  </div>
+</section>
+<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Минимум 5 задач · письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+<li>Подбери способ разделения для каждой смеси: рис + вода; железные опилки + песок; сахар + вода; спирт + вода.</li>
+<li>Опиши 4 шага очистки загрязнённой соли от песка своими словами.</li>
+<li>Почему магнит вытащит железо из песка, но не вытащит песок из соли? Объясни.</li>
+<li>Что будет, если раствор соли кипятить досуха? Где окажется соль?</li>
+<li><span class="hw-star">★ Предложи, как разделить смесь масла и воды без нагревания. На каком свойстве основан твой способ?</span></li>
+      </ol>
+    </div>
+  </div>
+</section>

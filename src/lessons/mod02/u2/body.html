@@ -1,0 +1,469 @@
+<header class="hero">
+  <div class="badge">Модуль 2 · Урок 2 из 3 · ~20 минут</div>
+  <h1>Переходы и смеси: плавление, кипение и чистые вещества</h1>
+  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="entry.html">Вход</a> · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Тест</a></p>
+<!--QA-->
+</header><!-- ==================== УРОК 2: ПЕРЕХОДЫ МЕЖДУ СОСТОЯНИЯМИ ==================== -->
+<section class="section">
+  <div class="stage s2 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">2</div>
+      <div>
+        <div class="stage-title">Переходы между состояниями</div>
+        <div class="stage-subtitle">Шесть переходов — от плавления до десублимации</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Когда вещество меняет своё агрегатное состояние, это <b>не химическая реакция</b>, а <b>физическое явление</b>.
+      Вещество остаётся тем же — меняется только его состояние. У каждого перехода есть своё название.
+    </p>
+
+    <h3 class="subhead">🔄 Шесть переходов</h3>
+    <p class="subhead-sub">Посмотри на анимацию и запомни, как называется каждый переход.</p>
+
+    <div class="transition-grid">
+      <div class="transition-card">
+        <div class="tr-anim"><span>🧊</span><span>➡️</span><span>💧</span></div>
+        <div class="tr-name">Плавление</div>
+        <div class="tr-desc">Твёрдое → жидкое. Лёд тает при 0 °C.</div>
+      </div>
+      <div class="transition-card">
+        <div class="tr-anim"><span>💧</span><span>➡️</span><span>🧊</span></div>
+        <div class="tr-name">Кристаллизация</div>
+        <div class="tr-desc">Жидкое → твёрдое. Вода замерзает при 0 °C.</div>
+      </div>
+      <div class="transition-card">
+        <div class="tr-anim"><span>💧</span><span>➡️</span><span>☁️</span></div>
+        <div class="tr-name">Испарение / кипение</div>
+        <div class="tr-desc">Жидкое → газ. Кипение воды при 100 °C.</div>
+      </div>
+      <div class="transition-card">
+        <div class="tr-anim"><span>☁️</span><span>➡️</span><span>💧</span></div>
+        <div class="tr-name">Конденсация</div>
+        <div class="tr-desc">Газ → жидкое. Пар оседает каплями на холодном стекле.</div>
+      </div>
+      <div class="transition-card">
+        <div class="tr-anim"><span>🧊</span><span>➡️</span><span>☁️</span></div>
+        <div class="tr-name">Сублимация</div>
+        <div class="tr-desc">Твёрдое → газ, минуя жидкое. Сухой лёд, нафталин.</div>
+      </div>
+      <div class="transition-card">
+        <div class="tr-anim"><span>☁️</span><span>➡️</span><span>🧊</span></div>
+        <div class="tr-name">Десублимация</div>
+        <div class="tr-desc">Газ → твёрдое. Иней на деревьях зимой.</div>
+      </div>
+    </div>
+
+    <h3 class="subhead">📈 Интерактивный график нагрева</h3>
+    <p class="subhead-sub">
+      Представь, что мы медленно нагреваем лёд. <b>Как меняется температура со временем?</b>
+      Это классическая задача химии. <span class="cta">👆 Подвигай ползунок</span> и посмотри, что происходит.
+    </p>
+
+    <div class="graph-wrap">
+      <svg viewBox="0 0 900 400" id="heatingGraph" xmlns="http://www.w3.org/2000/svg">
+        <!-- Фон -->
+        <rect x="0" y="0" width="900" height="400" fill="#f0f9ff"/>
+
+        <!-- Сетка -->
+        <g stroke="#e2e8f0" stroke-width="1">
+          <line x1="80" y1="60" x2="80" y2="340"/>
+          <line x1="80" y1="340" x2="820" y2="340"/>
+          <!-- горизонтальные -->
+          <line x1="80" y1="340" x2="820" y2="340"/>
+          <line x1="80" y1="300" x2="820" y2="300"/>
+          <line x1="80" y1="260" x2="820" y2="260"/>
+          <line x1="80" y1="220" x2="820" y2="220"/>
+          <line x1="80" y1="180" x2="820" y2="180"/>
+          <line x1="80" y1="140" x2="820" y2="140"/>
+          <line x1="80" y1="100" x2="820" y2="100"/>
+          <line x1="80" y1="60" x2="820" y2="60"/>
+        </g>
+
+        <!-- Оси -->
+        <line x1="80" y1="60" x2="80" y2="340" stroke="#475569" stroke-width="2.5"/>
+        <line x1="80" y1="340" x2="820" y2="340" stroke="#475569" stroke-width="2.5"/>
+
+        <!-- Стрелки осей -->
+        <polygon points="80,55 75,68 85,68" fill="#475569"/>
+        <polygon points="825,340 812,335 812,345" fill="#475569"/>
+
+        <!-- Подписи осей -->
+        <text x="450" y="380" text-anchor="middle" font-size="14" fill="#475569" font-weight="700" font-family="Inter, sans-serif">Время нагревания →</text>
+        <text x="30" y="200" text-anchor="middle" font-size="14" fill="#475569" font-weight="700" font-family="Inter, sans-serif" transform="rotate(-90 30 200)">Температура, °C</text>
+
+        <!-- Цифры на осях Y -->
+        <text x="70" y="105" text-anchor="end" font-size="13" fill="#64748b" font-family="Inter, sans-serif">100</text>
+        <text x="70" y="265" text-anchor="end" font-size="13" fill="#64748b" font-family="Inter, sans-serif">0</text>
+        <text x="70" y="345" text-anchor="end" font-size="13" fill="#64748b" font-family="Inter, sans-serif">−20</text>
+
+        <!-- Пунктирные уровни 0 и 100 -->
+        <line x1="80" y1="260" x2="820" y2="260" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4"/>
+        <line x1="80" y1="100" x2="820" y2="100" stroke="#94a3b8" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+        <!-- Сам график (путь) -->
+        <!-- X-координаты: сегменты по 740px поделены на 5 частей:
+             твёрдое нагревание: 80→200
+             плавление: 200→340
+             жидкое нагревание: 340→500
+             кипение: 500→640
+             газ нагревание: 640→820
+        -->
+        <polyline id="graphLine" points="80,340 200,260 340,260 500,100 640,100 820,60"
+          fill="none" stroke="#8b5cf6" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+
+        <!-- Точки на графике -->
+        <circle cx="80" cy="340" r="6" fill="#06b6d4"/>
+        <circle cx="200" cy="260" r="6" fill="#06b6d4"/>
+        <circle cx="340" cy="260" r="6" fill="#06b6d4"/>
+        <circle cx="500" cy="100" r="6" fill="#06b6d4"/>
+        <circle cx="640" cy="100" r="6" fill="#06b6d4"/>
+        <circle cx="820" cy="60" r="6" fill="#06b6d4"/>
+
+        <!-- Маркер текущей точки -->
+        <circle id="graphMarker" cx="80" cy="340" r="12" fill="#fff" stroke="#ef4444" stroke-width="4"/>
+
+        <!-- Подписи состояний над графиком -->
+        <text x="140" y="240" text-anchor="middle" font-size="13" fill="#0369a1" font-weight="800" font-family="Inter, sans-serif">ЛЁД</text>
+        <text x="270" y="285" text-anchor="middle" font-size="13" fill="#f59e0b" font-weight="800" font-family="Inter, sans-serif">ТАЯНИЕ</text>
+        <text x="420" y="80" text-anchor="middle" font-size="13" fill="#0369a1" font-weight="800" font-family="Inter, sans-serif">ВОДА</text>
+        <text x="570" y="125" text-anchor="middle" font-size="13" fill="#f59e0b" font-weight="800" font-family="Inter, sans-serif">КИПЕНИЕ</text>
+        <text x="730" y="45" text-anchor="middle" font-size="13" fill="#0369a1" font-weight="800" font-family="Inter, sans-serif">ПАР</text>
+
+        <!-- Подсветка областей -->
+        <rect x="80" y="60" width="120" height="280" fill="#06b6d4" opacity="0.06"/>
+        <rect x="200" y="60" width="140" height="280" fill="#f59e0b" opacity="0.08"/>
+        <rect x="340" y="60" width="160" height="280" fill="#06b6d4" opacity="0.06"/>
+        <rect x="500" y="60" width="140" height="280" fill="#f59e0b" opacity="0.08"/>
+        <rect x="640" y="60" width="180" height="280" fill="#06b6d4" opacity="0.06"/>
+      </svg>
+    </div>
+
+    <div class="slider-control" style="margin-top:14px;">
+      <label>⏱ Время:</label>
+      <input type="range" id="timeSlider" min="0" max="100" value="0" step="1">
+      <span class="slider-value" id="timeValue">0 %</span>
+    </div>
+
+    <div class="graph-info">
+      <div class="graph-info-box">
+        <div class="gi-title">🌡 Температура</div>
+        <div class="gi-text" id="graphTemp">−20 °C</div>
+      </div>
+      <div class="graph-info-box">
+        <div class="gi-title">💧 Состояние</div>
+        <div class="gi-text" id="graphState">Твёрдое (лёд). Частицы колеблются около одного места.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-note" style="margin-top:16px;">
+      <b>Что показывают плато на графике?</b> Пока лёд тает (или вода кипит), температура
+      <b>не меняется</b> — вся энергия уходит на разрушение связей между частицами, а не на нагрев.
+      Поэтому на графике появляются <b>горизонтальные участки</b> — плато.
+    </div>
+  </div>
+</section><!-- ==================== УРОК 3: ЧИСТЫЕ ВЕЩЕСТВА И СМЕСИ ==================== -->
+<section class="section">
+  <div class="stage s3 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">3</div>
+      <div>
+        <div class="stage-title">Чистые вещества и смеси</div>
+        <div class="stage-subtitle">Почему в природе почти нет «чистых» веществ — и это нормально</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Если ты возьмёшь в руки кусок гранита, стакан морской воды или воздух из комнаты —
+      это всё <b>смеси</b>. А вот дистиллированная вода, чистое золото или алмаз — <b>чистые вещества</b>.
+      Разница между ними — в том, из скольких компонентов они состоят.
+    </p>
+
+    <h3 class="subhead">💎 Чистое вещество</h3>
+    <p class="subhead-sub">
+      Состоит из <b>частиц одного вида</b> и имеет постоянные свойства: температуру плавления,
+      кипения, плотность, цвет.
+    </p>
+
+    <div class="card-grid">
+      <div class="visual-card">
+        <div class="vc-visual">
+          <svg viewBox="0 0 200 120">
+            <defs>
+              <radialGradient id="waterGrad" cx="50%" cy="50%">
+                <stop offset="0%" stop-color="#7dd3fc"/>
+                <stop offset="100%" stop-color="#0ea5e9"/>
+              </radialGradient>
+            </defs>
+            <ellipse cx="100" cy="80" rx="70" ry="26" fill="#e0f2fe" stroke="#0284c7" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <path d="M 100 30 Q 75 60 75 75 Q 75 95 100 95 Q 125 95 125 75 Q 125 60 100 30 Z" fill="url(#waterGrad)" stroke="#0369a1" stroke-width="2"/>
+            <ellipse cx="88" cy="68" rx="5" ry="8" fill="#fff" opacity="0.6"/>
+            <circle cx="108" cy="80" r="2" fill="#fff" opacity="0.7"/>
+          </svg>
+        </div>
+        <div class="vc-title">💧 Дистиллированная вода</div>
+        <div class="vc-desc">Получена перегонкой. Состоит только из частиц воды — никаких примесей. Кипит строго при 100 °C.</div>
+      </div>
+
+      <div class="visual-card">
+        <div class="vc-visual">
+          <svg viewBox="0 0 200 120">
+            <defs>
+              <linearGradient id="goldGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0%" stop-color="#fde047"/>
+                <stop offset="50%" stop-color="#facc15"/>
+                <stop offset="100%" stop-color="#eab308"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="100" cy="100" rx="55" ry="8" fill="#000" opacity="0.08"/>
+            <path d="M 55 75 L 70 40 L 100 32 L 130 45 L 145 75 L 130 92 L 70 92 Z" fill="url(#goldGrad)" stroke="#a16207" stroke-width="2" stroke-linejoin="round"/>
+            <path d="M 70 40 L 100 55 L 130 45 M 100 55 L 100 32 M 70 92 L 100 55 L 130 92" fill="none" stroke="#a16207" stroke-width="1.2" opacity="0.6"/>
+            <ellipse cx="80" cy="55" rx="6" ry="3" fill="#fff" opacity="0.7" transform="rotate(-20 80 55)"/>
+          </svg>
+        </div>
+        <div class="vc-title">🥇 Чистое золото</div>
+        <div class="vc-desc">Состоит только из частиц золота. Очень мягкое — поэтому в ювелирных изделиях к нему добавляют другие металлы для прочности.</div>
+      </div>
+
+      <div class="visual-card">
+        <div class="vc-visual">
+          <svg viewBox="0 0 200 120">
+            <defs>
+              <linearGradient id="diaGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e0f2fe"/>
+                <stop offset="50%" stop-color="#bae6fd"/>
+                <stop offset="100%" stop-color="#7dd3fc"/>
+              </linearGradient>
+            </defs>
+            <ellipse cx="100" cy="102" rx="45" ry="6" fill="#000" opacity="0.08"/>
+            <polygon points="100,20 60,55 75,95 125,95 140,55" fill="url(#diaGrad)" stroke="#0369a1" stroke-width="2" stroke-linejoin="round"/>
+            <polygon points="100,20 60,55 100,55" fill="#fff" opacity="0.5"/>
+            <polygon points="100,20 140,55 100,55" fill="#fff" opacity="0.3"/>
+            <polygon points="60,55 100,55 75,95" fill="#0ea5e9" opacity="0.3"/>
+            <polygon points="140,55 100,55 125,95" fill="#0ea5e9" opacity="0.15"/>
+            <line x1="100" y1="20" x2="100" y2="95" stroke="#0369a1" stroke-width="0.8" opacity="0.5"/>
+            <line x1="60" y1="55" x2="140" y2="55" stroke="#0369a1" stroke-width="0.8" opacity="0.5"/>
+            <circle cx="90" cy="40" r="3" fill="#fff" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="vc-title">💎 Алмаз</div>
+        <div class="vc-desc">Состоит только из частиц углерода, но расположенных в особой кристаллической решётке. Отсюда его твёрдость и блеск.</div>
+      </div>
+    </div>
+
+    <h3 class="subhead">🧪 Смесь</h3>
+    <p class="subhead-sub">
+      Состоит из <b>двух или более</b> разных веществ, которые можно разделить физическими способами.
+      Свойства смеси <b>не постоянны</b> и зависят от состава.
+    </p>
+
+    <div class="card-grid">
+      <div class="visual-card">
+        <div class="vc-visual">
+          <svg viewBox="0 0 200 120">
+            <ellipse cx="100" cy="60" rx="72" ry="42" fill="#f0f9ff" stroke="#7dd3fc" stroke-width="1.5" stroke-dasharray="3 3"/>
+            <circle cx="65" cy="45" r="6" fill="#0ea5e9" opacity="0.85"/>
+            <circle cx="90" cy="38" r="6" fill="#0ea5e9" opacity="0.85"/>
+            <circle cx="115" cy="48" r="6" fill="#0ea5e9" opacity="0.85"/>
+            <circle cx="135" cy="60" r="6" fill="#0ea5e9" opacity="0.85"/>
+            <circle cx="75" cy="70" r="5" fill="#ef4444" opacity="0.85"/>
+            <circle cx="105" cy="72" r="5" fill="#ef4444" opacity="0.85"/>
+            <circle cx="130" cy="78" r="5" fill="#ef4444" opacity="0.85"/>
+            <circle cx="60" cy="82" r="3.5" fill="#f59e0b" opacity="0.85"/>
+            <circle cx="88" cy="88" r="3.5" fill="#f59e0b" opacity="0.85"/>
+            <circle cx="112" cy="90" r="3.5" fill="#f59e0b" opacity="0.85"/>
+            <circle cx="140" cy="40" r="3.5" fill="#10b981" opacity="0.85"/>
+            <circle cx="50" cy="58" r="3.5" fill="#10b981" opacity="0.85"/>
+          </svg>
+        </div>
+        <div class="vc-title">🌬 Воздух</div>
+        <div class="vc-desc">Смесь разных газов: азота, кислорода, аргона, углекислого газа и паров воды. Все частицы невидимы и равномерно перемешаны.</div>
+      </div>
+
+      <div class="visual-card">
+        <div class="vc-visual">
+          <svg viewBox="0 0 200 120">
+            <path d="M 20 70 Q 40 55 60 70 T 100 70 T 140 70 T 180 70 L 180 100 L 20 100 Z" fill="#38bdf8" opacity="0.55"/>
+            <path d="M 20 70 Q 40 55 60 70 T 100 70 T 140 70 T 180 70" fill="none" stroke="#0284c7" stroke-width="2"/>
+            <circle cx="50" cy="60" r="2" fill="#fff" opacity="0.8"/>
+            <circle cx="85" cy="80" r="2.5" fill="#fff" opacity="0.7"/>
+            <circle cx="115" cy="62" r="2" fill="#fff" opacity="0.8"/>
+            <circle cx="145" cy="82" r="2.5" fill="#fff" opacity="0.7"/>
+            <rect x="60" y="90" width="8" height="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+            <rect x="80" y="94" width="8" height="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+            <rect x="105" y="88" width="8" height="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+            <rect x="128" y="92" width="8" height="8" fill="#f8fafc" stroke="#94a3b8" stroke-width="1"/>
+          </svg>
+        </div>
+        <div class="vc-title">🌊 Морская вода</div>
+        <div class="vc-desc">Вода + растворённые соли + газы + органические вещества. Настоящая сложная смесь, но внешне однородная.</div>
+      </div>
+
+      <div class="visual-card">
+        <div class="vc-visual">
+          <svg viewBox="0 0 200 120">
+            <defs>
+              <linearGradient id="milkGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#ffffff"/>
+                <stop offset="100%" stop-color="#f1f5f9"/>
+              </linearGradient>
+            </defs>
+            <path d="M 60 30 Q 55 60 60 80 Q 65 100 100 100 Q 135 100 140 80 Q 145 60 140 30 Z" fill="url(#milkGrad)" stroke="#cbd5e1" stroke-width="1.5"/>
+            <circle cx="85" cy="55" r="3" fill="#fcd34d" opacity="0.9"/>
+            <circle cx="110" cy="65" r="4" fill="#fcd34d" opacity="0.9"/>
+            <circle cx="95" cy="80" r="3.5" fill="#fcd34d" opacity="0.85"/>
+            <circle cx="75" cy="75" r="2.5" fill="#fcd34d" opacity="0.85"/>
+            <circle cx="120" cy="45" r="2.5" fill="#fcd34d" opacity="0.85"/>
+            <ellipse cx="100" cy="40" rx="28" ry="6" fill="#fff" opacity="0.9"/>
+          </svg>
+        </div>
+        <div class="vc-title">🥛 Молоко</div>
+        <div class="vc-desc">Вода + жиры (жёлтые капли) + белки + сахара + минеральные соли. Настоящая сложная смесь.</div>
+      </div>
+    </div>
+
+    <h3 class="subhead">🔬 Гомогенные и гетерогенные смеси</h3>
+    <p class="subhead-sub">
+      Смеси бывают двух типов: <b>однородные</b> (гомогенные) и <b>неоднородные</b> (гетерогенные).
+      Разница видна невооружённым глазом.
+    </p>
+
+    <div class="mixture-visual">
+      <div class="mixture-card">
+        <div class="mc-svg-wrap">
+          <svg viewBox="0 0 300 200">
+            <defs>
+              <linearGradient id="glassH" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#e0f2fe"/>
+                <stop offset="100%" stop-color="#bae6fd"/>
+              </linearGradient>
+              <linearGradient id="liquidH" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#bae6fd" stop-opacity="0.6"/>
+                <stop offset="100%" stop-color="#0ea5e9" stop-opacity="0.6"/>
+              </linearGradient>
+            </defs>
+            <path d="M 50 30 L 55 170 Q 55 180 65 180 L 235 180 Q 245 180 245 170 L 250 30" fill="url(#glassH)" fill-opacity="0.4" stroke="#0284c7" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M 56 80 L 60 170 Q 60 176 66 176 L 234 176 Q 240 176 240 170 L 244 80 Z" fill="url(#liquidH)"/>
+            <circle cx="80" cy="110" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="105" cy="130" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="130" cy="105" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="155" cy="140" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="180" cy="115" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="205" cy="135" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="95" cy="160" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="145" cy="165" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="195" cy="155" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="120" cy="85" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="170" cy="80" r="4" fill="#0369a1" opacity="0.8"/>
+            <circle cx="220" cy="90" r="4" fill="#0369a1" opacity="0.8"/>
+            <path d="M 62 50 Q 60 90 62 130" stroke="#fff" stroke-width="3" fill="none" opacity="0.6" stroke-linecap="round"/>
+            <text x="150" y="195" text-anchor="middle" font-size="11" fill="#64748b" font-family="Inter, sans-serif">частицы распределены равномерно</text>
+          </svg>
+        </div>
+        <div class="mc-title">Гомогенная (однородная)</div>
+        <div class="mc-desc">
+          Частицы равномерно распределены по всему объёму. <b>Не видно границ</b> между компонентами — ни глазом, ни в микроскоп.
+          <br><br><b>Примеры:</b> воздух, раствор сахара в воде, сплавы металлов.
+        </div>
+      </div>
+
+      <div class="mixture-card">
+        <div class="mc-svg-wrap">
+          <svg viewBox="0 0 300 200">
+            <defs>
+              <linearGradient id="glassG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fef3c7"/>
+                <stop offset="100%" stop-color="#fde68a"/>
+              </linearGradient>
+              <linearGradient id="liquidG" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0%" stop-color="#fbbf24" stop-opacity="0.45"/>
+                <stop offset="100%" stop-color="#f59e0b" stop-opacity="0.55"/>
+              </linearGradient>
+            </defs>
+            <path d="M 50 30 L 55 170 Q 55 180 65 180 L 235 180 Q 245 180 245 170 L 250 30" fill="url(#glassG)" fill-opacity="0.3" stroke="#b45309" stroke-width="2.5" stroke-linejoin="round"/>
+            <path d="M 56 70 L 60 170 Q 60 176 66 176 L 234 176 Q 240 176 240 170 L 244 70 Z" fill="url(#liquidG)"/>
+            <circle cx="80" cy="120" r="9" fill="#b45309" opacity="0.9"/>
+            <circle cx="105" cy="140" r="6" fill="#7c2d12" opacity="0.9"/>
+            <circle cx="135" cy="110" r="11" fill="#f97316" opacity="0.85"/>
+            <circle cx="170" cy="140" r="8" fill="#b45309" opacity="0.9"/>
+            <circle cx="200" cy="115" r="7" fill="#92400e" opacity="0.9"/>
+            <circle cx="220" cy="145" r="10" fill="#f59e0b" opacity="0.85"/>
+            <circle cx="95" cy="165" r="5" fill="#7c2d12" opacity="0.9"/>
+            <circle cx="155" cy="165" r="9" fill="#b45309" opacity="0.9"/>
+            <circle cx="195" cy="170" r="6" fill="#f97316" opacity="0.85"/>
+            <circle cx="120" cy="90" r="6" fill="#92400e" opacity="0.9"/>
+            <circle cx="175" cy="85" r="8" fill="#b45309" opacity="0.9"/>
+            <circle cx="215" cy="80" r="5" fill="#7c2d12" opacity="0.9"/>
+            <path d="M 56 70 Q 90 60 120 72 T 180 68 T 244 70" fill="none" stroke="#b45309" stroke-width="1.5" opacity="0.6"/>
+            <path d="M 62 50 Q 60 90 62 130" stroke="#fff" stroke-width="3" fill="none" opacity="0.5" stroke-linecap="round"/>
+            <text x="150" y="195" text-anchor="middle" font-size="11" fill="#64748b" font-family="Inter, sans-serif">видны отдельные частицы разных размеров</text>
+          </svg>
+        </div>
+        <div class="mc-title">Гетерогенная (неоднородная)</div>
+        <div class="mc-desc">
+          Компоненты <b>видны</b> и имеют границы раздела. Частицы отличаются по размеру, цвету или агрегатному состоянию.
+          <br><br><b>Примеры:</b> песок в воде, молоко, гранит, дым, туман.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-idea">
+      Представь сахарный песок и речной песок. <b>Сахарный песок</b> — это кристаллы одного вещества
+      (сахарозы), между ними нет границ раздела — если растворить, получится однородный раствор.
+      <b>Речной песок</b> — это смесь разных минералов: песчинки отличаются по цвету и блеску. Это
+      гетерогенная смесь.
+    </div>
+
+    <div class="game-area">
+      <h4>🎮 Мини-игра: чистое вещество, гомогенная или гетерогенная смесь?</h4>
+      <p class="game-hint">
+        <span class="cta">Перетащи каждое вещество</span> в нужную корзину.
+        Если перетаскивание не работает — <span class="cta">нажми на карточку, а затем на корзину</span>.
+      </p>
+
+      <div class="game-pool" id="mixturesPool"></div>
+
+      <div class="triple-basket">
+        <div class="basket" data-cat="pure">
+          <div class="basket-title">💎 Чистое вещество</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="homogeneous">
+          <div class="basket-title">🌬 Гомогенная смесь</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="heterogeneous">
+          <div class="basket-title">🔬 Гетерогенная смесь</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px;">
+        <button class="reset-btn" id="resetMixtures">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbMixtures"></div>
+    </div>
+  </div>
+</section><!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Минимум 5 задач · письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+<li>Выпиши все 6 переходов между состояниями (плавление, кипение, конденсация, замерзание, сублимация, десублимация) и по примеру на каждый.</li>
+<li>Почему кипящая вода не горячее 100 °C, сколько ни грей? Объясни через плато на графике.</li>
+<li>Воздух — смесь или чистое вещество? Докажи двумя аргументами.</li>
+<li>Приведи по 2 примера гомогенных и гетерогенных смесей из дома.</li>
+<li><span class="hw-star">★ Куда девается соль, когда морская вода высыхает на коже? Объясни, что произошло.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>

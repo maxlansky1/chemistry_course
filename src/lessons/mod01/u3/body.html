@@ -1,0 +1,273 @@
+<header class="hero">
+  <div class="badge">Модуль 1 · Урок 3 из 3 · ~20 минут</div>
+  <h1>Лаборатория: безопасность и оборудование</h1>
+  <!--QA-->
+  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
+</header>
+<div class="container">
+<section class="section" id="sess3">
+  <div class="stage s4 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">4</div>
+      <div>
+        <div class="stage-title">Химическая лаборатория</div>
+        <div class="stage-subtitle">Правила безопасности и лабораторное оборудование</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Химия — наука экспериментальная. Но лаборатория — это место, где нужно быть
+      <b>внимательным и осторожным</b>. Прежде чем смешивать что-либо, нужно выучить правила
+      безопасности и узнать, как называется оборудование.
+    </p>
+
+    <div class="callout callout-idea">
+      Представь, что ты водитель. Прежде чем сесть за руль, ты учишь правила дорожного движения.
+      В лаборатории то же самое: правила безопасности — это твой «кодекс», без которого нельзя начинать.
+    </div>
+
+    <h3 class="subhead">⚠️ Правила безопасности</h3>
+    <p class="subhead-sub">
+      <span class="cta">👆 Нажимай на правила</span>, чтобы отметить их как «изученные». Это поможет запомнить.
+    </p>
+
+    <div class="safety-list" id="safetyList">
+      <div class="safety-item" data-id="1">
+        <div class="si-icon">🥼</div>
+        <div class="si-text"><b>Работай только в халате.</b> Он защитит одежду и кожу от капель реактивов.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="2">
+        <div class="si-icon">🚫😋</div>
+        <div class="si-text"><b>Не пробуй вещества на вкус.</b> Никогда. Даже если это «сахар». В лаборатории все вещества — потенциально опасны.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="3">
+        <div class="si-icon">👃</div>
+        <div class="si-text"><b>Не наклоняйся над сосудом.</b> При нагревании брызги могут попасть в лицо. Нюхай осторожно, направляя воздух ладонью.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="4">
+        <div class="si-icon">🧴</div>
+        <div class="si-text"><b>Работай над столом, а не над полом.</b> Если что-то прольётся — не будет лужи под ногами.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="5">
+        <div class="si-icon">🧹</div>
+        <div class="si-text"><b>Держи рабочее место в порядке.</b> Лишние предметы мешают и могут стать причиной аварии.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="6">
+        <div class="si-icon">🍔🚫</div>
+        <div class="si-text"><b>Не ешь и не пей в лаборатории.</b> Частицы реактивов могут попасть в еду.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="7">
+        <div class="si-icon">🩹</div>
+        <div class="si-text"><b>При ожоге или порезе — сразу сообщи учителю.</b> Не пытайся лечиться сам.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="8">
+        <div class="si-icon">🧼</div>
+        <div class="si-text"><b>После работы убери всё на место и вымой руки.</b> Чистота — залог безопасности.</div>
+        <div class="si-check">✓</div>
+      </div>
+    </div>
+
+    <h3 class="subhead">🎭 Пять ситуаций: как поступить?</h3>
+    <p class="subhead-sub">
+      В лаборатории бывают неожиданные ситуации. Проверь, знаешь ли ты, как правильно действовать.
+      <span class="cta">👆 Выбери один вариант</span> — и сразу увидишь объяснение.
+      <b>Пропуск дальше: разбери все 5 ситуаций.</b> Ошибаться можно — читай объяснение и пробуй снова.
+    </p>
+
+    <div id="scenariosContainer"></div>
+
+    <div class="test-score" id="safetyGate"><span id="safetyGateText">🔒 Загрузка…</span><br><button class="retry-btn" id="retryScenarios">↺ Сбросить всё и начать заново</button></div>
+
+    <div class="game-area" style="margin-top:22px;">
+      <h4>🎮 Игра: разбери действия по настоящим правилам лаборатории</h4>
+      <p class="game-hint">
+        Здесь 12 действий — как из реальной инструкции по технике безопасности.
+        <span class="cta">Перетащи каждое действие</span> в корзину «можно» или «нельзя».
+        Если перетаскивание не работает — <span class="cta">нажми на карточку, а затем на корзину</span>.
+      </p>
+
+      <div class="game-pool" id="safetyQuizPool"></div>
+
+      <div class="dual-basket">
+        <div class="basket" data-cat="can">
+          <div class="basket-title">✅ Можно</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="cannot">
+          <div class="basket-title">❌ Нельзя</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px;">
+        <button class="reset-btn" id="resetSafetyQuiz">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbSafetyQuiz"></div>
+    </div>
+
+    <h3 class="subhead">🧰 Лабораторное оборудование</h3>
+    <p class="subhead-sub">
+      <span class="cta">👆 Нажми на карточку</span>, чтобы узнать, как называется прибор и для чего он нужен.
+    </p>
+
+    <div class="equip-grid" id="equipGrid">
+      <div class="equip-card" data-eq="0"><div class="eq-icon">🧪</div><div class="eq-name">Пробирка</div></div>
+      <div class="equip-card" data-eq="1"><div class="eq-icon">⚗️</div><div class="eq-name">Колба</div></div>
+      <div class="equip-card" data-eq="2"><div class="eq-icon">🥛</div><div class="eq-name">Мензурка</div></div>
+      <div class="equip-card" data-eq="3"><div class="eq-icon">⚖️</div><div class="eq-name">Весы</div></div>
+      <div class="equip-card" data-eq="4"><div class="eq-icon">🔥</div><div class="eq-name">Спиртовка</div></div>
+      <div class="equip-card" data-eq="5"><div class="eq-icon">🥄</div><div class="eq-name">Шпатель</div></div>
+      <div class="equip-card" data-eq="6"><div class="eq-icon">🧫</div><div class="eq-name">Чашка Петри</div></div>
+      <div class="equip-card" data-eq="7"><div class="eq-icon">🌡</div><div class="eq-name">Термометр</div></div>
+      <div class="equip-card" data-eq="8"><div class="eq-icon">🕳</div><div class="eq-name">Воронка</div></div>
+      <div class="equip-card" data-eq="9"><div class="eq-icon">📏</div><div class="eq-name">Линейка</div></div>
+      <div class="equip-card" data-eq="10"><div class="eq-icon">🧴</div><div class="eq-name">Капельница</div></div>
+      <div class="equip-card" data-eq="11"><div class="eq-icon">🔬</div><div class="eq-name">Микроскоп</div></div>
+    </div>
+
+    <div class="equip-detail" id="equipDetail">
+      <div class="ed-title">🧪 Пробирка</div>
+      <div class="ed-text">
+        Узкий стеклянный сосуд для проведения небольших опытов с малым количеством вещества.
+        Пробирки закрепляют в штативе или держат специальным зажимом.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🧠</div>
+      <div>
+        <div class="stage-title">Рефлексия по Фейнману</div>
+        <div class="stage-subtitle">Объясни своими словами и запиши в тетрадь — проверит учитель</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
+      Это не тест: готовых вариантов нет. Объясни вслух — сыну, дочке, брату или сестре
+      (или представь, что объясняешь им), а затем <b>запиши объяснения в тетрадь</b>.
+    </p>
+
+    <div class="callout callout-note">
+      <b>📝 Задание в тетрадь — ответь письменно на три вопроса:</b>
+      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+        <li>Чем химия отличается от физики? Объясни на примере стакана воды.</li>
+        <li>Чем физическое тело отличается от вещества? Приведи по два примера из дома и из лаборатории.</li>
+        <li>Почему в лаборатории нельзя пробовать вещества на вкус и нюхать их напрямую? Что делать вместо этого?</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Как понять, что получилось:</b> перечитай написанное и спроси себя —
+      поймёт ли это младший школьник? Если где-то запнулся или ушёл в умные слова —
+      вернись к этому месту модуля и разберись заново. Именно «застревание» и есть обучение.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ПРАКТИЧЕСКОЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практическое задание: опиши вещество по плану</div>
+        <div class="stage-subtitle">Проверь, умеешь ли ты применять знания о свойствах веществ</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Настоящий химик умеет <b>описывать вещество по плану</b>: цвет, блеск, запах, твёрдость,
+      растворимость, горючесть. Сейчас мы потренируемся.
+    </p>
+
+    <div id="practicalTask"></div>
+
+    <div class="callout callout-note" style="margin-top:16px;">
+      <b>📝 В тетрадь:</b> выбери одно вещество дома (например, сахар, соль, монету)
+      и опиши его письменно по плану выше. Это задание проверит учитель.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ЗАДАЧКА НА ПОДУМАТЬ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">★</div>
+      <div>
+        <div class="stage-title">Задачка на подумать</div>
+        <div class="stage-subtitle">Без ответа в файле — разбираем на уроке</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      На столе два одинаковых белых порошка без подписей: <b>сахар и соль</b>.
+      Пробовать на вкус <b>запрещено</b> (мы же помним правила безопасности!).
+      Придумай, как различить их, используя только то, что изучили в модуле:
+      свойства веществ и методы познания. Запиши свой способ в тетрадь.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== КАРТОЧКА-ВЫЖИМКА ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📇</div>
+      <div>
+        <div class="stage-title">Выжимка модуля: самое главное</div>
+        <div class="stage-subtitle">Перепиши в тетрадь — это твой конспект</div>
+      </div>
+    </div>
+
+    <div class="callout callout-ok">
+      <b>5 тезисов модуля:</b>
+      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+        <li><b>Химия</b> — наука о веществах, их свойствах и превращениях.</li>
+        <li><b>Тело</b> имеет форму и объём; <b>вещество</b> — то, из чего состоят тела.</li>
+        <li>Путь познания: наблюдение → эксперимент → измерение → моделирование → вывод.</li>
+        <li>Вещества различают по свойствам: цвет, запах, твёрдость, растворимость, горючесть и др.</li>
+        <li>Лаборатория требует правил: ничего не пробовать на вкус, сообщать учителю об авариях, убирать за собой.</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-note">
+      <b>Новые термины:</b> вещество · физическое тело · свойство вещества ·
+      наблюдение · эксперимент · измерение · моделирование · гипотеза · лаборатория.
+    </div>
+  </div>
+</section>
+<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Минимум 5 задач · письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+<li>Перепиши 5 главных правил безопасности своими словами — как запомнил, а не дословно.</li>
+<li>Нарисуй и подпиши 6 лабораторных приборов. Рядом с каждым — для чего он нужен.</li>
+<li>Опиши по шагам свои действия, если разбил пробирку с раствором.</li>
+<li>Объясни: почему пары нюхают ладонью, а не из сосуда? Назови 2 причины.</li>
+<li><span class="hw-star">★ Придумай ситуацию №6 для этого урока: опиши происшествие, дай правильный и два неправильных действия.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>

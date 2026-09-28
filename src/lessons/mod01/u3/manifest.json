@@ -1,0 +1,17 @@
+{
+  "module": "mod01",
+  "lesson": "u3",
+  "badge": "Модуль 1 · Урок 3 из 3 · ~2 часа",
+  "title": "Лаборатория: безопасность и оборудование",
+  "css": [
+    "core"
+  ],
+  "js": [
+    "dropgames",
+    "checklist",
+    "scenarios",
+    "equip",
+    "pract",
+    "fade"
+  ]
+}

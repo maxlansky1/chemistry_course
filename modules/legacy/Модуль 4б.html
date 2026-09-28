@@ -1,0 +1,2352 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модуль 4б. Химический элемент, язык химии и молекулы — интерактивный урок</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg:#f8fafc; --panel:#fff; --panel-2:#f1f5f9; --border:#e2e8f0;
+    --text:#1e293b; --muted:#64748b; --h-deep:#0e7490; --h-color:#06b6d4;
+    --accent:#8b5cf6; --green:#10b981; --orange:#f59e0b; --red:#ef4444;
+    --radius:16px; --shadow:0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg:0 12px 40px -12px rgba(0,0,0,.15);
+  }
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:17px;overflow-x:hidden;}
+  .container{max-width:1140px;margin:0 auto;padding:0 20px;}
+  .hero{text-align:center;padding:56px 0 26px;background:linear-gradient(180deg,#ede9fe 0%,var(--bg) 100%);}
+  .hero .badge{display:inline-block;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#5b21b6;border:1.5px solid #5b21b6;padding:6px 18px;border-radius:50px;margin-bottom:20px;background:rgba(139,92,246,.05);}
+  .hero h1{font-size:clamp(28px,4.5vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.15;background:linear-gradient(135deg,#8b5cf6,#ec4899,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px;}
+  .hero p{color:var(--muted);font-size:17px;max-width:780px;margin:0 auto;}
+  .section{padding:24px 0;}
+  .stage{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:26px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+  .stage::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;}
+  .stage.s-legend::before{background:linear-gradient(90deg,#06b6d4,#8b5cf6,#f59e0b);}
+  .stage.s-entry::before{background:linear-gradient(90deg,#f59e0b,#ef4444);}
+  .stage.s-intro::before{background:linear-gradient(90deg,#8b5cf6,#06b6d4);}
+  .stage.s1::before{background:linear-gradient(90deg,#10b981,#059669);}
+  .stage.s2::before{background:linear-gradient(90deg,#f59e0b,#f97316);}
+  .stage.s3::before{background:linear-gradient(90deg,#ef4444,#dc2626);}
+  .stage.s4::before{background:linear-gradient(90deg,#8b5cf6,#6d28d9);}
+  .stage.s5::before{background:linear-gradient(90deg,#06b6d4,#0891b2);}
+  .stage.s6::before{background:linear-gradient(90deg,#10b981,#059669);}
+  .stage.s-feyn::before{background:linear-gradient(90deg,#8b5cf6,#ec4899);}
+  .stage.s-prac::before{background:linear-gradient(90deg,#06b6d4,#10b981);}
+  .stage.s-test::before{background:linear-gradient(90deg,#f59e0b,#ef4444);}
+  .stage-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .stage-number{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:var(--panel-2);color:var(--h-deep);font-size:22px;font-weight:900;flex-shrink:0;border:2px solid var(--border);}
+  .stage-title{font-size:21px;font-weight:700;color:var(--text);}
+  .stage-subtitle{font-size:14px;color:var(--muted);font-weight:500;margin-top:2px;}
+  .callout{padding:16px 20px;border-radius:12px;margin:16px 0;font-size:16px;line-height:1.7;}
+  .callout-idea{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left:5px solid var(--orange);color:#78350f;}
+  .callout-idea b{color:#92400e;}
+  .callout-warn{background:linear-gradient(135deg,#fef2f2,#fee2e2);border-left:5px solid var(--red);color:#7f1d1d;}
+  .callout-warn b{color:#b91c1c;}
+  .callout-note{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-left:5px solid #3b82f6;color:#1e3a8a;}
+  .callout-note b{color:#1d4ed8;}
+  .callout-ok{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-left:5px solid var(--green);color:#065f46;}
+  .callout-ok b{color:#047857;}
+  .cta{color:var(--accent);font-weight:800;}
+  .subhead{font-size:17px;font-weight:800;margin:26px 0 8px;display:flex;align-items:center;gap:8px;}
+  .subhead-sub{font-size:14.5px;color:var(--muted);margin-bottom:10px;line-height:1.6;}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:16px;}
+  .card{background:linear-gradient(180deg,#f8fafc,#fff);border:1.5px solid var(--border);border-radius:14px;padding:20px;transition:all .3s;position:relative;overflow:hidden;}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--h-color),var(--accent));}
+  .card:hover{transform:translateY(-4px);box-shadow:0 12px 30px -12px rgba(0,0,0,.15);border-color:var(--h-deep);}
+  .card .c-title{font-size:16.5px;font-weight:800;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .card .c-desc{font-size:15.5px;color:var(--muted);line-height:1.65;}
+  .card .c-desc b{color:var(--text);}
+  .canvas-wrap{position:relative;background:linear-gradient(180deg,#f0f9ff 0%,#e0f2fe 100%);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+  .canvas-wrap canvas{display:block;width:100%;height:auto;}
+  .canvas-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+  .btn{padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;border:none;color:#fff;background:var(--accent);box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.ghost{background:var(--panel-2);color:var(--text);border:1.5px solid var(--border);box-shadow:none;}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .btn.cyan{background:#06b6d4;box-shadow:0 6px 16px -6px rgba(6,182,212,.5);}
+  .btn.violet{background:#8b5cf6;box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+  .btn.red{background:#ef4444;box-shadow:0 6px 16px -6px rgba(239,68,68,.5);}
+  .btn.green{background:#10b981;box-shadow:0 6px 16px -6px rgba(16,185,129,.5);}
+  .btn.orange{background:#f59e0b;box-shadow:0 6px 16px -6px rgba(245,158,11,.5);}
+  .timeline{position:relative;margin-top:20px;padding:8px 0 40px;}
+  .timeline-track{display:flex;gap:14px;overflow-x:auto;padding:20px 8px 30px;scroll-snap-type:x mandatory;}
+  .timeline-track::-webkit-scrollbar{height:8px;}
+  .timeline-track::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:8px;}
+  .tl-year{flex-shrink:0;scroll-snap-align:start;min-width:160px;background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .25s;text-align:center;}
+  .tl-year:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .tl-year.active{background:linear-gradient(180deg,#f5f3ff,#fff);border-color:var(--accent);box-shadow:0 8px 20px -8px rgba(139,92,246,.4);}
+  .tl-year .tl-num{font-size:22px;font-weight:900;color:var(--accent);}
+  .tl-year .tl-who{font-size:13px;font-weight:700;margin:6px 0 4px;color:var(--text);}
+  .tl-year .tl-what{font-size:12px;color:var(--muted);line-height:1.4;}
+  .tl-detail{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;animation:fadeSlide .35s ease;}
+  .tl-detail.show{display:block;}
+  .tl-detail .tl-d-title{font-size:18px;font-weight:800;margin-bottom:8px;}
+  .tl-detail .tl-d-text{font-size:15.5px;line-height:1.75;color:var(--text);}
+  .formula-card{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;margin-top:16px;}
+  .formula-display{font-size:38px;font-weight:900;text-align:center;color:var(--accent);letter-spacing:2px;margin:10px 0;font-family:'Courier New',monospace;}
+  .formula-parts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;}
+  .formula-part{padding:14px;border-radius:12px;text-align:center;font-size:14.5px;line-height:1.6;}
+  .formula-part .fp-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
+  .formula-part .fp-value{font-weight:800;color:var(--text);}
+  .game-area{background:var(--panel-2);border-radius:14px;padding:22px;margin-top:18px;}
+  .game-area h4{font-size:17px;font-weight:800;margin-bottom:8px;}
+  .game-area .game-hint{font-size:15px;color:var(--muted);margin-bottom:16px;}
+  .dual-basket{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+  .basket{border:2.5px dashed var(--border);border-radius:14px;padding:14px;min-height:130px;text-align:center;transition:all .25s;background:#fff;}
+  .basket.hover{border-color:var(--accent);background:#f5f3ff;}
+  .basket .basket-title{font-size:13.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .basket .basket-items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+  .basket .basket-chip{background:var(--panel-2);border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:13px;font-weight:700;}
+  .basket.good{border-color:var(--green);background:#ecfdf5;}
+  .basket.bad{border-color:var(--red);background:#fef2f2;}
+  .game-pool{display:flex;flex-wrap:wrap;gap:10px;padding:16px;background:#fff;border:2px solid var(--border);border-radius:14px;min-height:100px;margin-bottom:14px;}
+  .game-pool .pool-item{background:var(--panel-2);border:2px solid var(--border);border-radius:10px;padding:10px 18px;cursor:grab;font-size:15px;font-weight:700;transition:all .2s;user-select:none;}
+  .game-pool .pool-item:hover{border-color:var(--h-deep);transform:translateY(-2px);}
+  .game-pool .pool-item.selected{border-color:var(--accent);background:#f5f3ff;box-shadow:0 0 0 3px rgba(139,92,246,.15);}
+  .game-pool .pool-item.dragging{opacity:.5;}
+  .game-pool .pool-item.wrong-flash{animation:shake .4s;border-color:var(--red);background:#fef2f2;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .reset-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;background:var(--panel-2);color:var(--text);border:1.5px solid var(--border);cursor:pointer;font-size:14px;font-weight:700;transition:all .2s;}
+  .reset-btn:hover{border-color:var(--h-deep);color:var(--h-deep);}
+  .retry-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:12px 26px;border-radius:50px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:15px;font-weight:800;transition:all .2s;box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+  .retry-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(139,92,246,.6);}
+  .game-feedback{margin-top:14px;font-size:15.5px;font-weight:700;min-height:24px;}
+  .test-question{background:var(--panel-2);border-radius:12px;padding:20px;margin-bottom:16px;}
+  .test-question .q-text{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;gap:12px;align-items:flex-start;}
+  .test-question .q-num{background:var(--h-deep);color:#fff;border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;}
+  .test-options{display:flex;flex-direction:column;gap:10px;}
+  .test-option{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--border);border-radius:10px;padding:13px 16px;cursor:pointer;font-size:15.5px;transition:all .25s;}
+  .test-option:hover{border-color:var(--h-deep);}
+  .test-option .opt-marker{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:var(--muted);transition:all .25s;}
+  .test-option.correct{border-color:var(--green);background:#ecfdf5;}
+  .test-option.correct .opt-marker{background:var(--green);border-color:var(--green);color:#fff;}
+  .test-option.wrong{border-color:var(--red);background:#fef2f2;}
+  .test-option.wrong .opt-marker{background:var(--red);border-color:var(--red);color:#fff;}
+  .test-option.disabled{cursor:default;}
+  .test-option.disabled:hover{border-color:var(--border);}
+  .test-option.correct.disabled:hover{border-color:var(--green);}
+  .test-option.wrong.disabled:hover{border-color:var(--red);}
+  .explanation{margin-top:14px;padding:14px 16px;border-radius:10px;font-size:15px;line-height:1.65;display:none;animation:fadeSlide .35s ease;}
+  .explanation.show{display:block;}
+  .explanation.ok{background:#ecfdf5;border-left:4px solid var(--green);color:#065f46;}
+  .explanation.no{background:#fef2f2;border-left:4px solid var(--red);color:#991b1b;}
+  .explanation b{font-weight:800;}
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+  .test-score{margin-top:22px;padding:20px;border-radius:14px;text-align:center;font-size:18px;font-weight:800;background:var(--panel-2);border:2px solid var(--border);transition:all .4s;}
+  .test-score.good{background:#ecfdf5;border-color:var(--green);color:#059669;}
+  .test-score.mid{background:#fffbeb;border-color:var(--orange);color:#d97706;}
+  .test-score.bad{background:#fef2f2;border-color:var(--red);color:#dc2626;}
+  .entry-result{margin-top:20px;padding:20px;border-radius:14px;text-align:center;font-size:16px;font-weight:700;background:var(--panel-2);border:2px solid var(--border);display:none;}
+  .entry-result.show{display:block;animation:fadeSlide .35s ease;}
+  .entry-result.good{background:#ecfdf5;border-color:var(--green);color:#059669;}
+  .entry-result.mid{background:#fffbeb;border-color:var(--orange);color:#d97706;}
+  .footer{text-align:center;padding:40px 0 60px;color:var(--muted);font-size:14px;border-top:1px solid var(--border);margin-top:40px;}
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+  .legend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:16px;}
+  .legend-card{padding:14px 18px;border-radius:12px;border:2px solid var(--border);background:#fff;}
+  .legend-card .lc-header{display:flex;align-items:center;gap:10px;font-size:15.5px;font-weight:800;margin-bottom:6px;}
+  .legend-card .lc-body{font-size:14.5px;color:var(--muted);line-height:1.6;}
+  .legend-card .lc-body b{color:var(--text);}
+  .practical-step{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;}
+  .practical-step .ps-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .practical-step .ps-num{width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;}
+  .practical-step .ps-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);}
+  .practical-step .ps-situation{font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;}
+  .isotope-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px;}
+  .isotope-table th,.isotope-table td{padding:12px 14px;border:1.5px solid var(--border);text-align:left;}
+  .isotope-table th{background:var(--panel-2);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
+  .isotope-table tr:hover{background:#f8fafc;}
+  .isotope-table .iso-name{font-weight:800;}
+  .isotope-table .iso-symbol{font-family:'Courier New',monospace;font-weight:800;font-size:16px;color:var(--accent);}
+  .slider-wrap{display:flex;align-items:center;gap:14px;margin:16px 0;flex-wrap:wrap;}
+  .slider-wrap input[type=range]{flex:1;min-width:200px;accent-color:var(--accent);height:8px;cursor:pointer;}
+  .slider-label{font-size:14px;font-weight:700;color:var(--muted);min-width:90px;}
+  .energy-badge{display:inline-block;padding:4px 14px;border-radius:50px;font-size:13px;font-weight:800;transition:all .3s;}
+  .energy-badge.high{background:#fef2f2;color:#dc2626;}
+  .energy-badge.low{background:#ecfdf5;color:#059669;}
+  .reaction-canvas{background:linear-gradient(180deg,#0f172a,#1e293b);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+  .reaction-canvas canvas{display:block;width:100%;height:auto;}
+  @media (max-width:800px){.dual-basket{grid-template-columns:1fr;}.formula-parts{grid-template-columns:1fr;}}
+  @media (max-width:600px){.container{padding:0 14px;}.hero{padding:40px 0 20px;}.stage{padding:20px;}.card-grid{grid-template-columns:1fr;}body{font-size:16px;}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="badge">Модуль 4б · Химический элемент, язык химии и молекулы</div>
+  <h1>Как химики описывают мир</h1>
+  <p>От химического элемента — к молекулам, формулам и простым/сложным веществам. История, анимации и интерактив.</p>
+</header>
+
+<div class="container">
+
+<!-- ==================== ЛЕГЕНДА ==================== -->
+<section class="section">
+  <div class="stage s-legend fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📚</div>
+      <div>
+        <div class="stage-title">Как читать этот модуль</div>
+        <div class="stage-subtitle">Условные обозначения</div>
+      </div>
+    </div>
+    <p style="font-size:16px;line-height:1.75;">
+      Это <b>шестой модуль курса</b> (после 1, 2, 3а, 3б и 4а). Обозначения — те же.
+    </p>
+    <div class="legend-grid">
+      <div class="legend-card" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-color:#f59e0b;">
+        <div class="lc-header">💡 <span>Тёплый жёлтый</span></div>
+        <div class="lc-body">Ключевая мысль, сравнение или аналогия.</div>
+      </div>
+      <div class="legend-card" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border-color:#ef4444;">
+        <div class="lc-header">⚠️ <span>Красный</span></div>
+        <div class="lc-body">Важное предупреждение или правило. <b>К запоминанию.</b></div>
+      </div>
+      <div class="legend-card" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#3b82f6;">
+        <div class="lc-header">📌 <span>Синий</span></div>
+        <div class="lc-body">Дополнительная заметка или интересный факт.</div>
+      </div>
+      <div class="legend-card" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#10b981;">
+        <div class="lc-header">✅ <span>Зелёный</span></div>
+        <div class="lc-body">Правильный ответ или итоговый вывод.</div>
+      </div>
+      <div class="legend-card">
+        <div class="lc-header"><span class="cta">🔷 Жирный фиолетовый</span></div>
+        <div class="lc-body"><b>Призыв к действию.</b> Нужно нажать, подвигать, перетащить.</div>
+      </div>
+      <div class="legend-card">
+        <div class="lc-header">🎮 <span>Мини-игра</span></div>
+        <div class="lc-body">Интерактивное задание для закрепления материала.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ВХОДНОЙ ТЕСТ ==================== -->
+<section class="section">
+  <div class="stage s-entry fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🚪</div>
+      <div>
+        <div class="stage-title">Входной тест</div>
+        <div class="stage-subtitle">5 вопросов по Модулю 4а</div>
+      </div>
+    </div>
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      Этот тест — <b>проверка готовности</b>. Если наберёшь 4+, можешь идти дальше уверенно.
+    </p>
+    <div id="entryTestContainer"></div>
+    <div class="entry-result" id="entryResult"></div>
+  </div>
+</section>
+
+<!-- ==================== ВВЕДЕНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🎯</div>
+      <div>
+        <div class="stage-title">О чём этот модуль</div>
+        <div class="stage-subtitle">От атомов — к элементам, формулам и молекулам</div>
+      </div>
+    </div>
+    <p style="font-size:16.5px;line-height:1.8;">
+      В Модуле 4а мы открыли «чёрный ящик»: узнали, что вещество состоит из атомов,
+      а атомы — из ядра и электронов. Но остались важные вопросы: что такое
+      <b>химический элемент</b>? Как химики <b>записывают</b> вещества? Почему одни
+      вещества <b>простые</b>, а другие <b>сложные</b>? И почему атомы вообще
+      соединяются в молекулы?
+    </p>
+    <div class="callout callout-idea">
+      <b>Главный вопрос модуля:</b> как из атомов получаются молекулы, и как химики
+      придумали <b>универсальный язык</b>, понятный любому учёному в мире?
+    </div>
+    <div class="card-grid">
+      <div class="card"><div class="c-title">⚛️ Химический элемент</div><div class="c-desc">Как пришли к этому понятию, что такое <b>изотопы</b> и чем они отличаются.</div></div>
+      <div class="card"><div class="c-title">🔗 Молекулы и химическая связь</div><div class="c-desc">История изучения молекул, почему атомы соединяются, как образуется связь H₂.</div></div>
+      <div class="card"><div class="c-title">📝 Язык химии</div><div class="c-desc">История символов, как записывать и читать формулы. <b>Дальтон и Берцелиус.</b></div></div>
+      <div class="card"><div class="c-title">⚪🔗 Простые и сложные</div><div class="c-desc">Как различать, что показывает формула, зачем нужен <b>качественный и количественный состав</b>.</div></div>
+      <div class="card"><div class="c-title">💎 Аллотропия</div><div class="c-desc">Как один элемент образует разные вещества: <b>алмаз, графит, озон</b>.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 1: ХИМИЧЕСКИЙ ЭЛЕМЕНТ ==================== -->
+<section class="section">
+  <div class="stage s1 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">1</div>
+      <div>
+        <div class="stage-title">Химический элемент</div>
+        <div class="stage-subtitle">Как пришли к этому понятию и что такое изотопы</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      В Модуле 4а мы узнали, что все вещества состоят из атомов. Но атомы бывают
+      <b>разных видов</b>. Атомы одного вида — с одинаковым зарядом ядра — называются
+      <b>химическим элементом</b>.
+    </p>
+
+    <div class="callout callout-idea">
+      <b>Определение:</b> <b>Химический элемент</b> — это вид атомов с одинаковым
+      зарядом ядра. Например, все атомы с зарядом ядра +1 — это водород H.
+      Все атомы с зарядом ядра +8 — это кислород O.
+    </div>
+
+    <h3 class="subhead">📜 Как человечество пришло к понятию «химический элемент»</h3>
+
+    <p style="font-size:16px;line-height:1.8;">
+      Это понятие формировалось <b>постепенно, более двух столетий</b>. В античности
+      и в эпоху алхимии учёные считали, что всё состоит из «первоэлементов» —
+      земли, воды, воздуха и огня. Но с развитием химического анализа становилось
+      ясно, что это не так.
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-track" id="elemTimelineTrack"></div>
+      <div class="tl-detail" id="elemTlDetail"></div>
+    </div>
+
+    <div class="callout callout-note">
+      <b>Важно понимать:</b> до конца XVIII века под «элементом» часто понимали
+      простое вещество, которое нельзя разложить. Только после работ Дальтона
+      и Берцелиуса в начале XIX века элемент стали связывать с <b>атомами</b>
+      определённого вида. А окончательное понимание элемента как разновидности
+      атомов сформировалось лишь к концу XIX века, после открытия радиоактивности
+      и изотопии.
+    </div>
+
+    <h3 class="subhead">🔬 Изотопы: атомы одного элемента, но разные</h3>
+
+    <p style="font-size:16px;line-height:1.8;">
+      Представь, что у тебя есть два атома водорода. У обоих — по одному протону
+      (заряд ядра +1). Но у одного в ядре есть ещё и нейтрон, а у другого — нет.
+      Это <b>изотопы</b> — разновидности одного химического элемента, которые
+      отличаются числом нейтронов в ядре.
+    </p>
+
+    <div class="callout callout-idea">
+      <b>Изотопы</b> — это атомы одного и того же элемента, у которых
+      <b>одинаковое число протонов</b>, но <b>разное число нейтронов</b>.
+      Химические свойства у них почти одинаковые, а вот масса — разная.
+    </div>
+
+    <!-- ДЕТАЛЬНАЯ АНИМАЦИЯ ИЗОТОПОВ С ЭЛЕКТРОНАМИ -->
+    <div class="canvas-wrap" style="background:linear-gradient(180deg,#0f172a,#1e293b);">
+      <canvas id="isotopeCanvas" width="960" height="440"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn cyan" id="isotopeBtn">▶ Показать три изотопа водорода</button>
+      <button class="btn ghost" id="isotopeStepBtn">🔍 Показать по одному</button>
+    </div>
+
+    <!-- СВОДНАЯ ТАБЛИЦА ИЗОТОПОВ -->
+    <h4 style="font-size:15.5px;font-weight:800;margin:24px 0 8px;">📊 Сравнение трёх изотопов водорода</h4>
+    <table class="isotope-table">
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Символ</th>
+          <th>Протоны</th>
+          <th>Нейтроны</th>
+          <th>Электроны</th>
+          <th>Масса (а.е.м.)</th>
+          <th>Распространённость</th>
+          <th>Стабильность</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="iso-name">Протий</td>
+          <td class="iso-symbol">¹H</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1,0078</td>
+          <td>99,985%</td>
+          <td>✅ Стабилен</td>
+        </tr>
+        <tr>
+          <td class="iso-name">Дейтерий</td>
+          <td class="iso-symbol">²H (D)</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>2,0141</td>
+          <td>0,015%</td>
+          <td>✅ Стабилен</td>
+        </tr>
+        <tr>
+          <td class="iso-name">Тритий</td>
+          <td class="iso-symbol">³H (T)</td>
+          <td>1</td>
+          <td>2</td>
+          <td>1</td>
+          <td>3,0160</td>
+          <td>Следы</td>
+          <td>⚠️ Радиоактивен (12,3 года)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-ok" style="margin-top:16px;">
+      <b>Что общего?</b> У всех трёх изотопов — <b>один протон</b> (заряд ядра +1)
+      и <b>один электрон</b>. Поэтому все они — <b>водород</b>. Они одинаково
+      вступают в химические реакции. Разница только в массе: чем больше нейтронов,
+      тем тяжелее атом.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Интересный факт:</b> изотопы есть у большинства элементов. Например,
+      углерод существует в виде ¹²C (6 протонов, 6 нейтронов), ¹³C (6 протонов,
+      7 нейтронов) и ¹⁴C (6 протонов, 8 нейтронов). Именно ¹⁴C используется
+      для радиоуглеродного датирования в археологии.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 2: ИСТОРИЯ ИЗУЧЕНИЯ МОЛЕКУЛ ==================== -->
+<section class="section">
+  <div class="stage s2 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">2</div>
+      <div>
+        <div class="stage-title">История изучения молекул</div>
+        <div class="stage-subtitle">Авогадро, Гей-Люссак и рождение молекулярной теории</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      В начале XIX века учёные уже знали об атомах, но <b>не понимали</b>, как именно
+      атомы соединяются в более крупные частицы. Спор длился десятилетиями, пока
+      итальянский учёный <b>Амедео Авогадро</b> не предложил гениальную идею.
+    </p>
+
+    <h3 class="subhead">🔬 Ключевые идеи</h3>
+
+    <div class="card-grid">
+      <div class="card" style="border-color:#3b82f6;">
+        <div class="c-title">🧪 Гей-Люссак (1808)</div>
+        <div class="c-desc">
+          Французский химик <b>Жозеф Луи Гей-Люссак</b> изучал реакции между газами.
+          Он обнаружил удивительный факт: газы реагируют <b>в простых объёмных отношениях</b>.
+          <br><br>
+          Например, 2 объёма водорода + 1 объём кислорода = 2 объёма водяного пара.
+          <br><br>
+          <b>Закон объёмных отношений:</b> объёмы реагирующих газов относятся
+          как небольшие целые числа.
+        </div>
+      </div>
+      <div class="card" style="border-color:#8b5cf6;">
+        <div class="c-title">💡 Авогадро (1811)</div>
+        <div class="c-desc">
+          Итальянец <b>Амедео Авогадро</b> объяснил результаты Гей-Люссака.
+          Он предположил, что <b>в равных объёмах газов при одинаковых условиях
+          содержится одинаковое число молекул</b>.
+          <br><br>
+          Главное: Авогадро <b>различил атом и молекулу</b>. Например, водород
+          в газе — это не отдельные атомы H, а молекулы H₂.
+        </div>
+      </div>
+      <div class="card" style="border-color:#10b981;">
+        <div class="c-title">🎯 Канниццаро (1858)</div>
+        <div class="c-desc">
+          Идеи Авогадро <b>игнорировались почти 50 лет</b>! Только в 1858 году
+          итальянский химик <b>Станислао Канниццаро</b> на конференции в Карлсруэ
+          убедительно доказал их правильность.
+          <br><br>
+          С этого момента молекулярная теория стала <b>общепринятой</b>.
+        </div>
+      </div>
+    </div>
+
+    <!-- ПОЧЕМУ АТОМЫ СОЕДИНЯЮТСЯ -->
+    <h3 class="subhead">⚡ Почему атомы соединяются в молекулы?</h3>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      В предыдущих модулях мы говорили, что <b>любая система стремится
+      к состоянию с минимальной энергией</b>. Это универсальный закон природы:
+      мяч катится вниз, горячий чай остывает, а атомы — <b>соединяются</b>.
+    </p>
+
+    <div class="callout callout-idea">
+      <b>Главная причина:</b> когда два атома сближаются и образуют химическую
+      связь, <b>полная энергия системы понижается</b>. Это энергетически выгодно.
+      Атомам «удобнее» быть вместе, чем по отдельности.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Аналогия:</b> представь, что ты катишься с горки на санках. Внизу —
+      энергия ниже, и тебе туда «хочется». Так и атомы: они «скатываются»
+      в более низкое энергетическое состояние, образуя связь. Чтобы разорвать
+      связь, нужно <b>затратить энергию</b> — как будто толкать санки обратно в гору.
+    </div>
+
+    <!-- ИНТЕРАКТИВ: ПОЛЗУНОК ОБРАЗОВАНИЯ H2 (ИСПРАВЛЕННЫЙ) -->
+    <h4 style="font-size:15.5px;font-weight:800;margin:24px 0 8px;">🎛 Интерактив: собери молекулу H₂</h4>
+    <p style="font-size:15px;color:var(--muted);margin-bottom:10px;">
+      <span class="cta">Двигай ползунок</span> — атомы сближаются. Следи за энергией
+      системы и за электронами: когда атомы окажутся на оптимальном расстоянии,
+      электроны <b>обобществятся</b> и образуют связь.
+    </p>
+
+    <div class="reaction-canvas">
+      <canvas id="h2Canvas" width="900" height="340"></canvas>
+    </div>
+    <div class="slider-wrap">
+      <span class="slider-label">Расстояние:</span>
+      <input type="range" id="h2Slider" min="0" max="100" value="0">
+      <span class="energy-badge high" id="energyBadge">Энергия: высокая</span>
+    </div>
+    <div class="callout callout-ok" style="margin-top:12px;">
+      <b>Что происходит:</b> когда атомы далеко — энергия высокая, электроны
+      летают вокруг своих ядер. При сближении энергия <b>понижается</b>, и на
+      определённом расстоянии электроны начинают <b>обобществляться</b> —
+      образуется химическая связь. Дальнейшее сближение снова повышает энергию —
+      атомы начинают отталкиваться ядрами.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Запомни:</b> химическая связь — это результат <b>понижения энергии</b>
+      системы. Атомы соединяются не потому, что «хотят», а потому что так
+      энергетически выгоднее.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 3: ЯЗЫК ХИМИИ ==================== -->
+<section class="section">
+  <div class="stage s3 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">3</div>
+      <div>
+        <div class="stage-title">Язык химии: как записывать и читать</div>
+        <div class="stage-subtitle">История символов и правила формул</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      До начала XIX века химики <b>не имели единого способа</b> записывать состав веществ.
+      Каждый использовал свои обозначения — это была настоящая «вавилонская башня».
+      Всё изменилось благодаря двум учёным: <b>Джону Дальтону</b> и
+      <b>Йёнсу Якобу Берцелиусу</b>.
+    </p>
+
+    <div class="timeline">
+      <div class="timeline-track" id="langTimelineTrack"></div>
+      <div class="tl-detail" id="langTlDetail"></div>
+    </div>
+
+    <h3 class="subhead">📝 Как записываются химические элементы</h3>
+
+    <p style="font-size:16px;line-height:1.8;">
+      Каждый элемент имеет свой <b>химический символ</b> — одну или две буквы
+      латинского названия. Первая буква — <b>всегда заглавная</b>, вторая (если есть) —
+      <b>строчная</b>.
+    </p>
+
+    <table class="isotope-table" style="margin-top:14px;">
+      <thead><tr><th>Элемент</th><th>Латинское название</th><th>Символ</th><th>Произношение</th></tr></thead>
+      <tbody>
+        <tr><td>Водород</td><td>Hydrogenium</td><td><b>H</b></td><td>«аш»</td></tr>
+        <tr><td>Кислород</td><td>Oxygenium</td><td><b>O</b></td><td>«о»</td></tr>
+        <tr><td>Углерод</td><td>Carboneum</td><td><b>C</b></td><td>«цэ»</td></tr>
+        <tr><td>Азот</td><td>Nitrogenium</td><td><b>N</b></td><td>«эн»</td></tr>
+        <tr><td>Железо</td><td>Ferrum</td><td><b>Fe</b></td><td>«феррум»</td></tr>
+        <tr><td>Натрий</td><td>Natrium</td><td><b>Na</b></td><td>«натрий»</td></tr>
+        <tr><td>Золото</td><td>Aurum</td><td><b>Au</b></td><td>«аурум»</td></tr>
+        <tr><td>Серебро</td><td>Argentum</td><td><b>Ag</b></td><td>«аргентум»</td></tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> символы читаются по-разному. Однобуквенные — просто как буква
+      («аш», «о», «цэ»). Двухбуквенные — как название элемента: Fe = «феррум»,
+      Au = «аурум». Нельзя читать «фэ-е» или «а-у»!
+    </div>
+
+    <h3 class="subhead">🔢 Индексы и коэффициенты</h3>
+
+    <div class="callout callout-warn">
+      <b>Это важно не путать!</b>
+      <br><br>
+      <b>Индекс</b> — маленькая цифра <b>справа внизу</b> от символа. Показывает,
+      сколько атомов данного элемента в <b>одной молекуле</b>. Например, H₂O —
+      в одной молекуле 2 атома H.
+      <br><br>
+      <b>Коэффициент</b> — большая цифра <b>слева</b> от формулы. Показывает,
+      сколько <b>молекул</b> взято. Например, 3H₂O — три молекулы воды.
+    </div>
+
+    <div class="formula-card" style="background:linear-gradient(180deg,#fffbeb,#fff);border-color:#f59e0b;">
+      <div style="text-align:center;">
+        <span style="font-size:52px;font-weight:900;color:#f59e0b;">3</span>
+        <span style="font-size:52px;font-weight:900;color:#1e40af;">H</span>
+        <span style="font-size:32px;font-weight:900;color:#3730a3;vertical-align:sub;">2</span>
+        <span style="font-size:52px;font-weight:900;color:#991b1b;">O</span>
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:16px;">
+        <div style="padding:12px;background:#fffbeb;border-radius:10px;border-left:4px solid #f59e0b;">
+          <b style="color:#92400e;">Коэффициент = 3</b><br>
+          <span style="font-size:14px;">Три молекулы воды</span>
+        </div>
+        <div style="padding:12px;background:#f0f9ff;border-radius:10px;border-left:4px solid #3b82f6;">
+          <b style="color:#1e40af;">Индексы = 2 и 1</b><br>
+          <span style="font-size:14px;">В каждой молекуле 2 H и 1 O</span>
+        </div>
+      </div>
+      <div class="callout callout-ok" style="margin-top:14px;">
+        <b>Итого:</b> запись 3H₂O означает <b>3 молекулы воды</b>, в каждой из которых
+        по 2 атома водорода и 1 атому кислорода. Всего: <b>6 атомов H</b> и <b>3 атома O</b>.
+      </div>
+    </div>
+
+    <h3 class="subhead">🗣 Как читать химические формулы</h3>
+
+    <table class="isotope-table" style="margin-top:14px;">
+      <thead><tr><th>Формула</th><th>Чтение</th><th>Что означает</th></tr></thead>
+      <tbody>
+        <tr><td><b>H₂O</b></td><td>«аш-два-о»</td><td>Вода: 2 водорода + 1 кислород</td></tr>
+        <tr><td><b>CO₂</b></td><td>«цэ-о-два»</td><td>Углекислый газ: 1 углерод + 2 кислорода</td></tr>
+        <tr><td><b>CH₄</b></td><td>«цэ-аш-четыре»</td><td>Метан: 1 углерод + 4 водорода</td></tr>
+        <tr><td><b>NH₃</b></td><td>«эн-аш-три»</td><td>Аммиак: 1 азот + 3 водорода</td></tr>
+        <tr><td><b>H₂SO₄</b></td><td>«аш-два-эс-о-четыре»</td><td>Серная кислота: 2 H + 1 S + 4 O</td></tr>
+        <tr><td><b>3H₂O</b></td><td>«три-аш-два-о»</td><td>Три молекулы воды</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ==================== УРОК 4: ПРОСТЫЕ И СЛОЖНЫЕ ВЕЩЕСТВА ==================== -->
+<section class="section">
+  <div class="stage s4 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">4</div>
+      <div>
+        <div class="stage-title">Простые и сложные вещества</div>
+        <div class="stage-subtitle">Как различать и что показывает формула</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Все вещества можно разделить на две группы: <b>простые</b> (из атомов одного
+      элемента) и <b>сложные</b> (из атомов разных элементов).
+    </p>
+
+    <div class="card-grid">
+      <div class="card" style="border-color:#3b82f6;">
+        <div class="c-title">⚪ Простое вещество</div>
+        <div class="c-desc">
+          Состоит из атомов <b>одного химического элемента</b>.
+          <br><br>
+          <b>Примеры:</b> кислород O₂, железо Fe, золото Au, азот N₂, озон O₃, алмаз C.
+          <br><br>
+          <b>В формуле — только один символ элемента.</b>
+        </div>
+      </div>
+      <div class="card" style="border-color:#8b5cf6;">
+        <div class="c-title">🔗 Сложное вещество</div>
+        <div class="c-desc">
+          Состоит из атомов <b>разных химических элементов</b>.
+          <br><br>
+          <b>Примеры:</b> вода H₂O, углекислый газ CO₂, поваренная соль NaCl,
+          сахар C₁₂H₂₂O₁₁, аммиак NH₃.
+          <br><br>
+          <b>В формуле — два или более разных символа.</b>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="subhead">📝 Как записывать формулы простых и сложных веществ</h3>
+
+    <p style="font-size:16px;line-height:1.8;">
+      Формулы записываются по единым правилам, которые мы разобрали в Уроке 3.
+      Но есть важные особенности для простых и сложных веществ.
+    </p>
+
+    <div class="callout callout-note">
+      <b>Формула простого вещества:</b> один символ элемента. Если вещество
+      состоит из молекул, например O₂, N₂, H₂ — индекс показывает число атомов
+      в молекуле. Если вещество имеет немолекулярное строение (например, железо Fe,
+      алмаз C) — формула записывается просто как символ элемента.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Формула сложного вещества:</b> несколько разных символов. Порядок записи
+      обычно такой: сначала элемент с меньшей электроотрицательностью (чаще металл
+      или водород), затем — с большей (чаще неметалл). Например: NaCl, H₂O, CO₂.
+      Индексы показывают, сколько атомов каждого элемента в молекуле.
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Как быстро определить:</b> посмотри на формулу. Если все символы одинаковые
+      — это <b>простое</b> вещество. Если символы разные — <b>сложное</b>.
+    </div>
+
+    <!-- ИГРА: ПРОСТОЕ ИЛИ СЛОЖНОЕ (РУССКИЕ НАЗВАНИЯ) -->
+    <div class="game-area">
+      <h4>🎮 Игра: простое или сложное?</h4>
+      <p class="game-hint">
+        <span class="cta">Перетащи карточку</span> в нужную корзину.
+        На карточках — <b>русские названия веществ</b>.
+      </p>
+
+      <div class="game-pool" id="structPool"></div>
+
+      <div class="dual-basket">
+        <div class="basket" data-cat="simple">
+          <div class="basket-title">⚪ Простое вещество</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="complex">
+          <div class="basket-title">🔗 Сложное вещество</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px;">
+        <button class="reset-btn" id="resetStruct">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbStruct"></div>
+    </div>
+
+    <!-- КАЧЕСТВЕННЫЙ И КОЛИЧЕСТВЕННЫЙ СОСТАВ -->
+    <h3 class="subhead">🔍 Качественный и количественный состав</h3>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Химическая формула сообщает нам <b>два типа информации</b> о веществе.
+      Это не просто «запись ради записи» — это <b>рабочий инструмент</b> химика.
+    </p>
+
+    <div class="card-grid">
+      <div class="card" style="border-color:#3b82f6;">
+        <div class="c-title">🔵 Качественный состав</div>
+        <div class="c-desc">
+          Отвечает на вопрос: <b>из каких элементов</b> состоит вещество?
+          <br><br>
+          <b>Пример:</b> вода H₂O состоит из водорода H и кислорода O.
+          <br><br>
+          Достаточно посмотреть на <b>буквы</b> в формуле.
+        </div>
+      </div>
+      <div class="card" style="border-color:#8b5cf6;">
+        <div class="c-title">🟣 Количественный состав</div>
+        <div class="c-desc">
+          Отвечает на вопрос: <b>сколько атомов</b> каждого элемента входит в состав?
+          <br><br>
+          <b>Пример:</b> в молекуле воды H₂O — 2 атома водорода и 1 атом кислорода.
+          <br><br>
+          Смотрим на <b>индексы</b> (цифры справа внизу).
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Зачем это нужно на практике?</b>
+      <br><br>
+      <b>1. Определение неизвестного вещества.</b> Если учёный получил новое
+      соединение, он сначала выясняет <b>качественный состав</b> (какие элементы
+      входят), а затем — <b>количественный</b> (в каком соотношении). Только после
+      этого можно записать формулу.
+      <br><br>
+      <b>2. Контроль качества.</b> На производстве лекарств или продуктов питания
+      важно точно знать состав. Например, если в сахаре C₁₂H₂₂O₁₁ не хватает
+      кислорода — это уже не сахар, а другое вещество.
+      <br><br>
+      <b>3. Расчёт количества вещества для реакций.</b> Чтобы получить нужное
+      количество продукта, химик должен знать, сколько атомов каждого элемента
+      вступает в реакцию. Это напрямую следует из количественного состава.
+      <br><br>
+      <b>4. Экология и медицина.</b> Анализ состава воды, воздуха или крови —
+      это тоже определение качественного и количественного состава.
+    </div>
+
+    <!-- ИНТЕРАКТИВНЫЙ РАЗБОР ФОРМУЛ -->
+    <h3 class="subhead">🎮 Интерактив: разбери формулу</h3>
+    <p class="subhead-sub">
+      <span class="cta">👆 Нажми на формулу</span> — и увидишь её качественный и количественный состав.
+    </p>
+
+    <div id="formulaExplorer"></div>
+
+    <!-- АТОМНОЕ И МОЛЕКУЛЯРНОЕ СТРОЕНИЕ (РАСШИРЕННЫЙ) -->
+    <h3 class="subhead">🏗 Атомное и молекулярное строение</h3>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Не все вещества состоят из молекул! Это важно понимать, чтобы не путать
+      формулу вещества с его реальной структурой.
+    </p>
+
+    <div class="card-grid">
+      <div class="card" style="border-color:#06b6d4;">
+        <div class="c-title">🧊 Молекулярное строение</div>
+        <div class="c-desc">
+          Вещество состоит из <b>отдельных молекул</b>. Между молекулами —
+          слабые силы притяжения.
+          <br><br>
+          <b>Примеры:</b> вода H₂O, углекислый газ CO₂, кислород O₂, сахар.
+          <br><br>
+          <b>Свойства:</b> обычно легкоплавкие, легкокипящие, часто газы или жидкости.
+        </div>
+      </div>
+      <div class="card" style="border-color:#f59e0b;">
+        <div class="c-title">💎 Немолекулярное (атомное) строение</div>
+        <div class="c-desc">
+          Вещество состоит из <b>атомов, связанных в бесконечные сети, слои
+          или каркасы</b>. Отдельных молекул выделить нельзя.
+          <br><br>
+          <b>Примеры:</b> алмаз C, графит C, железо Fe, поваренная соль NaCl
+          (ионное строение).
+          <br><br>
+          <b>Свойства:</b> обычно тугоплавкие, твёрдые, нелетучие.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Почему у одних веществ молекулярное строение, а у других — атомное?</b>
+      <br><br>
+      Это зависит от <b>прочности химических связей</b> и <b>энергии, которую
+      нужно затратить, чтобы оторвать частицу от кристалла</b>.
+      <br><br>
+      <b>Молекулярное строение</b> — если связи между атомами внутри молекулы
+      <b>сильные</b> (ковалентные), но между самими молекулами — <b>слабые</b>.
+      Поэтому такие вещества легко плавятся и кипят: достаточно разорвать слабые
+      межмолекулярные связи.
+      <br><br>
+      <b>Атомное (немолекулярное) строение</b> — если все атомы связаны друг с
+      другом <b>одинаково прочными</b> связями в единую сетку. Чтобы расплавить
+      такое вещество, нужно разорвать <b>все</b> эти прочные связи. Это требует
+      очень высокой температуры.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Другие типы строения</b> (ионное, металлическое) мы будем подробно
+      изучать <b>позже</b> — в модулях о кристаллических решётках и химической
+      связи. Сейчас важно запомнить: <b>формула не всегда означает, что вещество
+      состоит из молекул</b>. Например, формула NaCl показывает соотношение
+      ионов натрия и хлора, но в кристалле нет отдельных «молекул NaCl».
+    </div>
+
+    <h4 style="font-size:15.5px;font-weight:800;margin:20px 0 8px;">🔎 Как определить строение по формуле или свойствам</h4>
+
+    <div class="card-grid">
+      <div class="card" style="border-color:#8b5cf6;">
+        <div class="c-title">По формуле</div>
+        <div class="c-desc">
+          <b>Скорее всего, молекулярное:</b> если формула состоит из символов
+          неметаллов и имеет <b>небольшие индексы</b> (H₂O, CO₂, NH₃, CH₄).
+          <br><br>
+          <b>Скорее всего, немолекулярное:</b> если в формуле есть <b>металл</b>
+          (NaCl, Fe, Cu) или вещество имеет <b>простое соотношение</b> атомов
+          (SiO₂, C).
+        </div>
+      </div>
+      <div class="card" style="border-color:#10b981;">
+        <div class="c-title">По свойствам</div>
+        <div class="c-desc">
+          <b>Молекулярное:</b> низкая температура плавления/кипения, летучесть,
+          часто запах, растворимость в органических растворителях.
+          <br><br>
+          <b>Немолекулярное:</b> высокая твёрдость, тугоплавкость, нелетучесть,
+          часто нерастворимость в воде.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важное исключение:</b> некоторые вещества с атомным строением могут
+      выглядеть как «молекулярные» по формуле. Например, SiO₂ (песок, кварц)
+      имеет формулу, похожую на CO₂, но это <b>атомный кристалл</b> с очень
+      высокой температурой плавления (1710 °C). А CO₂ — молекулярное вещество,
+      которое при обычных условиях газ. <b>Формула не всегда говорит о строении!</b>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 5: АЛЛОТРОПНЫЕ МОДИФИКАЦИИ ==================== -->
+<section class="section">
+  <div class="stage s6 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">5</div>
+      <div>
+        <div class="stage-title">Аллотропные модификации</div>
+        <div class="stage-subtitle">Один элемент — разные вещества</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Один и тот же химический элемент может образовывать <b>разные простые вещества</b>.
+      Это явление называется <b>аллотропией</b>. Самый яркий пример — <b>углерод</b>.
+    </p>
+
+    <div class="card-grid">
+      <div class="card" style="border-color:#94a3b8;">
+        <div class="c-title">💎 Алмаз</div>
+        <div class="c-desc">
+          Каждый атом углерода связан с <b>четырьмя</b> другими в тетраэдре.
+          Получается сверхпрочная трёхмерная сетка. Алмаз — <b>самый твёрдый</b>
+          минерал на Земле.
+        </div>
+      </div>
+      <div class="card" style="border-color:#475569;">
+        <div class="c-title">✏️ Графит</div>
+        <div class="c-desc">
+          Атомы углерода образуют <b>плоские слои</b> из шестиугольников.
+          Слои слабо связаны между собой и легко скользят. Поэтому графит
+          <b>мягкий</b> — из него делают грифели карандашей.
+        </div>
+      </div>
+      <div class="card" style="border-color:#8b5cf6;">
+        <div class="c-title">⚽ Фуллерен C₆₀</div>
+        <div class="c-desc">
+          60 атомов углерода образуют <b>замкнутую сферу</b>, похожую на футбольный
+          мяч. Открыт в 1985 году. Используется в нанотехнологиях и медицине.
+        </div>
+      </div>
+    </div>
+
+    <!-- АНИМАЦИЯ АЛМАЗ ИЗ ГРАФИТА С ПОЛЗУНКОМ ДАВЛЕНИЯ -->
+    <h4 style="font-size:15.5px;font-weight:800;margin:24px 0 8px;">🎬 Анимация: превращение графита в алмаз</h4>
+    <p style="font-size:15px;color:var(--muted);margin-bottom:10px;">
+      <span class="cta">Двигай ползунок давления</span> — и увидишь, как атомы
+      углерода постепенно перестраиваются. При достижении критического давления
+      структура плавно превращается в алмаз.
+    </p>
+    <div class="canvas-wrap" style="background:linear-gradient(180deg,#0f172a,#1e293b);">
+      <canvas id="diamondCanvas" width="960" height="420"></canvas>
+    </div>
+    <div class="slider-wrap">
+      <span class="slider-label">Давление:</span>
+      <input type="range" id="diamondSlider" min="0" max="100" value="0">
+      <span class="energy-badge high" id="diamondBadge">Давление: низкое</span>
+    </div>
+    <p style="font-size:14px;color:var(--muted);margin-top:10px;">
+      <b>Условия:</b> давление ~ 5–6 ГПа, температура ~ 1400–2000 °C.
+      Именно так алмазы образуются в недрах Земли и синтезируются искусственно.
+    </p>
+
+    <!-- АНИМАЦИЯ ОЗОНА С МОЛНИЕЙ -->
+    <h4 style="font-size:15.5px;font-weight:800;margin:24px 0 8px;">🎬 Анимация: образование озона из кислорода</h4>
+    <p style="font-size:15px;color:var(--muted);margin-bottom:10px;">
+      <span class="cta">Нажми кнопку</span> — и увидишь, как разряд молнии
+      расщепляет молекулы O₂, и атомарный кислород соединяется с другими
+      молекулами O₂, образуя озон O₃.
+    </p>
+    <div class="canvas-wrap" style="background:linear-gradient(180deg,#0f172a,#1e293b);">
+      <canvas id="ozoneCanvas" width="960" height="380"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn cyan" id="ozoneBtn">▶ Разряд молнии и образование озона</button>
+    </div>
+    <p style="font-size:14px;color:var(--muted);margin-top:10px;">
+      <b>Где это происходит:</b> в верхних слоях атмосферы (10–30 км) под действием
+      ультрафиолета, а также при грозовых разрядах. Озоновый слой защищает
+      всё живое от жёсткого УФ-излучения.
+    </p>
+
+    <div class="callout callout-ok" style="margin-top:16px;">
+      <b>Значение озона:</b> озоновый слой в стратосфере поглощает
+      <b>99% ультрафиолетового излучения</b> Солнца. Без него жизнь на
+      поверхности Земли была бы невозможна — УФ-лучи разрушают ДНК и вызывают
+      рак кожи. Именно поэтому так важно защищать озоновый слой.
+    </div>
+
+    <div class="callout callout-idea" style="margin-top:16px;">
+      <b>Почему это удивительно?</b> И алмаз, и графит, и фуллерен, и озон
+      состоят из <b>одних и тех же атомов</b> (углерода или кислорода).
+      Разница только в том, <b>как</b> они соединены. Это как из одних и тех же
+      букв составить разные слова — смысл будет совершенно разным.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🧠</div>
+      <div>
+        <div class="stage-title">Рефлексия по Фейнману</div>
+        <div class="stage-subtitle">Проверь, насколько ты понял материал</div>
+      </div>
+    </div>
+    <p style="font-size:16.5px;line-height:1.8;">
+      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
+      Выбери <b>лучшие простые объяснения</b> для младшего брата.
+    </p>
+    <div id="feynmanTest"></div>
+  </div>
+</section>
+
+<!-- ==================== ПРАКТИКУМ ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: разбери формулу</div>
+        <div class="stage-subtitle">Пройди 5 шагов и научись читать химические формулы</div>
+      </div>
+    </div>
+    <div id="practicalTask"></div>
+  </div>
+</section>
+
+<!-- ==================== ИТОГОВЫЙ ТЕСТ ==================== -->
+<section class="section">
+  <div class="stage s-test fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📝</div>
+      <div>
+        <div class="stage-title">Итоговый тест по Модулю 4б</div>
+        <div class="stage-subtitle">15 вопросов · порог — 80% (12 правильных)</div>
+      </div>
+    </div>
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      <span class="cta">👆 Нажми на вариант</span> — он сразу подсветится, а под вопросом появится объяснение.
+    </p>
+    <div id="testContainer"></div>
+    <div class="test-score" id="testScore">Правильных ответов: <span id="scoreNum">0</span> из 15</div>
+    <div id="retryBox" style="text-align:center;"></div>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Химический элемент, язык химии и молекулы · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">Простое объяснение · наглядный пример · интерактив · самопроверка</div>
+</footer>
+
+<script>
+/* ============================================================
+   УТИЛИТЫ
+   ============================================================ */
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
+    this.beginPath();this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);
+    this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath();return this;
+  };
+}
+const rand = (a,b)=>a+Math.random()*(b-a);
+
+/* ============================================================
+   ИЗОТОПЫ ВОДОРОДА — С ЭЛЕКТРОНАМИ И ОРБИТАМИ
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('isotopeCanvas');
+  const btn = document.getElementById('isotopeBtn');
+  const stepBtn = document.getElementById('isotopeStepBtn');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+  let progress = 0; let running = false; let rafId = null;
+  let stepMode = 0;
+
+  const isotopes = [
+    { name:'Протий ¹H', protons:1, neutrons:0, color:'#3b82f6', abundance:'99,985%' },
+    { name:'Дейтерий ²H (D)', protons:1, neutrons:1, color:'#8b5cf6', abundance:'0,015%' },
+    { name:'Тритий ³H (T)', protons:1, neutrons:2, color:'#ef4444', abundance:'Следы' }
+  ];
+
+  function drawNucleus(cx, cy, protons, neutrons, size){
+    const particles = [];
+    for (let i=0; i<protons; i++) particles.push({type:'p', color:'#ef4444'});
+    for (let i=0; i<neutrons; i++) particles.push({type:'n', color:'#64748b'});
+
+    const glowR = size + particles.length * 4 + 6;
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+    grad.addColorStop(0, 'rgba(239,68,68,.25)');
+    grad.addColorStop(1, 'rgba(239,68,68,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.arc(cx, cy, glowR, 0, Math.PI*2); ctx.fill();
+
+    particles.forEach((p, i)=>{
+      const angle = (i / particles.length) * Math.PI * 2 + progress * 0.8;
+      const r = size * 0.5 + (i % 2) * size * 0.35;
+      const px = cx + Math.cos(angle) * r;
+      const py = cy + Math.sin(angle) * r;
+      const pr = size * 0.32;
+
+      ctx.beginPath(); ctx.arc(px+2, py+2, pr, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fill();
+
+      ctx.beginPath(); ctx.arc(px, py, pr, 0, Math.PI*2);
+      ctx.fillStyle = p.color; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+      if (p.type === 'p'){
+        ctx.fillStyle = '#fff'; ctx.font = 'bold ' + (pr*1.1) + 'px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('+', px, py+1);
+      } else {
+        ctx.fillStyle = '#cbd5e1'; ctx.font = 'bold ' + (pr*1.1) + 'px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('n', px, py+1);
+      }
+    });
+  }
+
+  function drawElectronOrbit(cx, cy, radius, angleOffset, scale){
+    // Орбита (пунктирный круг)
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(6,182,212,.4)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 6]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Электрон
+    const angle = progress * 2 + angleOffset;
+    const ex = cx + Math.cos(angle) * radius;
+    const ey = cy + Math.sin(angle) * radius;
+    const er = 7 * scale;
+
+    // Свечение электрона
+    const eGrad = ctx.createRadialGradient(ex, ey, 0, ex, ey, er * 2.5);
+    eGrad.addColorStop(0, 'rgba(6,182,212,.6)');
+    eGrad.addColorStop(1, 'rgba(6,182,212,0)');
+    ctx.fillStyle = eGrad;
+    ctx.beginPath(); ctx.arc(ex, ey, er * 2.5, 0, Math.PI*2); ctx.fill();
+
+    // Электрон
+    ctx.beginPath(); ctx.arc(ex, ey, er, 0, Math.PI*2);
+    ctx.fillStyle = '#06b6d4';
+    ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+
+    // Знак минус
+    ctx.fillStyle = '#fff'; ctx.font = 'bold ' + (er*0.9) + 'px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('–', ex, ey+1);
+  }
+
+  function drawIsotope(iso, cx, cy, scale){
+    const size = 50 * scale;
+
+    // Название
+    ctx.font = 'bold ' + (16*scale) + 'px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = iso.color;
+    ctx.fillText(iso.name, cx, 40*scale);
+
+    // Электронная орбита (1s)
+    const orbitR = 110 * scale;
+    drawElectronOrbit(cx, cy, orbitR, 0, scale);
+
+    // Ядро
+    drawNucleus(cx, cy, iso.protons, iso.neutrons, size);
+
+    // Подпись состава
+    ctx.font = 'bold ' + (13*scale) + 'px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText(`${iso.protons} протон, ${iso.neutrons} нейтрон${iso.neutrons !== 1 ? 'а' : ''}, 1 электрон`, cx, cy + 135*scale);
+
+    // Распространённость
+    ctx.font = (11*scale) + 'px Inter, sans-serif';
+    ctx.fillStyle = '#64748b';
+    ctx.fillText(`В природе: ${iso.abundance}`, cx, cy + 155*scale);
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = '#0f172a'; ctx.fillRect(0,0,W,H);
+
+    if (stepMode === 0){
+      const spacing = W / 3;
+      isotopes.forEach((iso, idx)=>{
+        const cx = spacing * (idx + 0.5);
+        const cy = H/2 - 30;
+        drawIsotope(iso, cx, cy, 0.85);
+      });
+
+      if (progress > 0.7){
+        ctx.font = 'bold 15px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = '#fbbf24';
+        ctx.fillText('У всех трёх — 1 протон, 1 электрон. Это изотопы водорода.', W/2, H - 15);
+      }
+    } else {
+      const iso = isotopes[stepMode - 1];
+      const cx = W/2;
+      const cy = H/2 - 30;
+      drawIsotope(iso, cx, cy, 1.3);
+
+      ctx.font = 'bold 15px Inter, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = iso.color;
+      ctx.fillText(`Изотоп водорода: ${iso.name}`, W/2, H - 20);
+    }
+  }
+
+  function loop(){
+    if (!running) return;
+    progress += 0.012;
+    if (progress >= 1){ progress = 1; running = false; btn.textContent = '▶ Показать три изотопа водорода'; }
+    draw();
+    if (running) rafId = requestAnimationFrame(loop);
+  }
+
+  btn.addEventListener('click',()=>{
+    if (running){ running = false; btn.textContent = '▶ Продолжить'; return; }
+    if (progress >= 1) progress = 0;
+    stepMode = 0;
+    running = true; btn.textContent = '⏸ Пауза'; loop();
+  });
+
+  stepBtn.addEventListener('click',()=>{
+    stepMode = stepMode >= 3 ? 1 : stepMode + 1;
+    progress = 1;
+    draw();
+    btn.textContent = '▶ Показать три изотопа водорода';
+    running = false;
+    stepBtn.textContent = stepMode === 0 ? '🔍 Показать по одному' :
+      stepMode === 1 ? '🔍 Протий →' :
+      stepMode === 2 ? '🔍 Дейтерий →' : '🔍 Тритий →';
+  });
+
+  draw();
+})();
+
+/* ============================================================
+   ТАЙМЛАЙН ЭЛЕМЕНТОВ
+   ============================================================ */
+(function(){
+  const track = document.getElementById('elemTimelineTrack');
+  const detail = document.getElementById('elemTlDetail');
+  if (!track) return;
+
+  const EVENTS = [
+    { year:'1661', who:'Роберт Бойль', what:'Понятие химического элемента', title:'1661 · Роберт Бойль',
+      text:'Бойль предложил определение химического элемента как вещества, которое нельзя разложить на более простые части химическими методами. Это был важный шаг от алхимии к настоящей химии. Бойль также ввёл в науку принцип скептицизма: не принимать ничего на веру без экспериментальной проверки.' },
+    { year:'1789', who:'Антуан Лавуазье', what:'Первый список элементов', title:'1789 · Антуан Лавуазье',
+      text:'Лавуазье опубликовал первый научный список химических элементов. Он включил в него 33 вещества, из которых более 20 действительно являются элементами. Лавуазье также дал элементам современные названия и показал, что при химических реакциях масса веществ сохраняется. Именно он превратил химию в точную науку.' },
+    { year:'1803', who:'Джон Дальтон', what:'Атомная теория', title:'1803 · Джон Дальтон',
+      text:'Дальтон предложил атомную теорию: все атомы одного элемента одинаковы по массе и свойствам, а разных — разные. Это связало понятие элемента с конкретными атомами. Дальтон также ввёл первые символы элементов и таблицу атомных масс, хотя его символы были неудобными — каждый элемент обозначался особым значком.' },
+    { year:'1869', who:'Дмитрий Менделеев', what:'Периодическая таблица', title:'1869 · Дмитрий Менделеев',
+      text:'Менделеев расположил элементы в порядке возрастания атомных масс и обнаружил периодический закон. Его таблица предсказала существование ещё не открытых элементов и стала основой современной химии. Периодический закон показал, что элементы связаны между собой, и это окончательно укрепило понятие химического элемента.' }
+  ];
+
+  track.innerHTML = EVENTS.map((e,i)=>`
+    <div class="tl-year${i===0?' active':''}" data-i="${i}">
+      <div class="tl-num">${e.year}</div>
+      <div class="tl-who">${e.who}</div>
+      <div class="tl-what">${e.what}</div>
+    </div>`).join('');
+
+  function show(i){
+    document.querySelectorAll('#elemTimelineTrack .tl-year').forEach(el=>el.classList.remove('active'));
+    track.querySelector(`[data-i="${i}"]`).classList.add('active');
+    const e = EVENTS[i];
+    detail.classList.add('show');
+    detail.innerHTML = `<div class="tl-d-title">${e.title}</div><div class="tl-d-text">${e.text}</div>`;
+  }
+
+  track.querySelectorAll('.tl-year').forEach(el=>el.addEventListener('click',()=>show(+el.dataset.i)));
+  show(0);
+})();
+
+/* ============================================================
+   ТАЙМЛАЙН ЯЗЫКА ХИМИИ
+   ============================================================ */
+(function(){
+  const track = document.getElementById('langTimelineTrack');
+  const detail = document.getElementById('langTlDetail');
+  if (!track) return;
+
+  const EVENTS = [
+    { year:'1803', who:'Джон Дальтон', what:'Первые символы элементов', title:'1803 · Джон Дальтон',
+      text:'Дальтон предложил обозначать каждый элемент особым значком: кислород — кружком, водород — кружком с точкой. Состав соединения он изображал соположением значков. Но значков становилось слишком много, и записывать формулы становилось неудобно.' },
+    { year:'1813', who:'Йёнс Якоб Берцелиус', what:'Буквенные символы и индексы', title:'1813 · Йёнс Якоб Берцелиус',
+      text:'Берцелиус предложил гениально простую систему: обозначать элементы первыми буквами латинских названий (H — Hydrogenium, O — Oxygenium), а число атомов записывать цифрой после буквы. Так вода стала H₂O. Эта система оказалась настолько удобной, что используется до сих пор.' },
+    { year:'1814', who:'Берцелиус', what:'Первая таблица атомных масс', title:'1814 · Таблица атомных масс',
+      text:'Берцелиус опубликовал первую таблицу атомных масс, проанализировав 2000 соединений, образованных 43 элементами. Это была титаническая работа, подтвердившая атомную теорию. Точные атомные массы позволили химикам правильно записывать формулы.' },
+    { year:'1860', who:'Конгресс в Карлсруэ', what:'Единая система формул', title:'1860 · Конгресс в Карлсруэ',
+      text:'Химики разных стран собрались, чтобы договориться о единой системе обозначений. Система Берцелиуса победила — с тех пор все химики мира используют одни и те же символы и формулы. Это был первый международный стандарт в химии.' }
+  ];
+
+  track.innerHTML = EVENTS.map((e,i)=>`
+    <div class="tl-year${i===0?' active':''}" data-i="${i}">
+      <div class="tl-num">${e.year}</div>
+      <div class="tl-who">${e.who}</div>
+      <div class="tl-what">${e.what}</div>
+    </div>`).join('');
+
+  function show(i){
+    document.querySelectorAll('#langTimelineTrack .tl-year').forEach(el=>el.classList.remove('active'));
+    track.querySelector(`[data-i="${i}"]`).classList.add('active');
+    const e = EVENTS[i];
+    detail.classList.add('show');
+    detail.innerHTML = `<div class="tl-d-title">${e.title}</div><div class="tl-d-text">${e.text}</div>`;
+  }
+
+  track.querySelectorAll('.tl-year').forEach(el=>el.addEventListener('click',()=>show(+el.dataset.i)));
+  show(0);
+})();
+
+/* ============================================================
+   ИГРА: ПРОСТОЕ ИЛИ СЛОЖНОЕ (РУССКИЕ НАЗВАНИЯ)
+   ============================================================ */
+(function(){
+  const pool = document.getElementById('structPool');
+  const baskets = document.querySelectorAll('.dual-basket .basket');
+  const fb = document.getElementById('fbStruct');
+  const resetBtn = document.getElementById('resetStruct');
+  if (!pool) return;
+
+  const ITEMS = [
+    { label:'Кислород', cat:'simple' },
+    { label:'Вода', cat:'complex' },
+    { label:'Железо', cat:'simple' },
+    { label:'Углекислый газ', cat:'complex' },
+    { label:'Азот', cat:'simple' },
+    { label:'Метан', cat:'complex' },
+    { label:'Золото', cat:'simple' },
+    { label:'Аммиак', cat:'complex' },
+    { label:'Озон', cat:'simple' },
+    { label:'Поваренная соль', cat:'complex' }
+  ];
+
+  let selected = null;
+
+  function buildPool(){
+    pool.innerHTML = '';
+    ITEMS.forEach(it=>{
+      const el = document.createElement('div');
+      el.className = 'pool-item';
+      el.textContent = it.label;
+      el.dataset.cat = it.cat;
+      el.draggable = true;
+      el.addEventListener('dragstart',(e)=>{ e.dataTransfer.setData('text/plain', it.label); selected = el; el.classList.add('dragging'); });
+      el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+      el.addEventListener('click',()=>{
+        if (el.classList.contains('placed')) return;
+        pool.querySelectorAll('.pool-item').forEach(i=>i.classList.remove('selected'));
+        if (selected === el){ selected = null; fb.textContent = ''; return; }
+        selected = el; el.classList.add('selected');
+        fb.style.color = 'var(--muted)';
+        fb.textContent = 'Выбрано: ' + it.label + '. Теперь нажми на нужную корзину.';
+      });
+      pool.appendChild(el);
+    });
+  }
+
+  function resetBaskets(){
+    baskets.forEach(b=>{
+      const items = b.querySelector('.basket-items');
+      if (items) items.innerHTML = '';
+      b.classList.remove('good','bad');
+    });
+  }
+
+  function checkComplete(){
+    if (pool.querySelectorAll('.pool-item').length === 0){
+      fb.style.color = 'var(--green)';
+      fb.textContent = '🎉 Отлично! Все вещества разложены правильно!';
+    }
+  }
+
+  function tryPlace(item, basket){
+    if (!item || !basket || item.classList.contains('placed')) return;
+    const correct = item.dataset.cat === basket.dataset.cat;
+    if (correct){
+      const container = basket.querySelector('.basket-items');
+      const chip = document.createElement('div');
+      chip.className = 'basket-chip';
+      chip.textContent = item.textContent;
+      container.appendChild(chip);
+      item.remove();
+      selected = null;
+      basket.classList.add('good');
+      setTimeout(()=>basket.classList.remove('good'), 500);
+      fb.style.color = 'var(--green)';
+      const msgs = ['✅ Верно!','👍 Точно!','🎯 Правильно!','🌟 В точку!'];
+      fb.textContent = msgs[Math.floor(Math.random()*msgs.length)];
+      checkComplete();
+    } else {
+      basket.classList.add('bad');
+      setTimeout(()=>basket.classList.remove('bad'), 500);
+      item.classList.add('wrong-flash');
+      setTimeout(()=>item.classList.remove('wrong-flash'), 600);
+      fb.style.color = 'var(--red)';
+      const bad = ['❌ Подумай ещё.','❌ Это не сюда.','❌ Почти! Попробуй снова.'];
+      fb.textContent = bad[Math.floor(Math.random()*bad.length)];
+    }
+  }
+
+  baskets.forEach(basket=>{
+    basket.addEventListener('dragover',(e)=>{ e.preventDefault(); basket.classList.add('hover'); });
+    basket.addEventListener('dragleave',()=>basket.classList.remove('hover'));
+    basket.addEventListener('drop',(e)=>{ e.preventDefault(); basket.classList.remove('hover'); if (selected) tryPlace(selected, basket); });
+    basket.addEventListener('click',()=>{ if (selected) tryPlace(selected, basket); });
+  });
+
+  resetBtn.addEventListener('click',()=>{
+    resetBaskets(); buildPool(); selected = null; fb.textContent = '';
+  });
+
+  buildPool();
+})();
+
+/* ============================================================
+   ИНТЕРАКТИВ: ОБРАЗОВАНИЕ H2 С ЭЛЕКТРОНАМИ И ОРБИТАМИ
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('h2Canvas');
+  const slider = document.getElementById('h2Slider');
+  const badge = document.getElementById('energyBadge');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+  let animProgress = 0;
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = '#0f172a'; ctx.fillRect(0,0,W,H);
+
+    const t = slider.value / 100;
+    const maxSep = W * 0.38;
+    const minSep = 60;
+    const sep = maxSep - t * (maxSep - minSep);
+    const cx = W/2;
+    const cy = H/2 - 10;
+
+    const x1 = cx - sep/2;
+    const x2 = cx + sep/2;
+
+    // Энергия
+    const energy = Math.pow((sep - minSep) / (maxSep - minSep), 2);
+    const energyPct = Math.round(energy * 100);
+    if (energyPct > 40){
+      badge.className = 'energy-badge high';
+      badge.textContent = 'Энергия: высокая (' + energyPct + '%)';
+    } else if (energyPct > 10){
+      badge.className = 'energy-badge high';
+      badge.textContent = 'Энергия: снижается (' + energyPct + '%)';
+    } else {
+      badge.className = 'energy-badge low';
+      badge.textContent = 'Энергия: минимальная — связь образована!';
+    }
+
+    // Орбиты и электроны
+    const orbitR = Math.min(sep * 0.35, 90);
+    const bondFormed = energyPct < 25;
+
+    function drawOrbitAndElectron(atomX, atomY, orbitRadius, phase){
+      // Орбита
+      ctx.beginPath();
+      ctx.arc(atomX, atomY, orbitRadius, 0, Math.PI*2);
+      ctx.strokeStyle = bondFormed ? 'rgba(16,185,129,.35)' : 'rgba(6,182,212,.3)';
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([5, 5]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Электрон
+      const angle = animProgress * 2.5 + phase;
+      const ex = atomX + Math.cos(angle) * orbitRadius;
+      const ey = atomY + Math.sin(angle) * orbitRadius;
+      const er = 6;
+
+      // Свечение
+      const eGrad = ctx.createRadialGradient(ex, ey, 0, ex, ey, er*3);
+      eGrad.addColorStop(0, bondFormed ? 'rgba(16,185,129,.5)' : 'rgba(6,182,212,.5)');
+      eGrad.addColorStop(1, 'rgba(6,182,212,0)');
+      ctx.fillStyle = eGrad;
+      ctx.beginPath(); ctx.arc(ex, ey, er*3, 0, Math.PI*2); ctx.fill();
+
+      ctx.beginPath(); ctx.arc(ex, ey, er, 0, Math.PI*2);
+      ctx.fillStyle = bondFormed ? '#10b981' : '#06b6d4';
+      ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 8px Inter, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText('–', ex, ey+1);
+    }
+
+    // Если связь образована — общее облако
+    if (bondFormed){
+      const midX = (x1 + x2) / 2;
+      const cloudR = sep * 0.6 + 20;
+      const cloudGrad = ctx.createRadialGradient(midX, cy, 0, midX, cy, cloudR);
+      cloudGrad.addColorStop(0, 'rgba(16,185,129,.15)');
+      cloudGrad.addColorStop(0.6, 'rgba(16,185,129,.06)');
+      cloudGrad.addColorStop(1, 'rgba(16,185,129,0)');
+      ctx.fillStyle = cloudGrad;
+      ctx.beginPath(); ctx.ellipse(midX, cy, cloudR, cloudR*0.7, 0, 0, Math.PI*2); ctx.fill();
+
+      // Общие электроны
+      const angle = animProgress * 2;
+      const ex1 = midX - sep*0.15 + Math.cos(angle) * 15;
+      const ey1 = cy + Math.sin(angle) * 15;
+      const ex2 = midX + sep*0.15 + Math.cos(angle + Math.PI) * 15;
+      const ey2 = cy + Math.sin(angle + Math.PI) * 15;
+
+      function drawSharedElectron(ex, ey){
+        const eGrad = ctx.createRadialGradient(ex, ey, 0, ex, ey, 15);
+        eGrad.addColorStop(0, 'rgba(16,185,129,.6)');
+        eGrad.addColorStop(1, 'rgba(16,185,129,0)');
+        ctx.fillStyle = eGrad;
+        ctx.beginPath(); ctx.arc(ex, ey, 15, 0, Math.PI*2); ctx.fill();
+
+        ctx.beginPath(); ctx.arc(ex, ey, 6, 0, Math.PI*2);
+        ctx.fillStyle = '#10b981'; ctx.fill();
+        ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
+        ctx.fillStyle = '#fff'; ctx.font = 'bold 8px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('–', ex, ey+1);
+      }
+      drawSharedElectron(ex1, ey1);
+      drawSharedElectron(ex2, ey2);
+
+      // Линия связи
+      ctx.beginPath(); ctx.moveTo(x1+22, cy); ctx.lineTo(x2-22, cy);
+      ctx.strokeStyle = 'rgba(16,185,129,.7)';
+      ctx.lineWidth = 4; ctx.lineCap = 'round'; ctx.stroke();
+    }
+
+    // Атомы (ядро + орбита)
+    function drawAtom(x, y, label, color, phase){
+      // Орбита
+      drawOrbitAndElectron(x, y, orbitR, phase);
+
+      // Ядро
+      const grad = ctx.createRadialGradient(x-4, y-4, 2, x, y, 18);
+      grad.addColorStop(0, '#fff');
+      grad.addColorStop(0.3, color);
+      grad.addColorStop(1, color);
+      ctx.beginPath(); ctx.arc(x, y, 16, 0, Math.PI*2);
+      ctx.fillStyle = grad; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+      ctx.fillStyle = '#fff'; ctx.font = 'bold 14px Inter, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+      ctx.fillText(label, x, y+1);
+    }
+
+    drawAtom(x1, cy, 'H', '#3b82f6', 0);
+    drawAtom(x2, cy, 'H', '#3b82f6', Math.PI);
+
+    // Подписи
+    ctx.font = '13px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#94a3b8';
+
+    if (!bondFormed){
+      ctx.fillText('Атом водорода', x1, cy + 60);
+      ctx.fillText('Атом водорода', x2, cy + 60);
+      ctx.fillStyle = '#64748b';
+      ctx.font = '14px Inter, sans-serif';
+      ctx.fillText('Электроны летают вокруг своих ядер', W/2, cy + 95);
+    } else {
+      ctx.fillStyle = '#10b981';
+      ctx.font = 'bold 17px Inter, sans-serif';
+      ctx.fillText('Молекула H₂', W/2, cy + 70);
+      ctx.font = '13px Inter, sans-serif';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('Электроны обобществлены — связь образована!', W/2, cy + 95);
+    }
+
+    // Стрелка
+    ctx.font = 'bold 13px Inter, sans-serif';
+    ctx.fillStyle = '#f59e0b';
+    ctx.fillText('⚡ Двигай ползунок, чтобы сблизить атомы', W/2, H - 10);
+  }
+
+  function animLoop(){
+    animProgress += 0.03;
+    draw();
+    requestAnimationFrame(animLoop);
+  }
+
+  slider.addEventListener('input', draw);
+  animLoop();
+})();
+
+/* ============================================================
+   АНИМАЦИЯ ГРАФИТ → АЛМАЗ С ПОЛЗУНКОМ ДАВЛЕНИЯ
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('diamondCanvas');
+  const slider = document.getElementById('diamondSlider');
+  const badge = document.getElementById('diamondBadge');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+
+  function drawGraphite(cx, cy, alpha, scale){
+    ctx.globalAlpha = alpha;
+    const s = scale || 1;
+    const layers = 4;
+    const atomsPerLayer = 5;
+    const spacing = 38 * s;
+
+    for (let layer=0; layer<layers; layer++){
+      const yBase = cy - 50*s + layer * 32*s;
+      const offsetX = (layer % 2) * spacing * 0.5;
+
+      // Связи в слое
+      for (let x=0; x<atomsPerLayer-1; x++){
+        const px1 = cx + (x - (atomsPerLayer-1)/2) * spacing + offsetX;
+        const px2 = cx + (x+1 - (atomsPerLayer-1)/2) * spacing + offsetX;
+        ctx.beginPath(); ctx.moveTo(px1, yBase); ctx.lineTo(px2, yBase);
+        ctx.strokeStyle = 'rgba(148,163,184,.5)';
+        ctx.lineWidth = 2 * s; ctx.stroke();
+      }
+
+      // Атомы
+      for (let x=0; x<atomsPerLayer; x++){
+        const px = cx + (x - (atomsPerLayer-1)/2) * spacing + offsetX;
+        ctx.beginPath(); ctx.arc(px, yBase, 7*s, 0, Math.PI*2);
+        ctx.fillStyle = '#64748b'; ctx.fill();
+        ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5*s; ctx.stroke();
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function drawDiamond(cx, cy, alpha, scale){
+    ctx.globalAlpha = alpha;
+    const s = scale || 1;
+    const baseSize = 70 * s;
+
+    // Строим тетраэдрическую сетку
+    const atoms = [];
+    const bonds = [];
+
+    // Центральный атом
+    atoms.push({x: cx, y: cy, z: 0});
+
+    // 4 атома вокруг (тетраэдр)
+    const tetraAngles = [0, Math.PI*0.5, Math.PI, Math.PI*1.5];
+    const tetraTilt = 0.6;
+    tetraAngles.forEach((angle, i)=>{
+      const r = baseSize;
+      const x = cx + Math.cos(angle) * r * 0.8;
+      const y = cy + Math.sin(angle) * r * 0.5 + (i % 2 === 0 ? -r*0.3 : r*0.3);
+      atoms.push({x, y, z: 1});
+      bonds.push({from: 0, to: i+1});
+    });
+
+    // Добавляем ещё атомы для объёма (второй слой)
+    const outerAngles = [Math.PI*0.25, Math.PI*0.75, Math.PI*1.25, Math.PI*1.75];
+    outerAngles.forEach((angle, i)=>{
+      const r = baseSize * 1.6;
+      const x = cx + Math.cos(angle) * r * 0.7;
+      const y = cy + Math.sin(angle) * r * 0.4;
+      atoms.push({x, y, z: 2});
+      // Связываем с ближайшим тетраэдрическим атомом
+      const nearestTetra = i < 2 ? 1 : 3;
+      bonds.push({from: nearestTetra, to: atoms.length - 1});
+    });
+
+    // Рисуем связи
+    bonds.forEach(b=>{
+      const a = atoms[b.from];
+      const c = atoms[b.to];
+      ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(c.x, c.y);
+      ctx.strokeStyle = 'rgba(148,163,184,.45)';
+      ctx.lineWidth = 2.5 * s; ctx.stroke();
+    });
+
+    // Рисуем атомы
+    atoms.forEach((a, i)=>{
+      const radius = (i === 0 ? 12 : 8) * s;
+      const grad = ctx.createRadialGradient(a.x-2, a.y-2, 1, a.x, a.y, radius);
+      grad.addColorStop(0, '#e2e8f0');
+      grad.addColorStop(0.4, '#94a3b8');
+      grad.addColorStop(1, '#64748b');
+      ctx.beginPath(); ctx.arc(a.x, a.y, radius, 0, Math.PI*2);
+      ctx.fillStyle = grad; ctx.fill();
+      ctx.strokeStyle = '#cbd5e1'; ctx.lineWidth = 1.5 * s; ctx.stroke();
+    });
+
+    ctx.globalAlpha = 1;
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = '#0f172a'; ctx.fillRect(0,0,W,H);
+
+    const cx = W/2;
+    const cy = H/2;
+    const t = slider.value / 100;
+
+    // Давление
+    let pressureText, pressureColor;
+    if (t < 0.3){
+      pressureText = 'Давление: низкое (атмосферное)';
+      pressureColor = '#10b981';
+      badge.className = 'energy-badge low';
+    } else if (t < 0.6){
+      pressureText = 'Давление: повышается (~2–4 ГПа)';
+      pressureColor = '#f59e0b';
+      badge.className = 'energy-badge high';
+    } else if (t < 0.85){
+      pressureText = 'Давление: высокое (~5 ГПа)';
+      pressureColor = '#f59e0b';
+      badge.className = 'energy-badge high';
+    } else {
+      pressureText = 'Давление: критическое (~6+ ГПа)';
+      pressureColor = '#ef4444';
+      badge.className = 'energy-badge high';
+    }
+    badge.textContent = pressureText;
+
+    if (t < 0.3){
+      // Графит
+      drawGraphite(cx, cy, 1, 1);
+      ctx.font = 'bold 18px Inter, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('✏️ Графит', cx, 45);
+      ctx.font = '14px Inter, sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('Плоские слои, слабые связи между слоями', cx, H - 30);
+
+      // Стрелки давления вниз
+      ctx.font = 'bold 24px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(239,68,68,.3)';
+      for (let i=0; i<5; i++){
+        ctx.fillText('⬇', 150 + i*150, 80 + Math.sin(Date.now()/300 + i)*5);
+      }
+    } else if (t < 0.7){
+      // Переход
+      const mix = (t - 0.3) / 0.4;
+      drawGraphite(cx, cy, 1 - mix, 1 - mix * 0.3);
+      drawDiamond(cx, cy, mix, 0.4 + mix * 0.6);
+
+      ctx.font = 'bold 18px Inter, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = '#8b5cf6';
+      ctx.fillText('🔄 Перестройка кристаллической решётки...', cx, 45);
+      ctx.font = '14px Inter, sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('Слои сжимаются, атомы перестраиваются в тетраэдры', cx, H - 30);
+
+      // Давление
+      ctx.font = 'bold 28px Inter, sans-serif';
+      ctx.fillStyle = 'rgba(239,68,68,' + (0.4 + mix*0.6) + ')';
+      for (let i=0; i<7; i++){
+        ctx.fillText('⬇', 100 + i*120, 80 + Math.sin(Date.now()/200 + i)*8);
+      }
+    } else {
+      // Алмаз
+      const alpha = (t - 0.7) / 0.3;
+      drawDiamond(cx, cy, Math.min(1, alpha), 1 + alpha * 0.3);
+
+      ctx.font = 'bold 18px Inter, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = '#94a3b8';
+      ctx.fillText('💎 Алмаз', cx, 45);
+      ctx.font = '14px Inter, sans-serif';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('Тетраэдрическая сетка — сверхпрочный', cx, H - 30);
+
+      if (alpha > 0.5){
+        ctx.font = 'bold 15px Inter, sans-serif';
+        ctx.fillStyle = '#fbbf24';
+        ctx.fillText('Условия: ~5–6 ГПа, ~1400–2000 °C', W/2, H - 10);
+      }
+    }
+
+    // Подпись слайдера
+    ctx.font = 'bold 13px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#f59e0b';
+    ctx.fillText('⚡ Двигай ползунок давления', W/2, 20);
+  }
+
+  function animLoop(){
+    draw();
+    requestAnimationFrame(animLoop);
+  }
+
+  slider.addEventListener('input', draw);
+  animLoop();
+})();
+
+/* ============================================================
+   АНИМАЦИЯ ОЗОНА С МОЛНИЕЙ
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('ozoneCanvas');
+  const btn = document.getElementById('ozoneBtn');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+  let progress = 0; let running = false; let rafId = null;
+  let lightningBolts = [];
+  let molecules = [];
+
+  function initMolecules(){
+    molecules = [];
+    for (let i=0; i<6; i++){
+      molecules.push({
+        x: 100 + Math.random() * (W - 200),
+        y: 80 + Math.random() * (H - 160),
+        vx: (Math.random() - 0.5) * 0.5,
+        vy: (Math.random() - 0.5) * 0.5,
+        type: Math.random() > 0.5 ? 'O2' : 'O2',
+        alpha: 0.3 + Math.random() * 0.4
+      });
+    }
+  }
+
+  function initLightning(){
+    lightningBolts = [];
+    for (let i=0; i<3; i++){
+      const bolt = {
+        x: 150 + Math.random() * (W - 300),
+        y: 0,
+        points: [],
+        life: 0,
+        maxLife: 40 + Math.random() * 30
+      };
+      let cy = 0;
+      let cx = bolt.x;
+      while (cy < H * 0.6){
+        bolt.points.push({x: cx, y: cy});
+        cx += (Math.random() - 0.5) * 40;
+        cy += 20 + Math.random() * 20;
+      }
+      bolt.points.push({x: cx, y: H * 0.6});
+      lightningBolts.push(bolt);
+    }
+  }
+
+  function drawMolecule(x, y, type, alpha){
+    ctx.globalAlpha = alpha;
+    if (type === 'O2'){
+      ctx.beginPath(); ctx.arc(x-12, y, 9, 0, Math.PI*2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 1; ctx.stroke();
+
+      ctx.beginPath(); ctx.arc(x+12, y, 9, 0, Math.PI*2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 1; ctx.stroke();
+
+      ctx.beginPath(); ctx.moveTo(x-3, y); ctx.lineTo(x+3, y);
+      ctx.strokeStyle = 'rgba(148,163,184,.5)'; ctx.lineWidth = 3; ctx.stroke();
+    } else {
+      // O3 (угловая)
+      const angle = Math.PI * 0.35;
+      const r = 22;
+      ctx.beginPath(); ctx.arc(x, y, 10, 0, Math.PI*2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 1; ctx.stroke();
+
+      ctx.beginPath(); ctx.arc(x - Math.cos(angle/2)*r, y + Math.sin(angle/2)*r, 8, 0, Math.PI*2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 1; ctx.stroke();
+
+      ctx.beginPath(); ctx.arc(x + Math.cos(angle/2)*r, y + Math.sin(angle/2)*r, 8, 0, Math.PI*2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.5)'; ctx.lineWidth = 1; ctx.stroke();
+
+      // Связи
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x - Math.cos(angle/2)*r, y + Math.sin(angle/2)*r);
+      ctx.strokeStyle = 'rgba(148,163,184,.4)'; ctx.lineWidth = 2.5; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(x, y); ctx.lineTo(x + Math.cos(angle/2)*r, y + Math.sin(angle/2)*r);
+      ctx.strokeStyle = 'rgba(148,163,184,.4)'; ctx.lineWidth = 2.5; ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = '#0f172a'; ctx.fillRect(0,0,W,H);
+
+    // Фон атмосферы
+    const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+    bgGrad.addColorStop(0, 'rgba(30,58,138,.15)');
+    bgGrad.addColorStop(1, 'rgba(15,23,42,0)');
+    ctx.fillStyle = bgGrad;
+    ctx.fillRect(0, 0, W, H);
+
+    // Подпись
+    ctx.font = '14px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#64748b';
+    ctx.fillText('Верхние слои атмосферы (10–30 км)', W/2, 25);
+    ctx.fillText('☀️ Ультрафиолетовое излучение', W/2, H - 15);
+
+    const t = Math.min(progress, 1);
+
+    // Фаза 1: молекулы O2
+    if (t < 0.3){
+      molecules.forEach(m=>{
+        m.x += m.vx;
+        m.y += m.vy;
+        if (m.x < 50 || m.x > W-50) m.vx *= -1;
+        if (m.y < 50 || m.y > H-50) m.vy *= -1;
+        drawMolecule(m.x, m.y, 'O2', m.alpha);
+      });
+    }
+
+    // Фаза 2: молния
+    if (t > 0.15 && t < 0.7){
+      const boltAlpha = Math.min(1, (t - 0.15) * 4) * (1 - Math.max(0, (t - 0.5) * 3));
+      if (boltAlpha > 0){
+        if (lightningBolts.length === 0) initLightning();
+        lightningBolts.forEach(bolt=>{
+          ctx.beginPath();
+          ctx.moveTo(bolt.points[0].x, bolt.points[0].y);
+          bolt.points.forEach(p=>ctx.lineTo(p.x, p.y));
+          ctx.strokeStyle = 'rgba(251,191,36,' + boltAlpha + ')';
+          ctx.lineWidth = 2 + Math.random() * 2;
+          ctx.stroke();
+
+          // Свечение
+          ctx.beginPath();
+          ctx.moveTo(bolt.points[0].x, bolt.points[0].y);
+          bolt.points.forEach(p=>ctx.lineTo(p.x, p.y));
+          ctx.strokeStyle = 'rgba(255,255,255,' + boltAlpha * 0.5 + ')';
+          ctx.lineWidth = 1;
+          ctx.stroke();
+        });
+
+        // Вспышка
+        if (t > 0.2 && t < 0.35){
+          ctx.fillStyle = 'rgba(251,191,36,' + (0.15 - Math.abs(t - 0.275) * 0.5) + ')';
+          ctx.fillRect(0, 0, W, H);
+        }
+      }
+    }
+
+    // Фаза 3: распад O2 и образование O3
+    if (t > 0.4){
+      const showProducts = Math.min(1, (t - 0.4) * 2.5);
+
+      // Показываем O3 молекулы
+      for (let i=0; i<4; i++){
+        const ox = 150 + i * 180 + Math.sin(i * 2) * 30;
+        const oy = 120 + (i % 3) * 80;
+        drawMolecule(ox, oy, 'O3', showProducts * 0.8);
+      }
+
+      if (showProducts > 0.5){
+        ctx.font = 'bold 16px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = '#10b981';
+        ctx.fillText('Молекулы озона O₃', W/2, H - 40);
+      }
+    }
+
+    // Итог
+    if (t >= 0.85){
+      ctx.font = 'bold 15px Inter, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = '#fbbf24';
+      ctx.fillText('Озон защищает Землю от УФ-излучения', W/2, H - 55);
+    }
+
+    // Стрелка
+    ctx.font = 'bold 13px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#f59e0b';
+    ctx.fillText('⚡ Разряд молнии расщепляет O₂ на атомы', W/2, H - 5);
+  }
+
+  function loop(){
+    if (!running) return;
+    progress += 0.006;
+    if (progress >= 1){ progress = 1; running = false; btn.textContent = '▶ Разряд молнии и образование озона'; }
+    draw();
+    if (running) rafId = requestAnimationFrame(loop);
+  }
+
+  btn.addEventListener('click',()=>{
+    if (running){ running = false; btn.textContent = '▶ Продолжить'; return; }
+    if (progress >= 1) progress = 0;
+    lightningBolts = [];
+    running = true; btn.textContent = '⏸ Пауза'; loop();
+  });
+
+  initMolecules();
+  draw();
+})();
+
+/* ============================================================
+   ВХОДНОЙ ТЕСТ
+   ============================================================ */
+(function(){
+  const container = document.getElementById('entryTestContainer');
+  const resultBox = document.getElementById('entryResult');
+  if (!container) return;
+  const QUESTIONS = [
+    { q:'Что находится в центре атома?',
+      options:['Ядро (протоны и нейтроны)','Электроны','Пустота','Молекулы'],
+      correct:0, why:'В центре атома — ядро из протонов и нейтронов.' },
+    { q:'Какой заряд у электрона?',
+      options:['Положительный','Отрицательный','Нейтральный','Зависит от атома'],
+      correct:1, why:'Электрон — отрицательно заряженная частица.' },
+    { q:'Какая модель атома современная?',
+      options:['Модель Томсона','Модель Резерфорда','Модель Бора','Квантовая модель'],
+      correct:3, why:'Современная модель — квантовая: электрон как «облако вероятности».' },
+    { q:'Из чего состоят протоны и нейтроны?',
+      options:['Из кварков','Из электронов','Из атомов','Из молекул'],
+      correct:0, why:'Протоны и нейтроны состоят из кварков.' },
+    { q:'Что доказывает броуновское движение?',
+      options:['Существование молекул','Существование электронов','Существование протонов','Существование кварков'],
+      correct:0, why:'Броуновское движение — прямое доказательство существования молекул.' }
+  ];
+  let correct = 0, answered = 0;
+  container.innerHTML = QUESTIONS.map((q,i)=>`
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
+      <div class="test-options">${q.options.map((o,j)=>`
+        <div class="test-option" data-q="${i}" data-o="${j}">
+          <span class="opt-marker">${String.fromCharCode(65+j)}</span><span>${o}</span>
+        </div>`).join('')}</div>
+      <div class="explanation" id="entryExp-${i}"></div>
+    </div>`).join('');
+  container.querySelectorAll('.test-option').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      const qi=+opt.dataset.q, oi=+opt.dataset.o;
+      const q=QUESTIONS[qi];
+      const exp=document.getElementById('entryExp-'+qi);
+      if (exp.classList.contains('show')) return;
+      const ok=oi===q.correct;
+      container.querySelectorAll(`[data-q="${qi}"]`).forEach(o=>{
+        o.classList.add('disabled');
+        const idx=+o.dataset.o;
+        if (idx===q.correct) o.classList.add('correct');
+        if (idx===oi && !ok) o.classList.add('wrong');
+      });
+      exp.classList.add('show',ok?'ok':'no');
+      exp.innerHTML=`<b>${ok?'✅ Правильно!':'❌ Не совсем.'}</b> ${q.why}`;
+      if (ok) correct++;
+      answered++;
+      if (answered===QUESTIONS.length){
+        resultBox.classList.add('show');
+        if (correct>=4){resultBox.classList.add('good');resultBox.innerHTML=`🎉 <b>Отлично!</b> ${correct} из ${QUESTIONS.length}. Ты готов к Модулю 4б.`;}
+        else {resultBox.classList.add('mid');resultBox.innerHTML=`👍 <b>Хорошо.</b> ${correct} из ${QUESTIONS.length}. Рекомендуем повторить Модуль 4а.`;}
+      }
+    });
+  });
+})();
+
+/* ============================================================
+   РЕФЛЕКСИЯ ПО ФЕЙНМАНУ
+   ============================================================ */
+(function(){
+  const container = document.getElementById('feynmanTest');
+  if (!container) return;
+  const QUESTIONS = [
+    { q:'Как объяснить младшему брату, что такое химический элемент?',
+      options:['Это вид атомов с одинаковым зарядом ядра','Это любое вещество','Это молекула','Это смесь'],
+      correct:0, why:'Химический элемент — вид атомов с одинаковым зарядом ядра.' },
+    { q:'Что такое изотопы?',
+      options:['Атомы одного элемента с разным числом нейтронов','Атомы разных элементов','Молекулы','Ионы'],
+      correct:0, why:'Изотопы — атомы одного элемента, отличающиеся числом нейтронов.' },
+    { q:'Почему атомы соединяются в молекулы?',
+      options:['Так энергия системы понижается','Так проще','Это случайность','Их заставляет электричество'],
+      correct:0, why:'Атомы соединяются потому, что при образовании связи энергия системы понижается.' },
+    { q:'Почему формула H₂O читается «аш-два-о»?',
+      options:['Символы читаются как латинские буквы, индексы — как числа','Так придумали','Это сокращение','Это перевод'],
+      correct:0, why:'H = «аш», индекс 2 = «два», O = «о». Получается «аш-два-о».' },
+    { q:'Что такое простое вещество?',
+      options:['Вещество из атомов одного элемента','Вещество из атомов разных элементов','Вещество без примесей','Вещество, полученное в лаборатории'],
+      correct:0, why:'Простое вещество состоит из атомов одного химического элемента.' },
+    { q:'Почему алмаз и графит такие разные?',
+      options:['Одинаковые атомы углерода соединены по-разному','Они из разных элементов','Один из них сложное вещество','Разная температура'],
+      correct:0, why:'Алмаз и графит — аллотропные модификации углерода. Разное строение — разные свойства.' }
+  ];
+  let correct = 0, answered = 0;
+  container.innerHTML = QUESTIONS.map((q,i)=>`
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
+      <div class="test-options">${q.options.map((o,j)=>`
+        <div class="test-option" data-fq="${i}" data-fo="${j}">
+          <span class="opt-marker">${String.fromCharCode(65+j)}</span><span>${o}</span>
+        </div>`).join('')}</div>
+      <div class="explanation" id="feynExp-${i}"></div>
+    </div>`).join('');
+  container.querySelectorAll('.test-option').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      const qi=+opt.dataset.fq, oi=+opt.dataset.fo;
+      const q=QUESTIONS[qi];
+      const exp=document.getElementById('feynExp-'+qi);
+      if (exp.classList.contains('show')) return;
+      const ok=oi===q.correct;
+      container.querySelectorAll(`[data-fq="${qi}"]`).forEach(o=>{
+        o.classList.add('disabled');
+        const idx=+o.dataset.fo;
+        if (idx===q.correct) o.classList.add('correct');
+        if (idx===oi && !ok) o.classList.add('wrong');
+      });
+      exp.classList.add('show',ok?'ok':'no');
+      exp.innerHTML=`<b>${ok?'✅ Отлично!':'❌ Не совсем.'}</b> ${q.why}`;
+      if (ok) correct++;
+      answered++;
+      if (answered===QUESTIONS.length){
+        const box=document.createElement('div');
+        box.className='callout callout-ok';box.style.marginTop='14px';
+        const msg=correct>=5?'🎉 <b>Отлично!</b> Ты умеешь объяснять просто.':'👍 <b>Хорошо.</b> Посмотри объяснения ещё раз.';
+        box.innerHTML=`Правильных ответов: <b>${correct} из ${QUESTIONS.length}</b>. ${msg}`;
+        container.appendChild(box);
+      }
+    });
+  });
+})();
+
+/* ============================================================
+   ПРАКТИКУМ
+   ============================================================ */
+(function(){
+  const container = document.getElementById('practicalTask');
+  if (!container) return;
+  const STEPS = [
+    { situation:'Шаг 1: Что показывает формула H₂O?',
+      options:['2 атома водорода и 1 атом кислорода','1 атом водорода и 2 атома кислорода','2 молекулы воды','Воду с примесями'],
+      correct:0, why:'H₂O: индекс 2 у водорода, индекс 1 (не пишется) у кислорода.' },
+    { situation:'Шаг 2: Качественный состав воды H₂O — это...',
+      options:['Из каких элементов состоит: водород и кислород','Сколько атомов каждого элемента','Масса воды','Цвет воды'],
+      correct:0, why:'Качественный состав показывает, из каких химических элементов состоит вещество.' },
+    { situation:'Шаг 3: Количественный состав воды H₂O — это...',
+      options:['2 атома водорода и 1 атом кислорода','Водород и кислород','2 молекулы воды','Масса 18'],
+      correct:0, why:'Количественный состав показывает число атомов каждого элемента в молекуле.' },
+    { situation:'Шаг 4: Что означает запись 3CO₂?',
+      options:['3 молекулы углекислого газа','3 атома углерода','3 атома кислорода','1 молекула CO₂'],
+      correct:0, why:'Коэффициент 3 означает три молекулы CO₂. В каждой — 1 C и 2 O.' },
+    { situation:'Шаг 5: Какое вещество — простое?',
+      options:['Кислород O₂','Вода H₂O','Углекислый газ CO₂','Сахар C₁₂H₂₂O₁₁'],
+      correct:0, why:'Кислород O₂ состоит из атомов одного элемента — кислорода.' }
+  ];
+  let step=0, correct=0;
+  function render(){
+    if (step>=STEPS.length){
+      const msg=correct===STEPS.length?'🎉 Отлично! Ты научился читать формулы!':'👍 Хорошо! Практикум пройден.';
+      container.innerHTML=`
+        <div class="callout callout-ok" style="margin-top:0;">
+          <b>Практикум завершён!</b> ${msg} Правильных: ${correct} из ${STEPS.length}.
+        </div>
+        <div style="text-align:center;margin-top:14px;">
+          <button class="retry-btn" id="retryLab">↺ Пройти заново</button>
+        </div>`;
+      document.getElementById('retryLab').addEventListener('click',()=>{step=0;correct=0;render();});
+      return;
+    }
+    const s=STEPS[step];
+    container.innerHTML=`
+      <div class="practical-step">
+        <div class="ps-header"><div class="ps-num">${step+1}</div><div class="ps-title">Шаг ${step+1} из ${STEPS.length}</div></div>
+        <div class="ps-situation">${s.situation}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${s.options.map((o,i)=>`
+            <div class="test-option" data-i="${i}">
+              <span class="opt-marker">${String.fromCharCode(65+i)}</span><span>${o}</span>
+            </div>`).join('')}
+        </div>
+        <div class="explanation" id="labExp"></div>
+      </div>`;
+    container.querySelectorAll('.test-option').forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        const i=+opt.dataset.i;
+        if (opt.classList.contains('disabled')) return;
+        const ok=i===s.correct;
+        container.querySelectorAll('.test-option').forEach(o=>{
+          o.classList.add('disabled');
+          const idx=+o.dataset.i;
+          if (idx===s.correct) o.classList.add('correct');
+          if (idx===i && !ok) o.classList.add('wrong');
+        });
+        const exp=document.getElementById('labExp');
+        exp.classList.add('show',ok?'ok':'no');
+        exp.innerHTML=`<b>${ok?'✅ Верно!':'❌ Не совсем.'}</b> ${s.why}`;
+        if (ok) correct++;
+        setTimeout(()=>{step++;render();},2200);
+      });
+    });
+  }
+  render();
+})();
+
+/* ============================================================
+   ИНТЕРАКТИВНЫЙ РАЗБОР ФОРМУЛ
+   ============================================================ */
+(function(){
+  const container = document.getElementById('formulaExplorer');
+  if (!container) return;
+
+  const FORMULAS = [
+    { formula:'H₂O', name:'Вода', quality:'Водород H + Кислород O', quantity:'2 атома H + 1 атом O' },
+    { formula:'CO₂', name:'Углекислый газ', quality:'Углерод C + Кислород O', quantity:'1 атом C + 2 атома O' },
+    { formula:'CH₄', name:'Метан', quality:'Углерод C + Водород H', quantity:'1 атом C + 4 атома H' },
+    { formula:'NH₃', name:'Аммиак', quality:'Азот N + Водород H', quantity:'1 атом N + 3 атома H' },
+    { formula:'H₂SO₄', name:'Серная кислота', quality:'Водород H + Сера S + Кислород O', quantity:'2 H + 1 S + 4 O' },
+    { formula:'C₆H₁₂O₆', name:'Глюкоза', quality:'Углерод C + Водород H + Кислород O', quantity:'6 C + 12 H + 6 O' }
+  ];
+
+  let activeIdx = null;
+
+  function render(){
+    container.innerHTML = '';
+    FORMULAS.forEach((f,i)=>{
+      const card = document.createElement('div');
+      card.style.cssText = 'background:#fff;border:2px solid ' + (activeIdx===i?'var(--accent)':'var(--border)') + ';border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;transition:all .25s;';
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span style="font-size:26px;font-weight:900;color:var(--accent);font-family:'Courier New',monospace;">${f.formula}</span>
+          <span style="font-weight:700;color:var(--text);">${f.name}</span>
+        </div>
+      `;
+      card.addEventListener('click',()=>{
+        activeIdx = activeIdx === i ? null : i;
+        render();
+      });
+      container.appendChild(card);
+
+      if (activeIdx === i){
+        const detail = document.createElement('div');
+        detail.className = 'callout callout-ok';
+        detail.style.marginTop = '8px';
+        detail.innerHTML = `
+          <b>Формула:</b> ${f.formula} — ${f.name}<br><br>
+          <b>🔵 Качественный состав:</b> ${f.quality}<br>
+          <b>🟣 Количественный состав:</b> ${f.quantity}
+        `;
+        container.appendChild(detail);
+      }
+    });
+  }
+
+  render();
+})();
+
+/* ============================================================
+   ИТОГОВЫЙ ТЕСТ
+   ============================================================ */
+(function(){
+  const container = document.getElementById('testContainer');
+  const scoreBox = document.getElementById('testScore');
+  const retryBox = document.getElementById('retryBox');
+  if (!container) return;
+  const QUESTIONS = [
+    { q:'Что такое химический элемент?',
+      options:['Вид атомов с одинаковым зарядом ядра','Любое вещество','Молекула','Смесь веществ'], correct:0,
+      why:'Химический элемент — вид атомов с одинаковым зарядом ядра.' },
+    { q:'Что такое изотопы?',
+      options:['Атомы одного элемента с разным числом нейтронов','Атомы разных элементов','Молекулы','Ионы'], correct:0,
+      why:'Изотопы — атомы одного элемента, отличающиеся числом нейтронов в ядре.' },
+    { q:'Сколько нейтронов в дейтерии?',
+      options:['0','1','2','3'], correct:1,
+      why:'Дейтерий ²H: 1 протон и 1 нейтрон.' },
+    { q:'Кто предложил буквенные символы элементов?',
+      options:['Дальтон','Берцелиус','Менделеев','Ломоносов'], correct:1,
+      why:'Берцелиус в 1813 году предложил буквенные символы: H, O, C и индексы.' },
+    { q:'Как читается формула H₂O?',
+      options:['«аш-два-о»','«аш-о»','«два-аш-о»','«вода»'], correct:0,
+      why:'H₂O читается «аш-два-о»: H = аш, 2 = два, O = о.' },
+    { q:'Что означает индекс в формуле?',
+      options:['Число атомов элемента в молекуле','Число молекул','Массу','Заряд'], correct:0,
+      why:'Индекс (справа внизу) показывает число атомов данного элемента в одной молекуле.' },
+    { q:'Что означает коэффициент в формуле?',
+      options:['Число молекул','Число атомов','Массу','Заряд'], correct:0,
+      why:'Коэффициент (слева) показывает число молекул.' },
+    { q:'Что означает запись 3H₂O?',
+      options:['3 молекулы воды','3 атома водорода','3 атома кислорода','1 молекула воды'], correct:0,
+      why:'Коэффициент 3 перед формулой означает три молекулы воды.' },
+    { q:'Почему атомы соединяются в молекулы?',
+      options:['Так понижается энергия системы','Так проще','Это случайность','Их заставляет электричество'], correct:0,
+      why:'Атомы соединяются потому, что при образовании связи полная энергия системы понижается.' },
+    { q:'Что такое простое вещество?',
+      options:['Вещество из атомов одного элемента','Вещество из атомов разных элементов','Вещество без примесей','Вещество, полученное в лаборатории'], correct:0,
+      why:'Простое вещество состоит из атомов одного химического элемента.' },
+    { q:'Что такое сложное вещество?',
+      options:['Вещество из атомов одного элемента','Вещество из атомов разных элементов','Вещество, которое трудно получить','Вещество с большой массой'], correct:1,
+      why:'Сложное вещество состоит из атомов разных химических элементов.' },
+    { q:'Какое из перечисленных веществ — простое?',
+      options:['Вода','Кислород','Углекислый газ','Сахар'], correct:1,
+      why:'Кислород O₂ состоит из атомов одного элемента.' },
+    { q:'Почему алмаз и графит такие разные?',
+      options:['Одинаковые атомы углерода соединены по-разному','Они из разных элементов','Один из них сложное вещество','Разная температура'], correct:0,
+      why:'Алмаз и графит — аллотропные модификации углерода. Разное строение — разные свойства.' },
+    { q:'Что показывает качественный состав вещества?',
+      options:['Из каких химических элементов состоит вещество','Сколько атомов каждого элемента','Массу вещества','Плотность вещества'], correct:0,
+      why:'Качественный состав — это перечень химических элементов, входящих в вещество.' },
+    { q:'Что показывает количественный состав вещества?',
+      options:['Число атомов каждого элемента в молекуле','Из каких элементов состоит вещество','Цвет вещества','Температуру плавления'], correct:0,
+      why:'Количественный состав — это число атомов каждого элемента.' }
+  ];
+  const TOTAL = QUESTIONS.length;
+  const THRESHOLD = Math.ceil(TOTAL * 0.8);
+  function renderAll(){
+    let answered=0, correct=0;
+    container.innerHTML='';
+    retryBox.innerHTML='';
+    scoreBox.classList.remove('good','mid','bad');
+    scoreBox.innerHTML=`Правильных ответов: <span id="scoreNum">0</span> из ${TOTAL}`;
+    QUESTIONS.forEach((q,i)=>{
+      const block=document.createElement('div');
+      block.className='test-question';
+      block.innerHTML=`
+        <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
+        <div class="test-options">${q.options.map((o,j)=>`
+          <div class="test-option" data-q="${i}" data-opt="${j}">
+            <span class="opt-marker">${String.fromCharCode(65+j)}</span><span>${o}</span>
+          </div>`).join('')}</div>
+        <div class="explanation" id="exp-${i}"></div>`;
+      container.appendChild(block);
+    });
+    container.querySelectorAll('.test-option').forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        const qi=+opt.dataset.q, oi=+opt.dataset.opt;
+        const q=QUESTIONS[qi];
+        const exp=document.getElementById('exp-'+qi);
+        if (exp.classList.contains('show')) return;
+        const ok=oi===q.correct;
+        container.querySelectorAll(`[data-q="${qi}"]`).forEach(o=>{
+          o.classList.add('disabled');
+          const idx=+o.dataset.opt;
+          if (idx===q.correct) o.classList.add('correct');
+          if (idx===oi && !ok) o.classList.add('wrong');
+        });
+        exp.classList.add('show',ok?'ok':'no');
+        exp.innerHTML=ok?`<b>✅ Правильно!</b> ${q.why}`:`<b>❌ Не совсем.</b> Правильный ответ выделен зелёным. ${q.why}`;
+        if (ok) correct++;
+        answered++;
+        if (answered===TOTAL){
+          if (correct>=THRESHOLD){
+            scoreBox.classList.add('good');
+            scoreBox.innerHTML=`🎉 <b>Модуль пройден!</b> ${correct} из ${TOTAL} (порог: ${THRESHOLD}).`;
+          } else if (correct>=Math.ceil(TOTAL*0.6)){
+            scoreBox.classList.add('mid');
+            scoreBox.innerHTML=`👍 <b>Почти получилось!</b> ${correct} из ${TOTAL}. Порог — ${THRESHOLD}. Перечитай объяснения и попробуй снова.`;
+          } else {
+            scoreBox.classList.add('bad');
+            scoreBox.innerHTML=`💪 <b>Есть над чем поработать:</b> ${correct} из ${TOTAL}. Перечитай модуль и попробуй снова.`;
+          }
+          retryBox.innerHTML=`<button class="retry-btn" id="retryTest">↺ Пройти тест заново</button>`;
+          document.getElementById('retryTest').addEventListener('click',()=>{
+            renderAll();
+            window.scrollTo({top:container.offsetTop-100,behavior:'smooth'});
+          });
+        } else {
+          const scoreNum=document.getElementById('scoreNum');
+          if (scoreNum) scoreNum.textContent=correct;
+        }
+      });
+    });
+  }
+  renderAll();
+})();
+
+/* ============================================================
+   FADE-IN
+   ============================================================ */
+(function(){
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if (e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:0.08});
+  document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,399 @@
+<header class="hero">
+  <div class="badge">Модуль 1 · Урок 1 из 3 · ~20 минут</div>
+  <h1>Как учимся и что изучает химия</h1>
+  <!--QA-->
+  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
+</header>
+<div class="container">
+<!-- ============ ЛЕГЕНДА (fold) ============ -->
+
+
+<!-- ==================== РАЗОГРЕВ (без оценки) ==================== -->
+<section class="section">
+  <div class="stage s-entry fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🚪</div>
+      <div>
+        <div class="stage-title">Разогрев: проверь себя</div>
+        <div class="stage-subtitle">5 вопросов без оценки · просто чтобы размяться перед темой</div>
+      </div>
+    </div>
+
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      Это <b>не экзамен</b>: оценка не ставится и ни на что не влияет.
+      Отвечай как получится — неправильные ответы лишь покажут, на что обратить внимание в модуле.
+    </p>
+
+    <div id="entryTestContainer"></div>
+
+    <div class="entry-result" id="entryResult"></div>
+  </div>
+</section>
+
+<!-- s-intro удалён: метод Фейнмана живёт в fold-блоке в начале каждого урока -->
+
+
+<!-- ==================== ЗАЧЕМ НУЖНА ХИМИЯ ==================== -->
+<section class="section">
+  <div class="stage s-why fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🌍</div>
+      <div>
+        <div class="stage-title">Зачем человечеству химия</div>
+        <div class="stage-subtitle">Какие проблемы привели к её появлению и что она решает сегодня</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;color:var(--text);">
+      Химия появилась не в лаборатории — она родилась из <b>нужды</b>. Людям всегда было нужно:
+      есть, лечиться, строить, одеваться, защищаться. Давай посмотрим, как это происходило.
+    </p>
+
+    <h3 class="subhead">📜 История: от костра до лаборатории</h3>
+    <p class="subhead-sub"><span class="cta">👆 Нажми на любую эпоху</span>, чтобы узнать подробности.</p>
+
+    <div class="timeline">
+      <div class="timeline-track" id="timelineTrack">
+        <div class="timeline-item" data-era="0">
+          <div class="t-emoji">🔥</div>
+          <div class="t-era">до н.э.</div>
+          <div class="t-name">Древний мир</div>
+        </div>
+        <div class="timeline-item" data-era="1">
+          <div class="t-emoji">⚗️</div>
+          <div class="t-era">IV–XVII вв.</div>
+          <div class="t-name">Алхимия</div>
+        </div>
+        <div class="timeline-item" data-era="2">
+          <div class="t-emoji">🔬</div>
+          <div class="t-era">XVII–XVIII вв.</div>
+          <div class="t-name">Рождение науки</div>
+        </div>
+        <div class="timeline-item" data-era="3">
+          <div class="t-emoji">📊</div>
+          <div class="t-era">1869</div>
+          <div class="t-name">Таблица Менделеева</div>
+        </div>
+        <div class="timeline-item" data-era="4">
+          <div class="t-emoji">💊</div>
+          <div class="t-era">XX век</div>
+          <div class="t-name">Химия меняет мир</div>
+        </div>
+        <div class="timeline-item" data-era="5">
+          <div class="t-emoji">🌱</div>
+          <div class="t-era">XXI век</div>
+          <div class="t-name">Зелёная химия</div>
+        </div>
+      </div>
+      <div class="timeline-detail" id="timelineDetail"></div>
+    </div>
+
+    <h3 class="subhead">🎯 Что химия даёт человеку сегодня</h3>
+    <p class="subhead-sub">Наведи курсор на карточку, чтобы её подсветить.</p>
+
+    <div class="task-grid">
+      <div class="task-card">
+        <div class="tc-emoji">🏥</div>
+        <div class="tc-title">Здоровье</div>
+        <div class="tc-desc">Лекарства спасают миллионы жизней, а материалы помогают врачам.</div>
+        <div class="tc-examples">
+          <span>💊 таблетки</span>
+          <span>💉 вакцины</span>
+          <span>🩹 бинты</span>
+          <span>🦷 пломбы</span>
+          <span>🧬 анализ</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">🍞</div>
+        <div class="tc-title">Еда</div>
+        <div class="tc-desc">Химия помогает выращивать, сохранять и делать еду безопасной.</div>
+        <div class="tc-examples">
+          <span>🌾 удобрения</span>
+          <span>🧊 консерванты</span>
+          <span>🍯 витамины</span>
+          <span>🥫 упаковка</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">🏠</div>
+        <div class="tc-title">Материалы</div>
+        <div class="tc-desc">Пластик, стекло, металлы, ткани — всё создано или очищено химией.</div>
+        <div class="tc-examples">
+          <span>🧴 пластик</span>
+          <span>🔩 сплавы</span>
+          <span>🧵 волокна</span>
+          <span>🎨 краски</span>
+          <span>🏗 бетон</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">⚡</div>
+        <div class="tc-title">Энергия</div>
+        <div class="tc-desc">Без химии не было бы ни батареек, ни топлива, ни солнечных панелей.</div>
+        <div class="tc-examples">
+          <span>🔋 батарейки</span>
+          <span>⛽ бензин</span>
+          <span>☀️ фотоэлементы</span>
+          <span>💧 водород</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">🌊</div>
+        <div class="tc-title">Экология</div>
+        <div class="tc-desc">Очистка воды и воздуха, переработка мусора, безопасные технологии.</div>
+        <div class="tc-examples">
+          <span>💧 фильтры</span>
+          <span>♻️ переработка</span>
+          <span>🌫 очистка воздуха</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">🧴</div>
+        <div class="tc-title">Быт</div>
+        <div class="tc-desc">Мыло, шампунь, зубная паста, духи — всё это результат химии.</div>
+        <div class="tc-examples">
+          <span>🧼 мыло</span>
+          <span>🪥 паста</span>
+          <span>🧴 шампунь</span>
+          <span>🌸 духи</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 1: ЧТО ИЗУЧАЕТ ХИМИЯ ==================== -->
+<section class="section">
+  <div class="stage s1 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">1</div>
+      <div>
+        <div class="stage-title">Что изучает химия</div>
+        <div class="stage-subtitle">Наука о веществах и их превращениях</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      <b>Химия</b> — это наука о <b>веществах</b>: из чего они состоят, какие у них <b>свойства</b>
+      и как одни вещества <b>превращаются</b> в другие.
+    </p>
+
+    <div class="callout callout-idea">
+      Посмотри вокруг: воздух, которым дышишь, вода из крана, металл ложки, стекло окна —
+      всё это <b>вещества</b>. А когда дрова горят в печи или железо ржавеет, одни вещества
+      <b>превращаются</b> в другие. Вот эти превращения и изучает химия.
+    </div>
+    <!-- VIDEO-SLOT: сюда можно встроить короткое видео с яркой реакцией (YouTube/Instagram iframe).
+         Пока видео нет — блок скрыт, вёрстка не едет. Пример:
+         <div class="video-slot"><iframe src="URL" ...></iframe></div> -->
+
+    <h3 class="subhead">🔗 Место химии среди других наук</h3>
+    <p class="subhead-sub">
+      Химия — не одинокая наука. Она стоит в центре естествознания и тесно связана почти со всеми
+      другими дисциплинами. Посмотри на схему: <span class="cta">👆 наведи курсор на любую науку</span>,
+      чтобы увидеть, чем она помогает химии и чем химия помогает ей.
+    </p>
+
+    <div class="sciences-svg-wrap">
+      <svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" id="sciencesSvg">
+        <g stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6 6">
+          <line x1="350" y1="250" x2="130" y2="100"/>
+          <line x1="350" y1="250" x2="570" y2="100"/>
+          <line x1="350" y1="250" x2="80" y2="250"/>
+          <line x1="350" y1="250" x2="620" y2="250"/>
+          <line x1="350" y1="250" x2="130" y2="400"/>
+          <line x1="350" y1="250" x2="570" y2="400"/>
+          <line x1="350" y1="250" x2="350" y2="60"/>
+          <line x1="350" y1="250" x2="350" y2="440"/>
+        </g>
+
+        <circle cx="350" cy="250" r="80" fill="url(#centerGrad)" stroke="#0e7490" stroke-width="3"/>
+        <defs>
+          <radialGradient id="centerGrad">
+            <stop offset="0%" stop-color="#67e8f9"/>
+            <stop offset="100%" stop-color="#06b6d4"/>
+          </radialGradient>
+        </defs>
+        <text x="350" y="242" text-anchor="middle" font-size="32">🧪</text>
+        <text x="350" y="272" text-anchor="middle" font-size="18" font-weight="900" fill="#fff">ХИМИЯ</text>
+
+        <g class="sci-node" data-sci="physics" style="cursor:pointer;">
+          <circle cx="130" cy="100" r="58" fill="#eff6ff" stroke="#3b82f6" stroke-width="2.5"/>
+          <text x="130" y="90" text-anchor="middle" font-size="26">⚛️</text>
+          <text x="130" y="115" text-anchor="middle" font-size="14" font-weight="800" fill="#1e40af">Физика</text>
+        </g>
+
+        <g class="sci-node" data-sci="biology" style="cursor:pointer;">
+          <circle cx="570" cy="100" r="58" fill="#ecfdf5" stroke="#10b981" stroke-width="2.5"/>
+          <text x="570" y="90" text-anchor="middle" font-size="26">🧬</text>
+          <text x="570" y="115" text-anchor="middle" font-size="14" font-weight="800" fill="#065f46">Биология</text>
+        </g>
+
+        <g class="sci-node" data-sci="geology" style="cursor:pointer;">
+          <circle cx="80" cy="250" r="58" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
+          <text x="80" y="240" text-anchor="middle" font-size="26">🌍</text>
+          <text x="80" y="265" text-anchor="middle" font-size="13" font-weight="800" fill="#92400e">Геология</text>
+        </g>
+
+        <g class="sci-node" data-sci="medicine" style="cursor:pointer;">
+          <circle cx="620" cy="250" r="58" fill="#fee2e2" stroke="#ef4444" stroke-width="2.5"/>
+          <text x="620" y="240" text-anchor="middle" font-size="26">💊</text>
+          <text x="620" y="265" text-anchor="middle" font-size="14" font-weight="800" fill="#991b1b">Медицина</text>
+        </g>
+
+        <g class="sci-node" data-sci="ecology" style="cursor:pointer;">
+          <circle cx="130" cy="400" r="58" fill="#d1fae5" stroke="#10b981" stroke-width="2.5"/>
+          <text x="130" y="390" text-anchor="middle" font-size="26">🌱</text>
+          <text x="130" y="415" text-anchor="middle" font-size="14" font-weight="800" fill="#065f46">Экология</text>
+        </g>
+
+        <g class="sci-node" data-sci="materials" style="cursor:pointer;">
+          <circle cx="570" cy="400" r="58" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2.5"/>
+          <text x="570" y="390" text-anchor="middle" font-size="26">🔩</text>
+          <text x="570" y="415" text-anchor="middle" font-size="12" font-weight="800" fill="#5b21b6">Материалы</text>
+        </g>
+
+        <g class="sci-node" data-sci="math" style="cursor:pointer;">
+          <circle cx="350" cy="60" r="48" fill="#e0e7ff" stroke="#6366f1" stroke-width="2.5"/>
+          <text x="350" y="52" text-anchor="middle" font-size="22">📐</text>
+          <text x="350" y="74" text-anchor="middle" font-size="12" font-weight="800" fill="#3730a3">Математика</text>
+        </g>
+
+        <g class="sci-node" data-sci="it" style="cursor:pointer;">
+          <circle cx="350" cy="440" r="48" fill="#fce7f3" stroke="#ec4899" stroke-width="2.5"/>
+          <text x="350" y="432" text-anchor="middle" font-size="22">💻</text>
+          <text x="350" y="454" text-anchor="middle" font-size="12" font-weight="800" fill="#9d174d">Информатика</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="method-detail-box" id="sciDetail" style="margin-top:14px;">
+      <div class="mb-title">⚛️ Физика</div>
+      <div class="mb-text">
+        Физика объясняет, как устроены атомы и молекулы, как они движутся, какие силы действуют между ними.
+        Химия, в свою очередь, даёт физикам новые материалы — сверхпроводники, полупроводники, кристаллы.
+      </div>
+    </div>
+
+    <h3 class="subhead">📦 Физическое тело и вещество</h3>
+    <p class="subhead-sub">Эти два понятия часто путают. Давай разберёмся раз и навсегда.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title"><span style="font-size:26px;">📦</span> Физическое тело</div>
+        <div class="c-desc">
+          Всё, что нас окружает и имеет форму: <b>ложка 🥄, стакан 🥛, стол 🪑, карандаш ✏️, дом 🏠</b>.
+          Тело можно потрогать, оно занимает место в пространстве.
+        </div>
+      </div>
+      <div class="card">
+        <div class="c-title"><span style="font-size:26px;">🧪</span> Вещество</div>
+        <div class="c-desc">
+          То, из чего состоят тела: <b>алюминий 🪨, стекло 🔷, дерево 🪵, вода 💧, железо ⚙️</b>.
+          Одно и то же тело может быть сделано из разных веществ — например, ложка бывает деревянной, алюминиевой или серебряной.
+        </div>
+      </div>
+    </div>
+
+    <div class="game-area">
+      <h4>🎮 Мини-игра: тело или вещество?</h4>
+      <p class="game-hint">
+        <span class="cta">Перетащи каждую карточку</span> в нужную корзину: физическое тело или вещество.
+        Если перетаскивание не работает — <span class="cta">нажми на карточку, а затем на корзину</span>.
+      </p>
+
+      <div class="game-pool" id="bodySubstancePool"></div>
+
+      <div class="dual-basket">
+        <div class="basket" data-cat="substance">
+          <div class="basket-title">🧪 Вещество</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="body">
+          <div class="basket-title">📦 Физическое тело</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px;">
+        <button class="reset-btn" id="resetBodySubstance">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbBodySubstance"></div>
+    </div>
+
+    <h3 class="subhead">🔍 Алгоритм познания в химии</h3>
+    <p class="subhead-sub">
+      Как учёные узнают то, что знают? Существует пять шагов, которые образуют алгоритм.
+      <span class="cta">👆 Нажми на любой шаг</span>, чтобы увидеть подробности и пример из химии.
+    </p>
+
+    <div class="method-flow" id="methodFlow">
+      <div class="method-step" data-step="0">
+        <div class="ms-num">1</div>
+        <div class="ms-icon">👁</div>
+        <div class="ms-name">Наблюдение</div>
+      </div>
+      <div class="method-arrow">➡️</div>
+      <div class="method-step" data-step="1">
+        <div class="ms-num">2</div>
+        <div class="ms-icon">🧠</div>
+        <div class="ms-name">Гипотеза</div>
+      </div>
+      <div class="method-arrow">➡️</div>
+      <div class="method-step" data-step="2">
+        <div class="ms-num">3</div>
+        <div class="ms-icon">🧪</div>
+        <div class="ms-name">Эксперимент</div>
+      </div>
+      <div class="method-arrow">➡️</div>
+      <div class="method-step" data-step="3">
+        <div class="ms-num">4</div>
+        <div class="ms-icon">📏</div>
+        <div class="ms-name">Измерение</div>
+      </div>
+      <div class="method-arrow">➡️</div>
+      <div class="method-step" data-step="4">
+        <div class="ms-num">5</div>
+        <div class="ms-icon">🔮</div>
+        <div class="ms-name">Модель</div>
+      </div>
+    </div>
+
+    <div class="method-detail-box" id="methodDetail"></div>
+
+    <div class="callout callout-idea" style="margin-top:18px;">
+      <b>Так рождается научное знание:</b> сначала мы замечаем что-то в мире (наблюдение), потом
+      пытаемся объяснить (гипотеза), проверяем свою догадку в опыте (эксперимент), измеряем результат
+      (измерение), а затем строим упрощённое описание — модель, которая помогает понять всё до конца.
+    </div>
+
+    <!-- ВИРТУАЛЬНАЯ ЛАБОРАТОРИЯ -->
+    <h3 class="subhead">🔬 Виртуальная лаборатория «Первое наблюдение»</h3>
+    <p class="subhead-sub">Перед тобой 5 опытов — от простого к сложному. На каждом шаге выбирай правильный ход исследования. <span class="cta">👆 Выбери вариант</span> — и сразу увидишь объяснение.</p>
+
+    <div id="labScenario"></div>
+  </div>
+</section>
+<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Минимум 5 задач · письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+<li>Составь таблицу: 5 физических тел дома и вещества, из которых они состоят.</li>
+<li>Опиши стакан воды дважды: что изучала бы в нём физика, а что — химия? По 3 предложения.</li>
+<li>Возьми любое наблюдение из жизни и разбери его по шагам познания: наблюдение → предположение → проверка → вывод.</li>
+<li>Найди дома 3 вещества с необычными свойствами. Запиши вещество и его свойство.</li>
+<li><span class="hw-star">★ Почему вещество нельзя узнать только по цвету? Приведи 2 примера разных веществ одного цвета.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,15 @@
+{
+  "module": "mod02",
+  "lesson": "u3",
+  "title": "Урок 3. Разделение смесей",
+  "badge": "Модуль 2 · Урок 3 из 3 · ~20 минут",
+  "css": [
+    "core",
+    "mod02"
+  ],
+  "js": [
+    "m2_separation",
+    "m2_drop",
+    "m2_practical"
+  ]
+}

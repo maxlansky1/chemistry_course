@@ -1,0 +1,2026 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модуль 4а. Атомы: невидимый мир — интерактивный урок</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg:#f8fafc; --panel:#fff; --panel-2:#f1f5f9; --border:#e2e8f0;
+    --text:#1e293b; --muted:#64748b; --h-deep:#0e7490; --h-color:#06b6d4;
+    --accent:#8b5cf6; --green:#10b981; --orange:#f59e0b; --red:#ef4444;
+    --radius:16px; --shadow:0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg:0 12px 40px -12px rgba(0,0,0,.15);
+  }
+  html{scroll-behavior:smooth;}
+  body{font-family:'Inter','Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;font-size:17px;overflow-x:hidden;}
+  .container{max-width:1140px;margin:0 auto;padding:0 20px;}
+  .hero{text-align:center;padding:56px 0 26px;background:linear-gradient(180deg,#ede9fe 0%,var(--bg) 100%);}
+  .hero .badge{display:inline-block;font-size:12px;letter-spacing:3px;text-transform:uppercase;color:#5b21b6;border:1.5px solid #5b21b6;padding:6px 18px;border-radius:50px;margin-bottom:20px;background:rgba(139,92,246,.05);}
+  .hero h1{font-size:clamp(28px,4.5vw,48px);font-weight:800;letter-spacing:-1px;line-height:1.15;background:linear-gradient(135deg,#8b5cf6,#ec4899,#f59e0b);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:14px;}
+  .hero p{color:var(--muted);font-size:17px;max-width:780px;margin:0 auto;}
+  .section{padding:24px 0;}
+  .stage{background:var(--panel);border:1px solid var(--border);border-radius:var(--radius);padding:28px;margin-bottom:26px;box-shadow:var(--shadow);position:relative;overflow:hidden;}
+  .stage::before{content:'';position:absolute;top:0;left:0;width:100%;height:4px;}
+  .stage.s-legend::before{background:linear-gradient(90deg,#06b6d4,#8b5cf6,#f59e0b);}
+  .stage.s-entry::before{background:linear-gradient(90deg,#f59e0b,#ef4444);}
+  .stage.s-intro::before{background:linear-gradient(90deg,#8b5cf6,#06b6d4);}
+  .stage.s1::before{background:linear-gradient(90deg,#10b981,#059669);}
+  .stage.s2::before{background:linear-gradient(90deg,#f59e0b,#f97316);}
+  .stage.s3::before{background:linear-gradient(90deg,#ef4444,#dc2626);}
+  .stage.s-feyn::before{background:linear-gradient(90deg,#8b5cf6,#ec4899);}
+  .stage.s-prac::before{background:linear-gradient(90deg,#06b6d4,#10b981);}
+  .stage.s-test::before{background:linear-gradient(90deg,#f59e0b,#ef4444);}
+  .stage-header{display:flex;align-items:center;gap:14px;margin-bottom:18px;}
+  .stage-number{display:flex;align-items:center;justify-content:center;width:48px;height:48px;border-radius:50%;background:var(--panel-2);color:var(--h-deep);font-size:22px;font-weight:900;flex-shrink:0;border:2px solid var(--border);}
+  .stage-title{font-size:21px;font-weight:700;color:var(--text);}
+  .stage-subtitle{font-size:14px;color:var(--muted);font-weight:500;margin-top:2px;}
+  .callout{padding:16px 20px;border-radius:12px;margin:16px 0;font-size:16px;line-height:1.7;}
+  .callout-idea{background:linear-gradient(135deg,#fffbeb,#fef3c7);border-left:5px solid var(--orange);color:#78350f;}
+  .callout-idea b{color:#92400e;}
+  .callout-warn{background:linear-gradient(135deg,#fef2f2,#fee2e2);border-left:5px solid var(--red);color:#7f1d1d;}
+  .callout-warn b{color:#b91c1c;}
+  .callout-note{background:linear-gradient(135deg,#eff6ff,#dbeafe);border-left:5px solid #3b82f6;color:#1e3a8a;}
+  .callout-note b{color:#1d4ed8;}
+  .callout-ok{background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-left:5px solid var(--green);color:#065f46;}
+  .callout-ok b{color:#047857;}
+  .cta{color:var(--accent);font-weight:800;}
+  .subhead{font-size:17px;font-weight:800;margin:26px 0 8px;display:flex;align-items:center;gap:8px;}
+  .subhead-sub{font-size:14.5px;color:var(--muted);margin-bottom:10px;line-height:1.6;}
+  .card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px;margin-top:16px;}
+  .card{background:linear-gradient(180deg,#f8fafc,#fff);border:1.5px solid var(--border);border-radius:14px;padding:20px;transition:all .3s;position:relative;overflow:hidden;}
+  .card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--h-color),var(--accent));}
+  .card:hover{transform:translateY(-4px);box-shadow:0 12px 30px -12px rgba(0,0,0,.15);border-color:var(--h-deep);}
+  .card .c-title{font-size:16.5px;font-weight:800;color:var(--text);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+  .card .c-desc{font-size:15.5px;color:var(--muted);line-height:1.65;}
+  .card .c-desc b{color:var(--text);}
+  .canvas-wrap{position:relative;background:linear-gradient(180deg,#f0f9ff 0%,#e0f2fe 100%);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+  .canvas-wrap canvas{display:block;width:100%;height:auto;}
+  .canvas-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+  .btn{padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;border:none;color:#fff;background:var(--accent);box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+  .btn:hover{transform:translateY(-2px);}
+  .btn.ghost{background:var(--panel-2);color:var(--text);border:1.5px solid var(--border);box-shadow:none;}
+  .btn.ghost:hover{border-color:var(--accent);color:var(--accent);}
+  .btn.cyan{background:#06b6d4;box-shadow:0 6px 16px -6px rgba(6,182,212,.5);}
+  .btn.violet{background:#8b5cf6;box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+  .btn.red{background:#ef4444;box-shadow:0 6px 16px -6px rgba(239,68,68,.5);}
+  .btn.green{background:#10b981;box-shadow:0 6px 16px -6px rgba(16,185,129,.5);}
+  .timeline{position:relative;margin-top:20px;padding:8px 0 40px;}
+  .timeline-track{display:flex;gap:14px;overflow-x:auto;padding:20px 8px 30px;scroll-snap-type:x mandatory;}
+  .timeline-track::-webkit-scrollbar{height:8px;}
+  .timeline-track::-webkit-scrollbar-thumb{background:#cbd5e1;border-radius:8px;}
+  .tl-year{flex-shrink:0;scroll-snap-align:start;min-width:160px;background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .25s;text-align:center;}
+  .tl-year:hover{border-color:var(--accent);transform:translateY(-3px);}
+  .tl-year.active{background:linear-gradient(180deg,#f5f3ff,#fff);border-color:var(--accent);box-shadow:0 8px 20px -8px rgba(139,92,246,.4);}
+  .tl-year .tl-num{font-size:22px;font-weight:900;color:var(--accent);}
+  .tl-year .tl-who{font-size:13px;font-weight:700;margin:6px 0 4px;color:var(--text);}
+  .tl-year .tl-what{font-size:12px;color:var(--muted);line-height:1.4;}
+  .tl-detail{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;animation:fadeSlide .35s ease;}
+  .tl-detail.show{display:block;}
+  .tl-detail .tl-d-title{font-size:18px;font-weight:800;margin-bottom:8px;}
+  .tl-detail .tl-d-text{font-size:15.5px;line-height:1.75;color:var(--text);}
+  .model-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+  .model-tab{padding:10px 20px;border-radius:50px;background:var(--panel-2);border:2px solid var(--border);cursor:pointer;font-size:14px;font-weight:700;transition:all .25s;color:var(--text);}
+  .model-tab:hover{border-color:var(--accent);}
+  .model-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px -4px rgba(139,92,246,.5);}
+  .model-view{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;}
+  .model-view.active{display:block;}
+  .model-view .mv-title{font-size:18px;font-weight:800;margin-bottom:12px;}
+  .model-view .mv-text{font-size:15.5px;line-height:1.75;}
+  .model-view .mv-text b{color:var(--accent);}
+  .model-view .mv-problem{margin-top:14px;padding:12px 16px;background:#fef2f2;border-radius:10px;border-left:4px solid var(--red);font-size:14.5px;color:#991b1b;}
+  .model-view .mv-problem b{color:#b91c1c;}
+  .model-view .mv-problem.ok{background:#ecfdf5;border-left-color:var(--green);color:#065f46;}
+  .atom-3d-wrap{margin-top:16px;background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:14px;padding:30px;text-align:center;position:relative;overflow:hidden;min-height:400px;display:flex;align-items:center;justify-content:center;}
+  .atom-3d-wrap .atom-svg{width:100%;max-width:520px;height:auto;}
+  .atom-3d-wrap .atom-label{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:14px;font-weight:700;color:#94a3b8;}
+  @keyframes electronOrbit1{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+  @keyframes electronOrbit2{0%{transform:rotate(60deg)}100%{transform:rotate(420deg)}}
+  @keyframes electronOrbit3{0%{transform:rotate(120deg)}100%{transform:rotate(480deg)}}
+  @keyframes nucleusPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+  .electron-orbit-1{animation:electronOrbit1 4s linear infinite;transform-origin:260px 200px;}
+  .electron-orbit-2{animation:electronOrbit2 5s linear infinite;transform-origin:260px 200px;}
+  .electron-orbit-3{animation:electronOrbit3 6s linear infinite;transform-origin:260px 200px;}
+  .nucleus-pulse{animation:nucleusPulse 2s ease-in-out infinite;transform-origin:260px 200px;}
+  .particles-table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;border-radius:12px;overflow:hidden;border:2px solid var(--border);}
+  .particles-table th{background:var(--panel-2);padding:12px;font-size:14px;text-align:left;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border);}
+  .particles-table td{padding:12px;font-size:15px;border-bottom:1px solid var(--border);}
+  .particles-table tr:last-child td{border-bottom:none;}
+  .particles-table .pt-pro{background:#fef2f2;font-weight:900;color:#b91c1c;}
+  .particles-table .pt-neu{background:#f1f5f9;font-weight:900;color:#475569;}
+  .particles-table .pt-ele{background:#eff6ff;font-weight:900;color:#1d4ed8;}
+  .johnstone-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px;}
+  .bohr-controls{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+  .quark-wrap{margin-top:16px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:14px;padding:24px;text-align:center;color:#e0e7ff;position:relative;overflow:hidden;min-height:320px;}
+  .quark-wrap canvas{display:block;width:100%;height:auto;}
+  .scale-wrap{margin-top:16px;background:linear-gradient(180deg,#0f172a,#1e293b);border-radius:14px;padding:24px;color:#e2e8f0;position:relative;overflow:hidden;min-height:420px;}
+  .scale-wrap canvas{display:block;width:100%;height:auto;}
+  /* Game area */
+  .game-area{background:var(--panel-2);border-radius:14px;padding:22px;margin-top:18px;}
+  .game-area h4{font-size:17px;font-weight:800;margin-bottom:8px;}
+  .game-area .game-hint{font-size:15px;color:var(--muted);margin-bottom:16px;}
+  .dual-basket{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:16px;}
+  .basket{border:2.5px dashed var(--border);border-radius:14px;padding:14px;min-height:130px;text-align:center;transition:all .25s;background:#fff;}
+  .basket.hover{border-color:var(--accent);background:#f5f3ff;}
+  .basket .basket-title{font-size:13.5px;font-weight:800;letter-spacing:.5px;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
+  .basket .basket-items{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;}
+  .basket .basket-chip{background:var(--panel-2);border:1.5px solid var(--border);border-radius:8px;padding:5px 10px;font-size:13px;font-weight:700;}
+  .basket.good{border-color:var(--green);background:#ecfdf5;}
+  .basket.bad{border-color:var(--red);background:#fef2f2;}
+  .game-pool{display:flex;flex-wrap:wrap;gap:10px;padding:16px;background:#fff;border:2px solid var(--border);border-radius:14px;min-height:100px;margin-bottom:14px;}
+  .game-pool .pool-item{background:var(--panel-2);border:2px solid var(--border);border-radius:10px;padding:10px 18px;cursor:grab;font-size:15px;font-weight:700;transition:all .2s;user-select:none;}
+  .game-pool .pool-item:hover{border-color:var(--h-deep);transform:translateY(-2px);}
+  .game-pool .pool-item.selected{border-color:var(--accent);background:#f5f3ff;box-shadow:0 0 0 3px rgba(139,92,246,.15);}
+  .game-pool .pool-item.dragging{opacity:.5;}
+  .game-pool .pool-item.wrong-flash{animation:shake .4s;border-color:var(--red);background:#fef2f2;}
+  @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+  .reset-btn{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:50px;background:var(--panel-2);color:var(--text);border:1.5px solid var(--border);cursor:pointer;font-size:14px;font-weight:700;transition:all .2s;}
+  .reset-btn:hover{border-color:var(--h-deep);color:var(--h-deep);}
+  .retry-btn{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:12px 26px;border-radius:50px;background:var(--accent);color:#fff;border:none;cursor:pointer;font-size:15px;font-weight:800;transition:all .2s;box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+  .retry-btn:hover{transform:translateY(-2px);box-shadow:0 10px 24px -8px rgba(139,92,246,.6);}
+  .game-feedback{margin-top:14px;font-size:15.5px;font-weight:700;min-height:24px;}
+  /* Test */
+  .test-question{background:var(--panel-2);border-radius:12px;padding:20px;margin-bottom:16px;}
+  .test-question .q-text{font-size:17px;font-weight:700;margin-bottom:14px;display:flex;gap:12px;align-items:flex-start;}
+  .test-question .q-num{background:var(--h-deep);color:#fff;border-radius:50%;width:30px;height:30px;display:inline-flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;flex-shrink:0;}
+  .test-options{display:flex;flex-direction:column;gap:10px;}
+  .test-option{display:flex;align-items:center;gap:12px;background:#fff;border:2px solid var(--border);border-radius:10px;padding:13px 16px;cursor:pointer;font-size:15.5px;transition:all .25s;}
+  .test-option:hover{border-color:var(--h-deep);}
+  .test-option .opt-marker{width:26px;height:26px;border-radius:50%;border:2px solid var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:900;color:var(--muted);transition:all .25s;}
+  .test-option.correct{border-color:var(--green);background:#ecfdf5;}
+  .test-option.correct .opt-marker{background:var(--green);border-color:var(--green);color:#fff;}
+  .test-option.wrong{border-color:var(--red);background:#fef2f2;}
+  .test-option.wrong .opt-marker{background:var(--red);border-color:var(--red);color:#fff;}
+  .test-option.disabled{cursor:default;}
+  .test-option.disabled:hover{border-color:var(--border);}
+  .test-option.correct.disabled:hover{border-color:var(--green);}
+  .test-option.wrong.disabled:hover{border-color:var(--red);}
+  .explanation{margin-top:14px;padding:14px 16px;border-radius:10px;font-size:15px;line-height:1.65;display:none;animation:fadeSlide .35s ease;}
+  .explanation.show{display:block;}
+  .explanation.ok{background:#ecfdf5;border-left:4px solid var(--green);color:#065f46;}
+  .explanation.no{background:#fef2f2;border-left:4px solid var(--red);color:#991b1b;}
+  .explanation b{font-weight:800;}
+  @keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+  .test-score{margin-top:22px;padding:20px;border-radius:14px;text-align:center;font-size:18px;font-weight:800;background:var(--panel-2);border:2px solid var(--border);transition:all .4s;}
+  .test-score.good{background:#ecfdf5;border-color:var(--green);color:#059669;}
+  .test-score.mid{background:#fffbeb;border-color:var(--orange);color:#d97706;}
+  .test-score.bad{background:#fef2f2;border-color:var(--red);color:#dc2626;}
+  .entry-result{margin-top:20px;padding:20px;border-radius:14px;text-align:center;font-size:16px;font-weight:700;background:var(--panel-2);border:2px solid var(--border);display:none;}
+  .entry-result.show{display:block;animation:fadeSlide .35s ease;}
+  .entry-result.good{background:#ecfdf5;border-color:var(--green);color:#059669;}
+  .entry-result.mid{background:#fffbeb;border-color:var(--orange);color:#d97706;}
+  .footer{text-align:center;padding:40px 0 60px;color:var(--muted);font-size:14px;border-top:1px solid var(--border);margin-top:40px;}
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity .7s ease,transform .7s ease;}
+  .fade-in.visible{opacity:1;transform:translateY(0);}
+  .legend-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:14px;margin-top:16px;}
+  .legend-card{padding:14px 18px;border-radius:12px;border:2px solid var(--border);background:#fff;}
+  .legend-card .lc-header{display:flex;align-items:center;gap:10px;font-size:15.5px;font-weight:800;margin-bottom:6px;}
+  .legend-card .lc-body{font-size:14.5px;color:var(--muted);line-height:1.6;}
+  .legend-card .lc-body b{color:var(--text);}
+  .practical-step{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;}
+  .practical-step .ps-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+  .practical-step .ps-num{width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;}
+  .practical-step .ps-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);}
+  .practical-step .ps-situation{font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;}
+  @media (max-width:800px){.dual-basket{grid-template-columns:1fr;}.johnstone-trio{grid-template-columns:1fr;}}
+  @media (max-width:600px){.container{padding:0 14px;}.hero{padding:40px 0 20px;}.stage{padding:20px;}.card-grid{grid-template-columns:1fr;}body{font-size:16px;}}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="badge">Модуль 4а · Атомы: невидимый мир</div>
+  <h1>Из чего состоит всё вокруг?</h1>
+  <p>Урок о том, как человечество открыло атомы, как менялись модели атома, что находится внутри самого маленького «кирпичика» Вселенной — и что ещё глубже.</p>
+</header>
+
+<div class="container">
+
+<!-- ==================== ЛЕГЕНДА ==================== -->
+<section class="section">
+  <div class="stage s-legend fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📚</div>
+      <div>
+        <div class="stage-title">Как читать этот модуль</div>
+        <div class="stage-subtitle">Условные обозначения</div>
+      </div>
+    </div>
+    <p style="font-size:16px;line-height:1.75;">
+      Это <b>пятый модуль курса</b> (после 1, 2, 3а и 3б). Обозначения — те же. Если что-то подзабыл — короткая шпаргалка.
+    </p>
+    <div class="legend-grid">
+      <div class="legend-card" style="background:linear-gradient(135deg,#fffbeb,#fef3c7);border-color:#f59e0b;">
+        <div class="lc-header">💡 <span>Тёплый жёлтый</span></div>
+        <div class="lc-body">Ключевая мысль, сравнение или аналогия.</div>
+      </div>
+      <div class="legend-card" style="background:linear-gradient(135deg,#fef2f2,#fee2e2);border-color:#ef4444;">
+        <div class="lc-header">⚠️ <span>Красный</span></div>
+        <div class="lc-body">Важное предупреждение или правило. <b>К запоминанию.</b></div>
+      </div>
+      <div class="legend-card" style="background:linear-gradient(135deg,#eff6ff,#dbeafe);border-color:#3b82f6;">
+        <div class="lc-header">📌 <span>Синий</span></div>
+        <div class="lc-body">Дополнительная заметка или интересный факт.</div>
+      </div>
+      <div class="legend-card" style="background:linear-gradient(135deg,#ecfdf5,#d1fae5);border-color:#10b981;">
+        <div class="lc-header">✅ <span>Зелёный</span></div>
+        <div class="lc-body">Правильный ответ или итоговый вывод.</div>
+      </div>
+      <div class="legend-card">
+        <div class="lc-header"><span class="cta">🔷 Жирный фиолетовый</span></div>
+        <div class="lc-body"><b>Призыв к действию.</b> Нужно нажать, подвигать, перетащить.</div>
+      </div>
+      <div class="legend-card">
+        <div class="lc-header">🎮 <span>Мини-игра</span></div>
+        <div class="lc-body">Интерактивное задание для закрепления материала.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ВХОДНОЙ ТЕСТ ==================== -->
+<section class="section">
+  <div class="stage s-entry fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🚪</div>
+      <div>
+        <div class="stage-title">Входной тест</div>
+        <div class="stage-subtitle">5 вопросов по Модулю 3б</div>
+      </div>
+    </div>
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      Этот тест — <b>проверка готовности</b>. Если наберёшь 4+, можешь идти дальше уверенно.
+    </p>
+    <div id="entryTestContainer"></div>
+    <div class="entry-result" id="entryResult"></div>
+  </div>
+</section>
+
+<!-- ==================== ВВЕДЕНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🎯</div>
+      <div>
+        <div class="stage-title">О чём этот модуль</div>
+        <div class="stage-subtitle">Открываем «чёрный ящик» из Модуля 3б</div>
+      </div>
+    </div>
+    <p style="font-size:16.5px;line-height:1.8;">
+      В Модуле 3б мы увидели удивительный факт: <b>масса не исчезает</b> при химических реакциях.
+      Мы назвали это «чёрным ящиком» — знали, что внутри что-то есть, но не знали, что именно.
+      Пришло время <b>открыть этот ящик</b>.
+    </p>
+    <div class="callout callout-idea">
+      <b>Главный вопрос модуля:</b> из чего состоит вещество? Если разрезать кусочек вещества пополам,
+      потом ещё пополам, и так много-много раз — что мы увидим в конце? Есть ли предел делению?
+    </div>
+    <div class="card-grid">
+      <div class="card"><div class="c-title">🔍 Доказательства</div><div class="c-desc">Диффузия, броуновское движение, масляная плёнка, закон постоянства состава. <b>Четыре независимых доказательства.</b></div></div>
+      <div class="card"><div class="c-title">🧪 Модели атома</div><div class="c-desc">От «пудинга с изюмом» до квантовой модели. Как <b>менялись представления</b> учёных и почему.</div></div>
+      <div class="card"><div class="c-title">⚛️ Строение атома</div><div class="c-desc">Протоны, нейтроны, электроны — <b>откуда взялся заряд</b> и как устроен масштаб.</div></div>
+      <div class="card"><div class="c-title">🌈 Глубже атома</div><div class="c-desc"><b>Кварки, фермионы и бозоны</b> — что находится ещё глубже ядра. И зачем это изучают.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 1: ДОКАЗАТЕЛЬСТВА ==================== -->
+<section class="section">
+  <div class="stage s1 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">1</div>
+      <div>
+        <div class="stage-title">Откуда мы знаем об атомах?</div>
+        <div class="stage-subtitle">Четыре независимых доказательства существования невидимых частиц</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Идея о том, что всё состоит из мельчайших неделимых частиц, пришла ещё в Древней Греции.
+      <b>Демокрит</b> (около 460–370 гг. до н.э.) назвал эти частицы <b>атомами</b>
+      (греч. «атомос» — неделимый). Но это была лишь <b>философская догадка</b>.
+      Доказать её удалось только через 2000 лет!
+    </p>
+
+    <div class="callout callout-note">
+      <b>Почему так долго?</b> Атомы настолько малы, что их невозможно увидеть даже в самый мощный
+      оптический микроскоп. Пришлось искать <b>косвенные доказательства</b> — наблюдать не сами атомы,
+      а их <b>влияние</b> на окружающий мир.
+    </div>
+
+    <!-- ДОКАЗАТЕЛЬСТВО 1: ДИФФУЗИЯ -->
+    <h3 class="subhead">🌫 Доказательство 1: Диффузия</h3>
+    <p class="subhead-sub">
+      Если открыть флакон духов в углу комнаты, через некоторое время запах почувствуется в другом углу.
+      Как молекулы запаха «пробрались» через воздух? Давай посмотрим в двух масштабах.
+    </p>
+    <div class="canvas-wrap">
+      <canvas id="diffusionCanvas" width="900" height="380"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn cyan" id="diffusionBtn">▶ Запустить анимацию</button>
+      <button class="btn ghost" id="diffusionScale">🔍 Уровень молекул</button>
+      <button class="btn ghost" id="diffusionReset">↺ Сброс</button>
+    </div>
+    <div class="callout callout-idea" style="margin-top:16px;">
+      <b>Что это доказывает?</b> Если бы воздух был сплошной массой, запах не мог бы «протиснуться» сквозь него.
+      Но запах распространяется! Значит, воздух состоит из <b>отдельных частиц</b>, между которыми есть промежутки.
+      Молекулы запаха проникают в эти промежутки. <b>Важно:</b> в газе молекулы занимают лишь ~0,1% объёма —
+      всё остальное пустота.
+    </div>
+
+    <!-- ДОКАЗАТЕЛЬСТВО 2: БРОУНОВСКОЕ ДВИЖЕНИЕ -->
+    <h3 class="subhead">🕺 Доказательство 2: Броуновское движение</h3>
+    <p class="subhead-sub">
+      В 1827 году ботаник <b>Роберт Броун</b> рассматривал пыльцу в воде под микроскопом и заметил,
+      что мельчайшие частицы <b>непрерывно дрожат и хаотично двигаются</b>. Почему?
+    </p>
+    <div class="canvas-wrap">
+      <canvas id="brownianCanvas" width="900" height="380"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn violet" id="brownianBtn">▶ Запустить</button>
+      <button class="btn ghost" id="brownianTrail">👁 Показать траекторию</button>
+      <button class="btn ghost" id="brownianReset">↺ Сброс</button>
+    </div>
+    <div class="callout callout-idea" style="margin-top:16px;">
+      <b>История открытия:</b>
+      <ul style="margin-top:8px;padding-left:22px;line-height:1.8;">
+        <li><b>1827</b> — Роберт Броун замечает движение пыльцы, но не может объяснить.</li>
+        <li><b>1905</b> — Альберт Эйнштейн математически доказывает: если молекулы существуют, они <b>обязаны</b> толкать крупные частицы.</li>
+        <li><b>1908</b> — Жан Перрен ставит точные эксперименты и подтверждает теорию Эйнштейна.</li>
+      </ul>
+    </div>
+    <div class="callout callout-ok">
+      <b>Что это доказывает?</b> Частицы пыльцы не могут двигаться сами по себе — они слишком крупные.
+      Их <b>толкают</b> невидимые частицы воды. Это стало <b>прямым доказательством</b> существования молекул —
+      оно убедило даже последних скептиков.
+    </div>
+
+    <!-- ДОКАЗАТЕЛЬСТВО 3: МАСЛЯНАЯ ПЛЁНКА -->
+    <h3 class="subhead">💧 Доказательство 3: Опыт с масляной плёнкой</h3>
+    <p style="font-size:16px;line-height:1.8;">
+      Если капнуть каплю масла на поверхность воды, масло растекается тонкой плёнкой.
+      Но плёнка <b>не может быть тоньше определённого предела</b>. Когда масло растекается
+      максимально, его толщина равна <b>толщине одной молекулы</b>!
+    </p>
+    <div class="callout callout-idea">
+      <b>Что это доказывает?</b> Масло не может растекаться бесконечно — есть предел.
+      Этот предел — <b>размер одной молекулы</b>. Значит, молекулы действительно существуют
+      и имеют конечный размер.
+    </div>
+
+    <!-- ДОКАЗАТЕЛЬСТВО 4: ЗАКОН ПОСТОЯНСТВА СОСТАВА -->
+    <h3 class="subhead">⚖️ Доказательство 4: Закон постоянства состава</h3>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      В конце XVIII века разгорелся научный спор, который длился <b>восемь лет</b>.
+      <b>Клод Бертолле</b> считал, что состав вещества может меняться в зависимости от условий
+      и пропорций реагирующих веществ. <b>Жозеф Пруст</b> (1754–1826) утверждал обратное:
+      состав любого чистого вещества всегда постоянен.
+    </p>
+
+    <div class="callout callout-note">
+      <b>Формулировка закона (современная):</b> <i>Всякое химически чистое вещество молекулярного строения
+      независимо от способа и места его получения имеет постоянный качественный и количественный состав.</i>
+    </div>
+
+    <p style="font-size:16px;line-height:1.8;">
+      Пруст провёл множество экспериментов. Он сравнил <b>малахит из Сибири</b> и малахит,
+      полученный в лаборатории. Разное происхождение — а состав <b>абсолютно одинаковый</b>!
+      Он писал: «От одного полюса Земли до другого соединения имеют одинаковый состав и одинаковые свойства.
+      Никакой разницы нет между оксидом железа из Южного полушария и Северного».
+    </p>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> закон Пруста говорит о <b>химически чистом</b> веществе. Если вода отфильтрована,
+      но содержит примеси — это <b>смесь</b>, а не чистое вещество. Но состав <i>самой воды</i>
+      (H₂O) от примесей не меняется. Именно это и доказал Пруст.
+    </div>
+
+    <p style="font-size:16px;line-height:1.8;">
+      <b>Почему состав постоянен?</b> Потому что атомы соединяются <b>целыми порциями</b> —
+      один, два, три атома. Нельзя соединить «полтора атома». Поэтому на один атом кислорода
+      всегда приходится ровно два атома водорода.
+    </p>
+
+    <!-- АНИМАЦИЯ ПРУСТА -->
+    <div class="canvas-wrap" style="background:linear-gradient(180deg,#f0f9ff,#e0f2fe);">
+      <canvas id="proustCanvas" width="900" height="420"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn green" id="proustBtn">🔬 Взять по капле и заглянуть внутрь</button>
+      <button class="btn ghost" id="proustReset">↺ Сброс</button>
+    </div>
+
+    <div class="callout callout-idea" style="margin-top:16px;">
+      <b>Что это доказывает?</b> Вода из разных источников (и даже из лаборатории) —
+      после очистки это <b>одно и то же вещество</b> с одним и тем же составом.
+      Атомы соединяются целыми порциями, поэтому состав всегда одинаковый.
+      Это <b>прямое следствие</b> атомного строения вещества.
+    </div>
+
+    <!-- ТРЕУГОЛЬНИК ДЖОНСТОНА -->
+    <h3 class="subhead">🔺 Смотрим через треугольник Джонстона</h3>
+    <div class="johnstone-trio">
+      <div style="padding:20px;border-radius:14px;border:2px solid var(--green);background:linear-gradient(180deg,#ecfdf5,#fff);text-align:center;">
+        <div style="font-size:40px;line-height:1;margin-bottom:10px;">👁</div>
+        <div style="font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#065f46;margin-bottom:8px;">Макро</div>
+        <div style="font-size:14.5px;line-height:1.6;">Запах распространяется. Пыльца дрожит. Масло растекается. Состав постоянен.</div>
+      </div>
+      <div style="padding:20px;border-radius:14px;border:2px solid var(--accent);background:linear-gradient(180deg,#f5f3ff,#fff);text-align:center;">
+        <div style="font-size:40px;line-height:1;margin-bottom:10px;">⚛️</div>
+        <div style="font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#5b21b6;margin-bottom:8px;">Субмикро</div>
+        <div style="font-size:14.5px;line-height:1.6;"><b>Чёрный ящик открыт!</b> Вещество состоит из атомов и молекул. Они движутся и сталкиваются.</div>
+      </div>
+      <div style="padding:20px;border-radius:14px;border:2px solid var(--h-color);background:linear-gradient(180deg,#ecfeff,#fff);text-align:center;">
+        <div style="font-size:40px;line-height:1;margin-bottom:10px;">📝</div>
+        <div style="font-size:14px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:#0e7490;margin-bottom:8px;">Символический</div>
+        <div style="font-size:14.5px;line-height:1.6;">Пока — словами: «вещество состоит из атомов». Специальные знаки — в Модуле 4б.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 2: МОДЕЛИ АТОМА ==================== -->
+<section class="section">
+  <div class="stage s2 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">2</div>
+      <div>
+        <div class="stage-title">Модели атома: как менялись представления</div>
+        <div class="stage-subtitle">От «пудинга» до квантовой модели — путь длиной в 30 лет</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Когда учёные убедились, что атомы существуют, возник новый вопрос: <b>как устроен атом внутри?</b>
+      Если атом неделим, почему при электрических разрядах из него вылетают какие-то частицы?
+      Оказалось, атом <b>делим</b> — но не в химических реакциях, а при физических воздействиях.
+    </p>
+
+    <h3 class="subhead">📅 Интерактивный таймлайн открытий</h3>
+    <p class="subhead-sub"><span class="cta">👆 Нажми на любую карточку</span>, чтобы узнать подробности.</p>
+    <div class="timeline">
+      <div class="timeline-track" id="timelineTrack"></div>
+      <div class="tl-detail" id="tlDetail"></div>
+    </div>
+
+    <h3 class="subhead">🧪 Четыре модели атома</h3>
+    <p class="subhead-sub"><span class="cta">👆 Переключай</span> модели и смотри анимации.</p>
+    <div class="model-tabs">
+      <button class="model-tab active" data-model="thomson">🍮 Модель Томсона (1904)</button>
+      <button class="model-tab" data-model="rutherford">☀️ Модель Резерфорда (1911)</button>
+      <button class="model-tab" data-model="bohr">🪐 Модель Бора (1913)</button>
+      <button class="model-tab" data-model="quantum">☁️ Квантовая модель (1920-е)</button>
+    </div>
+
+    <!-- Модель Томсона -->
+    <div class="model-view active" id="model-thomson">
+      <div class="mv-title">🍮 «Пудинг с изюмом» — Джозеф Джон Томсон, 1904</div>
+      <div class="mv-text">
+        Томсон открыл <b>электрон</b> — отрицательно заряженную частицу. Но атом в целом нейтрален,
+        значит, должна быть и положительная часть. Томсон предположил, что атом — это <b>шар</b>
+        из положительно заряженного вещества, в который <b>вкраплены электроны</b>, как изюм в пудинг.
+      </div>
+      <div class="canvas-wrap" style="background:#f0f9ff;">
+        <canvas id="thomsonCanvas" width="900" height="340"></canvas>
+      </div>
+      <div class="canvas-toolbar">
+        <button class="btn red" id="thomsonBtn">🎯 Обстрелять альфа-частицами</button>
+      </div>
+      <div class="mv-problem">
+        <b>Проблема модели:</b> если атом — большой положительный шар, то положительные альфа-частицы
+        должны пролетать почти <b>без отклонений</b>. А эксперимент показал другое!
+      </div>
+    </div>
+
+    <!-- Модель Резерфорда -->
+    <div class="model-view" id="model-rutherford">
+      <div class="mv-title">☀️ Планетарная модель — Эрнест Резерфорд, 1911</div>
+      <div class="mv-text">
+        Резерфорд провёл знаменитый <b>опыт с золотой фольгой</b>. Он «обстреливал» тончайшую
+        золотую плёнку альфа-частицами и смотрел, как они рассеиваются. Результат был ошеломляющим:
+        большинство частиц пролетало насквозь, но некоторые <b>отскакивали назад</b>!
+        <br><br>
+        Резерфорд воскликнул: «Это так же невероятно, как если бы вы выстрелили из пушки в лист бумаги,
+        а ядро отскочило бы обратно в вас». Он сделал вывод: атом — это <b>пустота</b>, в центре которой
+        крошечное, но очень тяжёлое <b>ядро</b>, а вокруг движутся электроны — как <b>Солнечная система</b> в миниатюре.
+      </div>
+      <div class="canvas-wrap" style="background:linear-gradient(180deg,#0f172a,#1e293b);">
+        <canvas id="rutherfordCanvas" width="900" height="420"></canvas>
+      </div>
+      <div class="canvas-toolbar">
+        <button class="btn red" id="rutherfordBtn">▶ Запустить опыт</button>
+        <button class="btn ghost" id="rutherfordReset">↺ Сброс</button>
+      </div>
+      <div class="mv-problem">
+        <b>Проблема модели:</b> по законам физики электрон, движущийся вокруг ядра, должен излучать
+        энергию и в итоге упасть на ядро. Но атомы стабильны!
+      </div>
+    </div>
+
+    <!-- Модель Бора -->
+    <div class="model-view" id="model-bohr">
+      <div class="mv-title">🪐 Модель Бора — Нильс Бор, 1913</div>
+      <div class="mv-text">
+        Бор предположил, что электроны могут двигаться только по <b>определённым орбитам</b> —
+        «разрешённым» уровням энергии. Пока электрон на орбите, он <b>не излучает</b> энергию.
+        А когда перескакивает с одной орбиты на другую — <b>поглощает или выделяет</b> энергию
+        порцией (квантом).
+      </div>
+      <div class="canvas-wrap" style="background:linear-gradient(180deg,#0f172a,#1e293b);">
+        <canvas id="bohrCanvas" width="900" height="380"></canvas>
+      </div>
+      <div class="bohr-controls">
+        <button class="btn cyan" id="bohrUp">⚡ Возбудить атом</button>
+        <button class="btn green" id="bohrDown">💫 Вернуть электрон</button>
+        <button class="btn ghost" id="bohrReset">↺ Сброс</button>
+      </div>
+      <div class="mv-problem">
+        <b>Проблема модели:</b> модель хорошо работала для водорода, но не объясняла строение
+        более сложных атомов.
+      </div>
+    </div>
+
+    <!-- Квантовая модель -->
+    <div class="model-view" id="model-quantum">
+      <div class="mv-title">☁️ Квантовая модель — Шрёдингер, Гейзенберг, 1920-е</div>
+      <div class="mv-text">
+        Современная модель говорит: электрон — это <b>не шарик</b>, который движется по орбите,
+        а <b>«облако вероятности»</b>. Мы не можем точно сказать, где находится электрон в данный момент,
+        но можем указать, где он бывает <b>чаще всего</b>. Это облако называется <b>электронной орбиталью</b>.
+      </div>
+      <div class="canvas-wrap" style="background:linear-gradient(180deg,#0f172a,#1e293b);">
+        <canvas id="quantumCanvas" width="900" height="380"></canvas>
+      </div>
+      <div class="canvas-toolbar" style="flex-direction:column;align-items:center;gap:8px;">
+        <label style="color:#94a3b8;font-size:14px;font-weight:700;">Энергия / форма орбитали:</label>
+        <input type="range" id="quantumSlider" min="0" max="2" value="0" style="width:300px;accent-color:#8b5cf6;">
+        <div id="quantumLabel" style="color:#e0e7ff;font-weight:800;">s-орбиталь (сфера)</div>
+      </div>
+      <div class="mv-problem ok">
+        <b>Это — современная модель.</b> Она лучше всего объясняет все эксперименты.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 3: СТРОЕНИЕ АТОМА ==================== -->
+<section class="section">
+  <div class="stage s3 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">3</div>
+      <div>
+        <div class="stage-title">Что внутри атома?</div>
+        <div class="stage-subtitle">Протоны, нейтроны, электроны — и кварки</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Мы знаем: атом состоит из <b>ядра</b> и <b>электронов</b>. Но из чего состоит само ядро?
+      В 1919 году Резерфорд открыл <b>протон</b>. А в 1932 году Джеймс Чедвик — <b>нейтрон</b>.
+    </p>
+
+    <!-- 3D атом -->
+    <div class="atom-3d-wrap">
+      <svg class="atom-svg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="nucleusGrad" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#f87171"/><stop offset="100%" stop-color="#dc2626"/>
+          </radialGradient>
+          <radialGradient id="electronGrad" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#67e8f9"/><stop offset="100%" stop-color="#06b6d4"/>
+          </radialGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(30 260 200)"/>
+        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(90 260 200)"/>
+        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(150 260 200)"/>
+        <g class="nucleus-pulse">
+          <circle cx="260" cy="200" r="35" fill="url(#nucleusGrad)" filter="url(#glow)"/>
+          <circle cx="250" cy="190" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="250" y="194" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
+          <circle cx="270" cy="195" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="270" y="199" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
+          <circle cx="260" cy="215" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="260" y="219" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
+          <circle cx="268" cy="210" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="252" cy="205" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="265" cy="185" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
+        </g>
+        <g class="electron-orbit-1"><circle cx="440" cy="200" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="440" y="204" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
+        <g class="electron-orbit-2"><circle cx="260" cy="140" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="260" y="144" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
+        <g class="electron-orbit-3"><circle cx="170" cy="260" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="170" y="264" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
+      </svg>
+      <div class="atom-label">Ядро (протоны + нейтроны) и электроны на орбитах</div>
+    </div>
+
+    <!-- ТАБЛИЦА ЧАСТИЦ -->
+    <h3 class="subhead">📋 Три главные частицы</h3>
+    <table class="particles-table">
+      <thead><tr><th>Частица</th><th>Заряд</th><th>Масса</th><th>Где</th><th>Кто открыл</th></tr></thead>
+      <tbody>
+        <tr><td class="pt-pro">Протон (p⁺)</td><td>+1</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Резерфорд, 1919</td></tr>
+        <tr><td class="pt-neu">Нейтрон (n⁰)</td><td>0</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Чедвик, 1932</td></tr>
+        <tr><td class="pt-ele">Электрон (e⁻)</td><td>−1</td><td>≈1/1836 а.е.м.*</td><td>Вокруг ядра</td><td>Томсон, 1897</td></tr>
+      </tbody>
+    </table>
+    <p style="font-size:13.5px;color:var(--muted);margin-top:8px;">
+      * <b>а.е.м.</b> — атомная единица массы. Это удобная «единица измерения» для масс атомов и частиц.
+      Мы подробно разберём её в Модуле 4б. Пока просто запомни: <b>протон и нейтрон примерно одинаковы по массе,
+      а электрон в ~1836 раз легче</b>.
+    </p>
+
+    <!-- ЗАРЯД ПО ФЕЙНМАНУ -->
+    <h3 class="subhead">⚡ Откуда взялся заряд? (объяснение по Фейнману)</h3>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Представь, что ты никогда не слышал слово «заряд». Как объяснить его, не используя само слово?
+    </p>
+
+    <div class="callout callout-idea">
+      <b>Мысленный эксперимент:</b> возьми два одинаковых шарика. Потри их о шерсть и подвесь рядом.
+      Они <b>оттолкнутся</b> друг от друга. Потри один шарик о шерсть, а другой — о стекло.
+      Теперь они <b>притянутся</b>.
+      <br><br>
+      Значит, у шариков есть какое-то свойство, которое заставляет их либо отталкиваться, либо притягиваться.
+      Мы назвали это свойство <b>зарядом</b>. Природа выбрала <b>два типа</b> заряда — условно «плюс» и «минус».
+      Одинаковые заряды отталкиваются, разные — притягиваются.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Ключевая мысль:</b> заряд — это <b>не вещество</b> и <b>не «придела» к частице</b>.
+      Это <b>фундаментальное свойство</b> материи, такое же, как масса. Ты не можешь объяснить,
+      «почему» у протона именно плюс, а не минус. Мы просто <b>так назвали</b> два противоположных типа взаимодействия.
+      Главное — <b>баланс</b>: в атоме сколько плюсов, столько и минусов.
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> заряд — это <b>не энергия</b> и <b>не «топливо»</b>. Это свойство, которое определяет,
+      как частицы взаимодействуют друг с другом. Электроны удерживаются возле ядра именно потому,
+      что их отрицательный заряд притягивается к положительному заряду протонов.
+    </div>
+
+    <!-- МАСШТАБ -->
+    <h3 class="subhead">📏 Масштаб атома — от кварка до Вселенной</h3>
+    <p class="subhead-sub">
+      Самое сложное в атоме — <b>почувствовать</b> его масштаб. Ядро в 10 000–100 000 раз меньше атома.
+      Мы не можем нарисовать это «в лоб» — понадобится экран размером с дом. Вместо этого мы используем
+      <b>логарифмическую шкалу</b> — как в знаменитом проекте «Scale of the Universe».
+    </p>
+
+    <div class="canvas-wrap" style="background:linear-gradient(180deg,#0f172a,#1e293b);">
+      <canvas id="scaleCanvas" width="900" height="480"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn ghost" id="scaleIn">🔍 Приблизить</button>
+      <button class="btn ghost" id="scaleOut">🔭 Отдалить</button>
+      <button class="btn ghost" id="scaleReset">↺ Сброс</button>
+    </div>
+    <div style="text-align:center;margin-top:10px;color:#94a3b8;font-size:14px;" id="scaleInfo">
+      Текущий масштаб: <b>1 метр</b> — человек
+    </div>
+
+    <div class="callout callout-note" style="margin-top:16px;">
+      <b>Хочешь больше?</b> Открой <a href="https://universe.pavelfrolov.com/" target="_blank" style="color:var(--h-deep);font-weight:700;">интерактивную шкалу масштабов Вселенной</a> —
+      там можно пролететь от кварка до observable universe за 43 порядка величины. Это завораживает.
+    </div>
+
+    <!-- КВАРКИ -->
+    <h3 class="subhead">🌈 Что находится ещё глубже? Кварки, фермионы и бозоны</h3>
+    <p style="font-size:16.5px;line-height:1.8;">
+      Протоны и нейтроны <b>тоже делятся</b>. Они состоят из <b>кварков</b> — самых маленьких
+      известных частиц. Но кварки — не единственные «кирпичики». Современная физика делит все
+      элементарные частицы на <b>два больших класса</b>:
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧱 Фермионы — «кирпичики материи»</div>
+        <div class="c-desc">
+          Названы в честь Энрико Ферми. Это частицы, из которых <b>состоит вещество</b>.
+          У них полуцелый спин (это квантовое свойство, подробно — позже).
+          <br><br>
+          <b>Кварки</b> (6 типов: u, d, s, c, b, t) и <b>лептоны</b> (6 типов: электрон, мюон, тау и три нейтрино).
+          <br><br>
+          Протон = u + u + d. Нейтрон = u + d + d.
+        </div>
+      </div>
+      <div class="card">
+        <div class="c-title">🔗 Бозоны — «переносчики сил»</div>
+        <div class="c-desc">
+          Названы в честь Шатьендраната Бозе. Эти частицы <b>не составляют вещество</b> —
+          они <b>переносят взаимодействия</b> между фермионами.
+          <br><br>
+          <b>Фотон</b> — электромагнитная сила. <b>Глюоны</b> (8 типов) — сильная сила,
+          «склеивают» кварки. <b>W и Z-бозоны</b> — слабая сила. <b>Бозон Хиггса</b> — даёт массу.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> кварки <b>никогда не встречаются поодиночке</b>. Их «склеивают» глюоны,
+      и если попытаться «вытащить» один кварк, энергия натяжения «струны» станет настолько большой,
+      что родится новая пара кварк-антикварк. Это называется <b>конфайнмент</b> (от англ. confinement — удержание).
+    </div>
+
+    <!-- АНИМАЦИЯ КВАРКОВ -->
+    <div class="quark-wrap">
+      <canvas id="quarkCanvas" width="900" height="360"></canvas>
+    </div>
+    <div class="canvas-toolbar" style="margin-top:12px;">
+      <button class="btn ghost" id="quarkToggle" style="background:rgba(255,255,255,.1);color:#e0e7ff;border-color:rgba(255,255,255,.3);">⏸ Пауза</button>
+    </div>
+
+    <div class="callout callout-idea" style="margin-top:16px;">
+      <b>Зачем это изучают?</b> Чтобы понять, из чего состоит материя на самом фундаментальном уровне.
+      Это не просто любопытство. Знания о кварках и фундаментальных силах уже дали человечеству:
+      <ul style="margin-top:8px;padding-left:22px;line-height:1.8;">
+        <li><b>Ядерную энергетику</b> — понимание ядерных сил позволяет получать энергию из атомов.</li>
+        <li><b>Медицину</b> — ускорители частиц используются для лечения рака.</li>
+        <li><b>Технологии будущего</b> — квантовые компьютеры, сверхпроводники, новые материалы.</li>
+        <li><b>Понимание Вселенной</b> — что было в первые секунды после Большого взрыва.</li>
+      </ul>
+      <br>
+      Этим занимаются на <b>Большом адронном коллайдере</b> (ЦЕРН, Швейцария) и в других лабораториях мира.
+      Возможно, когда ты вырастешь, ты откроешь что-то ещё глубже!
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> в химических реакциях атомы <b>не делятся</b> на кварки. Кварки «работают» только
+      при огромных энергиях — в ускорителях частиц или в звёздах. Для химии атом — это <b>предел деления</b>.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🧠</div>
+      <div>
+        <div class="stage-title">Рефлексия по Фейнману</div>
+        <div class="stage-subtitle">Проверь, насколько ты понял материал</div>
+      </div>
+    </div>
+    <p style="font-size:16.5px;line-height:1.8;">
+      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
+      Выбери <b>лучшие простые объяснения</b> для младшего брата.
+    </p>
+    <div id="feynmanTest"></div>
+  </div>
+</section>
+
+<!-- ==================== ПРАКТИКУМ ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: собери атом</div>
+        <div class="stage-subtitle">Пройди 5 шагов и собери модель атома</div>
+      </div>
+    </div>
+    <div id="practicalTask"></div>
+  </div>
+</section>
+
+<!-- ==================== ИТОГОВЫЙ ТЕСТ ==================== -->
+<section class="section">
+  <div class="stage s-test fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📝</div>
+      <div>
+        <div class="stage-title">Итоговый тест по Модулю 4а</div>
+        <div class="stage-subtitle">15 вопросов · порог — 80% (12 правильных)</div>
+      </div>
+    </div>
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      <span class="cta">👆 Нажми на вариант</span> — он сразу подсветится, а под вопросом появится объяснение.
+    </p>
+    <div id="testContainer"></div>
+    <div class="test-score" id="testScore">Правильных ответов: <span id="scoreNum">0</span> из 15</div>
+    <div id="retryBox" style="text-align:center;"></div>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Атомы: невидимый мир · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">Простое объяснение · наглядный пример · интерактив · самопроверка</div>
+</footer>
+
+<script>
+/* ============================================================
+   УТИЛИТЫ
+   ============================================================ */
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
+    this.beginPath();this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);
+    this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath();return this;
+  };
+}
+const rand = (a,b)=>a+Math.random()*(b-a);
+
+/* ============================================================
+   ДИФФУЗИЯ
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('diffusionCanvas');
+  const btn = document.getElementById('diffusionBtn');
+  const scaleBtn = document.getElementById('diffusionScale');
+  const resetBtn = document.getElementById('diffusionReset');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  let mode = 'macro'; let running = false; let particles = [];
+  function initParticles(){
+    particles = [];
+    if (mode === 'macro'){
+      for (let i=0;i<160;i++) particles.push({x:rand(0,W),y:rand(0,H),vx:rand(-1,1),vy:rand(-1,1),r:rand(2,4),kind:'air'});
+      for (let i=0;i<50;i++) particles.push({x:rand(30,140),y:rand(H-140,H-40),vx:rand(-.5,.5),vy:rand(-.5,.5),r:rand(4,6),kind:'perfume'});
+    } else {
+      for (let i=0;i<40;i++) particles.push({x:rand(30,W-30),y:rand(30,H-30),vx:rand(-.8,.8),vy:rand(-.8,.8),r:10,kind:'air'});
+      for (let i=0;i<20;i++) particles.push({x:rand(40,180),y:rand(H-180,H-60),vx:rand(-.5,.5),vy:rand(-.5,.5),r:14,kind:'perfume'});
+    }
+  }
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const bg = ctx.createLinearGradient(0,0,0,H);
+    if (mode==='macro'){bg.addColorStop(0,'#f0f9ff');bg.addColorStop(1,'#e0f2fe');}
+    else {bg.addColorStop(0,'#0f172a');bg.addColorStop(1,'#1e293b');}
+    ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    if (mode==='macro'){
+      ctx.strokeStyle='#94a3b8';ctx.lineWidth=2;ctx.setLineDash([8,6]);ctx.strokeRect(20,20,W-40,H-40);ctx.setLineDash([]);
+      ctx.fillStyle='#8b5cf6';ctx.beginPath();ctx.roundRect(60,H-110,50,70,8);ctx.fill();
+      ctx.fillStyle='#c4b5fd';ctx.fillRect(75,H-125,20,20);
+      ctx.font='bold 14px Inter, sans-serif';ctx.textAlign='left';ctx.fillStyle='#8b5cf6';ctx.fillText('Флакон духов',60,H-130);
+      ctx.fillStyle='#64748b';ctx.fillText('Воздух комнаты',W-220,40);
+    } else {
+      ctx.font='bold 15px Inter, sans-serif';ctx.textAlign='left';ctx.fillStyle='#94a3b8';ctx.fillText('🔬 Молекулярный уровень: пустота между частицами',20,30);
+    }
+    particles.forEach(p=>{
+      ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      if (p.kind==='perfume') ctx.fillStyle = mode==='macro'?'rgba(139,92,246,.85)':'#a78bfa';
+      else ctx.fillStyle = mode==='macro'?'rgba(148,163,184,.4)':'#38bdf8';
+      ctx.fill();
+    });
+  }
+  function update(){particles.forEach(p=>{p.x+=p.vx;p.y+=p.vy;if(p.x<p.r||p.x>W-p.r)p.vx*=-1;if(p.y<p.r||p.y>H-p.r)p.vy*=-1;});}
+  function loop(){if(!running)return;update();draw();requestAnimationFrame(loop);}
+  btn.addEventListener('click',()=>{if(running){running=false;btn.textContent='▶ Запустить анимацию';return;}running=true;btn.textContent='⏸ Пауза';loop();});
+  scaleBtn.addEventListener('click',()=>{mode=mode==='macro'?'micro':'macro';scaleBtn.textContent=mode==='macro'?'🔍 Уровень молекул':'🏠 Вид комнаты';initParticles();draw();});
+  resetBtn.addEventListener('click',()=>{running=false;btn.textContent='▶ Запустить анимацию';initParticles();draw();});
+  initParticles();draw();
+})();
+
+/* ============================================================
+   БРОУНОВСКОЕ ДВИЖЕНИЕ
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('brownianCanvas');
+  const btn = document.getElementById('brownianBtn');
+  const trailBtn = document.getElementById('brownianTrail');
+  const resetBtn = document.getElementById('brownianReset');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+  const water = [];
+  for (let i=0;i<220;i++) water.push({x:rand(0,W),y:rand(0,H),vx:rand(-3,3),vy:rand(-3,3),r:rand(2,3)});
+  const pollen = {x:W/2,y:H/2,vx:0,vy:0,r:22,trail:[]};
+  let running=false, showTrail=true;
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#f0f9ff');bg.addColorStop(1,'#e0f2fe');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    water.forEach(p=>{ctx.beginPath();ctx.arc(p.x,p.y,p.r,0,Math.PI*2);ctx.fillStyle='rgba(125,211,252,.55)';ctx.fill();});
+    if (showTrail && pollen.trail.length>1){
+      ctx.beginPath();ctx.moveTo(pollen.trail[0].x,pollen.trail[0].y);
+      for(let i=1;i<pollen.trail.length;i++) ctx.lineTo(pollen.trail[i].x,pollen.trail[i].y);
+      ctx.strokeStyle='rgba(139,92,246,.55)';ctx.lineWidth=2;ctx.stroke();
+    }
+    ctx.beginPath();ctx.arc(pollen.x,pollen.y,pollen.r,0,Math.PI*2);ctx.fillStyle='#8b5cf6';ctx.fill();ctx.strokeStyle='#6d28d9';ctx.lineWidth=2;ctx.stroke();
+    ctx.font='bold 14px Inter, sans-serif';ctx.textAlign='left';ctx.fillStyle='#64748b';ctx.fillText('Молекулы воды',20,30);ctx.fillStyle='#8b5cf6';ctx.fillText('Частица пыльцы',20,52);
+  }
+  function update(){
+    water.forEach(p=>{
+      p.x+=p.vx;p.y+=p.vy;if(p.x<p.r||p.x>W-p.r)p.vx*=-1;if(p.y<p.r||p.y>H-p.r)p.vy*=-1;
+      const dx=pollen.x-p.x,dy=pollen.y-p.y,d=Math.hypot(dx,dy);
+      if(d<pollen.r+p.r+4){pollen.vx+=(dx/d)*0.35;pollen.vy+=(dy/d)*0.35;}
+    });
+    pollen.vx*=0.95;pollen.vy*=0.95;pollen.x+=pollen.vx;pollen.y+=pollen.vy;
+    if(pollen.x<pollen.r){pollen.x=pollen.r;pollen.vx=Math.abs(pollen.vx);}
+    if(pollen.x>W-pollen.r){pollen.x=W-pollen.r;pollen.vx=-Math.abs(pollen.vx);}
+    if(pollen.y<pollen.r){pollen.y=pollen.r;pollen.vy=Math.abs(pollen.vy);}
+    if(pollen.y>H-pollen.r){pollen.y=H-pollen.r;pollen.vy=-Math.abs(pollen.vy);}
+    pollen.trail.push({x:pollen.x,y:pollen.y});if(pollen.trail.length>250)pollen.trail.shift();
+  }
+  function loop(){if(!running)return;update();draw();requestAnimationFrame(loop);}
+  btn.addEventListener('click',()=>{if(running){running=false;btn.textContent='▶ Запустить';return;}running=true;btn.textContent='⏸ Пауза';loop();});
+  trailBtn.addEventListener('click',()=>{showTrail=!showTrail;trailBtn.textContent=showTrail?'👁 Скрыть траекторию':'👁 Показать траекторию';draw();});
+  resetBtn.addEventListener('click',()=>{pollen.x=W/2;pollen.y=H/2;pollen.vx=0;pollen.vy=0;pollen.trail=[];running=false;btn.textContent='▶ Запустить';draw();});
+  draw();
+})();
+
+/* ============================================================
+   ЗАКОН ПРУСТА — пипетки и зум
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('proustCanvas');
+  const btn = document.getElementById('proustBtn');
+  const resetBtn = document.getElementById('proustReset');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+
+  // Состояния анимации: 'idle' | 'pipette' | 'drop' | 'zoom1' | 'zoom2' | 'compare' | 'done'
+  let state = 'idle';
+  let t = 0;
+  let rafId = null;
+
+  const beakerA = {x: W*0.25, y: H*0.55, w: 120, h: 140};
+  const beakerB = {x: W*0.75, y: H*0.55, w: 120, h: 140};
+  const slideY = H*0.85;
+
+  function drawBeaker(cx, cy, label, subtitle){
+    // Стакан
+    ctx.beginPath();
+    ctx.moveTo(cx-60, cy-70);
+    ctx.lineTo(cx-60, cy+70);
+    ctx.lineTo(cx+60, cy+70);
+    ctx.lineTo(cx+60, cy-70);
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 3; ctx.stroke();
+    // Жидкость
+    ctx.beginPath();
+    ctx.moveTo(cx-58, cy-20); ctx.lineTo(cx-58, cy+68);
+    ctx.lineTo(cx+58, cy+68); ctx.lineTo(cx+58, cy-20);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(56,189,248,.35)'; ctx.fill();
+    // Подписи
+    ctx.font = 'bold 14px Inter, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillStyle = '#0e7490'; ctx.fillText(label, cx, cy-90);
+    ctx.font = '12px Inter, sans-serif'; ctx.fillStyle = '#64748b';
+    ctx.fillText(subtitle, cx, cy-74);
+    // Примеси (мелкие точки)
+    for (let i=0;i<15;i++){
+      ctx.beginPath();
+      ctx.arc(cx-40+Math.random()*80, cy-10+Math.random()*70, 1.5, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(148,163,184,.5)'; ctx.fill();
+    }
+  }
+
+  function drawPipette(x, y, angle){
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+    // Стеклянная трубка
+    ctx.fillStyle = 'rgba(255,255,255,.8)';
+    ctx.beginPath(); ctx.roundRect(-6, -40, 12, 80, 4); ctx.fill();
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1.5; ctx.stroke();
+    // Резиновая груша
+    ctx.fillStyle = '#ef4444';
+    ctx.beginPath(); ctx.ellipse(0, -50, 10, 14, 0, 0, Math.PI*2); ctx.fill();
+    ctx.restore();
+  }
+
+  function drawDrop(x, y, r, alpha){
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(56,189,248,${alpha})`;
+    ctx.fill();
+    ctx.strokeStyle = `rgba(14,116,144,${alpha})`; ctx.lineWidth = 1.5; ctx.stroke();
+  }
+
+  function drawMolecules(cx, cy, count, scale, label){
+    // Молекулы H2O: O (красный) + 2 H (синий)
+    for (let i=0;i<count;i++){
+      const angle = (i/count) * Math.PI * 2 + Math.random()*0.5;
+      const r = 20 + Math.random() * 60 * scale;
+      const mx = cx + Math.cos(angle) * r;
+      const my = cy + Math.sin(angle) * r;
+      // O
+      ctx.beginPath(); ctx.arc(mx, my, 8*scale, 0, Math.PI*2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      ctx.fillStyle = '#fff'; ctx.font = `bold ${9*scale}px Inter, sans-serif`; ctx.textAlign = 'center';
+      ctx.fillText('O', mx, my+3*scale);
+      // H1
+      ctx.beginPath(); ctx.arc(mx-12*scale, my-8*scale, 5*scale, 0, Math.PI*2);
+      ctx.fillStyle = '#3b82f6'; ctx.fill();
+      // H2
+      ctx.beginPath(); ctx.arc(mx+12*scale, my-8*scale, 5*scale, 0, Math.PI*2);
+      ctx.fillStyle = '#3b82f6'; ctx.fill();
+    }
+    if (label){
+      ctx.font = 'bold 16px Inter, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#10b981'; ctx.fillText(label, cx, cy+100*scale);
+    }
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const bg = ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#f0f9ff'); bg.addColorStop(1,'#e0f2fe');
+    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+    // Заголовок
+    ctx.font = 'bold 16px Inter, sans-serif'; ctx.textAlign = 'center';
+    ctx.fillStyle = '#0e7490';
+    ctx.fillText('Вода из разных источников — после очистки это одно и то же вещество', W/2, 35);
+
+    if (state === 'idle' || state === 'pipette' || state === 'drop'){
+      drawBeaker(beakerA.x, beakerA.y, 'Сибирское озеро', 'отфильтрована, но могут быть примеси');
+      drawBeaker(beakerB.x, beakerB.y, 'Лаборатория', 'отфильтрована, но могут быть примеси');
+
+      if (state === 'pipette' || state === 'drop'){
+        const progress = Math.min(t, 1);
+        // Пипетка A
+        const pxA = beakerA.x + (W/2 - beakerA.x) * progress;
+        const pyA = beakerA.y - 40 + (H*0.15) * progress;
+        drawPipette(pxA, pyA, 0.3 * progress);
+        // Пипетка B
+        const pxB = beakerB.x + (W/2 - beakerB.x) * progress;
+        const pyB = beakerB.y - 40 + (H*0.15) * progress;
+        drawPipette(pxB, pyB, -0.3 * progress);
+      }
+
+      if (state === 'drop' && t > 1.2){
+        drawDrop(W/2 - 80, H*0.3 + (t-1.2)*100, 8, Math.min(1, (t-1.2)*2));
+        drawDrop(W/2 + 80, H*0.3 + (t-1.2)*100, 8, Math.min(1, (t-1.2)*2));
+      }
+    }
+
+    if (state === 'zoom1'){
+      // Зум в первую каплю
+      const progress = Math.min(t, 1);
+      ctx.save();
+      ctx.translate(W/2, H/2);
+      ctx.scale(1 + progress * 4, 1 + progress * 4);
+      ctx.translate(-W/2, -H/2);
+      drawMolecules(W/2 - 80, H/2, 8, 0.8, '');
+      ctx.restore();
+      ctx.font = 'bold 18px Inter, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#8b5cf6';
+      ctx.fillText('🔬 Капля №1: молекулы воды H₂O', W/2, H - 30);
+    }
+
+    if (state === 'zoom2' || state === 'compare'){
+      const progress = state === 'compare' ? 1 : Math.min(t, 1);
+      // Две капли рядом
+      drawMolecules(W/2 - 150, H/2, 8, 1, '');
+      drawMolecules(W/2 + 150, H/2, 8, 1, '');
+      ctx.font = 'bold 16px Inter, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('Капля №1', W/2 - 150, H/2 - 110);
+      ctx.fillText('Капля №2', W/2 + 150, H/2 - 110);
+      if (state === 'compare'){
+        ctx.font = 'bold 20px Inter, sans-serif';
+        ctx.fillStyle = '#10b981';
+        ctx.fillText('✅ Состав одинаковый: H₂O!', W/2, H - 40);
+      }
+    }
+
+    if (state === 'done'){
+      drawMolecules(W/2 - 150, H/2, 8, 1, '');
+      drawMolecules(W/2 + 150, H/2, 8, 1, '');
+      ctx.font = 'bold 16px Inter, sans-serif'; ctx.textAlign = 'center';
+      ctx.fillStyle = '#64748b';
+      ctx.fillText('Капля №1', W/2 - 150, H/2 - 110);
+      ctx.fillText('Капля №2', W/2 + 150, H/2 - 110);
+      ctx.font = 'bold 22px Inter, sans-serif';
+      ctx.fillStyle = '#10b981';
+      ctx.fillText('✅ Состав одинаковый: H₂O!', W/2, H - 30);
+    }
+  }
+
+  function animate(){
+    if (state === 'done') return;
+    t += 0.02;
+    if (state === 'pipette' && t >= 1){ state = 'drop'; t = 0; }
+    else if (state === 'drop' && t >= 2.5){ state = 'zoom1'; t = 0; }
+    else if (state === 'zoom1' && t >= 1){ state = 'zoom2'; t = 0; }
+    else if (state === 'zoom2' && t >= 1){ state = 'compare'; t = 0; }
+    else if (state === 'compare' && t >= 1.5){ state = 'done'; }
+    draw();
+    if (state !== 'done') rafId = requestAnimationFrame(animate);
+  }
+
+  btn.addEventListener('click',()=>{
+    if (state !== 'idle') return;
+    state = 'pipette'; t = 0;
+    btn.textContent = '⏳ Анимация...';
+    btn.disabled = true;
+    animate();
+  });
+
+  resetBtn.addEventListener('click',()=>{
+    if (rafId) cancelAnimationFrame(rafId);
+    state = 'idle'; t = 0;
+    btn.textContent = '🔬 Взять по капле и заглянуть внутрь';
+    btn.disabled = false;
+    draw();
+  });
+
+  draw();
+})();
+
+/* ============================================================
+   ТАЙМЛАЙН
+   ============================================================ */
+(function(){
+  const track = document.getElementById('timelineTrack');
+  const detail = document.getElementById('tlDetail');
+  if (!track) return;
+  const EVENTS = [
+    { year:'1803', who:'Джон Дальтон', what:'Первая научная атомная теория', title:'1803 · Джон Дальтон',
+      text:'Дальтон предложил первую <b>научную</b> атомную теорию: каждое вещество состоит из атомов, атомы одного элемента одинаковы, а разных — разные. Атомы он представлял как <b>неделимые шарики</b>. Но как доказать их существование?' },
+    { year:'1897', who:'Дж. Дж. Томсон', what:'Открытие электрона', title:'1897 · Джозеф Джон Томсон',
+      text:'Изучая катодные лучи, Томсон обнаружил <b>электрон</b> — отрицательно заряженную частицу, которая в тысячи раз легче атома. Это означало: атом <b>делим</b>! Внутри него есть и другие частицы.' },
+    { year:'1904', who:'Дж. Дж. Томсон', what:'Модель «пудинг с изюмом»', title:'1904 · Модель Томсона',
+      text:'Томсон предположил, что атом — это <b>положительно заряженный шар</b>, в который вкраплены электроны, как изюм в пудинг. Модель объясняла нейтральность атома, но не объясняла результаты будущих опытов.' },
+    { year:'1909–1911', who:'Эрнест Резерфорд', what:'Опыт с золотой фольгой', title:'1909–1911 · Эрнест Резерфорд',
+      text:'Резерфорд «обстреливал» золотую фольгу альфа-частицами. Ожидалось, что все они пролетят насквозь. Но некоторые <b>отскочили назад</b>! Резерфорд сделал вывод: в центре атома — крошечное тяжёлое <b>ядро</b>, а вокруг — пустота и электроны.' },
+    { year:'1913', who:'Нильс Бор', what:'Квантовые постулаты', title:'1913 · Нильс Бор',
+      text:'Планетарная модель Резерфорда противоречила физике: электрон должен был упасть на ядро. Бор предположил, что электроны могут двигаться только по <b>определённым орбитам</b> и <b>не излучают</b> энергию, пока на них находятся. При перескоке — поглощают или выделяют <b>квант</b>.' },
+    { year:'1920-е', who:'Шрёдингер, Гейзенберг', what:'Квантовая модель', title:'1920-е · Квантовая механика',
+      text:'Электрон — <b>не шарик</b>, а «облако вероятности». Мы не можем точно указать его положение, но можем сказать, где он бывает <b>чаще всего</b>. Эта модель лучше всего объясняет эксперименты.' }
+  ];
+  track.innerHTML = EVENTS.map((e,i)=>`
+    <div class="tl-year${i===0?' active':''}" data-i="${i}">
+      <div class="tl-num">${e.year}</div>
+      <div class="tl-who">${e.who}</div>
+      <div class="tl-what">${e.what}</div>
+    </div>`).join('');
+  function show(i){
+    document.querySelectorAll('.tl-year').forEach(el=>el.classList.remove('active'));
+    track.querySelector(`[data-i="${i}"]`).classList.add('active');
+    const e = EVENTS[i];
+    detail.classList.add('show');
+    detail.innerHTML = `<div class="tl-d-title">${e.title}</div><div class="tl-d-text">${e.text}</div>`;
+  }
+  track.querySelectorAll('.tl-year').forEach(el=>el.addEventListener('click',()=>show(+el.dataset.i)));
+  show(0);
+})();
+
+/* ============================================================
+   МОДЕЛИ АТОМА
+   ============================================================ */
+(function(){
+  const tabs = document.querySelectorAll('.model-tab');
+  const views = document.querySelectorAll('.model-view');
+  tabs.forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      tabs.forEach(t=>t.classList.remove('active'));
+      views.forEach(v=>v.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('model-'+tab.dataset.model).classList.add('active');
+      if (tab.dataset.model === 'thomson') restartThomson();
+      if (tab.dataset.model === 'rutherford') restartRutherford();
+      if (tab.dataset.model === 'bohr') restartBohr();
+      if (tab.dataset.model === 'quantum') restartQuantum();
+    });
+  });
+})();
+
+/* ============================================================
+   МОДЕЛЬ ТОМСОНА
+   ============================================================ */
+let thomsonRaf = null;
+function restartThomson(){
+  const canvas = document.getElementById('thomsonCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+  const btn = document.getElementById('thomsonBtn');
+  let alphas = []; let running = false;
+  if (thomsonRaf) cancelAnimationFrame(thomsonRaf);
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const bg=ctx.createLinearGradient(0,0,0,H);bg.addColorStop(0,'#f0f9ff');bg.addColorStop(1,'#e0f2fe');ctx.fillStyle=bg;ctx.fillRect(0,0,W,H);
+    const cx=W/2,cy=H/2,R=120;
+    const grad=ctx.createRadialGradient(cx,cy,10,cx,cy,R);
+    grad.addColorStop(0,'rgba(239,68,68,.6)');grad.addColorStop(1,'rgba(239,68,68,.05)');
+    ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.fillStyle=grad;ctx.fill();
+    ctx.strokeStyle='rgba(239,68,68,.5)';ctx.lineWidth=2;ctx.setLineDash([6,6]);ctx.stroke();ctx.setLineDash([]);
+    const ePos=[[-60,-40],[60,-50],[70,50],[-50,60],[0,0],[-30,80],[40,80]];
+    ePos.forEach(([dx,dy])=>{
+      ctx.beginPath();ctx.arc(cx+dx,cy+dy,8,0,Math.PI*2);ctx.fillStyle='#3b82f6';ctx.fill();
+      ctx.strokeStyle='#1e40af';ctx.lineWidth=1.5;ctx.stroke();
+      ctx.fillStyle='#fff';ctx.font='bold 10px Inter, sans-serif';ctx.textAlign='center';ctx.fillText('−',cx+dx,cy+dy+4);
+    });
+    alphas.forEach(a=>{ctx.beginPath();ctx.arc(a.x,a.y,5,0,Math.PI*2);ctx.fillStyle='#fbbf24';ctx.fill();});
+    ctx.font='bold 14px Inter, sans-serif';ctx.fillStyle='#64748b';ctx.textAlign='left';ctx.fillText('Пучок α-частиц →',20,30);
+    ctx.textAlign='right';ctx.fillText('Атом Томсона',W-20,30);
+    ctx.textAlign='center';ctx.fillStyle='#b91c1c';ctx.fillText('Положительный шар + электроны',cx,cy+R+30);
+  }
+  function update(){
+    if (Math.random()<0.25) alphas.push({x:0,y:H/2+rand(-80,80),vx:4,vy:0,slight:rand(-0.04,0.04)});
+    for (let i=alphas.length-1;i>=0;i--){const a=alphas[i];a.x+=a.vx;a.y+=a.slight;if(a.x>W+10)alphas.splice(i,1);}
+  }
+  function loop(){if(!running)return;update();draw();thomsonRaf=requestAnimationFrame(loop);}
+  btn.addEventListener('click',()=>{if(running){running=false;btn.textContent='🎯 Обстрелять альфа-частицами';return;}running=true;btn.textContent='⏸ Пауза';loop();});
+  draw();
+}
+
+/* ============================================================
+   ОПЫТ РЕЗЕРФОРДА — ИСПРАВЛЕННАЯ ВЕРСИЯ
+   ============================================================ */
+let rutherfordRaf = null;
+function restartRutherford(){
+  const canvas = document.getElementById('rutherfordCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+  const btn = document.getElementById('rutherfordBtn');
+  const resetBtn = document.getElementById('rutherfordReset');
+
+  // Ядра золота — распределены по фольге
+  const foilX = 250;
+  const nuclei = [];
+  for (let y=50; y<H-50; y+=40){
+    for (let x=foilX-15; x<foilX+15; x+=30){
+      nuclei.push({x:x, y:y, r: 3});
+    }
+  }
+
+  let alphas = [];
+  let running = false;
+  let counts = {through:0, deflected:0, bounced:0};
+  if (rutherfordRaf) cancelAnimationFrame(rutherfordRaf);
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle='#0f172a';ctx.fillRect(0,0,W,H);
+
+    // Источник (свинцовый блок)
+    ctx.fillStyle='#475569';
+    ctx.beginPath();ctx.roundRect(20,H/2-40,70,80,6);ctx.fill();
+    ctx.fillStyle='#fbbf24';ctx.beginPath();ctx.arc(90,H/2,6,0,Math.PI*2);ctx.fill();
+
+    // Пучок
+    ctx.strokeStyle='rgba(251,191,36,.2)';ctx.lineWidth=2;ctx.setLineDash([4,4]);
+    ctx.beginPath();ctx.moveTo(96,H/2);ctx.lineTo(foilX-10,H/2);ctx.stroke();ctx.setLineDash([]);
+
+    // Золотая фольга
+    ctx.fillStyle='rgba(250,204,21,.08)';
+    ctx.fillRect(foilX-20,30,40,H-60);
+    ctx.strokeStyle='rgba(250,204,21,.3)';ctx.lineWidth=1;
+    ctx.strokeRect(foilX-20,30,40,H-60);
+
+    // Ядра золота
+    nuclei.forEach(n=>{
+      ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);
+      ctx.fillStyle='rgba(250,204,21,.8)';ctx.fill();
+    });
+
+    // Детектор (дуга справа)
+    ctx.strokeStyle='rgba(16,185,129,.4)';ctx.lineWidth=2;
+    ctx.beginPath();ctx.arc(W-100,H/2,130,-Math.PI/2,Math.PI/2);ctx.stroke();
+
+    // Альфа-частицы
+    alphas.forEach(a=>{
+      if (a.trail.length>1){
+        ctx.beginPath();ctx.moveTo(a.trail[0].x,a.trail[0].y);
+        for(let i=1;i<a.trail.length;i++) ctx.lineTo(a.trail[i].x,a.trail[i].y);
+        ctx.strokeStyle = a.bounced ? 'rgba(239,68,68,.7)' : (a.deflected ? 'rgba(251,191,36,.6)' : 'rgba(251,191,36,.2)');
+        ctx.lineWidth = a.bounced ? 2.5 : 1.5;
+        ctx.stroke();
+      }
+      ctx.beginPath();ctx.arc(a.x,a.y,4,0,Math.PI*2);
+      ctx.fillStyle = a.bounced ? '#ef4444' : '#fbbf24';ctx.fill();
+    });
+
+    // Подписи
+    ctx.font='bold 13px Inter, sans-serif';ctx.textAlign='left';ctx.fillStyle='#94a3b8';
+    ctx.fillText('Свинцовый блок',20,30);
+    ctx.fillStyle='#facc15';ctx.fillText('Золотая фольга',foilX-40,25);
+    ctx.fillStyle='#10b981';ctx.textAlign='right';ctx.fillText('Детектор',W-20,30);
+
+    // Счётчик
+    ctx.textAlign='center';ctx.fillStyle='#cbd5e1';ctx.font='bold 13px Inter, sans-serif';
+    ctx.fillText(`Прошло: ${counts.through} · Отклонилось: ${counts.deflected} · Отскочило: ${counts.bounced}`,W/2,H-15);
+  }
+
+  function spawn(){
+    if (Math.random()>0.4) return;
+    const startY = H/2 + rand(-160,160);
+    // Целимся в случайное ядро золота
+    const target = nuclei[Math.floor(Math.random()*nuclei.length)];
+    const angle = Math.atan2(target.y - startY, target.x - 96) + rand(-0.06, 0.06);
+    alphas.push({
+      x:96, y:startY,
+      vx:Math.cos(angle)*3.5,
+      vy:Math.sin(angle)*3.5,
+      trail:[], deflected:false, bounced:false
+    });
+  }
+
+  function update(){
+    spawn();
+    for (let i=alphas.length-1;i>=0;i--){
+      const a = alphas[i];
+      // Взаимодействие с ближайшим ядром
+      let nearest = null, minDist = Infinity;
+      nuclei.forEach(n=>{
+        const d = Math.hypot(a.x-n.x, a.y-n.y);
+        if (d < minDist){ minDist = d; nearest = n; }
+      });
+      if (nearest && minDist < 60 && minDist > 0){
+        const dx = a.x - nearest.x, dy = a.y - nearest.y;
+        const force = 500 / (minDist*minDist);
+        a.vx += (dx/minDist) * force;
+        a.vy += (dy/minDist) * force;
+        if (!a.deflected && force > 0.1){ a.deflected = true; }
+      }
+      a.x += a.vx; a.y += a.vy;
+      a.trail.push({x:a.x,y:a.y});
+      if (a.trail.length>60) a.trail.shift();
+
+      if (a.x > W+10){
+        if (a.bounced) counts.bounced++;
+        else if (a.deflected) counts.deflected++;
+        else counts.through++;
+        alphas.splice(i,1); continue;
+      }
+      if (a.x < -10 || a.y < -10 || a.y > H+10){
+        if (a.x < -10 && a.vy < 0){ a.bounced = true; counts.bounced++; }
+        else if (a.deflected) counts.deflected++;
+        alphas.splice(i,1); continue;
+      }
+    }
+  }
+
+  function loop(){if(!running)return;update();draw();rutherfordRaf=requestAnimationFrame(loop);}
+  btn.addEventListener('click',()=>{if(running){running=false;btn.textContent='▶ Запустить опыт';return;}running=true;btn.textContent='⏸ Пауза';loop();});
+  resetBtn.addEventListener('click',()=>{running=false;btn.textContent='▶ Запустить опыт';alphas=[];counts={through:0,deflected:0,bounced:0};draw();});
+  draw();
+}
+
+/* ============================================================
+   МОДЕЛЬ БОРА
+   ============================================================ */
+let bohrRaf = null;
+let bohrState = {orbit:1, flash:null};
+function restartBohr(){
+  const canvas = document.getElementById('bohrCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2;
+  const orbits = [60,110,160];
+  const labels = ['n=1','n=2','n=3'];
+  let angle = 0;
+  if (bohrRaf) cancelAnimationFrame(bohrRaf);
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0f172a';ctx.fillRect(0,0,W,H);
+    orbits.forEach((r,i)=>{
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);
+      ctx.strokeStyle=i===bohrState.orbit-1?'#06b6d4':'#334155';
+      ctx.lineWidth=i===bohrState.orbit-1?2.5:1.5;
+      ctx.setLineDash(i===bohrState.orbit-1?[]:[5,5]);ctx.stroke();ctx.setLineDash([]);
+      ctx.font='bold 12px Inter, sans-serif';ctx.fillStyle=i===bohrState.orbit-1?'#67e8f9':'#64748b';
+      ctx.textAlign='left';ctx.fillText(labels[i],cx+r+6,cy);
+    });
+    ctx.beginPath();ctx.arc(cx,cy,25,0,Math.PI*2);
+    const g=ctx.createRadialGradient(cx,cy,5,cx,cy,25);g.addColorStop(0,'#f87171');g.addColorStop(1,'#dc2626');
+    ctx.fillStyle=g;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    ctx.fillStyle='#fff';ctx.font='bold 11px Inter, sans-serif';ctx.textAlign='center';ctx.fillText('ядро',cx,cy+4);
+    const r=orbits[bohrState.orbit-1];
+    const ex=cx+Math.cos(angle)*r, ey=cy+Math.sin(angle)*r;
+    ctx.beginPath();ctx.arc(ex,ey,11,0,Math.PI*2);
+    const eg=ctx.createRadialGradient(ex,ey,2,ex,ey,11);eg.addColorStop(0,'#67e8f9');eg.addColorStop(1,'#06b6d4');
+    ctx.fillStyle=eg;ctx.fill();ctx.fillStyle='#fff';ctx.font='bold 12px Inter, sans-serif';ctx.fillText('−',ex,ey+4);
+    if (bohrState.flash){
+      const f=bohrState.flash;ctx.globalAlpha=f.alpha;
+      ctx.beginPath();ctx.arc(cx+300,cy-100,12,0,Math.PI*2);ctx.fillStyle='#fbbf24';ctx.fill();
+      ctx.font='bold 16px Inter, sans-serif';ctx.fillStyle='#fbbf24';ctx.textAlign='center';
+      ctx.fillText(f.dir==='up'?'⚡ квант':'✨ фотон',cx+300,cy-130);
+      ctx.globalAlpha=1;
+    }
+    ctx.font='bold 14px Inter, sans-serif';ctx.textAlign='center';ctx.fillStyle='#94a3b8';
+    ctx.fillText('Электрон на орбите n='+bohrState.orbit+' (не излучает)',cx,H-20);
+  }
+  function loop(){
+    angle+=0.03;
+    if(bohrState.flash){bohrState.flash.alpha-=0.02;if(bohrState.flash.alpha<=0)bohrState.flash=null;}
+    draw();bohrRaf=requestAnimationFrame(loop);
+  }
+  document.getElementById('bohrUp').onclick=()=>{if(bohrState.orbit<3){bohrState.orbit++;bohrState.flash={alpha:1,dir:'up'};}};
+  document.getElementById('bohrDown').onclick=()=>{if(bohrState.orbit>1){bohrState.orbit--;bohrState.flash={alpha:1,dir:'down'};}};
+  document.getElementById('bohrReset').onclick=()=>{bohrState.orbit=1;bohrState.flash=null;};
+  loop();
+}
+
+/* ============================================================
+   КВАНТОВАЯ МОДЕЛЬ
+   ============================================================ */
+let quantumRaf = null;
+function restartQuantum(){
+  const canvas = document.getElementById('quantumCanvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+  const cx=W/2, cy=H/2;
+  const slider=document.getElementById('quantumSlider');
+  const label=document.getElementById('quantumLabel');
+  let t=0;
+  if (quantumRaf) cancelAnimationFrame(quantumRaf);
+  const names=['s-орбиталь (сфера)','p-орбиталь (гантель)','d-орбиталь (лепестки)'];
+  function draw(){
+    ctx.clearRect(0,0,W,H);ctx.fillStyle='#0f172a';ctx.fillRect(0,0,W,H);
+    const mode=+slider.value;
+    ctx.beginPath();ctx.arc(cx,cy,18,0,Math.PI*2);
+    const g=ctx.createRadialGradient(cx,cy,3,cx,cy,18);g.addColorStop(0,'#f87171');g.addColorStop(1,'#dc2626');ctx.fillStyle=g;ctx.fill();
+    const pulse=1+Math.sin(t)*0.04;
+    if (mode===0){
+      const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,100*pulse);
+      cg.addColorStop(0,'rgba(167,139,250,.55)');cg.addColorStop(1,'rgba(167,139,250,0)');
+      ctx.beginPath();ctx.arc(cx,cy,100*pulse,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+    } else if (mode===1){
+      for (const sign of [-1,1]){
+        const cxx=cx, cyy=cy+sign*70*pulse;
+        const cg=ctx.createRadialGradient(cxx,cyy,0,cxx,cyy,80*pulse);
+        cg.addColorStop(0,'rgba(139,92,246,.55)');cg.addColorStop(1,'rgba(139,92,246,0)');
+        ctx.beginPath();ctx.ellipse(cxx,cyy,60*pulse,80*pulse,0,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+      }
+    } else {
+      const angles=[0,Math.PI/2,Math.PI,3*Math.PI/2];
+      angles.forEach(a=>{
+        const cxx=cx+Math.cos(a)*80*pulse, cyy=cy+Math.sin(a)*80*pulse;
+        const cg=ctx.createRadialGradient(cxx,cyy,0,cxx,cyy,60*pulse);
+        cg.addColorStop(0,'rgba(139,92,246,.55)');cg.addColorStop(1,'rgba(139,92,246,0)');
+        ctx.beginPath();ctx.ellipse(cxx,cyy,55*pulse,40*pulse,a,0,Math.PI*2);ctx.fillStyle=cg;ctx.fill();
+      });
+    }
+    ctx.font='bold 15px Inter, sans-serif';ctx.textAlign='center';ctx.fillStyle='#e0e7ff';
+    ctx.fillText('Где электрон бывает чаще — там облако плотнее',cx,H-20);
+  }
+  function loop(){t+=0.05;draw();quantumRaf=requestAnimationFrame(loop);}
+  slider.oninput=()=>{label.textContent=names[+slider.value];draw();};
+  label.textContent=names[+slider.value];
+  loop();
+}
+
+/* ============================================================
+   ШКАЛА МАСШТАБОВ — ЛОГАРИФМИЧЕСКАЯ
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('scaleCanvas');
+  const btnIn = document.getElementById('scaleIn');
+  const btnOut = document.getElementById('scaleOut');
+  const btnReset = document.getElementById('scaleReset');
+  const info = document.getElementById('scaleInfo');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // Логарифмическая шкала: от 10^-18 м (кварк) до 10^7 м (Земля)
+  // log10 от -18 до 7 = 25 порядков
+  const MIN_LOG = -18, MAX_LOG = 7;
+  let currentLog = 0; // 1 метр
+
+  const OBJECTS = [
+    {log:-18, name:'Кварк', r:2, color:'#a78bfa', label:'< 10⁻¹⁸ м'},
+    {log:-15, name:'Протон', r:4, color:'#f87171', label:'~10⁻¹⁵ м'},
+    {log:-14, name:'Ядро атома', r:6, color:'#ef4444', label:'~10⁻¹⁴ м'},
+    {log:-10, name:'Атом', r:20, color:'#38bdf8', label:'~10⁻¹⁰ м'},
+    {log:-9, name:'Молекула', r:25, color:'#06b6d4', label:'~10⁻⁹ м'},
+    {log:-7, name:'Вирус', r:30, color:'#10b981', label:'~10⁻⁷ м'},
+    {log:-6, name:'Бактерия', r:35, color:'#22c55e', label:'~10⁻⁶ м'},
+    {log:-4, name:'Клетка', r:45, color:'#84cc16', label:'~10⁻⁴ м'},
+    {log:-2, name:'Пылинка', r:50, color:'#eab308', label:'~10⁻² м'},
+    {log:0, name:'Человек', r:70, color:'#f97316', label:'1 м'},
+    {log:4, name:'Гора', r:100, color:'#78716c', label:'~10⁴ м'},
+    {log:7, name:'Земля', r:150, color:'#3b82f6', label:'~10⁷ м'}
+  ];
+
+  // Находим ближайший объект к текущему масштабу
+  function nearestObject(log){
+    let best = OBJECTS[0], bestDist = Infinity;
+    OBJECTS.forEach(o=>{
+      const d = Math.abs(o.log - log);
+      if (d < bestDist){ bestDist = d; best = o; }
+    });
+    return best;
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const bg = ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#0f172a'); bg.addColorStop(1,'#1e293b');
+    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+    // Центральный объект
+    const obj = nearestObject(currentLog);
+    const cx = W/2, cy = H/2 - 20;
+
+    // Пульсация
+    const pulse = 1 + Math.sin(Date.now()*0.003) * 0.05;
+    const radius = obj.r * pulse;
+
+    // Свечение
+    const glow = ctx.createRadialGradient(cx,cy,0,cx,cy,radius*3);
+    glow.addColorStop(0, obj.color + '66');
+    glow.addColorStop(1, obj.color + '00');
+    ctx.beginPath(); ctx.arc(cx,cy,radius*3,0,Math.PI*2);
+    ctx.fillStyle = glow; ctx.fill();
+
+    // Объект
+    ctx.beginPath(); ctx.arc(cx,cy,radius,0,Math.PI*2);
+    ctx.fillStyle = obj.color; ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+    // Название
+    ctx.font = 'bold 24px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillText(obj.name, cx, cy + radius + 40);
+    ctx.font = '16px Inter, sans-serif';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText(obj.label, cx, cy + radius + 65);
+
+    // Шкала (логарифмическая линейка)
+    const barY = H - 60;
+    const barX = 60;
+    const barW = W - 120;
+    const barH = 12;
+
+    ctx.fillStyle = '#334155';
+    ctx.beginPath(); ctx.roundRect(barX, barY, barW, barH, 6); ctx.fill();
+
+    // Заполнение
+    const fillW = ((currentLog - MIN_LOG) / (MAX_LOG - MIN_LOG)) * barW;
+    const grad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
+    grad.addColorStop(0, '#a78bfa');
+    grad.addColorStop(0.5, '#38bdf8');
+    grad.addColorStop(1, '#f97316');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.roundRect(barX, barY, fillW, barH, 6); ctx.fill();
+
+    // Метки на шкале
+    ctx.font = 'bold 11px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    const marks = [-18, -15, -12, -9, -6, -3, 0, 3, 6];
+    marks.forEach(m=>{
+      const x = barX + ((m - MIN_LOG) / (MAX_LOG - MIN_LOG)) * barW;
+      ctx.fillStyle = '#64748b';
+      ctx.fillRect(x-1, barY+barH, 2, 6);
+      ctx.fillStyle = '#94a3b8';
+      const label = m === 0 ? '1 м' : `10${m < 0 ? '⁻' : ''}${Math.abs(m)} м`;
+      ctx.fillText(label, x, barY + barH + 22);
+    });
+
+    // Подпись
+    ctx.font = 'bold 14px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#8b5cf6';
+    ctx.fillText(`Текущий масштаб: 10${currentLog < 0 ? '⁻' : ''}${Math.abs(Math.round(currentLog))} м`, cx, 40);
+
+    // Инфо
+    info.innerHTML = `Текущий масштаб: <b>${obj.label}</b> — ${obj.name}`;
+  }
+
+  btnIn.addEventListener('click',()=>{ currentLog = Math.max(MIN_LOG, currentLog - 1); draw(); });
+  btnOut.addEventListener('click',()=>{ currentLog = Math.min(MAX_LOG, currentLog + 1); draw(); });
+  btnReset.addEventListener('click',()=>{ currentLog = 0; draw(); });
+
+  draw();
+})();
+
+/* ============================================================
+   КВАРКИ — АНИМИРОВАННЫЙ ОБМЕН ГЛЮОНАМИ
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('quarkCanvas');
+  const toggleBtn = document.getElementById('quarkToggle');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2;
+  let running = true;
+  let rafId = null;
+  let t = 0;
+
+  // Три кварка
+  const quarks = [
+    {angle: 0, radius: 70, color: '#a78bfa', label: 'u', offset: 0},
+    {angle: 2*Math.PI/3, radius: 70, color: '#a78bfa', label: 'u', offset: Math.PI/3},
+    {angle: 4*Math.PI/3, radius: 70, color: '#7dd3fc', label: 'd', offset: 2*Math.PI/3}
+  ];
+
+  // Глюоны — 6 частиц, которые летают между кварками
+  const gluons = [];
+  for (let i=0;i<6;i++){
+    gluons.push({
+      from: i % 3,
+      to: (i+1) % 3,
+      progress: Math.random(),
+      speed: 0.005 + Math.random()*0.01
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = '#1e1b4b'; ctx.fillRect(0,0,W,H);
+
+    // Свечение протона
+    const g = ctx.createRadialGradient(cx,cy,0,cx,cy,130);
+    g.addColorStop(0,'rgba(167,139,250,.15)');
+    g.addColorStop(1,'rgba(167,139,250,0)');
+    ctx.beginPath(); ctx.arc(cx,cy,130,0,Math.PI*2); ctx.fillStyle = g; ctx.fill();
+
+    // Контур протона
+    ctx.beginPath(); ctx.arc(cx,cy,120,0,Math.PI*2);
+    ctx.strokeStyle = 'rgba(167,139,250,.3)';
+    ctx.lineWidth = 2; ctx.setLineDash([8,6]); ctx.stroke(); ctx.setLineDash([]);
+
+    // Позиции кварков
+    const pos = quarks.map(q=>{
+      const a = q.angle + t * 0.01;
+      return { x: cx + Math.cos(a) * q.radius, y: cy + Math.sin(a) * q.radius };
+    });
+
+    // Глюоны (линии между кварками)
+    gluons.forEach(gl=>{
+      const from = pos[gl.from];
+      const to = pos[gl.to];
+      const gx = from.x + (to.x - from.x) * gl.progress;
+      const gy = from.y + (to.y - from.y) * gl.progress;
+
+      // Линия
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.strokeStyle = `rgba(251,191,36,${0.2 + gl.progress * 0.3})`;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4,4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Глюон (жёлтая точка)
+      ctx.beginPath();
+      ctx.arc(gx, gy, 4, 0, Math.PI*2);
+      ctx.fillStyle = '#fbbf24';
+      ctx.fill();
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1; ctx.stroke();
+
+      gl.progress += gl.speed;
+      if (gl.progress > 1){ gl.progress = 0; gl.from = gl.to; gl.to = (gl.to+1)%3; }
+    });
+
+    // Кварки
+    quarks.forEach((q,i)=>{
+      const p = pos[i];
+      ctx.beginPath(); ctx.arc(p.x, p.y, 26, 0, Math.PI*2);
+      const qg = ctx.createRadialGradient(p.x-6,p.y-6,4,p.x,p.y,26);
+      qg.addColorStop(0, q.color);
+      qg.addColorStop(1, q.color === '#a78bfa' ? '#7c3aed' : '#0284c7');
+      ctx.fillStyle = qg; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 18px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(q.label, p.x, p.y + 6);
+    });
+
+    // Подписи
+    ctx.font = 'bold 14px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#c7d2fe';
+    ctx.fillText('Протон: два u-кварка и один d-кварк', cx, 30);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillText('Жёлтые точки — глюоны, «склеивающие» кварки', cx, H - 20);
+
+    t++;
+  }
+
+  function loop(){
+    if (!running) return;
+    draw();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  toggleBtn.addEventListener('click',()=>{
+    if (running){ running = false; toggleBtn.textContent = '▶ Продолжить'; }
+    else { running = true; toggleBtn.textContent = '⏸ Пауза'; loop(); }
+  });
+
+  loop();
+})();
+
+/* ============================================================
+   ВХОДНОЙ ТЕСТ
+   ============================================================ */
+(function(){
+  const container = document.getElementById('entryTestContainer');
+  const resultBox = document.getElementById('entryResult');
+  if (!container) return;
+  const QUESTIONS = [
+    { q:'Что утверждает закон сохранения массы?',
+      options:['Масса до реакции равна массе после реакции','Масса всегда уменьшается','Масса всегда увеличивается','Масса не важна'],
+      correct:0, why:'Масса веществ, вступивших в реакцию, равна массе образовавшихся веществ.' },
+    { q:'Что утверждает закон сохранения энергии?',
+      options:['Энергия исчезает','Энергия переходит из формы в форму, но не исчезает','Энергия берётся из воздуха','Энергия не важна'],
+      correct:1, why:'Энергия не создаётся и не исчезает — только переходит из одной формы в другую.' },
+    { q:'Что такое энтропия?',
+      options:['Мера беспорядка','Мера массы','Мера скорости','Мера энергии'],
+      correct:0, why:'Энтропия — мера беспорядка. Чем больше беспорядка, тем выше энтропия.' },
+    { q:'Почему мяч катится с горки?',
+      options:['Стремление к снижению энергии','Стремление к повышению беспорядка','Стремление к сохранению массы','Так захотел'],
+      correct:0, why:'Система стремится к снижению энергии — мяч катится вниз.' },
+    { q:'Когда реакция идёт сама собой?',
+      options:['Когда система снижает энергию и повышает беспорядок','Когда есть катализатор','Когда есть тепло','Когда есть свет'],
+      correct:0, why:'Реакция идёт сама, если система может снизить энергию и повысить энтропию.' }
+  ];
+  let correct = 0, answered = 0;
+  container.innerHTML = QUESTIONS.map((q,i)=>`
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
+      <div class="test-options">${q.options.map((o,j)=>`
+        <div class="test-option" data-q="${i}" data-o="${j}">
+          <span class="opt-marker">${String.fromCharCode(65+j)}</span><span>${o}</span>
+        </div>`).join('')}</div>
+      <div class="explanation" id="entryExp-${i}"></div>
+    </div>`).join('');
+  container.querySelectorAll('.test-option').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      const qi=+opt.dataset.q, oi=+opt.dataset.o;
+      const q=QUESTIONS[qi];
+      const exp=document.getElementById('entryExp-'+qi);
+      if (exp.classList.contains('show')) return;
+      const ok=oi===q.correct;
+      container.querySelectorAll(`[data-q="${qi}"]`).forEach(o=>{
+        o.classList.add('disabled');
+        const idx=+o.dataset.o;
+        if (idx===q.correct) o.classList.add('correct');
+        if (idx===oi && !ok) o.classList.add('wrong');
+      });
+      exp.classList.add('show',ok?'ok':'no');
+      exp.innerHTML=`<b>${ok?'✅ Правильно!':'❌ Не совсем.'}</b> ${q.why}`;
+      if (ok) correct++;
+      answered++;
+      if (answered===QUESTIONS.length){
+        resultBox.classList.add('show');
+        if (correct>=4){resultBox.classList.add('good');resultBox.innerHTML=`🎉 <b>Отлично!</b> ${correct} из ${QUESTIONS.length}. Ты готов к Модулю 4а.`;}
+        else {resultBox.classList.add('mid');resultBox.innerHTML=`👍 <b>Хорошо.</b> ${correct} из ${QUESTIONS.length}. Рекомендуем пройти модуль целиком.`;}
+      }
+    });
+  });
+})();
+
+/* ============================================================
+   РЕФЛЕКСИЯ ПО ФЕЙНМАНУ
+   ============================================================ */
+(function(){
+  const container = document.getElementById('feynmanTest');
+  if (!container) return;
+  const QUESTIONS = [
+    { q:'Как объяснить младшему брату, откуда мы знаем об атомах, если мы их не видим?',
+      options:['Мы видим их влияние: запах распространяется, пыльца дрожит','Учёные придумали атомы','Атомы видны в микроскоп','Атомы — фантазия'],
+      correct:0, why:'Мы не видим атомы напрямую, но видим их влияние: диффузия, броуновское движение, масляная плёнка.' },
+    { q:'Почему модель атома менялась?',
+      options:['Новые факты не укладывались в старую модель','Учёные не могли договориться','Модели менялись по прихоти','Так было всегда'],
+      correct:0, why:'Наука развивается через уточнение: каждая новая модель лучше объясняла эксперименты.' },
+    { q:'Что такое атом?',
+      options:['Мельчайшая частица вещества, не делящаяся в химических реакциях','Самый маленький шарик','Молекула','Что-то невидимое'],
+      correct:0, why:'Атом — мельчайшая химически неделимая частица.' },
+    { q:'Откуда взялся заряд у частиц?',
+      options:['Это фундаментальное свойство материи, как масса','Учёные приделали заряд','Заряд появляется при движении','Заряд — это энергия'],
+      correct:0, why:'Заряд — фундаментальное свойство. Природа выбрала два типа заряда, и они взаимодействуют.' },
+    { q:'Что находится внутри атома?',
+      options:['Ядро (протоны и нейтроны) и электроны','Только электроны','Только ядро','Ничего'],
+      correct:0, why:'Атом состоит из ядра (протоны + нейтроны) и электронов вокруг.' }
+  ];
+  let correct = 0, answered = 0;
+  container.innerHTML = QUESTIONS.map((q,i)=>`
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
+      <div class="test-options">${q.options.map((o,j)=>`
+        <div class="test-option" data-fq="${i}" data-fo="${j}">
+          <span class="opt-marker">${String.fromCharCode(65+j)}</span><span>${o}</span>
+        </div>`).join('')}</div>
+      <div class="explanation" id="feynExp-${i}"></div>
+    </div>`).join('');
+  container.querySelectorAll('.test-option').forEach(opt=>{
+    opt.addEventListener('click',()=>{
+      const qi=+opt.dataset.fq, oi=+opt.dataset.fo;
+      const q=QUESTIONS[qi];
+      const exp=document.getElementById('feynExp-'+qi);
+      if (exp.classList.contains('show')) return;
+      const ok=oi===q.correct;
+      container.querySelectorAll(`[data-fq="${qi}"]`).forEach(o=>{
+        o.classList.add('disabled');
+        const idx=+o.dataset.fo;
+        if (idx===q.correct) o.classList.add('correct');
+        if (idx===oi && !ok) o.classList.add('wrong');
+      });
+      exp.classList.add('show',ok?'ok':'no');
+      exp.innerHTML=`<b>${ok?'✅ Отлично!':'❌ Не совсем.'}</b> ${q.why}`;
+      if (ok) correct++;
+      answered++;
+      if (answered===QUESTIONS.length){
+        const box=document.createElement('div');
+        box.className='callout callout-ok';box.style.marginTop='14px';
+        const msg=correct>=4?'🎉 <b>Отлично!</b> Ты умеешь объяснять просто.':'👍 <b>Хорошо.</b> Посмотри объяснения ещё раз.';
+        box.innerHTML=`Правильных ответов: <b>${correct} из ${QUESTIONS.length}</b>. ${msg}`;
+        container.appendChild(box);
+      }
+    });
+  });
+})();
+
+/* ============================================================
+   ПРАКТИКУМ
+   ============================================================ */
+(function(){
+  const container = document.getElementById('practicalTask');
+  if (!container) return;
+  const STEPS = [
+    { situation:'Шаг 1: Что должно быть в центре атома?',
+      options:['Ядро (протоны и нейтроны)','Электроны','Пустота','Молекулы'],
+      correct:0, why:'В центре атома — ядро из протонов и нейтронов.' },
+    { situation:'Шаг 2: Какие частицы движутся вокруг ядра?',
+      options:['Протоны','Нейтроны','Электроны','Кварки'],
+      correct:2, why:'Вокруг ядра движутся электроны — отрицательно заряженные частицы.' },
+    { situation:'Шаг 3: Какой заряд у протона?',
+      options:['Положительный (+)','Отрицательный (−)','Нет заряда','Зависит от атома'],
+      correct:0, why:'Протон имеет положительный заряд.' },
+    { situation:'Шаг 4: Откуда вообще взялся заряд у частиц?',
+      options:['Заряд — фундаментальное свойство материи, как масса','Учёные приделали заряд к частицам','Заряд появляется при движении','Заряд — это энергия'],
+      correct:0, why:'Заряд — фундаментальное свойство, такое же, как масса. Природа выбрала два типа заряда.' },
+    { situation:'Шаг 5: Какая модель атома современная?',
+      options:['Модель Томсона','Модель Резерфорда','Модель Бора','Квантовая модель'],
+      correct:3, why:'Современная модель — квантовая: электрон как «облако вероятности».' }
+  ];
+  let step=0, correct=0;
+  function render(){
+    if (step>=STEPS.length){
+      const msg=correct===STEPS.length?'🎉 Отлично! Ты настоящий знаток атома!':'👍 Хорошо! Практикум пройден.';
+      container.innerHTML=`
+        <div class="callout callout-ok" style="margin-top:0;">
+          <b>Практикум завершён!</b> ${msg} Правильных: ${correct} из ${STEPS.length}.
+        </div>
+        <div style="text-align:center;margin-top:14px;">
+          <button class="retry-btn" id="retryLab">↺ Пройти заново</button>
+        </div>`;
+      document.getElementById('retryLab').addEventListener('click',()=>{step=0;correct=0;render();});
+      return;
+    }
+    const s=STEPS[step];
+    container.innerHTML=`
+      <div class="practical-step">
+        <div class="ps-header"><div class="ps-num">${step+1}</div><div class="ps-title">Шаг ${step+1} из ${STEPS.length}</div></div>
+        <div class="ps-situation">${s.situation}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${s.options.map((o,i)=>`
+            <div class="test-option" data-i="${i}">
+              <span class="opt-marker">${String.fromCharCode(65+i)}</span><span>${o}</span>
+            </div>`).join('')}
+        </div>
+        <div class="explanation" id="labExp"></div>
+      </div>`;
+    container.querySelectorAll('.test-option').forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        const i=+opt.dataset.i;
+        if (opt.classList.contains('disabled')) return;
+        const ok=i===s.correct;
+        container.querySelectorAll('.test-option').forEach(o=>{
+          o.classList.add('disabled');
+          const idx=+o.dataset.i;
+          if (idx===s.correct) o.classList.add('correct');
+          if (idx===i && !ok) o.classList.add('wrong');
+        });
+        const exp=document.getElementById('labExp');
+        exp.classList.add('show',ok?'ok':'no');
+        exp.innerHTML=`<b>${ok?'✅ Верно!':'❌ Не совсем.'}</b> ${s.why}`;
+        if (ok) correct++;
+        setTimeout(()=>{step++;render();},2200);
+      });
+    });
+  }
+  render();
+})();
+
+/* ============================================================
+   ИТОГОВЫЙ ТЕСТ
+   ============================================================ */
+(function(){
+  const container = document.getElementById('testContainer');
+  const scoreBox = document.getElementById('testScore');
+  const retryBox = document.getElementById('retryBox');
+  if (!container) return;
+  const QUESTIONS = [
+    { q:'Кто первым предложил идею атомов?',
+      options:['Аристотель','Демокрит','Ломоносов','Менделеев'], correct:1,
+      why:'Демокрит (ок. 460–370 до н.э.) первым предложил идею неделимых частиц — атомов.' },
+    { q:'Что доказывает броуновское движение?',
+      options:['Существование молекул','Существование электронов','Существование протонов','Существование кварков'], correct:0,
+      why:'Броуновское движение — хаотичное движение пыльцы под ударами невидимых молекул. Прямое доказательство существования молекул.' },
+    { q:'Как называется модель атома Томсона?',
+      options:['Планетарная','Пудинг с изюмом','Квантовая','Ядерная'], correct:1,
+      why:'Модель Томсона — «пудинг с изюмом»: положительный шар с электронами.' },
+    { q:'Что доказал опыт Резерфорда с золотой фольгой?',
+      options:['Атом — сплошной шар','В центре атома — маленькое тяжёлое ядро','Электроны движутся по орбитам','Атом неделим'], correct:1,
+      why:'Опыт показал: атом — пустота, в центре — маленькое тяжёлое ядро.' },
+    { q:'Какие частицы находятся в ядре?',
+      options:['Только электроны','Протоны и нейтроны','Только протоны','Только нейтроны'], correct:1,
+      why:'Ядро состоит из протонов (положительных) и нейтронов (нейтральных).' },
+    { q:'Какой заряд у электрона?',
+      options:['Положительный','Отрицательный','Нейтральный','Зависит от атома'], correct:1,
+      why:'Электрон — отрицательно заряженная частица.' },
+    { q:'Из чего состоят протоны и нейтроны?',
+      options:['Из кварков','Из электронов','Из атомов','Из молекул'], correct:0,
+      why:'Протоны и нейтроны состоят из кварков — самых маленьких известных частиц.' },
+    { q:'Какая модель атома современная?',
+      options:['Томсона','Резерфорда','Бора','Квантовая'], correct:3,
+      why:'Современная модель — квантовая: электрон как «облако вероятности».' },
+    { q:'Что такое закон постоянства состава?',
+      options:['Состав чистого вещества постоянен независимо от способа получения','Состав всегда меняется','Состав зависит от температуры','Состав зависит от давления'], correct:0,
+      why:'Закон Пруста: всякое химически чистое вещество молекулярного строения имеет постоянный состав.' },
+    { q:'Почему состав воды всегда одинаков?',
+      options:['Атомы соединяются целыми порциями','Так решили учёные','Вода — простое вещество','Это случайность'], correct:0,
+      why:'Атомы соединяются целыми порциями: один, два, три. Нельзя соединить «полтора атома».' },
+    { q:'Откуда у частиц берётся заряд?',
+      options:['Это фундаментальное свойство материи, как масса','Учёные приделали заряд','Заряд появляется при движении','Заряд — это энергия'], correct:0,
+      why:'Заряд — фундаментальное свойство. Природа выбрала два типа заряда, и они взаимодействуют.' },
+    { q:'Если атом — футбольный стадион, то ядро — это...',
+      options:['Горошина в центре поля','Мяч','Трибуна','Ворота'], correct:0,
+      why:'Ядро в 10 000–100 000 раз меньше атома — как горошина на стадионе.' },
+    { q:'Какие частицы «склеены» глюонами?',
+      options:['Электроны','Кварки','Протоны целиком','Атомы'], correct:1,
+      why:'Кварки склеены глюонами (от англ. glue — клей) и никогда не встречаются поодиночке.' },
+    { q:'Что такое фермионы?',
+      options:['Частицы, из которых состоит вещество','Частицы, переносящие силы','Тип атомов','Тип молекул'], correct:0,
+      why:'Фермионы — «кирпичики материи»: кварки и лептоны. Бозоны — переносчики сил.' },
+    { q:'Почему атом не делится в химических реакциях?',
+      options:['Слишком маленький','Для деления ядра нужна огромная энергия, которой в химии нет','Не может делиться','Так придумали учёные'], correct:1,
+      why:'Для разрушения ядра нужна огромная энергия — она есть только в ядерных реакциях или ускорителях.' }
+  ];
+  const TOTAL = QUESTIONS.length;
+  const THRESHOLD = Math.ceil(TOTAL * 0.8);
+  function renderAll(){
+    let answered=0, correct=0;
+    container.innerHTML='';
+    retryBox.innerHTML='';
+    scoreBox.classList.remove('good','mid','bad');
+    scoreBox.innerHTML=`Правильных ответов: <span id="scoreNum">0</span> из ${TOTAL}`;
+    QUESTIONS.forEach((q,i)=>{
+      const block=document.createElement('div');
+      block.className='test-question';
+      block.innerHTML=`
+        <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
+        <div class="test-options">${q.options.map((o,j)=>`
+          <div class="test-option" data-q="${i}" data-opt="${j}">
+            <span class="opt-marker">${String.fromCharCode(65+j)}</span><span>${o}</span>
+          </div>`).join('')}</div>
+        <div class="explanation" id="exp-${i}"></div>`;
+      container.appendChild(block);
+    });
+    container.querySelectorAll('.test-option').forEach(opt=>{
+      opt.addEventListener('click',()=>{
+        const qi=+opt.dataset.q, oi=+opt.dataset.opt;
+        const q=QUESTIONS[qi];
+        const exp=document.getElementById('exp-'+qi);
+        if (exp.classList.contains('show')) return;
+        const ok=oi===q.correct;
+        container.querySelectorAll(`[data-q="${qi}"]`).forEach(o=>{
+          o.classList.add('disabled');
+          const idx=+o.dataset.opt;
+          if (idx===q.correct) o.classList.add('correct');
+          if (idx===oi && !ok) o.classList.add('wrong');
+        });
+        exp.classList.add('show',ok?'ok':'no');
+        exp.innerHTML=ok?`<b>✅ Правильно!</b> ${q.why}`:`<b>❌ Не совсем.</b> Правильный ответ выделен зелёным. ${q.why}`;
+        if (ok) correct++;
+        answered++;
+        if (answered===TOTAL){
+          if (correct>=THRESHOLD){
+            scoreBox.classList.add('good');
+            scoreBox.innerHTML=`🎉 <b>Модуль пройден!</b> ${correct} из ${TOTAL} (порог: ${THRESHOLD}).`;
+          } else if (correct>=Math.ceil(TOTAL*0.6)){
+            scoreBox.classList.add('mid');
+            scoreBox.innerHTML=`👍 <b>Почти получилось!</b> ${correct} из ${TOTAL}. Порог — ${THRESHOLD}. Перечитай объяснения и попробуй снова.`;
+          } else {
+            scoreBox.classList.add('bad');
+            scoreBox.innerHTML=`💪 <b>Есть над чем поработать:</b> ${correct} из ${TOTAL}. Перечитай модуль и попробуй снова.`;
+          }
+          retryBox.innerHTML=`<button class="retry-btn" id="retryTest">↺ Пройти тест заново</button>`;
+          document.getElementById('retryTest').addEventListener('click',()=>{
+            renderAll();
+            window.scrollTo({top:container.offsetTop-100,behavior:'smooth'});
+          });
+        } else {
+          const scoreNum=document.getElementById('scoreNum');
+          if (scoreNum) scoreNum.textContent=correct;
+        }
+      });
+    });
+  }
+  renderAll();
+})();
+
+/* ============================================================
+   FADE-IN
+   ============================================================ */
+(function(){
+  const observer = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if (e.isIntersecting) e.target.classList.add('visible'); });
+  },{threshold:0.08});
+  document.querySelectorAll('.fade-in').forEach(el=>observer.observe(el));
+})();
+</script>
+</body>
+</html>

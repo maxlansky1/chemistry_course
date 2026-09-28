@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модуль 1. Химия как наука — полный интерактивный урок</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --h-deep: #0e7490;
+    --h-color: #06b6d4;
+    --accent: #8b5cf6;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --radius: 16px;
+    --shadow: 0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg: 0 12px 40px -12px rgba(0,0,0,.15);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    font-size: 17px;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+  .hero {
+    text-align: center; padding: 56px 0 26px;
+    background: linear-gradient(180deg, #ecfeff 0%, var(--bg) 100%);
+  }
+  .hero .badge {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--h-deep);
+    border: 1.5px solid var(--h-deep); padding: 6px 18px;
+    border-radius: 50px; margin-bottom: 20px; background: rgba(6,182,212,.05);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 800;
+    letter-spacing: -1px; line-height: 1.15;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 14px;
+  }
+  .hero p { color: var(--muted); font-size: 17px; max-width: 750px; margin: 0 auto; }
+
+  .section { padding: 24px 0; }
+
+  .stage {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 26px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .stage::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  }
+  .stage.s-legend::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b); }
+  .stage.s-entry::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .stage.s-intro::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6); }
+  .stage.s-why::before   { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s1::before      { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+  .stage.s2::before      { background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+  .stage.s3::before      { background: linear-gradient(90deg, #10b981, #059669); }
+  .stage.s4::before      { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+  .stage.s-feyn::before  { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s-prac::before  { background: linear-gradient(90deg, #06b6d4, #10b981); }
+  .stage.s-test::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  .stage-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .stage-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--panel-2); color: var(--h-deep);
+    font-size: 22px; font-weight: 900; flex-shrink: 0;
+    border: 2px solid var(--border);
+  }
+  .stage-title { font-size: 21px; font-weight: 700; color: var(--text); }
+  .stage-subtitle { font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+  .callout {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 16px 0;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .callout-idea {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-left: 5px solid var(--orange);
+    color: #78350f;
+  }
+  .callout-idea b { color: #92400e; }
+  .callout-warn {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    border-left: 5px solid var(--red);
+    color: #7f1d1d;
+  }
+  .callout-warn b { color: #b91c1c; }
+  .callout-note {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-left: 5px solid #3b82f6;
+    color: #1e3a8a;
+  }
+  .callout-note b { color: #1d4ed8; }
+  .callout-ok {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-left: 5px solid var(--green);
+    color: #065f46;
+  }
+  .callout-ok b { color: #047857; }
+
+  .cta { color: var(--accent); font-weight: 800; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .card {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--h-color), var(--accent));
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,.15);
+    border-color: var(--h-deep);
+  }
+  .card .c-title { font-size: 16.5px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .card .c-desc { font-size: 15.5px; color: var(--muted); line-height: 1.65; }
+  .card .c-desc b { color: var(--text); }
+
+  /* Таймлайн */
+  .timeline { position: relative; padding: 10px 0; margin-top: 10px; }
+  .timeline-track {
+    display: flex; gap: 0; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+  }
+  .timeline-track::-webkit-scrollbar { height: 8px; }
+  .timeline-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .timeline-item {
+    flex: 0 0 auto; width: 210px; padding: 16px; margin-right: 12px;
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; cursor: pointer; transition: all .25s;
+    scroll-snap-align: start; text-align: center;
+  }
+  .timeline-item:hover { transform: translateY(-3px); border-color: var(--h-deep); }
+  .timeline-item.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+  }
+  .timeline-item .t-emoji { font-size: 30px; }
+  .timeline-item .t-era {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep); margin-top: 6px;
+  }
+  .timeline-item .t-name { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+  .timeline-detail {
+    margin-top: 14px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 14px; color: #e2e8f0; min-height: 140px;
+    transition: all .3s;
+  }
+  .timeline-detail .td-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+  .timeline-detail .td-text { font-size: 15.5px; line-height: 1.75; color: #cbd5e1; }
+  .timeline-detail .td-text b { color: #fff; }
+
+  /* Сетка задач */
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .task-card {
+    padding: 20px; background: var(--panel-2); border-radius: 14px;
+    border: 1.5px solid var(--border); transition: all .25s;
+  }
+  .task-card:hover {
+    border-color: var(--h-deep); transform: translateY(-3px);
+    box-shadow: 0 8px 20px -8px rgba(6,182,212,.3);
+  }
+  .task-card .tc-emoji { font-size: 32px; line-height: 1; }
+  .task-card .tc-title { font-size: 16px; font-weight: 800; margin-top: 8px; }
+  .task-card .tc-desc { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .task-card .tc-examples { font-size: 13.5px; color: var(--text); margin-top: 8px; line-height: 1.55; }
+  .task-card .tc-examples span { display: inline-block; background: #fff; padding: 3px 8px; border-radius: 6px; margin: 2px 3px 2px 0; border: 1px solid var(--border); font-weight: 600; }
+
+  /* Игры */
+  .game-area {
+    background: var(--panel-2); border-radius: 14px;
+    padding: 22px; margin-top: 18px;
+  }
+  .game-area h4 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .game-area .game-hint { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+
+  .dual-basket {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .basket {
+    border: 2.5px dashed var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    min-height: 160px;
+    text-align: center;
+    transition: all .25s;
+    background: #fff;
+  }
+  .basket.hover { border-color: var(--accent); background: #f5f3ff; }
+  .basket .basket-title {
+    font-size: 14px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .basket .basket-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .basket .basket-chip {
+    background: var(--panel-2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .basket.good { border-color: var(--green); background: #ecfdf5; }
+  .basket.bad { border-color: var(--red); background: #fef2f2; }
+
+  .game-pool {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-height: 100px;
+    margin-bottom: 14px;
+  }
+  .game-pool .pool-item {
+    background: var(--panel-2);
+    border: 2px solid var(--border);
+    border-radius: 10px; padding: 10px 18px;
+    cursor: grab; font-size: 15px; font-weight: 700;
+    transition: all .2s; user-select: none;
+  }
+  .game-pool .pool-item:hover { border-color: var(--h-deep); transform: translateY(-2px); }
+  .game-pool .pool-item.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .game-pool .pool-item.dragging { opacity: .5; }
+  .game-pool .pool-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: #fef2f2; }
+
+  .reset-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 50px;
+    background: var(--panel-2); color: var(--text);
+    border: 1.5px solid var(--border);
+    cursor: pointer; font-size: 14px; font-weight: 700;
+    transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--h-deep); color: var(--h-deep); }
+
+  .game-feedback { margin-top: 14px; font-size: 15.5px; font-weight: 700; min-height: 24px; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Треугольник Джонстона (стили оставлены для Модуля 4б, в Модуле 1 блок удалён) */
+  .johnstone-wrap {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px;
+    align-items: center; margin-top: 18px;
+  }
+  .johnstone-svg-wrap {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 2px solid var(--border); border-radius: 14px; padding: 14px;
+  }
+  .johnstone-svg-wrap svg { width: 100%; height: auto; display: block; }
+  .johnstone-info {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; min-height: 220px;
+  }
+  .johnstone-info .ji-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--h-deep); }
+  .johnstone-info .ji-text { font-size: 15.5px; line-height: 1.7; color: var(--text); }
+  .johnstone-info .ji-example {
+    margin-top: 14px; padding: 12px 16px;
+    background: #fff; border-radius: 10px;
+    border-left: 4px solid var(--accent);
+    font-size: 14.5px; color: #4c1d95;
+  }
+  .johnstone-info .ji-example b { color: #5b21b6; }
+
+  .sciences-svg-wrap {
+    background: linear-gradient(180deg, #faf5ff, #fff);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 16px;
+  }
+  .sciences-svg-wrap svg { width: 100%; height: auto; display: block; }
+
+  /* Методы познания */
+  .method-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border-radius: 14px;
+    border: 2px solid var(--border);
+  }
+  .method-step {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 18px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-width: 130px;
+    transition: all .35s;
+    cursor: pointer;
+  }
+  .method-step.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+    transform: scale(1.05);
+  }
+  .method-step .ms-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--h-deep); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .method-step.active .ms-num { background: var(--accent); }
+  .method-step .ms-icon { font-size: 28px; }
+  .method-step .ms-name { font-size: 14px; font-weight: 800; margin-top: 6px; text-align: center; }
+  .method-arrow {
+    font-size: 24px; color: var(--muted); animation: slide 2s infinite;
+  }
+  @keyframes slide {
+    0%,100% { transform: translateX(0); opacity: .5; }
+    50% { transform: translateX(4px); opacity: 1; color: var(--accent); }
+  }
+  .method-detail-box {
+    margin-top: 16px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px;
+    color: #e2e8f0;
+    min-height: 130px;
+    transition: all .3s;
+  }
+  .method-detail-box .mb-title { font-size: 16px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .method-detail-box .mb-text { font-size: 15px; line-height: 1.7; color: #cbd5e1; }
+  .method-detail-box .mb-text b { color: #fff; }
+
+  /* Свойства веществ */
+  .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .property-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    transition: all .25s;
+  }
+  .property-card:hover { transform: translateY(-4px); border-color: var(--h-deep); box-shadow: var(--shadow-lg); }
+  .property-card .pc-svg {
+    height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .property-card .pc-title { font-size: 16px; font-weight: 800; }
+  .property-card .pc-desc { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.55; }
+
+  /* Процессы жизни */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .process-card {
+    background: linear-gradient(180deg, #fff, #f0fdf4);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: all .25s;
+  }
+  .process-card:hover { transform: translateY(-4px); border-color: var(--green); box-shadow: var(--shadow-lg); }
+  .process-card .prc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .process-card .prc-icon { font-size: 32px; }
+  .process-card .prc-name { font-size: 16px; font-weight: 800; }
+  .process-card .prc-eq {
+    background: #fff; border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px; font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    font-style: italic;
+  }
+  .process-card .prc-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* Правила безопасности */
+  .safety-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .safety-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px; background: var(--panel-2);
+    border-radius: 12px; border: 2px solid var(--border);
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .safety-item:hover { border-color: var(--h-deep); transform: translateX(4px); }
+  .safety-item .si-icon { font-size: 30px; line-height: 1; flex-shrink: 0; }
+  .safety-item .si-check {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: transparent; font-weight: 900;
+    transition: all .25s; background: #fff;
+    margin-top: 2px;
+  }
+  .safety-item.checked { border-color: var(--green); background: #ecfdf5; }
+  .safety-item.checked .si-check {
+    background: var(--green); border-color: var(--green); color: #fff;
+  }
+  .safety-item .si-text { font-size: 15.5px; line-height: 1.6; flex: 1; }
+  .safety-item .si-text b { color: var(--red); }
+
+  /* Оборудование */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .equip-card {
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; padding: 14px; text-align: center;
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .equip-card:hover { transform: translateY(-4px); border-color: var(--h-deep); }
+  .equip-card.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .equip-card .eq-icon { font-size: 44px; line-height: 1; }
+  .equip-card .eq-name { font-size: 14px; font-weight: 800; margin-top: 8px; }
+
+  .equip-detail {
+    margin-top: 16px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px; color: #e2e8f0;
+    min-height: 120px; transition: all .3s;
+  }
+  .equip-detail .ed-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .equip-detail .ed-text { font-size: 15.5px; line-height: 1.7; color: #cbd5e1; }
+
+  /* Тест */
+  .test-question {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .test-question .q-text {
+    font-size: 17px; font-weight: 700; margin-bottom: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .test-question .q-num {
+    background: var(--h-deep); color: #fff;
+    border-radius: 50%; width: 30px; height: 30px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+  .test-options { display: flex; flex-direction: column; gap: 10px; }
+  .test-option {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; font-size: 15.5px; transition: all .25s;
+  }
+  .test-option:hover { border-color: var(--h-deep); }
+  .test-option .opt-marker {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    transition: all .25s;
+  }
+  .test-option.correct { border-color: var(--green); background: #ecfdf5; }
+  .test-option.correct .opt-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .test-option.wrong { border-color: var(--red); background: #fef2f2; }
+  .test-option.wrong .opt-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .test-option.disabled { cursor: default; }
+  .test-option.disabled:hover { border-color: var(--border); }
+  .test-option.correct.disabled:hover { border-color: var(--green); }
+  .test-option.wrong.disabled:hover { border-color: var(--red); }
+
+  .explanation {
+    margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+    font-size: 15px; line-height: 1.65; display: none;
+    animation: fadeSlide .35s ease;
+  }
+  .explanation.show { display: block; }
+  .explanation.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .explanation.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+  .explanation b { font-weight: 800; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .test-score {
+    margin-top: 22px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 18px; font-weight: 800;
+    background: var(--panel-2); border: 2px solid var(--border);
+    transition: all .4s;
+  }
+  .test-score.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .test-score.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+  .test-score.bad { background: #fef2f2; border-color: var(--red); color: #dc2626; }
+
+  .retry-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 12px 26px; border-radius: 50px;
+    background: var(--accent); color: #fff; border: none;
+    cursor: pointer; font-size: 15px; font-weight: 800;
+    transition: all .2s;
+    box-shadow: 0 6px 16px -6px rgba(139,92,246,.5);
+  }
+  .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(139,92,246,.6); }
+
+  /* Branching scenarios */
+  .scenario-card {
+    background: linear-gradient(180deg, #fff, #fef2f2);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    transition: all .25s;
+  }
+  .scenario-card .sc-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .scenario-card .sc-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--red); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900; flex-shrink: 0;
+  }
+  .scenario-card .sc-title { font-size: 16.5px; font-weight: 800; }
+  .scenario-card .sc-situation {
+    background: #fff; border-radius: 10px; padding: 14px 18px;
+    font-size: 15.5px; line-height: 1.65; margin-bottom: 14px;
+    border-left: 4px solid var(--orange);
+  }
+  .scenario-actions { display: flex; flex-direction: column; gap: 8px; }
+  .scenario-action {
+    padding: 12px 16px; background: #fff;
+    border: 2px solid var(--border); border-radius: 10px;
+    cursor: pointer; font-size: 15px; transition: all .2s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .scenario-action:hover { border-color: var(--h-deep); }
+  .scenario-action .sa-marker {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .scenario-action.correct { border-color: var(--green); background: #ecfdf5; }
+  .scenario-action.correct .sa-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .scenario-action.wrong { border-color: var(--red); background: #fef2f2; }
+  .scenario-action.wrong .sa-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .scenario-action.disabled { cursor: default; }
+  .scenario-action.disabled:hover { border-color: var(--border); }
+  .scenario-action.correct.disabled:hover { border-color: var(--green); }
+  .scenario-action.wrong.disabled:hover { border-color: var(--red); }
+
+  .scenario-feedback {
+    margin-top: 12px; padding: 12px 16px; border-radius: 10px;
+    font-size: 14.5px; line-height: 1.6; display: none;
+  }
+  .scenario-feedback.show { display: block; animation: fadeSlide .3s ease; }
+  .scenario-feedback.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .scenario-feedback.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+
+  /* Слот под видео (YouTube/Instagram). Пока видео нет — блок не вставляется, вёрстка не едет.
+     Когда появится: <div class="video-slot"><iframe ...></iframe></div> */
+  .video-slot {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: 14px; margin-top: 16px; border: 2px solid var(--border);
+  }
+  .video-slot iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+
+  .footer {
+    text-align: center; padding: 40px 0 60px;
+    color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .subhead {
+    font-size: 17px; font-weight: 800;
+    margin: 26px 0 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .subhead-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+
+  .legend-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .legend-card {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: #fff;
+  }
+  .legend-card .lc-header { display: flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 800; margin-bottom: 6px; }
+  .legend-card .lc-body { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .legend-card .lc-body b { color: var(--text); }
+
+  /* Разогрев (без оценки) */
+  .entry-result {
+    margin-top: 20px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 16px; font-weight: 700;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: none;
+  }
+  .entry-result.show { display: block; animation: fadeSlide .35s ease; }
+  .entry-result.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .entry-result.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+
+  @media (max-width: 900px) {
+    .johnstone-wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 800px) {
+    .dual-basket { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 20px; }
+    .stage { padding: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .timeline-item { width: 180px; }
+    body { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="badge">Модуль 1 · Урок 3 из 3 · ~2 часа</div>
+  <h1>Лаборатория: безопасность и оборудование</h1>
+  <p>Правила безопасности (гейт 5/5), оборудование, Фейнман в тетрадь, практикум, задачка★, выжимка.</p>
+  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
+</header>
+<div class="container">
+<details class="stage fade-in" style="padding:18px 22px;margin-bottom:22px;">
+<summary style="font-size:16px;font-weight:800;cursor:pointer;">📚 Обозначения (открой, если забыл)</summary>
+<div style="font-size:14.5px;line-height:1.8;margin-top:10px;">
+💡 <b>Жёлтый</b> — ключевая мысль · ⚠️ <b>Красный</b> — предупреждение ·
+📌 <b>Синий</b> — заметка · ✅ <b>Зелёный</b> — успех/вывод ·
+<span class="cta">Фиолетовый</span> — сделай что-то · 🎮 — игра · 📝 — тест.
+</div>
+</details>
+<details class="stage fade-in" style="padding:18px 22px;margin-bottom:22px;">
+<summary style="font-size:16px;font-weight:800;cursor:pointer;">🧠 Как учимся: метод Фейнмана</summary>
+<div style="font-size:14.5px;line-height:1.8;margin-top:10px;">
+1️⃣ Объясняй просто · 2️⃣ Приводи примеры из жизни · 3️⃣ Смотри и пробуй ·
+4️⃣ Проверяй себя. Не можешь объяснить просто — значит, не понял.
+Главное: <b>объясни вслух и запиши в тетрадь</b>.
+</div>
+</details>
+<section class="section" id="sess3">
+  <div class="stage s4 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">4</div>
+      <div>
+        <div class="stage-title">Химическая лаборатория</div>
+        <div class="stage-subtitle">Правила безопасности и лабораторное оборудование</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Химия — наука экспериментальная. Но лаборатория — это место, где нужно быть
+      <b>внимательным и осторожным</b>. Прежде чем смешивать что-либо, нужно выучить правила
+      безопасности и узнать, как называется оборудование.
+    </p>
+
+    <div class="callout callout-idea">
+      Представь, что ты водитель. Прежде чем сесть за руль, ты учишь правила дорожного движения.
+      В лаборатории то же самое: правила безопасности — это твой «кодекс», без которого нельзя начинать.
+    </div>
+
+    <h3 class="subhead">⚠️ Правила безопасности</h3>
+    <p class="subhead-sub">
+      <span class="cta">👆 Нажимай на правила</span>, чтобы отметить их как «изученные». Это поможет запомнить.
+    </p>
+
+    <div class="safety-list" id="safetyList">
+      <div class="safety-item" data-id="1">
+        <div class="si-icon">🥼</div>
+        <div class="si-text"><b>Работай только в халате.</b> Он защитит одежду и кожу от капель реактивов.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="2">
+        <div class="si-icon">🚫😋</div>
+        <div class="si-text"><b>Не пробуй вещества на вкус.</b> Никогда. Даже если это «сахар». В лаборатории все вещества — потенциально опасны.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="3">
+        <div class="si-icon">👃</div>
+        <div class="si-text"><b>Не наклоняйся над сосудом.</b> При нагревании брызги могут попасть в лицо. Нюхай осторожно, направляя воздух ладонью.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="4">
+        <div class="si-icon">🧴</div>
+        <div class="si-text"><b>Работай над столом, а не над полом.</b> Если что-то прольётся — не будет лужи под ногами.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="5">
+        <div class="si-icon">🧹</div>
+        <div class="si-text"><b>Держи рабочее место в порядке.</b> Лишние предметы мешают и могут стать причиной аварии.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="6">
+        <div class="si-icon">🍔🚫</div>
+        <div class="si-text"><b>Не ешь и не пей в лаборатории.</b> Частицы реактивов могут попасть в еду.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="7">
+        <div class="si-icon">🩹</div>
+        <div class="si-text"><b>При ожоге или порезе — сразу сообщи учителю.</b> Не пытайся лечиться сам.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="8">
+        <div class="si-icon">🧼</div>
+        <div class="si-text"><b>После работы убери всё на место и вымой руки.</b> Чистота — залог безопасности.</div>
+        <div class="si-check">✓</div>
+      </div>
+    </div>
+
+    <h3 class="subhead">🎭 Пять ситуаций: как поступить?</h3>
+    <p class="subhead-sub">
+      В лаборатории бывают неожиданные ситуации. Проверь, знаешь ли ты, как правильно действовать.
+      <span class="cta">👆 Выбери один вариант</span> — и сразу увидишь объяснение.
+      <b>Внимание: это пропуск дальше — нужно ответить верно на все 5 ситуаций с первого раза.</b>
+    </p>
+
+    <div id="scenariosContainer"></div>
+
+    <div class="test-score" id="safetyGate"><span id="safetyGateText">🔒 <b>Пропуск дальше:</b> ответь верно на все 5 ситуаций с первого раза.</span><br><button class="retry-btn" id="retryScenarios" style="display:none;">↺ Пройти заново</button></div>
+
+    <div class="game-area" style="margin-top:22px;">
+      <h4>🎮 Игра: что можно и что нельзя?</h4>
+      <p class="game-hint">
+        <span class="cta">Перетащи каждое действие</span> в корзину «можно» или «нельзя».
+        Если перетаскивание не работает — <span class="cta">нажми на карточку, а затем на корзину</span>.
+      </p>
+
+      <div class="game-pool" id="safetyQuizPool"></div>
+
+      <div class="dual-basket">
+        <div class="basket" data-cat="can">
+          <div class="basket-title">✅ Можно</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="cannot">
+          <div class="basket-title">❌ Нельзя</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px;">
+        <button class="reset-btn" id="resetSafetyQuiz">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbSafetyQuiz"></div>
+    </div>
+
+    <h3 class="subhead">🧰 Лабораторное оборудование</h3>
+    <p class="subhead-sub">
+      <span class="cta">👆 Нажми на карточку</span>, чтобы узнать, как называется прибор и для чего он нужен.
+    </p>
+
+    <div class="equip-grid" id="equipGrid">
+      <div class="equip-card" data-eq="0"><div class="eq-icon">🧪</div><div class="eq-name">Пробирка</div></div>
+      <div class="equip-card" data-eq="1"><div class="eq-icon">⚗️</div><div class="eq-name">Колба</div></div>
+      <div class="equip-card" data-eq="2"><div class="eq-icon">🥛</div><div class="eq-name">Мензурка</div></div>
+      <div class="equip-card" data-eq="3"><div class="eq-icon">⚖️</div><div class="eq-name">Весы</div></div>
+      <div class="equip-card" data-eq="4"><div class="eq-icon">🔥</div><div class="eq-name">Спиртовка</div></div>
+      <div class="equip-card" data-eq="5"><div class="eq-icon">🥄</div><div class="eq-name">Шпатель</div></div>
+      <div class="equip-card" data-eq="6"><div class="eq-icon">🧫</div><div class="eq-name">Чашка Петри</div></div>
+      <div class="equip-card" data-eq="7"><div class="eq-icon">🌡</div><div class="eq-name">Термометр</div></div>
+      <div class="equip-card" data-eq="8"><div class="eq-icon">🕳</div><div class="eq-name">Воронка</div></div>
+      <div class="equip-card" data-eq="9"><div class="eq-icon">📏</div><div class="eq-name">Линейка</div></div>
+      <div class="equip-card" data-eq="10"><div class="eq-icon">🧴</div><div class="eq-name">Капельница</div></div>
+      <div class="equip-card" data-eq="11"><div class="eq-icon">🔬</div><div class="eq-name">Микроскоп</div></div>
+    </div>
+
+    <div class="equip-detail" id="equipDetail">
+      <div class="ed-title">🧪 Пробирка</div>
+      <div class="ed-text">
+        Узкий стеклянный сосуд для проведения небольших опытов с малым количеством вещества.
+        Пробирки закрепляют в штативе или держат специальным зажимом.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🧠</div>
+      <div>
+        <div class="stage-title">Рефлексия по Фейнману</div>
+        <div class="stage-subtitle">Объясни своими словами и запиши в тетрадь — проверит учитель</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
+      Это не тест: готовых вариантов нет. Объясни вслух — сыну, дочке, брату или сестре
+      (или представь, что объясняешь им), а затем <b>запиши объяснения в тетрадь</b>.
+    </p>
+
+    <div class="callout callout-note">
+      <b>📝 Задание в тетрадь — ответь письменно на три вопроса:</b>
+      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+        <li>Чем химия отличается от физики? Объясни на примере стакана воды.</li>
+        <li>Чем физическое тело отличается от вещества? Приведи по два примера из дома и из лаборатории.</li>
+        <li>Почему в лаборатории нельзя пробовать вещества на вкус и нюхать их напрямую? Что делать вместо этого?</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Как понять, что получилось:</b> перечитай написанное и спроси себя —
+      поймёт ли это младший школьник? Если где-то запнулся или ушёл в умные слова —
+      вернись к этому месту модуля и разберись заново. Именно «застревание» и есть обучение.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ПРАКТИЧЕСКОЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практическое задание: опиши вещество по плану</div>
+        <div class="stage-subtitle">Проверь, умеешь ли ты применять знания о свойствах веществ</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Настоящий химик умеет <b>описывать вещество по плану</b>: цвет, блеск, запах, твёрдость,
+      растворимость, горючесть. Сейчас мы потренируемся.
+    </p>
+
+    <div id="practicalTask"></div>
+
+    <div class="callout callout-note" style="margin-top:16px;">
+      <b>📝 В тетрадь:</b> выбери одно вещество дома (например, сахар, соль, монету)
+      и опиши его письменно по плану выше. Это задание проверит учитель.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ЗАДАЧКА НА ПОДУМАТЬ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">★</div>
+      <div>
+        <div class="stage-title">Задачка на подумать</div>
+        <div class="stage-subtitle">Без ответа в файле — разбираем на уроке</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      На столе два одинаковых белых порошка без подписей: <b>сахар и соль</b>.
+      Пробовать на вкус <b>запрещено</b> (мы же помним правила безопасности!).
+      Придумай, как различить их, используя только то, что изучили в модуле:
+      свойства веществ и методы познания. Запиши свой способ в тетрадь.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== КАРТОЧКА-ВЫЖИМКА ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📇</div>
+      <div>
+        <div class="stage-title">Выжимка модуля: самое главное</div>
+        <div class="stage-subtitle">Перепиши в тетрадь — это твой конспект</div>
+      </div>
+    </div>
+
+    <div class="callout callout-ok">
+      <b>5 тезисов модуля:</b>
+      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+        <li><b>Химия</b> — наука о веществах, их свойствах и превращениях.</li>
+        <li><b>Тело</b> имеет форму и объём; <b>вещество</b> — то, из чего состоят тела.</li>
+        <li>Путь познания: наблюдение → эксперимент → измерение → моделирование → вывод.</li>
+        <li>Вещества различают по свойствам: цвет, запах, твёрдость, растворимость, горючесть и др.</li>
+        <li>Лаборатория требует правил: ничего не пробовать на вкус, сообщать учителю об авариях, убирать за собой.</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-note">
+      <b>Новые термины:</b> вещество · физическое тело · свойство вещества ·
+      наблюдение · эксперимент · измерение · моделирование · гипотеза · лаборатория.
+    </div>
+  </div>
+</section>
+<div class="callout callout-note" style="text-align:center;">← <a href="u2.html">Урок 2</a> (файл <b>mod01/u2.html</b>) · Дальше: открой файл <b>mod01/final.html</b> — <a href="final.html">Итоговый тест →</a>.</div>
+</div>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Химия как наука · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">
+    Принцип обучения: простое объяснение · аналогия из жизни · наглядный пример · самопроверка
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  ДРОП-ИГРЫ (универсальная механика)
+// ============================================================
+function makeDropGame(opts) {
+  const pool = document.getElementById(opts.poolId);
+  const baskets = document.querySelectorAll('.basket');
+  const fb = document.getElementById(opts.feedbackId);
+  const resetBtn = document.getElementById(opts.resetId);
+  if (!pool || !fb) return;
+
+  let selected = null;
+
+  function buildPool() {
+    pool.innerHTML = '';
+    (opts.items || []).forEach(it => {
+      const el = document.createElement('div');
+      el.className = 'pool-item';
+      el.textContent = it.label;
+      el.dataset.cat = it.cat;
+      el.draggable = true;
+      el.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', it.label);
+        e.dataTransfer.effectAllowed = 'move';
+        selected = el;
+        el.classList.add('dragging');
+      });
+      el.addEventListener('dragend', () => {
+        el.classList.remove('dragging');
+      });
+      el.addEventListener('click', () => {
+        if (el.classList.contains('placed')) return;
+        pool.querySelectorAll('.pool-item').forEach(i => i.classList.remove('selected'));
+        if (selected === el) {
+          selected = null;
+          fb.textContent = '';
+          return;
+        }
+        selected = el;
+        el.classList.add('selected');
+        fb.style.color = 'var(--muted)';
+        fb.textContent = `Выбрано: ${el.textContent}. Теперь нажми на нужную корзину.`;
+      });
+      pool.appendChild(el);
+    });
+  }
+
+  function resetBaskets() {
+    baskets.forEach(b => {
+      const items = b.querySelector('.basket-items');
+      if (items) items.innerHTML = '';
+      b.classList.remove('good', 'bad');
+    });
+  }
+
+  function checkComplete() {
+    const remaining = pool.querySelectorAll('.pool-item').length;
+    if (remaining === 0) {
+      fb.style.color = 'var(--green)';
+      const messages = [
+        '🎉 Отлично! Всё разложено правильно!',
+        '✅ Превосходно! Ты справился!',
+        '🌟 Супер! Все карточки на своих местах!'
+      ];
+      fb.textContent = messages[Math.floor(Math.random() * messages.length)];
+    }
+  }
+
+  function tryPlace(item, basket) {
+    if (!item || !basket) return;
+    if (item.classList.contains('placed')) return;
+
+    const target = basket.dataset.cat;
+    const correct = item.dataset.cat === target;
+
+    if (correct) {
+      const container = basket.querySelector('.basket-items');
+      const chip = document.createElement('div');
+      chip.className = 'basket-chip';
+      chip.textContent = item.textContent;
+      container.appendChild(chip);
+      item.classList.add('placed');
+      item.remove();
+      selected = null;
+      basket.classList.add('good');
+      setTimeout(() => basket.classList.remove('good'), 500);
+      fb.style.color = 'var(--green)';
+      const okMessages = ['✅ Верно!', '👍 Точно!', '🎯 Правильно!', '🌟 В точку!'];
+      fb.textContent = okMessages[Math.floor(Math.random() * okMessages.length)];
+      checkComplete();
+    } else {
+      basket.classList.add('bad');
+      setTimeout(() => basket.classList.remove('bad'), 500);
+      item.classList.add('wrong-flash');
+      setTimeout(() => item.classList.remove('wrong-flash'), 600);
+      fb.style.color = 'var(--red)';
+      const badMessages = [
+        '❌ Подумай ещё раз.',
+        '❌ Будь внимательнее.',
+        '❌ Давай разберёмся: это не сюда.',
+        '❌ Почти! Но не в эту корзину.',
+        '❌ Хм, не то. Попробуй снова.'
+      ];
+      fb.textContent = badMessages[Math.floor(Math.random() * badMessages.length)];
+    }
+  }
+
+  baskets.forEach(basket => {
+    basket.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      basket.classList.add('hover');
+    });
+    basket.addEventListener('dragleave', () => basket.classList.remove('hover'));
+    basket.addEventListener('drop', (e) => {
+      e.preventDefault();
+      basket.classList.remove('hover');
+      if (selected) tryPlace(selected, basket);
+    });
+    basket.addEventListener('click', () => {
+      if (selected) tryPlace(selected, basket);
+    });
+  });
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      resetBaskets();
+      buildPool();
+      selected = null;
+      fb.textContent = '';
+    });
+  }
+
+  buildPool();
+}
+
+// Игра 1: тело или вещество
+makeDropGame({
+  poolId: 'bodySubstancePool',
+  feedbackId: 'fbBodySubstance',
+  resetId: 'resetBodySubstance',
+  items: [
+    { label: 'древесина', cat: 'substance' },
+    { label: 'железо', cat: 'substance' },
+    { label: 'гвоздь', cat: 'body' },
+    { label: 'ваза', cat: 'body' },
+    { label: 'стекло', cat: 'substance' },
+    { label: 'сахар', cat: 'substance' },
+    { label: 'проволока', cat: 'body' },
+    { label: 'медь', cat: 'substance' },
+    { label: 'нож', cat: 'body' },
+    { label: 'сталь', cat: 'substance' },
+    { label: 'ртуть', cat: 'substance' },
+    { label: 'термометр', cat: 'body' }
+  ]
+});
+
+// Игра 2: правила безопасности
+makeDropGame({
+  poolId: 'safetyQuizPool',
+  feedbackId: 'fbSafetyQuiz',
+  resetId: 'resetSafetyQuiz',
+  items: [
+    { label: '🥼 Работать в халате', cat: 'can' },
+    { label: '😋 Пробовать на вкус', cat: 'cannot' },
+    { label: '👃 Нюхать напрямую из колбы', cat: 'cannot' },
+    { label: '🧼 Мыть руки после работы', cat: 'can' },
+    { label: '🙇 Наклоняться над сосудом', cat: 'cannot' },
+    { label: '🧹 Держать место в порядке', cat: 'can' },
+    { label: '🍔 Есть за столом', cat: 'cannot' },
+    { label: '👩‍🏫 Слушать учителя', cat: 'can' },
+    { label: '🏃 Бегать по классу', cat: 'cannot' },
+    { label: '🧴 Убирать всё на место', cat: 'can' }
+  ]
+});
+
+// ============================================================
+//  ПРАВИЛА БЕЗОПАСНОСТИ (чек-лист)
+// ============================================================
+(function initSafetyChecklist() {
+  const items = document.querySelectorAll('.safety-item');
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('checked');
+    });
+  });
+})();
+
+// ============================================================
+//  BRANCHING SCENARIOS (5 ситуаций)
+// ============================================================
+(function initScenarios() {
+  const container = document.getElementById('scenariosContainer');
+  if (!container) return;
+
+  const SCENARIOS = [
+    {
+      situation: 'Ты случайно разбил пробирку с раствором соли. Осколки и лужа на столе.',
+      actions: [
+        'Соберу осколки руками',
+        'Сообщу учителю и уберу осколки щёткой и совком в специальный контейнер',
+        'Закопаю осколки в мусорное ведро',
+        'Продолжу работу — это неважно'
+      ],
+      correct: 1,
+      why: 'Осколки нельзя собирать руками — можно порезаться. Нужно сообщить учителю и убрать специальными инструментами.'
+    },
+    {
+      situation: 'На твою руку попала капля кислоты.',
+      actions: [
+        'Сделаю вид, что ничего не было',
+        'Промою руку большим количеством воды и сообщу учителю',
+        'Вытру руку салфеткой',
+        'Помажу руку мылом и продолжу'
+      ],
+      correct: 1,
+      why: 'Кислота разъедает кожу. Нужно немедленно промыть большим количеством воды и сказать учителю.'
+    },
+    {
+      situation: 'Ты хочешь понюхать неизвестное вещество в колбе.',
+      actions: [
+        'Наклонюсь и вдохну прямо из сосуда',
+        'Направлю пары ладонью к носу и осторожно понюхаю',
+        'Понюхаю, но закрою один глаз',
+        'Не буду нюхать, это запрещено правилами'
+      ],
+      correct: 1,
+      why: 'Нюхать можно только осторожно, направляя пары ладонью. Наклоняться над сосудом и вдыхать напрямую — опасно.'
+    },
+    {
+      situation: 'Ты закончил работу с реактивами.',
+      actions: [
+        'Уйду сразу — урок закончился',
+        'Уберу всё на место и вымою руки',
+        'Оставлю реактивы на столе — может ещё пригодятся',
+        'Начну новую работу без уборки'
+      ],
+      correct: 1,
+      why: 'После работы обязательно нужно убрать всё на место и вымыть руки — это правило безопасности.'
+    },
+    {
+      situation: 'Учитель просит нагреть раствор в пробирке.',
+      actions: [
+        'Накрою пробирку рукой и подержу над пламенем',
+        'Зажму пробирку держателем, направлю отверстие от себя и от соседей',
+        'Нагрею пробирку, направив отверстие на соседа',
+        'Откажусь — это опасно'
+      ],
+      correct: 1,
+      why: 'Пробирку нужно держать специальным держателем и направлять отверстие от себя и соседей, чтобы брызги никого не обожгли.'
+    }
+  ];
+
+  container.innerHTML = SCENARIOS.map((s, i) => `
+    <div class="scenario-card" data-scenario="${i}">
+      <div class="sc-header">
+        <div class="sc-num">${i + 1}</div>
+        <div class="sc-title">Ситуация ${i + 1}</div>
+      </div>
+      <div class="sc-situation">${s.situation}</div>
+      <div class="scenario-actions">
+        ${s.actions.map((a, j) => `
+          <div class="scenario-action" data-sc="${i}" data-act="${j}">
+            <span class="sa-marker">${String.fromCharCode(65 + j)}</span>
+            <span>${a}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="scenario-feedback" id="scfb-${i}"></div>
+    </div>
+  `).join('');
+
+  let solvedFirstTry = 0;
+
+  container.querySelectorAll('.scenario-action').forEach(act => {
+    act.addEventListener('click', () => {
+      const scIdx = parseInt(act.dataset.sc);
+      const aIdx = parseInt(act.dataset.act);
+      const s = SCENARIOS[scIdx];
+      const actions = container.querySelectorAll(`[data-sc="${scIdx}"]`);
+      const fb = document.getElementById(`scfb-${scIdx}`);
+      if (fb.classList.contains('show')) return;
+
+      const isCorrect = aIdx === s.correct;
+      actions.forEach(a => {
+        a.classList.add('disabled');
+        const idx = parseInt(a.dataset.act);
+        if (idx === s.correct) a.classList.add('correct');
+        if (idx === aIdx && !isCorrect) a.classList.add('wrong');
+      });
+
+      fb.classList.add('show', isCorrect ? 'ok' : 'no');
+      fb.innerHTML = isCorrect
+        ? `<b>✅ Правильно!</b> ${s.why}`
+        : `<b>❌ Не совсем.</b> Правильный ответ выделен зелёным. ${s.why}`;
+
+      if (isCorrect) solvedFirstTry++;
+      const done = container.querySelectorAll('.scenario-feedback.show').length;
+      const gate = document.getElementById('safetyGate');
+      const gateText = document.getElementById('safetyGateText');
+      const retryBtn = document.getElementById('retryScenarios');
+      if (solvedFirstTry === SCENARIOS.length) {
+        gate.classList.add('good');
+        gateText.innerHTML = `🎉 <b>Пропуск получен!</b> Все 5 ситуаций — верно с первого раза. Можно идти дальше.`;
+        retryBtn.style.display = 'none';
+      } else if (done === SCENARIOS.length) {
+        gateText.innerHTML = `🔒 Где-то была ошибка (верно с первого раза: ${solvedFirstTry} из ${SCENARIOS.length}). Нажми <b>«Пройти заново»</b> — нужен чистый заход 5 из 5.`;
+        retryBtn.style.display = 'inline-flex';
+      } else {
+        gateText.innerHTML = `🔒 <b>Пропуск дальше:</b> верно с первого раза ${solvedFirstTry} из ${SCENARIOS.length}. Продолжай — осталось ${SCENARIOS.length - done}.`;
+      }
+    });
+  });
+
+  document.getElementById('retryScenarios').addEventListener('click', () => {
+    solvedFirstTry = 0;
+    container.querySelectorAll('.scenario-action').forEach(a => a.classList.remove('disabled', 'correct', 'wrong'));
+    container.querySelectorAll('.scenario-feedback').forEach(f => { f.classList.remove('show', 'ok', 'no'); f.innerHTML = ''; });
+    const gate = document.getElementById('safetyGate');
+    gate.classList.remove('good');
+    document.getElementById('safetyGateText').innerHTML = `🔒 <b>Пропуск дальше:</b> ответь верно на все 5 ситуаций с первого раза.`;
+    document.getElementById('retryScenarios').style.display = 'none';
+  });
+})();
+
+// ============================================================
+//  ЛАБОРАТОРНОЕ ОБОРУДОВАНИЕ
+// ============================================================
+(function initEquipment() {
+  const cards = document.querySelectorAll('.equip-card');
+  const detail = document.getElementById('equipDetail');
+  if (!cards.length || !detail) return;
+
+  const DATA = [
+    { title: '🧪 Пробирка', text: 'Узкий стеклянный сосуд для проведения небольших опытов с малым количеством вещества. Пробирки закрепляют в штативе или держат специальным зажимом.' },
+    { title: '⚗️ Колба', text: 'Сосуд с широким дном и узким горлом. Бывает коническая (Эрленмейера), круглая, плоскодонная. Используется для смешивания, нагревания и хранения растворов.' },
+    { title: '🥛 Мензурка', text: 'Стеклянный цилиндр с делениями для измерения объёма жидкостей. Незаменима, когда нужно отмерить точный объём.' },
+    { title: '⚖️ Весы', text: 'Прибор для измерения массы вещества. В школьной лаборатории чаще всего используют электронные весы с точностью до 0,01 г.' },
+    { title: '🔥 Спиртовка', text: 'Небольшой прибор для нагревания. Состоит из стеклянного резервуара со спиртом, фитиля и колпачка. Даёт небольшое, но ровное пламя.' },
+    { title: '🥄 Шпатель', text: 'Ложечка для взятия твёрдых сыпучих веществ. Позволяет аккуратно перенести порошок из банки в пробирку.' },
+    { title: '🧫 Чашка Петри', text: 'Плоская прозрачная чашка с крышкой. Используется для наблюдения за кристаллизацией, выращивания микроорганизмов, хранения образцов.' },
+    { title: '🌡 Термометр', text: 'Прибор для измерения температуры. В химии используют лабораторные термометры, часто со шкалой до 200–300 °C.' },
+    { title: '🕳 Воронка', text: 'Приспособление для переливания жидкостей и фильтрования. В неё вставляют фильтр, чтобы отделить осадок от раствора.' },
+    { title: '📏 Линейка', text: 'Инструмент для измерения длины. В лаборатории нужна для измерения размеров образцов и работы с моделями.' },
+    { title: '🧴 Капельница', text: 'Небольшой сосуд с пипеткой для дозированного добавления жидкости по каплям. Используется в качественном анализе.' },
+    { title: '🔬 Микроскоп', text: 'Оптический прибор для увеличения мелких объектов. Позволяет рассмотреть кристаллы, клетки, структуру веществ.' }
+  ];
+
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => {
+      cards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      const d = DATA[i];
+      detail.innerHTML = `<div class="ed-title">${d.title}</div><div class="ed-text">${d.text}</div>`;
+    });
+  });
+
+  cards[0].click();
+})();
+
+// ============================================================
+//  ПРАКТИЧЕСКОЕ ЗАДАНИЕ (тест)
+// ============================================================
+(function initPracticalTask() {
+  const container = document.getElementById('practicalTask');
+  if (!container) return;
+
+  const QUESTIONS = [
+    {
+      plan: 'Цвет и блеск',
+      q: 'Какого цвета медь и есть ли у неё блеск?',
+      options: [
+        'Белая, без блеска',
+        'Рыжая (красноватая), есть металлический блеск',
+        'Чёрная, без блеска',
+        'Прозрачная, без блеска'
+      ],
+      correct: 1,
+      why: 'Медь — рыжий металл с характерным металлическим блеском.'
+    },
+    {
+      plan: 'Запах',
+      q: 'Есть ли запах у чистой воды?',
+      options: [
+        'Резкий запах',
+        'Сладкий запах',
+        'Нет запаха',
+        'Запах гари'
+      ],
+      correct: 2,
+      why: 'Чистая вода не имеет запаха. Это одно из её свойств.'
+    },
+    {
+      plan: 'Твёрдость',
+      q: 'Какое из этих веществ самое твёрдое?',
+      options: [
+        'Воск',
+        'Алмаз',
+        'Стекло',
+        'Дерево'
+      ],
+      correct: 1,
+      why: 'Алмаз — самое твёрдое природное вещество. Он царапает стекло, а воск и дерево — нет.'
+    },
+    {
+      plan: 'Растворимость',
+      q: 'Какое вещество растворяется в воде?',
+      options: [
+        'Песок',
+        'Мел',
+        'Сахар',
+        'Стекло'
+      ],
+      correct: 2,
+      why: 'Сахар хорошо растворяется в воде. Песок, мел и стекло — не растворяются.'
+    },
+    {
+      plan: 'Горючесть',
+      q: 'Какое вещество горит?',
+      options: [
+        'Вода',
+        'Песок',
+        'Спирт',
+        'Соль'
+      ],
+      correct: 2,
+      why: 'Спирт — горючее вещество. Вода, песок и соль не горят.'
+    }
+  ];
+
+  let correctCount = 0;
+  let answered = 0;
+
+  container.innerHTML = QUESTIONS.map((q, i) => `
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i + 1}</span><span><b>${q.plan}.</b> ${q.q}</span></div>
+      <div class="test-options">
+        ${q.options.map((o, j) => `
+          <div class="test-option" data-pq="${i}" data-po="${j}">
+            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
+            <span>${o}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="pracExp-${i}"></div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.test-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const qIdx = parseInt(opt.dataset.pq);
+      const oIdx = parseInt(opt.dataset.po);
+      const q = QUESTIONS[qIdx];
+      const exp = document.getElementById(`pracExp-${qIdx}`);
+      if (exp.classList.contains('show')) return;
+
+      const isCorrect = oIdx === q.correct;
+      container.querySelectorAll(`[data-pq="${qIdx}"]`).forEach(o => {
+        o.classList.add('disabled');
+        const idx = parseInt(o.dataset.po);
+        if (idx === q.correct) o.classList.add('correct');
+        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
+      });
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+
+      if (isCorrect) correctCount++;
+      answered++;
+
+      if (answered === QUESTIONS.length) {
+        const msg = correctCount >= 4
+          ? '🎉 <b>Отлично!</b> Ты умеешь описывать вещества по плану.'
+          : '👍 <b>Хорошо!</b> Но стоит ещё раз повторить свойства веществ.';
+        const box = document.createElement('div');
+        box.className = 'callout callout-ok';
+        box.style.marginTop = '14px';
+        box.innerHTML = `Правильных ответов: <b>${correctCount} из ${QUESTIONS.length}</b>. ${msg}`;
+        container.appendChild(box);
+      }
+    });
+  });
+})();
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+</script>
+</body>
+</html>

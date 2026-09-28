@@ -1,0 +1,1306 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Свойства веществ и химия вокруг нас</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --h-deep: #0e7490;
+    --h-color: #06b6d4;
+    --accent: #8b5cf6;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --radius: 16px;
+    --shadow: 0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg: 0 12px 40px -12px rgba(0,0,0,.15);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    font-size: 17px;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+  .hero {
+    text-align: center; padding: 56px 0 26px;
+    background: linear-gradient(180deg, #ecfeff 0%, var(--bg) 100%);
+  }
+  .hero .badge {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--h-deep);
+    border: 1.5px solid var(--h-deep); padding: 6px 18px;
+    border-radius: 50px; margin-bottom: 20px; background: rgba(6,182,212,.05);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 800;
+    letter-spacing: -1px; line-height: 1.15;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 14px;
+  }
+  .hero p { color: var(--muted); font-size: 17px; max-width: 750px; margin: 0 auto; }
+
+  .section { padding: 24px 0; }
+
+  .stage {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 26px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .stage::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  }
+  .stage.s-legend::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b); }
+  .stage.s-entry::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .stage.s-intro::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6); }
+  .stage.s-why::before   { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s1::before      { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+  .stage.s2::before      { background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+  .stage.s3::before      { background: linear-gradient(90deg, #10b981, #059669); }
+  .stage.s4::before      { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+  .stage.s-feyn::before  { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s-prac::before  { background: linear-gradient(90deg, #06b6d4, #10b981); }
+  .stage.s-test::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  .stage-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .stage-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--panel-2); color: var(--h-deep);
+    font-size: 22px; font-weight: 900; flex-shrink: 0;
+    border: 2px solid var(--border);
+  }
+  .stage-title { font-size: 21px; font-weight: 700; color: var(--text); }
+  .stage-subtitle { font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+  .callout {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 16px 0;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .callout-idea {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-left: 5px solid var(--orange);
+    color: #78350f;
+  }
+  .callout-idea b { color: #92400e; }
+  .callout-warn {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    border-left: 5px solid var(--red);
+    color: #7f1d1d;
+  }
+  .callout-warn b { color: #b91c1c; }
+  .callout-note {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-left: 5px solid #3b82f6;
+    color: #1e3a8a;
+  }
+  .callout-note b { color: #1d4ed8; }
+  .callout-ok {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-left: 5px solid var(--green);
+    color: #065f46;
+  }
+  .callout-ok b { color: #047857; }
+
+  .cta { color: var(--accent); font-weight: 800; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .card {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--h-color), var(--accent));
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,.15);
+    border-color: var(--h-deep);
+  }
+  .card .c-title { font-size: 16.5px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .card .c-desc { font-size: 15.5px; color: var(--muted); line-height: 1.65; }
+  .card .c-desc b { color: var(--text); }
+
+  /* Таймлайн */
+  .timeline { position: relative; padding: 10px 0; margin-top: 10px; }
+  .timeline-track {
+    display: flex; gap: 0; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+  }
+  .timeline-track::-webkit-scrollbar { height: 8px; }
+  .timeline-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .timeline-item {
+    flex: 0 0 auto; width: 210px; padding: 16px; margin-right: 12px;
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; cursor: pointer; transition: all .25s;
+    scroll-snap-align: start; text-align: center;
+  }
+  .timeline-item:hover { transform: translateY(-3px); border-color: var(--h-deep); }
+  .timeline-item.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+  }
+  .timeline-item .t-emoji { font-size: 30px; }
+  .timeline-item .t-era {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep); margin-top: 6px;
+  }
+  .timeline-item .t-name { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+  .timeline-detail {
+    margin-top: 14px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 14px; color: #e2e8f0; min-height: 140px;
+    transition: all .3s;
+  }
+  .timeline-detail .td-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+  .timeline-detail .td-text { font-size: 15.5px; line-height: 1.75; color: #cbd5e1; }
+  .timeline-detail .td-text b { color: #fff; }
+
+  /* Сетка задач */
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .task-card {
+    padding: 20px; background: var(--panel-2); border-radius: 14px;
+    border: 1.5px solid var(--border); transition: all .25s;
+  }
+  .task-card:hover {
+    border-color: var(--h-deep); transform: translateY(-3px);
+    box-shadow: 0 8px 20px -8px rgba(6,182,212,.3);
+  }
+  .task-card .tc-emoji { font-size: 32px; line-height: 1; }
+  .task-card .tc-title { font-size: 16px; font-weight: 800; margin-top: 8px; }
+  .task-card .tc-desc { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .task-card .tc-examples { font-size: 13.5px; color: var(--text); margin-top: 8px; line-height: 1.55; }
+  .task-card .tc-examples span { display: inline-block; background: #fff; padding: 3px 8px; border-radius: 6px; margin: 2px 3px 2px 0; border: 1px solid var(--border); font-weight: 600; }
+
+  /* Игры */
+  .game-area {
+    background: var(--panel-2); border-radius: 14px;
+    padding: 22px; margin-top: 18px;
+  }
+  .game-area h4 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .game-area .game-hint { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+
+  .dual-basket {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .basket {
+    border: 2.5px dashed var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    min-height: 160px;
+    text-align: center;
+    transition: all .25s;
+    background: #fff;
+  }
+  .basket.hover { border-color: var(--accent); background: #f5f3ff; }
+  .basket .basket-title {
+    font-size: 14px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .basket .basket-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .basket .basket-chip {
+    background: var(--panel-2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .basket.good { border-color: var(--green); background: #ecfdf5; }
+  .basket.bad { border-color: var(--red); background: #fef2f2; }
+
+  .game-pool {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-height: 100px;
+    margin-bottom: 14px;
+  }
+  .game-pool .pool-item {
+    background: var(--panel-2);
+    border: 2px solid var(--border);
+    border-radius: 10px; padding: 10px 18px;
+    cursor: grab; font-size: 15px; font-weight: 700;
+    transition: all .2s; user-select: none;
+  }
+  .game-pool .pool-item:hover { border-color: var(--h-deep); transform: translateY(-2px); }
+  .game-pool .pool-item.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .game-pool .pool-item.dragging { opacity: .5; }
+  .game-pool .pool-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: #fef2f2; }
+
+  .reset-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 50px;
+    background: var(--panel-2); color: var(--text);
+    border: 1.5px solid var(--border);
+    cursor: pointer; font-size: 14px; font-weight: 700;
+    transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--h-deep); color: var(--h-deep); }
+
+  .game-feedback { margin-top: 14px; font-size: 15.5px; font-weight: 700; min-height: 24px; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Треугольник Джонстона (стили оставлены для Модуля 4б, в Модуле 1 блок удалён) */
+  .johnstone-wrap {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px;
+    align-items: center; margin-top: 18px;
+  }
+  .johnstone-svg-wrap {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 2px solid var(--border); border-radius: 14px; padding: 14px;
+  }
+  .johnstone-svg-wrap svg { width: 100%; height: auto; display: block; }
+  .johnstone-info {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; min-height: 220px;
+  }
+  .johnstone-info .ji-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--h-deep); }
+  .johnstone-info .ji-text { font-size: 15.5px; line-height: 1.7; color: var(--text); }
+  .johnstone-info .ji-example {
+    margin-top: 14px; padding: 12px 16px;
+    background: #fff; border-radius: 10px;
+    border-left: 4px solid var(--accent);
+    font-size: 14.5px; color: #4c1d95;
+  }
+  .johnstone-info .ji-example b { color: #5b21b6; }
+
+  .sciences-svg-wrap {
+    background: linear-gradient(180deg, #faf5ff, #fff);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 16px;
+  }
+  .sciences-svg-wrap svg { width: 100%; height: auto; display: block; }
+
+  /* Методы познания */
+  .method-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border-radius: 14px;
+    border: 2px solid var(--border);
+  }
+  .method-step {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 18px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-width: 130px;
+    transition: all .35s;
+    cursor: pointer;
+  }
+  .method-step.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+    transform: scale(1.05);
+  }
+  .method-step .ms-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--h-deep); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .method-step.active .ms-num { background: var(--accent); }
+  .method-step .ms-icon { font-size: 28px; }
+  .method-step .ms-name { font-size: 14px; font-weight: 800; margin-top: 6px; text-align: center; }
+  .method-arrow {
+    font-size: 24px; color: var(--muted); animation: slide 2s infinite;
+  }
+  @keyframes slide {
+    0%,100% { transform: translateX(0); opacity: .5; }
+    50% { transform: translateX(4px); opacity: 1; color: var(--accent); }
+  }
+  .method-detail-box {
+    margin-top: 16px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px;
+    color: #e2e8f0;
+    min-height: 130px;
+    transition: all .3s;
+  }
+  .method-detail-box .mb-title { font-size: 16px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .method-detail-box .mb-text { font-size: 15px; line-height: 1.7; color: #cbd5e1; }
+  .method-detail-box .mb-text b { color: #fff; }
+
+  /* Свойства веществ */
+  .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .property-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    transition: all .25s;
+  }
+  .property-card:hover { transform: translateY(-4px); border-color: var(--h-deep); box-shadow: var(--shadow-lg); }
+  .property-card .pc-svg {
+    height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .property-card .pc-title { font-size: 16px; font-weight: 800; }
+  .property-card .pc-desc { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.55; }
+
+  /* Процессы жизни */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .process-card {
+    background: linear-gradient(180deg, #fff, #f0fdf4);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: all .25s;
+  }
+  .process-card:hover { transform: translateY(-4px); border-color: var(--green); box-shadow: var(--shadow-lg); }
+  .process-card .prc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .process-card .prc-icon { font-size: 32px; }
+  .process-card .prc-name { font-size: 16px; font-weight: 800; }
+  .process-card .prc-eq {
+    background: #fff; border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px; font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    font-style: italic;
+  }
+  .process-card .prc-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* Правила безопасности */
+  .safety-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .safety-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px; background: var(--panel-2);
+    border-radius: 12px; border: 2px solid var(--border);
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .safety-item:hover { border-color: var(--h-deep); transform: translateX(4px); }
+  .safety-item .si-icon { font-size: 30px; line-height: 1; flex-shrink: 0; }
+  .safety-item .si-check {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: transparent; font-weight: 900;
+    transition: all .25s; background: #fff;
+    margin-top: 2px;
+  }
+  .safety-item.checked { border-color: var(--green); background: #ecfdf5; }
+  .safety-item.checked .si-check {
+    background: var(--green); border-color: var(--green); color: #fff;
+  }
+  .safety-item .si-text { font-size: 15.5px; line-height: 1.6; flex: 1; }
+  .safety-item .si-text b { color: var(--red); }
+
+  /* Оборудование */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .equip-card {
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; padding: 14px; text-align: center;
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .equip-card:hover { transform: translateY(-4px); border-color: var(--h-deep); }
+  .equip-card.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .equip-card .eq-icon { font-size: 44px; line-height: 1; }
+  .equip-card .eq-name { font-size: 14px; font-weight: 800; margin-top: 8px; }
+
+  .equip-detail {
+    margin-top: 16px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px; color: #e2e8f0;
+    min-height: 120px; transition: all .3s;
+  }
+  .equip-detail .ed-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .equip-detail .ed-text { font-size: 15.5px; line-height: 1.7; color: #cbd5e1; }
+
+  /* Тест */
+  .test-question {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .test-question .q-text {
+    font-size: 17px; font-weight: 700; margin-bottom: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .test-question .q-num {
+    background: var(--h-deep); color: #fff;
+    border-radius: 50%; width: 30px; height: 30px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+  .test-options { display: flex; flex-direction: column; gap: 10px; }
+  .test-option {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; font-size: 15.5px; transition: all .25s;
+  }
+  .test-option:hover { border-color: var(--h-deep); }
+  .test-option .opt-marker {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    transition: all .25s;
+  }
+  .test-option.correct { border-color: var(--green); background: #ecfdf5; }
+  .test-option.correct .opt-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .test-option.wrong { border-color: var(--red); background: #fef2f2; }
+  .test-option.wrong .opt-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .test-option.disabled { cursor: default; }
+  .test-option.disabled:hover { border-color: var(--border); }
+  .test-option.correct.disabled:hover { border-color: var(--green); }
+  .test-option.wrong.disabled:hover { border-color: var(--red); }
+
+  .explanation {
+    margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+    font-size: 15px; line-height: 1.65; display: none;
+    animation: fadeSlide .35s ease;
+  }
+  .explanation.show { display: block; }
+  .explanation.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .explanation.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+  .explanation b { font-weight: 800; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .test-score {
+    margin-top: 22px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 18px; font-weight: 800;
+    background: var(--panel-2); border: 2px solid var(--border);
+    transition: all .4s;
+  }
+  .test-score.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .test-score.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+  .test-score.bad { background: #fef2f2; border-color: var(--red); color: #dc2626; }
+
+  .retry-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 12px 26px; border-radius: 50px;
+    background: var(--accent); color: #fff; border: none;
+    cursor: pointer; font-size: 15px; font-weight: 800;
+    transition: all .2s;
+    box-shadow: 0 6px 16px -6px rgba(139,92,246,.5);
+  }
+  .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(139,92,246,.6); }
+
+  /* Branching scenarios */
+  .scenario-card {
+    background: linear-gradient(180deg, #fff, #fef2f2);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    transition: all .25s;
+  }
+  .scenario-card .sc-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .scenario-card .sc-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--red); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900; flex-shrink: 0;
+  }
+  .scenario-card .sc-title { font-size: 16.5px; font-weight: 800; }
+  .scenario-card .sc-situation {
+    background: #fff; border-radius: 10px; padding: 14px 18px;
+    font-size: 15.5px; line-height: 1.65; margin-bottom: 14px;
+    border-left: 4px solid var(--orange);
+  }
+  .scenario-actions { display: flex; flex-direction: column; gap: 8px; }
+  .scenario-action {
+    padding: 12px 16px; background: #fff;
+    border: 2px solid var(--border); border-radius: 10px;
+    cursor: pointer; font-size: 15px; transition: all .2s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .scenario-action:hover { border-color: var(--h-deep); }
+  .scenario-action .sa-marker {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .scenario-action.correct { border-color: var(--green); background: #ecfdf5; }
+  .scenario-action.correct .sa-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .scenario-action.wrong { border-color: var(--red); background: #fef2f2; }
+  .scenario-action.wrong .sa-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .scenario-action.disabled { cursor: default; }
+  .scenario-action.disabled:hover { border-color: var(--border); }
+  .scenario-action.correct.disabled:hover { border-color: var(--green); }
+  .scenario-action.wrong.disabled:hover { border-color: var(--red); }
+
+  .scenario-feedback {
+    margin-top: 12px; padding: 12px 16px; border-radius: 10px;
+    font-size: 14.5px; line-height: 1.6; display: none;
+  }
+  .scenario-feedback.show { display: block; animation: fadeSlide .3s ease; }
+  .scenario-feedback.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .scenario-feedback.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+
+  /* Слот под видео (YouTube/Instagram). Пока видео нет — блок не вставляется, вёрстка не едет.
+     Когда появится: <div class="video-slot"><iframe ...></iframe></div> */
+  .video-slot {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: 14px; margin-top: 16px; border: 2px solid var(--border);
+  }
+  .video-slot iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+
+  .footer {
+    text-align: center; padding: 40px 0 60px;
+    color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .subhead {
+    font-size: 17px; font-weight: 800;
+    margin: 26px 0 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .subhead-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+
+  .legend-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .legend-card {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: #fff;
+  }
+  .legend-card .lc-header { display: flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 800; margin-bottom: 6px; }
+  .legend-card .lc-body { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .legend-card .lc-body b { color: var(--text); }
+
+  /* Разогрев (без оценки) */
+  .entry-result {
+    margin-top: 20px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 16px; font-weight: 700;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: none;
+  }
+  .entry-result.show { display: block; animation: fadeSlide .35s ease; }
+  .entry-result.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .entry-result.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+
+  @media (max-width: 900px) {
+    .johnstone-wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 800px) {
+    .dual-basket { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 20px; }
+    .stage { padding: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .timeline-item { width: 180px; }
+    body { font-size: 16px; }
+  }
+
+  /* Раскрывающиеся блоки-шпаргалки (легенда, метод Фейнмана) */
+  details.fold {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 22px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  details.fold summary {
+    list-style: none; cursor: pointer;
+    padding: 16px 22px; font-size: 16px; font-weight: 800;
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    user-select: none;
+  }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary::before {
+    content: '\25B6'; font-size: 12px; color: var(--h-deep);
+    transition: transform .25s;
+  }
+  details.fold[open] summary::before { transform: rotate(90deg); }
+  details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
+  details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
+
+  /* Навигация по урокам: карточки + пилюли */
+  .lesson-nav {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 12px; align-items: stretch; margin: 26px 0 8px;
+  }
+  .ln-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 14px 18px;
+    text-decoration: none; color: var(--text);
+    display: flex; flex-direction: column; gap: 4px; transition: all .2s;
+  }
+  a.ln-card:hover {
+    border-color: var(--h-deep); transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .ln-card.ln-next { text-align: right; }
+  .ln-dir {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep);
+  }
+  .ln-title { font-size: 15px; font-weight: 700; }
+  .ln-card.done { border-style: dashed; color: var(--muted); cursor: default; }
+  .ln-map { display: flex; gap: 8px; align-items: center; justify-content: center; }
+  .ln-pill {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 2px solid var(--border); display: inline-flex;
+    align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: var(--muted);
+    text-decoration: none; background: #fff;
+  }
+  a.ln-pill:hover { border-color: var(--h-deep); }
+  .ln-pill.now { background: var(--h-deep); border-color: var(--h-deep); color: #fff; }
+  @media (max-width: 600px) {
+    .lesson-nav { grid-template-columns: 1fr; }
+    .ln-card.ln-next { text-align: left; }
+    .ln-map { order: -1; }
+  }
+
+  /* Вопросы hero: 3 риторических вопроса модуля/урока */
+  .hero-questions {
+    display: flex; flex-direction: column; gap: 8px;
+    max-width: 640px; margin: 14px auto 0; text-align: left;
+  }
+  .hero-questions div {
+    background: rgba(255,255,255,.75);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 8px 14px; font-size: 15.5px; font-weight: 600;
+  }
+
+  /* Цвета карточек легенды по смыслу */
+  .legend-card { border: 2px solid var(--border); }
+  .legend-card.lc-warm { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #f59e0b; }
+  .legend-card.lc-danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-color: #ef4444; }
+  .legend-card.lc-info { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6; }
+  .legend-card.lc-ok { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #10b981; }
+  .legend-card.lc-act { background: #fff; border-style: dashed; }
+
+  /* Домашнее задание */
+  .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+  .homework ol { margin: 12px 0 0 22px; line-height: 1.9; font-size: 15.5px; }
+  .homework ol li { margin-bottom: 6px; }
+  .homework .hw-star { color: var(--accent); font-weight: 800; }
+
+  /* Карточки вопросов: нумерованный вопрос-промпт, без эмодзи и ответов.
+     Вопрос задаётся ученику по ходу урока — ответ рождается в уроке. */
+  .qa-list { display: flex; flex-direction: column; gap: 10px;
+    max-width: 680px; margin: 14px auto 0; text-align: left; }
+  .qa-card {
+    background: rgba(255,255,255,.85);
+    border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 12px 16px; border-left: 5px solid var(--accent);
+  }
+  .qa-q { font-size: 15.5px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
+  .qa-num {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; transform: translateY(3px);
+  }
+
+  /* Чипсы навигации модуля */
+  .mod-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+  .mod-chip {
+    padding: 9px 20px; border-radius: 50px; text-decoration: none;
+    background: rgba(255,255,255,.8); border: 1.5px solid var(--border);
+    font-size: 14.5px; font-weight: 800; color: var(--text); transition: all .2s;
+  }
+  a.mod-chip:hover { border-color: var(--h-deep); color: var(--h-deep); transform: translateY(-2px); }
+</style>
+</head>
+<body>
+<!-- built by src/build.py v1 · 2026-09-27 · mod01/u2 · manifest-driven -->
+<header class="hero">
+  <div class="badge">Модуль 1 · Урок 2 из 3 · ~20 минут</div>
+  <h1>Свойства веществ и химия вокруг нас</h1>
+  <div class="qa-list">
+<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Как различить вещества вокруг нас?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Из чего состоим мы сами?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Где химия в твоём доме?</span></div></div>
+</div>
+  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
+</header>
+<div class="container">
+
+
+<section class="section" id="sess2">
+  <div class="stage s2 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">2</div>
+      <div>
+        <div class="stage-title">Свойства веществ</div>
+        <div class="stage-subtitle">По каким признакам различают вещества</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Вещества окружают нас повсюду. Одни мы видим каждый день, другие — редкие гости.
+      Но у каждого вещества есть свои <b>свойства</b>, по которым его можно узнать.
+    </p>
+
+    <h3 class="subhead">🔍 По каким свойствам различают вещества</h3>
+
+    <div class="property-grid">
+      <div class="property-card">
+        <div class="pc-svg">
+          <svg viewBox="0 0 100 70" width="120" height="70">
+            <circle cx="30" cy="35" r="18" fill="#fbbf24"/>
+            <circle cx="55" cy="35" r="18" fill="#06b6d4" opacity="0.9"/>
+            <circle cx="80" cy="35" r="18" fill="#ec4899" opacity="0.85"/>
+          </svg>
+        </div>
+        <div class="pc-title">👁 Цвет и блеск</div>
+        <div class="pc-desc">Медь — рыжая, золото — жёлтое и блестящее, вода — прозрачная, уголь — чёрный.</div>
+      </div>
+
+      <div class="property-card">
+        <div class="pc-svg">
+          <svg viewBox="0 0 100 70" width="120" height="70">
+            <path d="M 35 20 Q 50 12 65 20 Q 72 35 60 50 L 40 50 Q 28 35 35 20 Z" fill="#fb923c"/>
+            <circle cx="50" cy="20" r="6" fill="#f97316"/>
+            <path d="M 40 52 L 60 52 L 58 62 L 42 62 Z" fill="#ea580c"/>
+          </svg>
+        </div>
+        <div class="pc-title">👃 Запах</div>
+        <div class="pc-desc">Уксус пахнет резко, лимон — свежо, бензин — специфически, а вода не пахнет вовсе.</div>
+      </div>
+
+      <div class="property-card">
+        <div class="pc-svg">
+          <svg viewBox="0 0 100 70" width="120" height="70">
+            <polygon points="50,10 62,32 88,36 68,52 74,78 50,64 26,78 32,52 12,36 38,32" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+            <polygon points="50,22 58,36 74,38 62,48 66,64 50,56 34,64 38,48 26,38 42,36" fill="#c7d2fe"/>
+          </svg>
+        </div>
+        <div class="pc-title">🔨 Твёрдость</div>
+        <div class="pc-desc">Алмаз царапает стекло, а воск — нет. Твёрдость определяют «по царапинам».</div>
+      </div>
+
+      <div class="property-card">
+        <div class="pc-svg">
+          <svg viewBox="0 0 100 70" width="120" height="70">
+            <path d="M 50 15 Q 40 30 40 42 Q 40 55 50 55 Q 60 55 60 42 Q 60 30 50 15 Z" fill="#f97316"/>
+            <path d="M 50 25 Q 45 35 45 43 Q 45 50 50 50 Q 55 50 55 43 Q 55 35 50 25 Z" fill="#fbbf24"/>
+            <path d="M 40 60 L 60 60 M 45 65 L 55 65" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pc-title">🔥 Горючесть</div>
+        <div class="pc-desc">Бензин и спирт горят, а вода и песок — нет.</div>
+      </div>
+    </div>
+
+    <div class="game-area" style="margin-top:22px;">
+      <h4>🎮 Симулятор «Определи свойство»</h4>
+      <p class="game-hint">
+        Сейчас тебе покажут вещество, а ты должен выбрать <b>правильное описание его свойств</b>.
+        <span class="cta">👆 Нажимай на вариант</span> — и сразу увидишь, прав ты или нет.
+      </p>
+
+      <div id="propertySimulator"></div>
+    </div>
+  </div>
+</section><!-- ==================== УРОК 3: ХИМИЯ И ЖИЗНЬ ==================== -->
+<section class="section">
+  <div class="stage s3 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">3</div>
+      <div>
+        <div class="stage-title">Химия и жизнь</div>
+        <div class="stage-subtitle">Как химия объясняет жизнь и помогает человеку</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Самый удивительный химический «завод» — это сам человек. В нашем организме непрерывно
+      происходят тысячи химических превращений: мы дышим, едим, двигаемся, думаем — и всё это химия.
+    </p>
+
+    <div class="callout callout-idea">
+      Представь завод, который работает без остановки всю твою жизнь. Цех дыхания забирает
+      кислород из воздуха. Цех пищеварения разбирает еду на молекулы-кирпичики. Энергетический
+      цех сжигает часть кирпичиков и выдаёт тепло и движение. Строительный цех собирает из них
+      мышцы, кости и кровь. А лаборатория мозга управляет всем этим сразу. Сырьё — еда и воздух,
+      отходы — углекислый газ и вода. И всё это — химия, которая идёт прямо сейчас внутри тебя.
+    </div>
+
+    <h3 class="subhead">🌱 Главные химические процессы жизни на Земле</h3>
+    <p class="subhead-sub">
+      Жизнь на нашей планете держится на нескольких ключевых химических превращениях. Без них
+      не было бы ни растений, ни животных, ни нас с тобой.
+    </p>
+
+    <div class="process-grid">
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🌿</div>
+          <div class="prc-name">Фотосинтез</div>
+        </div>
+        <div class="prc-eq">Из углекислого газа и воды образуется глюкоза и выделяется кислород</div>
+        <div class="prc-desc">
+          В зелёных листьях на свету из углекислого газа и воды образуется глюкоза и выделяется кислород.
+          Это главный источник кислорода на Земле.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🫁</div>
+          <div class="prc-name">Клеточное дыхание</div>
+        </div>
+        <div class="prc-eq">Глюкоза соединяется с кислородом, образуя углекислый газ, воду и энергию</div>
+        <div class="prc-desc">
+          В наших клетках глюкоза «сгорает» с помощью кислорода, выделяя энергию для жизни.
+          Обратный процесс фотосинтезу.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🫘</div>
+          <div class="prc-name">Азотфиксация</div>
+        </div>
+        <div class="prc-eq">Азот воздуха превращается в соединения, доступные растениям</div>
+        <div class="prc-desc">
+          Клубеньковые бактерии на корнях бобовых превращают азот воздуха в соединения, доступные растениям.
+          Без этого не было бы плодородной почвы.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🔥</div>
+          <div class="prc-name">Горение метана</div>
+        </div>
+        <div class="prc-eq">Метан соединяется с кислородом, выделяя углекислый газ, воду и тепло</div>
+        <div class="prc-desc">
+          Природный газ, который горит на кухонной плите, — это метан. При горении выделяется
+          тепло и углекислый газ.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">⛽</div>
+          <div class="prc-name">Образование нефти</div>
+        </div>
+        <div class="prc-eq">Остатки планктона без доступа кислорода превращаются в углеводороды</div>
+        <div class="prc-desc">
+          Миллионы лет назад остатки морских организмов опускались на дно, без доступа кислорода
+          превращались в нефть и газ. Это невозобновляемый ресурс.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🍂</div>
+          <div class="prc-name">Гниение и брожение</div>
+        </div>
+        <div class="prc-eq">Органические остатки разлагаются до углекислого газа, воды и метана</div>
+        <div class="prc-desc">
+          Бактерии и грибы разлагают мёртвые остатки, возвращая углерод и другие элементы
+          в круговорот природы. Именно поэтому лес «убирает» за собой.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-note" style="margin-top:18px;">
+      <b>Обрати внимание:</b> фотосинтез и дыхание — это два противоположных процесса, которые
+      поддерживают баланс кислорода и углекислого газа в атмосфере. Один производит кислород,
+      другой его потребляет. Так природа сама себя регулирует.
+    </div>
+
+    <h3 class="subhead">🧬 Из чего состоит человек</h3>
+    <p class="subhead-sub">
+      Если разложить тело человека на «простые составляющие» — химические элементы — получится такая картина.
+      Слева — сам человек, справа — из чего он «сделан».
+    </p>
+
+    <div class="sciences-svg-wrap">
+      <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="humanClip2">
+            <circle cx="160" cy="70" r="42"/>
+            <rect x="118" y="112" width="84" height="180" rx="26"/>
+            <rect x="84" y="122" width="30" height="150" rx="15"/>
+            <rect x="206" y="122" width="30" height="150" rx="15"/>
+            <rect x="120" y="290" width="34" height="190" rx="16"/>
+            <rect x="166" y="290" width="34" height="190" rx="16"/>
+          </clipPath>
+        </defs>
+
+        <g clip-path="url(#humanClip2)">
+          <rect x="0" y="0" width="320" height="312" fill="#ef4444"/>
+          <rect x="0" y="312" width="320" height="86" fill="#475569"/>
+          <rect x="0" y="398" width="320" height="48" fill="#06b6d4"/>
+          <rect x="0" y="446" width="320" height="14" fill="#3b82f6"/>
+          <rect x="0" y="460" width="320" height="7" fill="#f59e0b"/>
+          <rect x="0" y="467" width="320" height="5" fill="#8b5cf6"/>
+          <rect x="0" y="472" width="320" height="8" fill="#94a3b8"/>
+        </g>
+
+        <g clip-path="url(#humanClip2)" fill="none">
+          <circle cx="160" cy="70" r="42" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="118" y="112" width="84" height="180" rx="26" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="84" y="122" width="30" height="150" rx="15" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="206" y="122" width="30" height="150" rx="15" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="120" y="290" width="34" height="190" rx="16" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="166" y="290" width="34" height="190" rx="16" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+        </g>
+
+        <g font-family="Inter, system-ui, sans-serif">
+          <text x="400" y="40" font-size="18" font-weight="900" fill="#1e293b">Состав тела человека по массе</text>
+
+          <g transform="translate(400, 70)">
+            <rect width="30" height="30" rx="6" fill="#ef4444"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Кислород</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">65%</text>
+          </g>
+
+          <g transform="translate(400, 115)">
+            <rect width="30" height="30" rx="6" fill="#475569"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Углерод</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">18%</text>
+          </g>
+
+          <g transform="translate(400, 160)">
+            <rect width="30" height="30" rx="6" fill="#06b6d4"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Водород</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">10%</text>
+          </g>
+
+          <g transform="translate(400, 205)">
+            <rect width="30" height="30" rx="6" fill="#3b82f6"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Азот</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">3%</text>
+          </g>
+
+          <g transform="translate(400, 250)">
+            <rect width="30" height="30" rx="6" fill="#f59e0b"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Кальций</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">1,5%</text>
+          </g>
+
+          <g transform="translate(400, 295)">
+            <rect width="30" height="30" rx="6" fill="#8b5cf6"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Фосфор</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">1%</text>
+          </g>
+
+          <g transform="translate(400, 340)">
+            <rect width="30" height="30" rx="6" fill="#94a3b8"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Все остальные элементы</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">1,5%</text>
+          </g>
+
+          <g transform="translate(400, 395)">
+            <rect width="300" height="70" rx="12" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+            <text x="20" y="30" font-size="14" font-weight="700" fill="#64748b">Всего в теле человека</text>
+            <text x="20" y="54" font-size="14" font-weight="700" fill="#64748b">обнаружено около <tspan font-size="20" fill="#0e7490" font-weight="900">60</tspan> элементов</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="callout callout-idea" style="margin-top:18px;">
+      Получается, что мы почти на <b>две трети</b> состоим из кислорода и на <b>десятую часть</b> — из водорода.
+      А вместе с углеродом эти три элемента дают <b>больше 90%</b> массы нашего тела.
+    </div>
+
+    <h3 class="subhead">🏡 Химия в твоём доме</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🍳 Кухня</div>
+        <div class="c-desc">Соль, сахар, сода, уксус, растительное масло — всё это химические вещества. А ещё — выпечка, жарка, варка: это химические превращения.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧼 Ванная</div>
+        <div class="c-desc">Мыло, шампунь, зубная паста, стиральный порошок — химия помогает нам быть чистыми и здоровыми.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">💊 Аптечка</div>
+        <div class="c-desc">Лекарства, антисептики, бинты и пластыри — всё это результат работы химиков и врачей.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🚗 На улице</div>
+        <div class="c-desc">Бензин, асфальт, шины, дорожные знаки, краска на стенах — химия повсюду.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">📱 В кармане</div>
+        <div class="c-desc">Телефон сделан из десятков разных материалов: пластик, стекло, металлы, редкие элементы. Всё это — химия.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🌳 На природе</div>
+        <div class="c-desc">Фотосинтез в листьях, дыхание животных, круговорот воды — глобальные химические процессы.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-ok" style="margin-top:18px;">
+      <b>Вывод:</b> химия — не скучная наука из учебника. Это язык, на котором «разговаривает» вся природа
+      и всё, что сделано руками человека. Поняв её, ты начнёшь видеть мир по-другому.
+    </div>
+  </div>
+</section>
+<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Минимум 5 задач · письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+<li>Опиши 3 вещества дома по плану: состояние, цвет, запах, растворимость в воде.</li>
+<li>Опусти в два стакана с водой ложку соли и ложку масла. Что наблюдаешь? Запиши вывод.</li>
+<li>Нарисуй схему «путь хлеба»: какие превращения происходят от зерна до энергии в мышцах?</li>
+<li>Найди на 5 этикетках дома названия веществ (состав продуктов, шампуня). Выпиши их.</li>
+<li><span class="hw-star">★ Железный гвоздь тонет, а деревянная ложка плавает. Какое свойство за это отвечает? Объясни.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+<nav class="lesson-nav">
+<a class="ln-card" href="u1.html"><span class="ln-dir">← Назад</span><span class="ln-title">Урок 1. Как учимся и что изучает химия</span></a>
+<div class="ln-map"><a class="ln-pill" href="u1.html">1</a><span class="ln-pill now">2</span><a class="ln-pill" href="u3.html">3</a><a class="ln-pill" href="final.html">✓</a></div>
+<a class="ln-card ln-next" href="u3.html"><span class="ln-dir">Вперёд →</span><span class="ln-title">Урок 3. Лаборатория: безопасность и оборудование</span></a>
+</nav>
+</div>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Химия · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">
+    Простое объяснение · пример из жизни · наглядный опыт · запись в тетрадь
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  СИМУЛЯТОР «ОПРЕДЕЛИ СВОЙСТВО»
+// ============================================================
+(function initPropertySimulator() {
+  const container = document.getElementById('propertySimulator');
+  if (!container) return;
+
+  const QUESTIONS = [
+    {
+      substance: '🥉 Медь',
+      question: 'Выбери правильное описание свойств меди:',
+      options: [
+        'Имеет резкий запах',
+        'Рыжая, блестящая, хорошо проводит ток',
+        'Белая, без запаха, не проводит ток',
+        'Растворяется в воде с выделением тепла'
+      ],
+      correct: 1,
+      why: 'Медь — рыжий металл с характерным блеском. Она хорошо проводит электрический ток, поэтому из неё делают провода.'
+    },
+    {
+      substance: '🧴 Уксус',
+      question: 'Выбери правильное описание свойств уксуса:',
+      options: [
+        'Бесцветная жидкость с резким запахом',
+        'Твёрдое вещество жёлтого цвета',
+        'Газ без цвета и запаха',
+        'Металл, блестящий и твёрдый'
+      ],
+      correct: 0,
+      why: 'Уксус — это бесцветная жидкость с очень резким запахом. Именно запах — его главное отличительное свойство.'
+    },
+    {
+      substance: '🍬 Сахар',
+      question: 'Выбери правильное описание свойств сахара:',
+      options: [
+        'Твёрдое, сладкое на вкус, растворяется в воде',
+        'Жидкость с горьким вкусом',
+        'Газ с запахом',
+        'Металл'
+      ],
+      correct: 0,
+      why: 'Сахар — твёрдое кристаллическое вещество, сладкое на вкус, хорошо растворяется в воде.'
+    },
+    {
+      substance: '⚫ Уголь',
+      question: 'Выбери правильное описание свойств угля:',
+      options: [
+        'Белое твёрдое вещество',
+        'Чёрное твёрдое вещество, горит',
+        'Прозрачная жидкость',
+        'Газ без запаха'
+      ],
+      correct: 1,
+      why: 'Уголь — чёрное твёрдое вещество. Его главное свойство — горючесть: он хорошо горит и даёт тепло.'
+    },
+    {
+      substance: '💧 Вода',
+      question: 'Выбери правильное описание свойств воды:',
+      options: [
+        'Имеет резкий запах',
+        'Прозрачная жидкость без запаха',
+        'Жёлтая жидкость',
+        'Твёрдое вещество'
+      ],
+      correct: 1,
+      why: 'Вода — прозрачная жидкость без цвета и запаха. Это её главные свойства.'
+    }
+  ];
+
+  let current = 0;
+  let answered = 0;
+  let correctCount = 0;
+
+  function render() {
+    if (current >= QUESTIONS.length) {
+      const msg = correctCount >= 4
+        ? '🎉 Отлично! Ты хорошо различаешь свойства веществ!'
+        : correctCount >= 3
+          ? '👍 Хорошо! Ещё немного практики — и будет отлично.'
+          : '💪 Стоит повторить свойства веществ. Попробуй ещё раз!';
+      container.innerHTML = `
+        <div class="callout callout-ok" style="margin-top:0;">
+          <b>Результат:</b> ${correctCount} из ${QUESTIONS.length}. ${msg}
+        </div>
+        <div style="text-align:center;margin-top:14px;">
+          <button class="retry-btn" id="retryProperty">↺ Пройти заново</button>
+        </div>
+      `;
+      document.getElementById('retryProperty').addEventListener('click', () => {
+        current = 0; answered = 0; correctCount = 0;
+        render();
+      });
+      return;
+    }
+
+    const q = QUESTIONS[current];
+    container.innerHTML = `
+      <div style="background:#fff;border:2px solid var(--border);border-radius:14px;padding:22px;">
+        <div style="font-size:40px;text-align:center;margin-bottom:10px;">${q.substance}</div>
+        <div style="font-size:16.5px;font-weight:800;margin-bottom:14px;">${q.question}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${q.options.map((o, i) => `
+            <div class="test-option" data-i="${i}">
+              <span class="opt-marker">${String.fromCharCode(65 + i)}</span>
+              <span>${o}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="explanation" id="propExp"></div>
+      </div>
+      <div style="text-align:center;margin-top:12px;color:var(--muted);font-size:14px;">
+        Вопрос ${current + 1} из ${QUESTIONS.length}
+      </div>
+    `;
+
+    container.querySelectorAll('.test-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const i = parseInt(opt.dataset.i);
+        if (opt.classList.contains('disabled')) return;
+        const isCorrect = i === q.correct;
+        container.querySelectorAll('.test-option').forEach(o => {
+          o.classList.add('disabled');
+          const idx = parseInt(o.dataset.i);
+          if (idx === q.correct) o.classList.add('correct');
+          if (idx === i && !isCorrect) o.classList.add('wrong');
+        });
+        const exp = document.getElementById('propExp');
+        exp.classList.add('show', isCorrect ? 'ok' : 'no');
+        exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+        if (isCorrect) correctCount++;
+        answered++;
+        setTimeout(() => { current++; render(); }, 1600);
+      });
+    });
+  }
+
+  render();
+})();
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+</script>
+</body>
+</html>

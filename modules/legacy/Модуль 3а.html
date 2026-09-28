@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модуль 3а. Явления и признаки химических реакций — интерактивный урок</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --h-deep: #0e7490;
+    --h-color: #06b6d4;
+    --accent: #8b5cf6;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --radius: 16px;
+    --shadow: 0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg: 0 12px 40px -12px rgba(0,0,0,.15);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    font-size: 17px; overflow-x: hidden;
+  }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+  .hero {
+    text-align: center; padding: 56px 0 26px;
+    background: linear-gradient(180deg, #fef3c7 0%, var(--bg) 100%);
+  }
+  .hero .badge {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: #b45309;
+    border: 1.5px solid #b45309; padding: 6px 18px;
+    border-radius: 50px; margin-bottom: 20px; background: rgba(245,158,11,.05);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 800;
+    letter-spacing: -1px; line-height: 1.15;
+    background: linear-gradient(135deg, #f59e0b, #ef4444, #ec4899);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 14px;
+  }
+  .hero p { color: var(--muted); font-size: 17px; max-width: 780px; margin: 0 auto; }
+
+  .section { padding: 24px 0; }
+
+  .stage {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 26px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .stage::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  }
+  .stage.s-legend::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b); }
+  .stage.s-entry::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .stage.s-intro::before  { background: linear-gradient(90deg, #ec4899, #f59e0b); }
+  .stage.s1::before       { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+  .stage.s2::before       { background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+  .stage.s3::before       { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+  .stage.s4::before       { background: linear-gradient(90deg, #10b981, #059669); }
+  .stage.s-feyn::before   { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s-prac::before   { background: linear-gradient(90deg, #06b6d4, #10b981); }
+  .stage.s-test::before   { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  .stage-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .stage-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--panel-2); color: var(--h-deep);
+    font-size: 22px; font-weight: 900; flex-shrink: 0;
+    border: 2px solid var(--border);
+  }
+  .stage-title { font-size: 21px; font-weight: 700; color: var(--text); }
+  .stage-subtitle { font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+  .callout { padding: 16px 20px; border-radius: 12px; margin: 16px 0; font-size: 16px; line-height: 1.7; }
+  .callout-idea { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-left: 5px solid var(--orange); color: #78350f; }
+  .callout-idea b { color: #92400e; }
+  .callout-warn { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-left: 5px solid var(--red); color: #7f1d1d; }
+  .callout-warn b { color: #b91c1c; }
+  .callout-note { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-left: 5px solid #3b82f6; color: #1e3a8a; }
+  .callout-note b { color: #1d4ed8; }
+  .callout-ok { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-left: 5px solid var(--green); color: #065f46; }
+  .callout-ok b { color: #047857; }
+
+  .cta { color: var(--accent); font-weight: 800; }
+  .tri-symbol { color: var(--accent); font-weight: 900; font-size: 1.05em; }
+
+  .subhead { font-size: 17px; font-weight: 800; margin: 26px 0 8px; display: flex; align-items: center; gap: 8px; }
+  .subhead-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+
+  .card-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px; margin-top: 16px;
+  }
+  .card {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 1.5px solid var(--border); border-radius: 14px;
+    padding: 20px; transition: all .3s; position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--h-color), var(--accent));
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 30px -12px rgba(0,0,0,.15); border-color: var(--h-deep); }
+  .card .c-title { font-size: 16.5px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .card .c-desc { font-size: 15.5px; color: var(--muted); line-height: 1.65; }
+  .card .c-desc b { color: var(--text); }
+
+  /* Игры */
+  .game-area { background: var(--panel-2); border-radius: 14px; padding: 22px; margin-top: 18px; }
+  .game-area h4 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .game-area .game-hint { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+
+  .dual-basket { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
+
+  .basket {
+    border: 2.5px dashed var(--border); border-radius: 14px;
+    padding: 16px; min-height: 160px; text-align: center;
+    transition: all .25s; background: #fff;
+  }
+  .basket.hover { border-color: var(--accent); background: #f5f3ff; }
+  .basket .basket-title {
+    font-size: 14px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted); margin-bottom: 12px;
+  }
+  .basket .basket-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .basket .basket-chip {
+    background: var(--panel-2); border: 1.5px solid var(--border);
+    border-radius: 8px; padding: 6px 12px; font-size: 14px; font-weight: 700;
+  }
+  .basket.good { border-color: var(--green); background: #ecfdf5; }
+  .basket.bad { border-color: var(--red); background: #fef2f2; }
+
+  .game-pool {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 16px; background: #fff;
+    border: 2px solid var(--border); border-radius: 14px;
+    min-height: 100px; margin-bottom: 14px;
+  }
+  .game-pool .pool-item {
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 10px; padding: 10px 18px;
+    cursor: grab; font-size: 15px; font-weight: 700;
+    transition: all .2s; user-select: none;
+  }
+  .game-pool .pool-item:hover { border-color: var(--h-deep); transform: translateY(-2px); }
+  .game-pool .pool-item.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .game-pool .pool-item.dragging { opacity: .5; }
+  .game-pool .pool-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: #fef2f2; }
+
+  .reset-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 50px;
+    background: var(--panel-2); color: var(--text);
+    border: 1.5px solid var(--border); cursor: pointer;
+    font-size: 14px; font-weight: 700; transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--h-deep); color: var(--h-deep); }
+
+  .retry-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 12px 26px; border-radius: 50px;
+    background: var(--accent); color: #fff; border: none;
+    cursor: pointer; font-size: 15px; font-weight: 800;
+    transition: all .2s;
+    box-shadow: 0 6px 16px -6px rgba(139,92,246,.5);
+  }
+  .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(139,92,246,.6); }
+
+  .game-feedback { margin-top: 14px; font-size: 15.5px; font-weight: 700; min-height: 24px; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Признаки реакций — карточки с canvas */
+  .sign-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .sign-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border); border-radius: 14px;
+    padding: 16px; cursor: pointer;
+    transition: all .3s; position: relative; overflow: hidden;
+  }
+  .sign-card:hover { transform: translateY(-4px); border-color: var(--h-deep); box-shadow: var(--shadow-lg); }
+  .sign-card.active { border-color: var(--accent); background: #faf5ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .sign-card .sc-head {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .sign-card .sc-icon {
+    width: 56px; height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border-radius: 12px; flex-shrink: 0;
+    transition: all .25s;
+  }
+  .sign-card.active .sc-icon { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+  .sign-card .sc-icon svg { width: 40px; height: 40px; }
+  .sign-card .sc-title { font-size: 16px; font-weight: 800; }
+  .sign-card .sc-desc { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+
+  .sign-card .sign-canvas-wrap {
+    max-height: 0; overflow: hidden;
+    transition: max-height .5s ease, margin .3s ease;
+  }
+  .sign-card.active .sign-canvas-wrap {
+    max-height: 320px; margin-top: 14px;
+  }
+  .sign-card canvas {
+    width: 100%; height: auto; display: block;
+    border-radius: 10px; background: #f0f9ff;
+  }
+
+  /* Экзо- и эндо- */
+  .thermo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px; margin-top: 16px;
+  }
+  .thermo-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border); border-radius: 14px;
+    padding: 20px; text-align: center;
+    transition: all .25s;
+  }
+  .thermo-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+  .thermo-card.exo { border-color: #f97316; background: linear-gradient(180deg, #fff7ed, #ffedd5); }
+  .thermo-card.endo { border-color: #3b82f6; background: linear-gradient(180deg, #eff6ff, #dbeafe); }
+  .thermo-card .tc-icon { font-size: 48px; line-height: 1; margin-bottom: 10px; }
+  .thermo-card .tc-title { font-size: 18px; font-weight: 800; }
+  .thermo-card .tc-desc { font-size: 14.5px; color: var(--muted); line-height: 1.6; margin-top: 8px; }
+  .thermo-card .tc-examples { font-size: 13.5px; color: var(--text); margin-top: 10px; }
+  .thermo-card .tc-examples span { display: inline-block; background: #fff; padding: 3px 10px; border-radius: 6px; margin: 3px 3px 0 0; border: 1px solid var(--border); font-weight: 600; }
+
+  /* Тест */
+  .test-question { background: var(--panel-2); border-radius: 12px; padding: 20px; margin-bottom: 16px; }
+  .test-question .q-text {
+    font-size: 17px; font-weight: 700; margin-bottom: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .test-question .q-num {
+    background: var(--h-deep); color: #fff; border-radius: 50%;
+    width: 30px; height: 30px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+  .test-options { display: flex; flex-direction: column; gap: 10px; }
+  .test-option {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; font-size: 15.5px; transition: all .25s;
+  }
+  .test-option:hover { border-color: var(--h-deep); }
+  .test-option .opt-marker {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted); transition: all .25s;
+  }
+  .test-option.correct { border-color: var(--green); background: #ecfdf5; }
+  .test-option.correct .opt-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .test-option.wrong { border-color: var(--red); background: #fef2f2; }
+  .test-option.wrong .opt-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .test-option.disabled { cursor: default; }
+  .test-option.disabled:hover { border-color: var(--border); }
+  .test-option.correct.disabled:hover { border-color: var(--green); }
+  .test-option.wrong.disabled:hover { border-color: var(--red); }
+
+  .explanation {
+    margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+    font-size: 15px; line-height: 1.65; display: none;
+    animation: fadeSlide .35s ease;
+  }
+  .explanation.show { display: block; }
+  .explanation.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .explanation.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+  .explanation b { font-weight: 800; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .test-score {
+    margin-top: 22px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 18px; font-weight: 800;
+    background: var(--panel-2); border: 2px solid var(--border); transition: all .4s;
+  }
+  .test-score.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .test-score.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+  .test-score.bad { background: #fef2f2; border-color: var(--red); color: #dc2626; }
+
+  .entry-result {
+    margin-top: 20px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 16px; font-weight: 700;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: none;
+  }
+  .entry-result.show { display: block; animation: fadeSlide .35s ease; }
+  .entry-result.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .entry-result.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+
+  .footer {
+    text-align: center; padding: 40px 0 60px;
+    color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .legend-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .legend-card {
+    padding: 14px 18px; border-radius: 12px;
+    border: 2px solid var(--border); background: #fff;
+  }
+  .legend-card .lc-header { display: flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 800; margin-bottom: 6px; }
+  .legend-card .lc-body { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .legend-card .lc-body b { color: var(--text); }
+
+  /* Карточки Лавуазье */
+  .lavoisier-story {
+    background: linear-gradient(135deg, #fef3c7, #fffbeb);
+    border: 2px solid #f59e0b;
+    border-radius: 14px;
+    padding: 22px;
+    margin-top: 16px;
+  }
+  .lavoisier-story .ls-title {
+    font-size: 17px; font-weight: 800; color: #92400e;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+  .lavoisier-story .ls-text {
+    font-size: 15.5px; line-height: 1.75; color: #78350f;
+  }
+  .lavoisier-story .ls-text b { color: #b45309; }
+
+  @media (max-width: 800px) {
+    .dual-basket, .thermo-grid { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 20px; }
+    .stage { padding: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    body { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="badge">Модуль 3а · Явления и признаки реакций</div>
+  <h1>Что происходит с веществами?</h1>
+  <p>Урок о том, как отличить физическое явление от химической реакции, по каким признакам заметить реакцию и почему одни реакции выделяют тепло, а другие — поглощают.</p>
+</header>
+
+<div class="container">
+
+<!-- ==================== ЛЕГЕНДА ==================== -->
+<section class="section">
+  <div class="stage s-legend fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📚</div>
+      <div>
+        <div class="stage-title">Как читать этот модуль</div>
+        <div class="stage-subtitle">Краткое напоминание условных обозначений</div>
+      </div>
+    </div>
+
+    <p style="font-size:16px;line-height:1.75;">
+      Это <b>третий модуль курса</b>. Все условные обозначения — те же, что и в предыдущих. Если что-то подзабыл — вот короткая шпаргалка.
+    </p>
+
+    <div class="legend-grid">
+      <div class="legend-card" style="background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #f59e0b;">
+        <div class="lc-header">💡 <span>Тёплый жёлтый</span></div>
+        <div class="lc-body">Ключевая мысль, сравнение или аналогия.</div>
+      </div>
+      <div class="legend-card" style="background: linear-gradient(135deg, #fef2f2, #fee2e2); border-color: #ef4444;">
+        <div class="lc-header">⚠️ <span>Красный</span></div>
+        <div class="lc-body">Важное предупреждение или правило. <b>К запоминанию.</b></div>
+      </div>
+      <div class="legend-card" style="background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6;">
+        <div class="lc-header">📌 <span>Синий</span></div>
+        <div class="lc-body">Дополнительная заметка или интересный факт.</div>
+      </div>
+      <div class="legend-card" style="background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #10b981;">
+        <div class="lc-header">✅ <span>Зелёный</span></div>
+        <div class="lc-body">Правильный ответ или итоговый вывод.</div>
+      </div>
+      <div class="legend-card">
+        <div class="lc-header"><span class="cta">🔷 Жирный фиолетовый</span></div>
+        <div class="lc-body"><b>Призыв к действию.</b> Нужно нажать, подвигать, перетащить.</div>
+      </div>
+      <div class="legend-card">
+        <div class="lc-header">🎮 <span>Мини-игра</span></div>
+        <div class="lc-body">Интерактивное задание для закрепления материала.</div>
+      </div>
+      <div class="legend-card" style="border-color: var(--accent);">
+        <div class="lc-header"><span class="tri-symbol">🔺</span> <span>Треугольник Джонстона</span></div>
+        <div class="lc-body">Способ смотреть на любую тему сразу с трёх сторон: <b>макро</b> (что видим), <b>субмикро</b> (что на уровне частиц), <b>символический</b> (как записать).</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ВХОДНОЙ ТЕСТ ==================== -->
+<section class="section">
+  <div class="stage s-entry fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🚪</div>
+      <div>
+        <div class="stage-title">Входной тест</div>
+        <div class="stage-subtitle">5 вопросов по Модулю 2 · если наберёшь 4+, можешь сразу перейти к Модулю 3б</div>
+      </div>
+    </div>
+
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      Этот тест — <b>проверка готовности</b>. Если ты уже знаешь основы, можешь не проходить модуль целиком,
+      а сразу перейти к следующему. Если нет — пройди урок полностью, и всё встанет на места.
+    </p>
+
+    <div id="entryTestContainer"></div>
+
+    <div class="entry-result" id="entryResult"></div>
+  </div>
+</section>
+
+<!-- ==================== ВВЕДЕНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🎯</div>
+      <div>
+        <div class="stage-title">О чём этот модуль</div>
+        <div class="stage-subtitle">Три урока о явлениях, признаках реакций и тепловых эффектах</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      В первом модуле мы выяснили, что химия — наука о веществах и их превращениях.
+      Во втором — разобрались, что такое агрегатные состояния и смеси.
+      Теперь пришло время понять: <b>что именно происходит с веществом, когда оно «превращается»?</b>
+      Как отличить превращение от простого изменения формы? И по каким признакам учёные понимают,
+      что произошла химическая реакция?
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🔬 Явления</div>
+        <div class="c-desc">Чем <b>физическое явление</b> отличается от <b>химической реакции</b>? По каким признакам понять, что произошла реакция?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">👁 Признаки реакций</div>
+        <div class="c-desc">Пять главных признаков: <b>выделение газа</b>, <b>образование осадка</b>, <b>изменение цвета</b>, <b>выделение тепла</b> и <b>выделение света</b>.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🌡 Экзо- и эндо-</div>
+        <div class="c-desc">Почему одни реакции <b>выделяют тепло</b> (горение), а другие — <b>поглощают</b> (разложение)? Это первое знакомство с энергией.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Держи в голове главный вопрос:</b> если при реакции вещество меняется — например, сгорает дотла —
+      <b>почему масса не исчезает?</b> Ответ на этот вопрос мы будем искать в Модуле 3б.
+      А пока просто запомни: в природе ничего не исчезает бесследно.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 1: ФИЗИЧЕСКИЕ И ХИМИЧЕСКИЕ ЯВЛЕНИЯ ==================== -->
+<section class="section">
+  <div class="stage s1 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">1</div>
+      <div>
+        <div class="stage-title">Физические и химические явления</div>
+        <div class="stage-subtitle">Как отличить превращение одного вещества от превращения формы</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Всё, что происходит в мире, — это <b>явления</b>. Идёт дождь, горит костёр, ржавеет гвоздь,
+      тает лёд, темнеет серебро, кипит чайник. Одни явления меняют только форму или состояние
+      вещества, другие — превращают его во что-то новое. Первые называют <b>физическими</b>,
+      вторые — <b>химическими</b>.
+    </p>
+
+    <h3 class="subhead">📦 Физические явления</h3>
+    <p class="subhead-sub">Вещество остаётся тем же, меняется только его форма, агрегатное состояние или размер частиц.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧊 Плавление льда</div>
+        <div class="c-desc">Лёд → вода. Частицы те же, просто связь между ними слабеет.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">💧 Кипение воды</div>
+        <div class="c-desc">Вода → пар. Снова то же вещество, но в газообразном состоянии.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">📏 Разрезание бумаги</div>
+        <div class="c-desc">Бумага → кусочки бумаги. Состав не меняется, меняется только форма.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧂 Растворение сахара</div>
+        <div class="c-desc">Сахар → невидимые частицы в воде. Новое вещество не образовалось.</div>
+      </div>
+    </div>
+
+    <h3 class="subhead">🔥 Химические явления (реакции)</h3>
+    <p class="subhead-sub">Из одних веществ образуются <b>новые</b> вещества с другими свойствами. Их называют <b>химическими реакциями</b>.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🔥 Горение дров</div>
+        <div class="c-desc">Дерево + кислород → углекислый газ + вода + зола. Новые вещества!</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🟤 Ржавление гвоздя</div>
+        <div class="c-desc">Железо + кислород + вода → ржавчина. Совсем другое вещество.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🥛 Скисание молока</div>
+        <div class="c-desc">Молочный сахар → молочная кислота. Вкус и запах изменились.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🍂 Гниение листьев</div>
+        <div class="c-desc">Органика → перегной + газы. Сложные вещества распались на простые.</div>
+      </div>
+    </div>
+
+    <!-- ОПЫТ ЛАВУАЗЬЕ -->
+    <h3 class="subhead">💎 Опыт Лавуазье: как сгорел алмаз</h3>
+    <p class="subhead-sub">
+      В 1772 году великий французский химик <b>Антуан Лавуазье</b> провёл эксперимент,
+      который изменил химию. Он купил алмаз — самый драгоценный камень в мире — и... сжёг его.
+    </p>
+
+    <div class="lavoisier-story">
+      <div class="ls-title">🔥 Как это было</div>
+      <div class="ls-text">
+        Лавуазье поместил алмаз в специальный сосуд, нагрел его до очень высокой температуры
+        (около 900 °C) и направил на него поток воздуха. Алмаз <b>загорелся и сгорел без остатка</b>,
+        превратившись в невидимый газ — <b>углекислый газ</b>.
+        <br><br>
+        Это было настоящее открытие! Оказалось, что <b>алмаз — это чистый углерод</b>, тот же элемент,
+        из которого состоит графит в карандаше и уголь в костре. Просто у него другая кристаллическая решётка —
+        поэтому он такой твёрдый и блестящий.
+        <br><br>
+        <b>Почему это важно?</b> Лавуазье доказал, что при горении вещество не исчезает бесследно.
+        Алмаз «исчез», но превратился в газ, который улетел в воздух. <b>Масса не исчезла — она просто перешла в другое вещество.</b>
+      </div>
+    </div>
+
+    <div class="callout callout-note" style="margin-top:16px;">
+      <b>Как Лавуазье понял, что алмаз — это углерод?</b> Он сжёг алмаз в закрытом сосуде с кислородом
+      и обнаружил, что образовался <b>углекислый газ</b> — то же самое вещество, которое образуется
+      при горении угля. А раз продукты одинаковые — значит, и исходное вещество одинаковое.
+    </div>
+
+    <div class="game-area">
+      <h4>🎮 Мини-игра: физическое или химическое явление?</h4>
+      <p class="game-hint">
+        <span class="cta">Перетащи каждое явление</span> в нужную корзину.
+        Если перетаскивание не работает — <span class="cta">нажми на карточку, а затем на корзину</span>.
+      </p>
+
+      <div class="game-pool" id="phenomenaPool"></div>
+
+      <div class="dual-basket">
+        <div class="basket" data-cat="physical">
+          <div class="basket-title">🧊 Физическое явление</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="chemical">
+          <div class="basket-title">🔥 Химическое явление</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px;">
+        <button class="reset-btn" id="resetPhenomena">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbPhenomena"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 2: ПРИЗНАКИ ХИМИЧЕСКИХ РЕАКЦИЙ ==================== -->
+<section class="section">
+  <div class="stage s2 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">2</div>
+      <div>
+        <div class="stage-title">Пять признаков химических реакций</div>
+        <div class="stage-subtitle">Как заметить, что произошла реакция</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Как понять, что перед нами химическая реакция, а не физическое явление?
+      Существует <b>пять основных признаков</b>. Если ты видишь хотя бы один из них —
+      скорее всего, произошла реакция. <span class="cta">👆 Нажми на карточку</span> —
+      прямо внутри неё запустится анимация этого признака.
+    </p>
+
+    <div class="sign-grid" id="signGrid">
+      <div class="sign-card" data-sign="gas">
+        <div class="sc-head">
+          <div class="sc-icon">
+            <svg viewBox="0 0 80 80">
+              <rect x="20" y="20" width="40" height="50" rx="6" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+              <circle cx="32" cy="50" r="4" fill="#38bdf8"/>
+              <circle cx="44" cy="45" r="5" fill="#38bdf8"/>
+              <circle cx="52" cy="55" r="3" fill="#38bdf8"/>
+              <circle cx="30" cy="35" r="3" fill="#7dd3fc"/>
+              <circle cx="46" cy="30" r="4" fill="#7dd3fc"/>
+              <circle cx="52" cy="22" r="3" fill="#bae6fd"/>
+            </svg>
+          </div>
+          <div>
+            <div class="sc-title">Выделение газа</div>
+            <div class="sc-desc">Пузырьки, вскипание, «шипение»</div>
+          </div>
+        </div>
+        <div class="sign-canvas-wrap">
+          <canvas class="sign-canvas" data-sign="gas" width="480" height="240"></canvas>
+        </div>
+      </div>
+
+      <div class="sign-card" data-sign="precipitate">
+        <div class="sc-head">
+          <div class="sc-icon">
+            <svg viewBox="0 0 80 80">
+              <rect x="20" y="20" width="40" height="50" rx="6" fill="#f8fafc" stroke="#0284c7" stroke-width="2"/>
+              <rect x="22" y="55" width="36" height="13" fill="#fbbf24" opacity="0.7"/>
+              <circle cx="30" cy="48" r="2" fill="#f59e0b"/>
+              <circle cx="45" cy="45" r="2.5" fill="#f59e0b"/>
+              <circle cx="52" cy="50" r="1.8" fill="#f59e0b"/>
+              <circle cx="38" cy="40" r="2" fill="#f59e0b"/>
+            </svg>
+          </div>
+          <div>
+            <div class="sc-title">Образование осадка</div>
+            <div class="sc-desc">Помутнение, хлопья, кристаллы на дне</div>
+          </div>
+        </div>
+        <div class="sign-canvas-wrap">
+          <canvas class="sign-canvas" data-sign="precipitate" width="480" height="240"></canvas>
+        </div>
+      </div>
+
+      <div class="sign-card" data-sign="color">
+        <div class="sc-head">
+          <div class="sc-icon">
+            <svg viewBox="0 0 80 80">
+              <circle cx="28" cy="40" r="16" fill="#06b6d4"/>
+              <circle cx="52" cy="40" r="16" fill="#f59e0b" opacity="0.85"/>
+            </svg>
+          </div>
+          <div>
+            <div class="sc-title">Изменение цвета</div>
+            <div class="sc-desc">Бесцветное → красное, синее → зелёное и т.д.</div>
+          </div>
+        </div>
+        <div class="sign-canvas-wrap">
+          <canvas class="sign-canvas" data-sign="color" width="480" height="240"></canvas>
+        </div>
+      </div>
+
+      <div class="sign-card" data-sign="heat">
+        <div class="sc-head">
+          <div class="sc-icon">
+            <svg viewBox="0 0 80 80">
+              <path d="M 40 15 Q 30 35 35 50 Q 38 58 40 62 Q 42 58 45 50 Q 50 35 40 15 Z" fill="#f97316"/>
+              <path d="M 40 28 Q 36 40 38 50 Q 39 55 40 58 Q 41 55 42 50 Q 44 40 40 28 Z" fill="#fbbf24"/>
+              <path d="M 25 62 L 55 62" stroke="#94a3b8" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <div>
+            <div class="sc-title">Выделение тепла</div>
+            <div class="sc-desc">Сосуд нагревается, тепло расходится вокруг</div>
+          </div>
+        </div>
+        <div class="sign-canvas-wrap">
+          <canvas class="sign-canvas" data-sign="heat" width="480" height="240"></canvas>
+        </div>
+      </div>
+
+      <div class="sign-card" data-sign="light">
+        <div class="sc-head">
+          <div class="sc-icon">
+            <svg viewBox="0 0 80 80">
+              <polygon points="40,10 44,32 60,22 48,40 68,44 48,48 60,66 44,56 40,78 36,56 20,66 32,48 12,44 32,40 20,22 36,32" fill="#fbbf24" stroke="#f59e0b" stroke-width="1.5"/>
+              <circle cx="40" cy="44" r="6" fill="#fff"/>
+            </svg>
+          </div>
+          <div>
+            <div class="sc-title">Выделение света</div>
+            <div class="sc-desc">Свечение, искры, вспышка, пламя</div>
+          </div>
+        </div>
+        <div class="sign-canvas-wrap">
+          <canvas class="sign-canvas" data-sign="light" width="480" height="240"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-note" style="margin-top:16px;">
+      <b>Важно:</b> обычно у одной реакции проявляется <b>несколько признаков сразу</b>.
+      Например, при горении дров мы видим и тепло, и свет, и дым (газ). А при взаимодействии соды с уксусом —
+      выделение газа и шипение.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 3: ЭКЗО- И ЭНДОТЕРМИЧЕСКИЕ РЕАКЦИИ ==================== -->
+<section class="section">
+  <div class="stage s3 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">3</div>
+      <div>
+        <div class="stage-title">Экзо- и эндотермические реакции</div>
+        <div class="stage-subtitle">Почему одни реакции греют, а другие — охлаждают</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Все химические реакции можно разделить на две большие группы: те, которые <b>выделяют тепло</b>,
+      и те, которые <b>поглощают тепло</b>. Это первое знакомство с энергией, которая играет
+      огромную роль в химии.
+    </p>
+
+    <div class="thermo-grid">
+      <div class="thermo-card exo">
+        <div class="tc-icon">🔥</div>
+        <div class="tc-title">Экзотермические реакции</div>
+        <div class="tc-desc">
+          Протекают с <b>выделением тепла</b>. Окружающая среда нагревается.
+          Такие реакции «отдают» энергию.
+        </div>
+        <div class="tc-examples">
+          <span>🔥 Горение</span>
+          <span>🟤 Ржавление</span>
+          <span>🍞 Выпечка</span>
+          <span>🕯 Горение свечи</span>
+        </div>
+      </div>
+
+      <div class="thermo-card endo">
+        <div class="tc-icon">❄️</div>
+        <div class="tc-title">Эндотермические реакции</div>
+        <div class="tc-desc">
+          Протекают с <b>поглощением тепла</b>. Окружающая среда охлаждается.
+          Такие реакции «забирают» энергию.
+        </div>
+        <div class="tc-examples">
+          <span>🧊 Таяние льда</span>
+          <span>🥶 Холодный компресс</span>
+          <span>🌿 Фотосинтез</span>
+          <span>🔥 Разложение</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-idea" style="margin-top:18px;">
+      <b>Аналогия с деньгами.</b> Экзотермическая реакция — как <b>трата</b> денег: ты отдаёшь энергию
+      в окружающую среду, и вокруг становится «теплее». Эндотермическая — как <b>накопление</b>:
+      ты забираешь энергию из окружающей среды, и вокруг становится «холоднее».
+    </div>
+
+    <div class="callout callout-note">
+      <b>Запомни:</b> слово «экзо» означает «наружу», «эндо» — «внутрь».
+      Экзотермическая — тепло выходит наружу. Эндотермическая — тепло уходит внутрь реакции.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🧠</div>
+      <div>
+        <div class="stage-title">Рефлексия по Фейнману</div>
+        <div class="stage-subtitle">Проверь, насколько ты понял материал — выбери лучшее объяснение</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
+      Сейчас тебе нужно выбрать <b>лучшие простые объяснения</b> для младшего брата.
+      Это тест, а не сочинение: просто нажимай на подходящий вариант.
+    </p>
+
+    <div id="feynmanTest"></div>
+  </div>
+</section>
+
+<!-- ==================== ПРАКТИКУМ ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: наблюдение признаков реакций</div>
+        <div class="stage-subtitle">Пройди 4 шага наблюдения и определи признаки реакций</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      В лаборатории проводят три опыта. Твоя задача — по описанию определить, какие признаки
+      реакций проявились. Это тест-сценарий: выбирай правильные варианты.
+    </p>
+
+    <div id="practicalTask"></div>
+  </div>
+</section>
+
+<!-- ==================== ИТОГОВЫЙ ТЕСТ ==================== -->
+<section class="section">
+  <div class="stage s-test fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📝</div>
+      <div>
+        <div class="stage-title">Итоговый тест по Модулю 3а</div>
+        <div class="stage-subtitle">15 вопросов · порог прохождения — 80% (12 правильных ответов)</div>
+      </div>
+    </div>
+
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      <span class="cta">👆 Нажми на вариант ответа</span> — он сразу подсветится, а под вопросом появится объяснение.
+      В конце ты увидишь свой результат и кнопку «Пройти заново», если порог не достигнут.
+    </p>
+
+    <div id="testContainer"></div>
+
+    <div class="test-score" id="testScore">
+      Правильных ответов: <span id="scoreNum">0</span> из 15
+    </div>
+
+    <div id="retryBox" style="text-align:center;"></div>
+  </div>
+</section>
+
+</div>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Явления и признаки химических реакций · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">
+    Принцип обучения: простое объяснение · наглядный пример · интерактив · самопроверка
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  ПРИЗНАКИ РЕАКЦИЙ — canvas-анимация на каждой карточке
+// ============================================================
+(function initSignAnimations() {
+  const cards = document.querySelectorAll('.sign-card');
+  if (!cards.length) return;
+
+  if (!CanvasRenderingContext2D.prototype.roundRect) {
+    CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
+      this.beginPath();
+      this.moveTo(x + r, y);
+      this.arcTo(x + w, y, x + w, y + h, r);
+      this.arcTo(x + w, y + h, x, y + h, r);
+      this.arcTo(x, y + h, x, y, r);
+      this.arcTo(x, y, x + w, y, r);
+      this.closePath();
+      return this;
+    };
+  }
+
+  function drawGas(ctx, W, H, t) {
+    ctx.fillStyle = '#e0f2fe';
+    ctx.strokeStyle = '#0284c7';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.roundRect(W/2 - 90, 25, 180, 190, 14);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(56,189,248,.45)';
+    ctx.beginPath();
+    ctx.moveTo(W/2 - 85, 100);
+    for (let x = W/2 - 85; x <= W/2 + 85; x += 5) {
+      const y = 100 + Math.sin((x + t * 40) * 0.08) * 3;
+      ctx.lineTo(x, y);
+    }
+    ctx.lineTo(W/2 + 85, 210);
+    ctx.lineTo(W/2 - 85, 210);
+    ctx.closePath();
+    ctx.fill();
+
+    for (let i = 0; i < 15; i++) {
+      const phase = i * 0.6;
+      const py = 210 - ((t * 1.8 + phase * 18) % 130);
+      const px = W/2 - 60 + (i % 7) * 20 + Math.sin(t * 1.5 + phase) * 6;
+      const r = 3 + (i % 3) * 1.2;
+      ctx.beginPath();
+      ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(125,211,252,.9)';
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,.9)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(W/2 - 75, 50);
+    ctx.quadraticCurveTo(W/2 - 78, 120, W/2 - 72, 180);
+    ctx.strokeStyle = 'rgba(255,255,255,.7)';
+    ctx.lineWidth = 4;
+    ctx.stroke();
+  }
+
+  function drawPrecipitate(ctx, W, H, t) {
+    ctx.fillStyle = '#f8fafc';
+    ctx.strokeStyle = '#0284c7';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.roundRect(W/2 - 90, 25, 180, 190, 14);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(224,242,254,.6)';
+    ctx.fillRect(W/2 - 85, 30, 170, 110);
+
+    const turb = (Math.sin(t * 0.6) + 1) / 2;
+    ctx.fillStyle = `rgba(251,191,36,${0.05 + turb * 0.08})`;
+    ctx.fillRect(W/2 - 85, 30, 170, 110);
+
+    ctx.fillStyle = '#fbbf24';
+    ctx.beginPath();
+    ctx.moveTo(W/2 - 85, 180);
+    for (let x = W/2 - 85; x <= W/2 + 85; x += 8) {
+      ctx.lineTo(x, 180 + Math.sin((x + t * 20) * 0.15) * 3);
+    }
+    ctx.lineTo(W/2 + 85, 215);
+    ctx.lineTo(W/2 - 85, 215);
+    ctx.closePath();
+    ctx.fill();
+
+    for (let i = 0; i < 20; i++) {
+      const px = W/2 - 70 + (i * 15) % 140;
+      const phase = i * 0.35;
+      const py = 40 + ((t * 1.5 + phase * 20) % 140);
+      const r = 2 + (i % 3) * 0.8;
+      ctx.beginPath();
+      ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(245,158,11,${0.5 + (i%3)*0.2})`;
+      ctx.fill();
+    }
+
+    ctx.beginPath();
+    ctx.moveTo(W/2 - 75, 50);
+    ctx.quadraticCurveTo(W/2 - 78, 120, W/2 - 72, 180);
+    ctx.strokeStyle = 'rgba(255,255,255,.7)';
+    ctx.lineWidth = 4;
+    ctx.stroke();
+  }
+
+  function drawColor(ctx, W, H, t) {
+    ctx.fillStyle = '#e0f2fe';
+    ctx.strokeStyle = '#0284c7';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.roundRect(60, 40, 140, 180, 12);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(6,182,212,.7)';
+    ctx.fillRect(65, 110, 130, 105);
+
+    ctx.fillStyle = '#e0f2fe';
+    ctx.beginPath();
+    ctx.roundRect(220, 40, 140, 180, 12);
+    ctx.fill();
+    ctx.stroke();
+
+    const cyc = (Math.sin(t * 0.8) + 1) / 2;
+    const r = Math.round(6 + (239 - 6) * cyc);
+    const g = Math.round(182 + (68 - 182) * cyc);
+    const b = Math.round(212 + (68 - 212) * cyc);
+    ctx.fillStyle = `rgba(${r},${g},${b},.75)`;
+    ctx.fillRect(225, 110, 130, 105);
+
+    for (let i = 0; i < 3; i++) {
+      const phase = ((t * 0.7 + i * 0.33) % 1);
+      ctx.beginPath();
+      ctx.arc(290, 130, 20 + phase * 70, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(${r},${g},${b},${0.4 * (1 - phase)})`;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+
+    ctx.strokeStyle = '#8b5cf6';
+    ctx.lineWidth = 4;
+    ctx.beginPath();
+    ctx.moveTo(210, 130);
+    ctx.lineTo(215, 130);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(215, 130);
+    ctx.lineTo(207, 124);
+    ctx.lineTo(207, 136);
+    ctx.closePath();
+    ctx.fillStyle = '#8b5cf6';
+    ctx.fill();
+
+    ctx.font = 'bold 14px Inter, sans-serif';
+    ctx.fillStyle = '#8b5cf6';
+    ctx.textAlign = 'center';
+    ctx.fillText('реакция', 210, 155);
+
+    ctx.beginPath();
+    ctx.moveTo(75, 60);
+    ctx.lineTo(75, 180);
+    ctx.strokeStyle = 'rgba(255,255,255,.6)';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(235, 60);
+    ctx.lineTo(235, 180);
+    ctx.stroke();
+  }
+
+  function drawHeat(ctx, W, H, t) {
+    ctx.fillStyle = '#fef3c7';
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 3;
+    ctx.beginPath();
+    ctx.roundRect(W/2 - 80, 25, 160, 190, 12);
+    ctx.fill();
+    ctx.stroke();
+
+    ctx.fillStyle = 'rgba(251,191,36,.5)';
+    ctx.fillRect(W/2 - 75, 100, 150, 110);
+
+    const pulse = (Math.sin(t * 3) + 1) / 2;
+    const grd = ctx.createRadialGradient(W/2, 120, 20, W/2, 120, 200);
+    grd.addColorStop(0, `rgba(249,115,22,${0.15 + pulse * 0.25})`);
+    grd.addColorStop(1, 'rgba(249,115,22,0)');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.arc(W/2, 120, 200, 0, Math.PI * 2);
+    ctx.fill();
+
+    for (let i = 0; i < 7; i++) {
+      const x = W/2 - 70 + i * 22;
+      const flameH = 25 + Math.sin(t * 4 + i) * 12;
+      ctx.beginPath();
+      ctx.moveTo(x, 230);
+      ctx.quadraticCurveTo(x + 6, 230 - flameH, x + 12, 230);
+      ctx.closePath();
+      ctx.fillStyle = i % 2 === 0 ? '#f97316' : '#fbbf24';
+      ctx.fill();
+    }
+
+    for (let i = 0; i < 4; i++) {
+      const phase = (t * 0.5 + i * 0.25) % 1;
+      ctx.beginPath();
+      ctx.arc(W/2, 100, 30 + phase * 100, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(249,115,22,${0.4 * (1 - phase)})`;
+      ctx.lineWidth = 3;
+      ctx.stroke();
+    }
+
+    ctx.fillStyle = '#fff';
+    ctx.strokeStyle = '#475569';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.roundRect(W - 55, 40, 20, 170, 8);
+    ctx.fill();
+    ctx.stroke();
+    const level = 0.3 + pulse * 0.6;
+    ctx.fillStyle = '#ef4444';
+    const fillH = 160 * level;
+    ctx.fillRect(W - 51, 45 + (160 - fillH), 12, fillH);
+    ctx.beginPath();
+    ctx.arc(W - 45, 200, 12, 0, Math.PI * 2);
+    ctx.fillStyle = '#ef4444';
+    ctx.fill();
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth = 1;
+    for (let i = 0; i < 10; i++) {
+      ctx.beginPath();
+      ctx.moveTo(W - 40, 50 + i * 16);
+      ctx.lineTo(W - 36, 50 + i * 16);
+      ctx.stroke();
+    }
+  }
+
+  function drawLight(ctx, W, H, t) {
+    ctx.fillStyle = '#0f172a';
+    ctx.fillRect(0, 0, W, H);
+
+    const pulse = (Math.sin(t * 2.5) + 1) / 2;
+    const grd = ctx.createRadialGradient(W/2, H/2, 5, W/2, H/2, 180 + pulse * 60);
+    grd.addColorStop(0, 'rgba(255,255,255,.95)');
+    grd.addColorStop(0.25, 'rgba(251,191,36,.85)');
+    grd.addColorStop(0.6, 'rgba(245,158,11,.35)');
+    grd.addColorStop(1, 'rgba(245,158,11,0)');
+    ctx.fillStyle = grd;
+    ctx.beginPath();
+    ctx.arc(W/2, H/2, 280, 0, Math.PI * 2);
+    ctx.fill();
+
+    for (let i = 0; i < 16; i++) {
+      const angle = (i / 16) * Math.PI * 2 + t * 0.4;
+      const r1 = 30;
+      const r2 = 60 + pulse * 70;
+      ctx.beginPath();
+      ctx.moveTo(W/2 + Math.cos(angle) * r1, H/2 + Math.sin(angle) * r1);
+      ctx.lineTo(W/2 + Math.cos(angle) * r2, H/2 + Math.sin(angle) * r2);
+      ctx.strokeStyle = `rgba(255,255,255,${0.5 + pulse * 0.4})`;
+      ctx.lineWidth = 3;
+      ctx.lineCap = 'round';
+      ctx.stroke();
+    }
+
+    ctx.beginPath();
+    ctx.arc(W/2, H/2, 20 + pulse * 8, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(W/2, H/2, 30 + pulse * 10, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(255,255,255,${0.6})`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+  }
+
+  const DRAWERS = {
+    gas: drawGas,
+    precipitate: drawPrecipitate,
+    color: drawColor,
+    heat: drawHeat,
+    light: drawLight
+  };
+
+  const states = new Map();
+
+  cards.forEach(card => {
+    const canvas = card.querySelector('.sign-canvas');
+    const mode = card.dataset.sign;
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    states.set(mode, { canvas, ctx, t: 0, running: false, rafId: null });
+
+    card.addEventListener('click', () => {
+      const isActive = card.classList.contains('active');
+      cards.forEach(c => c.classList.remove('active'));
+      states.forEach(s => { s.running = false; if (s.rafId) cancelAnimationFrame(s.rafId); });
+      if (!isActive) {
+        card.classList.add('active');
+        const s = states.get(mode);
+        if (s) startAnim(s);
+      }
+    });
+  });
+
+  function startAnim(s) {
+    if (s.running) return;
+    s.running = true;
+    s.t = 0;
+    function loop() {
+      if (!s.running) return;
+      s.t += 0.04;
+      const W = s.canvas.width, H = s.canvas.height;
+      s.ctx.clearRect(0, 0, W, H);
+      if (s.canvas.dataset.sign !== 'light') {
+        const bg = s.ctx.createLinearGradient(0, 0, 0, H);
+        bg.addColorStop(0, '#f0f9ff');
+        bg.addColorStop(1, '#e0f2fe');
+        s.ctx.fillStyle = bg;
+        s.ctx.fillRect(0, 0, W, H);
+      }
+      const drawer = DRAWERS[s.canvas.dataset.sign];
+      if (drawer) drawer(s.ctx, W, H, s.t);
+      s.rafId = requestAnimationFrame(loop);
+    }
+    loop();
+  }
+
+  cards[0].classList.add('active');
+  const firstState = states.get(cards[0].dataset.sign);
+  if (firstState) startAnim(firstState);
+})();
+
+// ============================================================
+//  ДРОП-ИГРЫ
+// ============================================================
+function makeDropGame(opts) {
+  const pool = document.getElementById(opts.poolId);
+  const baskets = document.querySelectorAll('.basket[data-cat]');
+  const fb = document.getElementById(opts.feedbackId);
+  const resetBtn = document.getElementById(opts.resetId);
+  if (!pool || !fb) return;
+
+  const validCats = new Set((opts.items || []).map(i => i.cat));
+  const gameBaskets = Array.from(baskets).filter(b => validCats.has(b.dataset.cat));
+
+  let selected = null;
+
+  function buildPool() {
+    pool.innerHTML = '';
+    (opts.items || []).forEach(it => {
+      const el = document.createElement('div');
+      el.className = 'pool-item';
+      el.textContent = it.label;
+      el.dataset.cat = it.cat;
+      el.draggable = true;
+      el.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', it.label);
+        e.dataTransfer.effectAllowed = 'move';
+        selected = el;
+        el.classList.add('dragging');
+      });
+      el.addEventListener('dragend', () => el.classList.remove('dragging'));
+      el.addEventListener('click', () => {
+        if (el.classList.contains('placed')) return;
+        pool.querySelectorAll('.pool-item').forEach(i => i.classList.remove('selected'));
+        if (selected === el) {
+          selected = null;
+          fb.textContent = '';
+          return;
+        }
+        selected = el;
+        el.classList.add('selected');
+        fb.style.color = 'var(--muted)';
+        fb.textContent = `Выбрано: ${el.textContent}. Теперь нажми на нужную корзину.`;
+      });
+      pool.appendChild(el);
+    });
+  }
+
+  function resetBaskets() {
+    gameBaskets.forEach(b => {
+      const items = b.querySelector('.basket-items');
+      if (items) items.innerHTML = '';
+      b.classList.remove('good', 'bad');
+    });
+  }
+
+  function checkComplete() {
+    const remaining = pool.querySelectorAll('.pool-item').length;
+    if (remaining === 0) {
+      fb.style.color = 'var(--green)';
+      fb.textContent = '🎉 Отлично! Всё разложено правильно!';
+    }
+  }
+
+  function tryPlace(item, basket) {
+    if (!item || !basket) return;
+    if (item.classList.contains('placed')) return;
+    const target = basket.dataset.cat;
+    const correct = item.dataset.cat === target;
+
+    if (correct) {
+      const container = basket.querySelector('.basket-items');
+      const chip = document.createElement('div');
+      chip.className = 'basket-chip';
+      chip.textContent = item.textContent;
+      container.appendChild(chip);
+      item.classList.add('placed');
+      item.remove();
+      selected = null;
+      basket.classList.add('good');
+      setTimeout(() => basket.classList.remove('good'), 500);
+      fb.style.color = 'var(--green)';
+      const okMessages = ['✅ Верно!', '👍 Точно!', '🎯 Правильно!', '🌟 В точку!'];
+      fb.textContent = okMessages[Math.floor(Math.random() * okMessages.length)];
+      checkComplete();
+    } else {
+      basket.classList.add('bad');
+      setTimeout(() => basket.classList.remove('bad'), 500);
+      item.classList.add('wrong-flash');
+      setTimeout(() => item.classList.remove('wrong-flash'), 600);
+      fb.style.color = 'var(--red)';
+      const badMessages = [
+        '❌ Подумай ещё раз.', '❌ Будь внимательнее.', '❌ Давай разберёмся: это не сюда.',
+        '❌ Почти! Но не в эту корзину.', '❌ Хм, не то. Попробуй снова.'
+      ];
+      fb.textContent = badMessages[Math.floor(Math.random() * badMessages.length)];
+    }
+  }
+
+  gameBaskets.forEach(basket => {
+    basket.addEventListener('dragover', (e) => { e.preventDefault(); basket.classList.add('hover'); });
+    basket.addEventListener('dragleave', () => basket.classList.remove('hover'));
+    basket.addEventListener('drop', (e) => {
+      e.preventDefault();
+      basket.classList.remove('hover');
+      if (selected) tryPlace(selected, basket);
+    });
+    basket.addEventListener('click', () => {
+      if (selected) tryPlace(selected, basket);
+    });
+  });
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      resetBaskets();
+      buildPool();
+      selected = null;
+      fb.textContent = '';
+    });
+  }
+
+  buildPool();
+}
+
+// Игра: физическое или химическое явление
+makeDropGame({
+  poolId: 'phenomenaPool',
+  feedbackId: 'fbPhenomena',
+  resetId: 'resetPhenomena',
+  items: [
+    { label: '🧊 Тает лёд', cat: 'physical' },
+    { label: '🔥 Горит свеча', cat: 'chemical' },
+    { label: '💧 Кипит вода', cat: 'physical' },
+    { label: '🟤 Ржавеет гвоздь', cat: 'chemical' },
+    { label: '📏 Режут бумагу', cat: 'physical' },
+    { label: '🥛 Скисает молоко', cat: 'chemical' },
+    { label: '💨 Испаряется спирт', cat: 'physical' },
+    { label: '🍂 Гниёт листва', cat: 'chemical' },
+    { label: '🧂 Растворяется сахар', cat: 'physical' },
+    { label: '🔥 Горит метан', cat: 'chemical' },
+    { label: '💎 Раскалывается стекло', cat: 'physical' },
+    { label: '🍞 Подгорает хлеб', cat: 'chemical' }
+  ]
+});
+
+// ============================================================
+//  ВХОДНОЙ ТЕСТ
+// ============================================================
+(function initEntryTest() {
+  const container = document.getElementById('entryTestContainer');
+  const resultBox = document.getElementById('entryResult');
+  if (!container || !resultBox) return;
+
+  const QUESTIONS = [
+    {
+      q: 'Какие три агрегатных состояния вещества мы изучаем в базовом курсе?',
+      options: ['Твёрдое, жидкое, газообразное', 'Твёрдое, плазма, жидкое', 'Жидкое, газообразное, конденсат', 'Только твёрдое и жидкое'],
+      correct: 0,
+      why: 'В базовом курсе мы изучаем три основных агрегатных состояния: твёрдое, жидкое и газообразное.'
+    },
+    {
+      q: 'Что такое чистое вещество?',
+      options: ['Любое вещество, которое выглядит однородным', 'Вещество, состоящее из частиц одного вида', 'Вещество, которое не встречается в природе', 'Вещество без цвета и запаха'],
+      correct: 1,
+      why: 'Чистое вещество состоит из частиц одного вида и имеет постоянные свойства.'
+    },
+    {
+      q: 'Что такое смесь?',
+      options: ['То же самое, что чистое вещество', 'Вещество, состоящее из двух или более разных компонентов', 'Только жидкость с твёрдыми частицами', 'Вещество, полученное в лаборатории'],
+      correct: 1,
+      why: 'Смесь состоит из двух или более разных веществ, которые можно разделить физическими способами.'
+    },
+    {
+      q: 'Каким способом можно получить соль из морской воды?',
+      options: ['Фильтрованием', 'Отстаиванием', 'Выпариванием', 'Магнитом'],
+      correct: 2,
+      why: 'Соль растворена в воде. Если воду выпарить, соль останется на дне в виде кристаллов.'
+    },
+    {
+      q: 'Что используют для разделения смеси железных опилок и серы?',
+      options: ['Воду', 'Магнит', 'Фильтр', 'Огонь'],
+      correct: 1,
+      why: 'Железо обладает магнитными свойствами, а сера — нет. Магнит притянет железные опилки.'
+    }
+  ];
+
+  let correctCount = 0;
+  let answered = 0;
+
+  container.innerHTML = QUESTIONS.map((q, i) => `
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i + 1}</span><span>${q.q}</span></div>
+      <div class="test-options">
+        ${q.options.map((o, j) => `
+          <div class="test-option" data-q="${i}" data-o="${j}">
+            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
+            <span>${o}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="entryExp-${i}"></div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.test-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const qIdx = parseInt(opt.dataset.q);
+      const oIdx = parseInt(opt.dataset.o);
+      const q = QUESTIONS[qIdx];
+      const exp = document.getElementById(`entryExp-${qIdx}`);
+      if (exp.classList.contains('show')) return;
+
+      const isCorrect = oIdx === q.correct;
+      container.querySelectorAll(`[data-q="${qIdx}"]`).forEach(o => {
+        o.classList.add('disabled');
+        const idx = parseInt(o.dataset.o);
+        if (idx === q.correct) o.classList.add('correct');
+        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
+      });
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+
+      if (isCorrect) correctCount++;
+      answered++;
+
+      if (answered === QUESTIONS.length) {
+        resultBox.classList.add('show');
+        if (correctCount >= 4) {
+          resultBox.classList.add('good');
+          resultBox.innerHTML = `🎉 <b>Отлично!</b> Ты набрал ${correctCount} из ${QUESTIONS.length}. Можешь смело переходить к Модулю 3б.`;
+        } else {
+          resultBox.classList.add('mid');
+          resultBox.innerHTML = `👍 <b>Хорошо!</b> Ты набрал ${correctCount} из ${QUESTIONS.length}. Рекомендуем пройти модуль целиком.`;
+        }
+      }
+    });
+  });
+})();
+
+// ============================================================
+//  РЕФЛЕКСИЯ ПО ФЕЙНМАНУ (тест)
+// ============================================================
+(function initFeynmanTest() {
+  const container = document.getElementById('feynmanTest');
+  if (!container) return;
+
+  const QUESTIONS = [
+    {
+      q: 'Представь, что нужно объяснить младшему брату (5 класс), чем физическое явление отличается от химического. Какой вариант лучше?',
+      options: [
+        'В физическом явлении вещество остаётся тем же, а в химическом — образуется новое вещество',
+        'Физическое явление — это когда холодно, а химическое — когда горячо',
+        'Это одно и то же, просто слова разные',
+        'Химическое явление — это когда взрывается'
+      ],
+      correct: 0,
+      why: 'Самое точное объяснение: в физическом явлении вещество не меняется, а в химическом — из одних веществ образуются новые.'
+    },
+    {
+      q: 'Как лучше объяснить, что такое химическая реакция?',
+      options: [
+        'Это когда из одних веществ получаются другие вещества',
+        'Это когда что-то горит',
+        'Это когда что-то смешивается',
+        'Это когда что-то тает'
+      ],
+      correct: 0,
+      why: 'Химическая реакция — это превращение одних веществ в другие. Горение, таяние и смешивание — только частные случаи.'
+    },
+    {
+      q: 'Как объяснить, почему при горении дров выделяется тепло?',
+      options: [
+        'Это экзотермическая реакция: тепло выделяется в окружающую среду',
+        'Дерево боится огня и отдаёт тепло',
+        'Тепло берётся из воздуха',
+        'Это не связано с химией'
+      ],
+      correct: 0,
+      why: 'Горение — экзотермическая реакция: тепло выделяется и нагревает окружающую среду.'
+    },
+    {
+      q: 'Как объяснить, что такое эндотермическая реакция?',
+      options: [
+        'Это реакция, которая поглощает тепло из окружающей среды',
+        'Это реакция, которая выделяет тепло',
+        'Это реакция, которая не происходит',
+        'Это реакция, которая происходит только в темноте'
+      ],
+      correct: 0,
+      why: 'Эндотермическая реакция поглощает тепло. Пример: таяние льда, фотосинтез.'
+    },
+    {
+      q: 'Как объяснить, почему алмаз сгорел, когда Лавуазье его нагрел?',
+      options: [
+        'Алмаз состоит из углерода, а углерод горит, образуя углекислый газ',
+        'Алмаз — это магия, он не должен гореть',
+        'Лавуазье обманул всех',
+        'Алмаз расплавился, а не сгорел'
+      ],
+      correct: 0,
+      why: 'Алмаз — это чистый углерод. При горении углерод соединяется с кислородом и образует углекислый газ. Поэтому алмаз «исчез», превратившись в газ.'
+    }
+  ];
+
+  let correctCount = 0;
+  let answered = 0;
+
+  container.innerHTML = QUESTIONS.map((q, i) => `
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i + 1}</span><span>${q.q}</span></div>
+      <div class="test-options">
+        ${q.options.map((o, j) => `
+          <div class="test-option" data-fq="${i}" data-fo="${j}">
+            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
+            <span>${o}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="feynExp-${i}"></div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.test-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const qIdx = parseInt(opt.dataset.fq);
+      const oIdx = parseInt(opt.dataset.fo);
+      const q = QUESTIONS[qIdx];
+      const exp = document.getElementById(`feynExp-${qIdx}`);
+      if (exp.classList.contains('show')) return;
+
+      const isCorrect = oIdx === q.correct;
+      container.querySelectorAll(`[data-fq="${qIdx}"]`).forEach(o => {
+        o.classList.add('disabled');
+        const idx = parseInt(o.dataset.fo);
+        if (idx === q.correct) o.classList.add('correct');
+        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
+      });
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = `<b>${isCorrect ? '✅ Отлично!' : '❌ Не совсем.'}</b> ${q.why}`;
+
+      if (isCorrect) correctCount++;
+      answered++;
+
+      if (answered === QUESTIONS.length) {
+        const msg = correctCount >= 4
+          ? '🎉 <b>Отлично!</b> Ты умеешь объяснять просто — значит, ты действительно понял материал.'
+          : '👍 <b>Хорошо.</b> Но обрати внимание на объяснения — они показывают, как объяснять ещё проще.';
+        const box = document.createElement('div');
+        box.className = 'callout callout-ok';
+        box.style.marginTop = '14px';
+        box.innerHTML = `Правильных ответов: <b>${correctCount} из ${QUESTIONS.length}</b>. ${msg}`;
+        container.appendChild(box);
+      }
+    });
+  });
+})();
+
+// ============================================================
+//  ПРАКТИКУМ «НАБЛЮДЕНИЕ ПРИЗНАКОВ РЕАКЦИЙ»
+// ============================================================
+(function initPracticalTask() {
+  const container = document.getElementById('practicalTask');
+  if (!container) return;
+
+  const STEPS = [
+    {
+      situation: 'Опыт 1: В стакан с содой налили уксус. Наблюдение: смесь зашипела, появились пузырьки.',
+      options: [
+        'Выделение газа',
+        'Образование осадка',
+        'Изменение цвета',
+        'Выделение света'
+      ],
+      correct: 0,
+      why: 'Правильно! Шипение и пузырьки — это выделение газа (углекислого газа).'
+    },
+    {
+      situation: 'Опыт 2: В раствор медного купороса опустили железный гвоздь. Наблюдение: раствор изменил цвет с синего на зеленоватый, а на гвозде появился красный налёт.',
+      options: [
+        'Выделение газа',
+        'Изменение цвета',
+        'Выделение тепла',
+        'Появление запаха'
+      ],
+      correct: 1,
+      why: 'Правильно! Раствор изменил цвет с синего на зеленоватый — это признак изменения цвета.'
+    },
+    {
+      situation: 'Опыт 3: К раствору соли добавили раствор другого вещества. Наблюдение: жидкость помутнела, на дне появились белые хлопья.',
+      options: [
+        'Выделение газа',
+        'Образование осадка',
+        'Изменение цвета',
+        'Выделение света'
+      ],
+      correct: 1,
+      why: 'Правильно! Помутнение и хлопья на дне — это образование осадка.'
+    },
+    {
+      situation: 'Опыт 4: Подожгли свечу. Наблюдение: свеча горит, вокруг стало теплее и светло.',
+      options: [
+        'Только выделение света',
+        'Только выделение тепла',
+        'Выделение тепла и света',
+        'Ничего не произошло'
+      ],
+      correct: 2,
+      why: 'Правильно! При горении свечи мы видим и тепло, и свет — два признака сразу.'
+    }
+  ];
+
+  let step = 0;
+  let correctCount = 0;
+
+  function render() {
+    if (step >= STEPS.length) {
+      const msg = correctCount === STEPS.length
+        ? '🎉 Отлично! Ты настоящий наблюдатель!'
+        : '👍 Хорошо! Ты прошёл практикум. Обрати внимание на объяснения.';
+      container.innerHTML = `
+        <div class="callout callout-ok" style="margin-top:0;">
+          <b>Практикум завершён!</b> ${msg} Правильных ответов: ${correctCount} из ${STEPS.length}.
+        </div>
+        <div style="text-align:center;margin-top:14px;">
+          <button class="retry-btn" id="retryLab">↺ Пройти заново</button>
+        </div>
+      `;
+      document.getElementById('retryLab').addEventListener('click', () => {
+        step = 0; correctCount = 0; render();
+      });
+      return;
+    }
+
+    const s = STEPS[step];
+    container.innerHTML = `
+      <div style="background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;">${step + 1}</div>
+          <div style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);">Опыт ${step + 1} из ${STEPS.length}</div>
+        </div>
+        <div style="font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;">${s.situation}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${s.options.map((o, i) => `
+            <div class="test-option" data-i="${i}">
+              <span class="opt-marker">${String.fromCharCode(65 + i)}</span>
+              <span>${o}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="explanation" id="labExp"></div>
+      </div>
+    `;
+
+    container.querySelectorAll('.test-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const i = parseInt(opt.dataset.i);
+        if (opt.classList.contains('disabled')) return;
+        const isCorrect = i === s.correct;
+        container.querySelectorAll('.test-option').forEach(o => {
+          o.classList.add('disabled');
+          const idx = parseInt(o.dataset.i);
+          if (idx === s.correct) o.classList.add('correct');
+          if (idx === i && !isCorrect) o.classList.add('wrong');
+        });
+        const exp = document.getElementById('labExp');
+        exp.classList.add('show', isCorrect ? 'ok' : 'no');
+        exp.innerHTML = `<b>${isCorrect ? '✅ Верно!' : '❌ Не совсем.'}</b> ${s.why}`;
+        if (isCorrect) correctCount++;
+        setTimeout(() => { step++; render(); }, 2200);
+      });
+    });
+  }
+
+  render();
+})();
+
+// ============================================================
+//  ИТОГОВЫЙ ТЕСТ (15 вопросов, порог 80%)
+// ============================================================
+const TEST_QUESTIONS = [
+  {
+    q: 'Какое из перечисленных явлений — химическое?',
+    options: ['Тает лёд', 'Ржавеет гвоздь', 'Кипит вода', 'Режут бумагу'],
+    correct: 1,
+    why: 'При ржавлении железо превращается в новое вещество — ржавчину. Остальные явления — физические.'
+  },
+  {
+    q: 'Что НЕ является признаком химической реакции?',
+    options: ['Выделение газа', 'Образование осадка', 'Изменение формы', 'Изменение цвета'],
+    correct: 2,
+    why: 'Изменение формы — это физическое явление. А выделение газа, осадок и изменение цвета — признаки химической реакции.'
+  },
+  {
+    q: 'Какой признак реакции мы видим, когда сода «шипит» с уксусом?',
+    options: ['Выделение газа', 'Образование осадка', 'Изменение цвета', 'Выделение света'],
+    correct: 0,
+    why: 'Шипение и пузырьки — это выделение газа (углекислого газа).'
+  },
+  {
+    q: 'Что происходит с алмазом при сильном нагревании на воздухе?',
+    options: ['Плавится', 'Сгорает, образуя углекислый газ', 'Испаряется', 'Ничего не происходит'],
+    correct: 1,
+    why: 'Алмаз — это чистый углерод. При горении он соединяется с кислородом и образует углекислый газ. Именно это доказал Лавуазье.'
+  },
+  {
+    q: 'Как называется реакция, при которой выделяется тепло?',
+    options: ['Эндотермическая', 'Экзотермическая', 'Обратимая', 'Необратимая'],
+    correct: 1,
+    why: 'Экзотермическая реакция — реакция с выделением тепла. Пример: горение.'
+  },
+  {
+    q: 'Как называется реакция, при которой поглощается тепло?',
+    options: ['Эндотермическая', 'Экзотермическая', 'Обратимая', 'Каталитическая'],
+    correct: 0,
+    why: 'Эндотермическая реакция — реакция с поглощением тепла. Пример: таяние льда, фотосинтез.'
+  },
+  {
+    q: 'Что означает приставка «экзо»?',
+    options: ['Внутрь', 'Наружу', 'Вверх', 'Вниз'],
+    correct: 1,
+    why: '«Экзо» означает «наружу». Экзотермическая реакция — тепло выходит наружу, в окружающую среду.'
+  },
+  {
+    q: 'Что означает приставка «эндо»?',
+    options: ['Внутрь', 'Наружу', 'Вверх', 'Вниз'],
+    correct: 0,
+    why: '«Эндо» означает «внутрь». Эндотермическая реакция — тепло уходит внутрь реакции, поглощается.'
+  },
+  {
+    q: 'Какое из перечисленных явлений — физическое?',
+    options: ['Горение свечи', 'Скисание молока', 'Плавление льда', 'Ржавление гвоздя'],
+    correct: 2,
+    why: 'Плавление льда — физическое явление: вещество остаётся тем же (вода), меняется только агрегатное состояние.'
+  },
+  {
+    q: 'Что образуется при горении углерода?',
+    options: ['Кислород', 'Углекислый газ', 'Водород', 'Азот'],
+    correct: 1,
+    why: 'При горении углерода образуется углекислый газ. Это один из продуктов горения.'
+  },
+  {
+    q: 'Что такое химическая реакция?',
+    options: [
+      'Изменение формы вещества',
+      'Превращение одних веществ в другие',
+      'Изменение агрегатного состояния',
+      'Растворение вещества в воде'
+    ],
+    correct: 1,
+    why: 'Химическая реакция — это превращение одних веществ в другие. Изменение формы и состояния — физические явления.'
+  },
+  {
+    q: 'Какой признак реакции проявляется при горении свечи?',
+    options: [
+      'Только выделение тепла',
+      'Только выделение света',
+      'И выделение тепла, и выделение света',
+      'Ничего из перечисленного'
+    ],
+    correct: 2,
+    why: 'При горении свечи мы видим и тепло, и свет — обычно у реакции проявляется несколько признаков сразу.'
+  },
+  {
+    q: 'Какие три уровня рассматривает треугольник Джонстона?',
+    options: [
+      'Макро, субмикро, символический',
+      'Твёрдый, жидкий, газообразный',
+      'Физический, химический, биологический',
+      'Прошлое, настоящее, будущее'
+    ],
+    correct: 0,
+    why: 'Треугольник Джонстона — это способ смотреть на химию с трёх сторон: макро (что видим), субмикро (что на уровне частиц), символический (как записать).'
+  },
+  {
+    q: 'Почему при горении дров масса не исчезает?',
+    options: [
+      'Потому что дрова сгорают не полностью',
+      'Потому что вещество превращается в другие вещества — газ и золу',
+      'Потому что масса — это выдумка',
+      'Потому что дрова очень тяжёлые'
+    ],
+    correct: 1,
+    why: 'При горении дрова превращаются в углекислый газ, воду и золу. Масса не исчезает — она переходит в другие вещества. Это закон сохранения массы, который мы изучим в Модуле 3б.'
+  },
+  {
+    q: 'Что такое экзотермическая реакция?',
+    options: [
+      'Реакция, которая поглощает тепло',
+      'Реакция, которая выделяет тепло',
+      'Реакция, которая не происходит',
+      'Реакция, которая происходит только на свету'
+    ],
+    correct: 1,
+    why: 'Экзотермическая реакция — реакция с выделением тепла. Пример: горение, ржавление.'
+  }
+];
+
+(function renderTest() {
+  const container = document.getElementById('testContainer');
+  const scoreBox = document.getElementById('testScore');
+  const retryBox = document.getElementById('retryBox');
+  if (!container) return;
+
+  const TOTAL = TEST_QUESTIONS.length;
+  const THRESHOLD = Math.ceil(TOTAL * 0.8);
+
+  function renderAll() {
+    let answered = 0;
+    let correctCount = 0;
+    container.innerHTML = '';
+    retryBox.innerHTML = '';
+    scoreBox.classList.remove('good', 'mid', 'bad');
+    scoreBox.innerHTML = `Правильных ответов: <span id="scoreNum">0</span> из ${TOTAL}`;
+
+    const WRONG_HEADERS = [
+      '❌ Подумай ещё раз.', '❌ Будь внимательнее.', '❌ Давай разберёмся.',
+      '❌ Почти! Но не совсем так.', '❌ Есть над чем подумать.',
+      '❌ Не спеши, посмотри ещё раз.', '❌ Хм, не то. Попробуй снова.'
+    ];
+
+    TEST_QUESTIONS.forEach((q, i) => {
+      const block = document.createElement('div');
+      block.className = 'test-question';
+      block.innerHTML = `
+        <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
+        <div class="test-options">
+          ${q.options.map((opt, j) => `
+            <div class="test-option" data-q="${i}" data-opt="${j}">
+              <span class="opt-marker">${String.fromCharCode(65+j)}</span>
+              <span>${opt}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="explanation" id="exp-${i}"></div>
+      `;
+      container.appendChild(block);
+    });
+
+    container.querySelectorAll('.test-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const qIdx = parseInt(opt.dataset.q);
+        const oIdx = parseInt(opt.dataset.opt);
+        const question = TEST_QUESTIONS[qIdx];
+        const options = container.querySelectorAll(`[data-q="${qIdx}"]`);
+        const exp = document.getElementById(`exp-${qIdx}`);
+        if (exp.classList.contains('show')) return;
+
+        const isCorrect = (oIdx === question.correct);
+
+        options.forEach(o => {
+          o.classList.add('disabled');
+          const idx = parseInt(o.dataset.opt);
+          if (idx === question.correct) o.classList.add('correct');
+          if (idx === oIdx && !isCorrect) o.classList.add('wrong');
+        });
+
+        exp.classList.add('show');
+        exp.classList.add(isCorrect ? 'ok' : 'no');
+
+        if (isCorrect) {
+          correctCount++;
+          exp.innerHTML = `<b>✅ Правильно!</b> ${question.why}`;
+        } else {
+          const header = WRONG_HEADERS[Math.floor(Math.random() * WRONG_HEADERS.length)];
+          exp.innerHTML = `<b>${header}</b> Правильный ответ выделен зелёным. ${question.why}`;
+        }
+
+        answered++;
+        const scoreNum = document.getElementById('scoreNum');
+        if (scoreNum) scoreNum.textContent = correctCount;
+
+        if (answered === TOTAL) {
+          scoreBox.classList.remove('good', 'mid', 'bad');
+          if (correctCount >= THRESHOLD) {
+            scoreBox.classList.add('good');
+            scoreBox.innerHTML = `🎉 <b>Модуль пройден!</b> ${correctCount} из ${TOTAL} (порог: ${THRESHOLD}).`;
+          } else if (correctCount >= Math.ceil(TOTAL * 0.6)) {
+            scoreBox.classList.add('mid');
+            scoreBox.innerHTML = `👍 <b>Почти получилось!</b> ${correctCount} из ${TOTAL}. Порог — ${THRESHOLD}. Перечитай объяснения и попробуй снова.`;
+          } else {
+            scoreBox.classList.add('bad');
+            scoreBox.innerHTML = `💪 <b>Есть над чем поработать:</b> ${correctCount} из ${TOTAL}. Перечитай модуль и попробуй снова.`;
+          }
+
+          retryBox.innerHTML = `<button class="retry-btn" id="retryTest">↺ Пройти тест заново</button>`;
+          document.getElementById('retryTest').addEventListener('click', () => {
+            renderAll();
+            window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
+          });
+        } else {
+          scoreBox.classList.remove('good', 'mid', 'bad');
+          scoreBox.innerHTML = `Правильных ответов: <span id="scoreNum">${correctCount}</span> из ${TOTAL}`;
+        }
+      });
+    });
+  }
+
+  renderAll();
+})();
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+</script>
+</body>
+</html>
