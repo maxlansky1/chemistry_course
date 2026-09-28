@@ -29,8 +29,11 @@
     const targetId = data.target || island.id.replace(/-data$/, '');
     const host = document.getElementById(targetId);
     if (!host) return;
-    const questions = data.questions || [];
+    let questions = data.questions || [];
     const config = data.config || host.dataset.config || 'practice';
+    if (data.bank && questions.length > data.bank) {
+      questions = shuffle(questions).slice(0, data.bank);
+    }
     const threshold = data.threshold != null
       ? data.threshold
       : Math.ceil(questions.length * PASS_RATIO);

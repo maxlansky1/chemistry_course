@@ -854,6 +854,32 @@
     color: var(--text);
   }
 
+  /* Карта курса */
+  .map-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: var(--radius); padding: 18px; display: flex;
+    flex-direction: column; gap: 8px; box-shadow: var(--shadow);
+  }
+  .map-card.ready { border-color: var(--green); }
+  .map-card.wip { border-color: var(--orange); }
+  .map-icon { font-size: 30px; line-height: 1; }
+  .map-title { font-size: 17px; font-weight: 800; letter-spacing: -.3px; }
+  .map-meta { font-size: 13px; color: var(--muted); }
+  .map-badge {
+    align-self: flex-start; font-size: 11px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 50px;
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+  }
+  .map-card.ready .map-badge { color: #fff; background: var(--green); border-color: var(--green); }
+  .map-topics { font-size: 14.5px; }
+  .map-skills { font-size: 14px; color: var(--muted); }
+  .map-prereq { font-size: 13px; color: var(--orange); font-weight: 700; }
+  .map-grid {
+    display: grid; gap: 14px; margin-top: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  .map-level-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
+
   .visual-card {
     background: linear-gradient(180deg, #f8fafc, #fff);
     border: 1.5px solid var(--border); border-radius: 14px;
