@@ -1,0 +1,5 @@
+{
+  "state_of_matter": { "title": "Агрегатные состояния", "type": "tune", "used_in": ["module_2/u1"], "status": "draft" },
+  "heating_graph": { "title": "График нагрева", "type": "tune", "used_in": ["module_2/u2"], "status": "draft" },
+  "separation_cards": { "title": "Способы разделения", "type": "map", "used_in": ["module_2/u3"], "status": "draft" }
+}
