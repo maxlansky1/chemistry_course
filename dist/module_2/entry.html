@@ -1,0 +1,1005 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Входной тест</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --h-deep: #0e7490;
+    --h-color: #06b6d4;
+    --accent: #8b5cf6;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --radius: 16px;
+    --shadow: 0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg: 0 12px 40px -12px rgba(0,0,0,.15);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    font-size: 17px;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+  .hero {
+    text-align: center; padding: 56px 0 26px;
+    background: linear-gradient(180deg, #ecfeff 0%, var(--bg) 100%);
+  }
+  .hero .badge {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--h-deep);
+    border: 1.5px solid var(--h-deep); padding: 6px 18px;
+    border-radius: 50px; margin-bottom: 20px; background: rgba(6,182,212,.05);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 800;
+    letter-spacing: -1px; line-height: 1.15;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 14px;
+  }
+  .hero p { color: var(--muted); font-size: 17px; max-width: 750px; margin: 0 auto; }
+
+  .section { padding: 24px 0; }
+
+  .stage {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 26px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .stage::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  }
+  .stage.s-legend::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b); }
+  .stage.s-entry::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .stage.s-intro::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6); }
+  .stage.s-why::before   { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s1::before      { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+  .stage.s2::before      { background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+  .stage.s3::before      { background: linear-gradient(90deg, #10b981, #059669); }
+  .stage.s4::before      { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+  .stage.s-feyn::before  { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s-prac::before  { background: linear-gradient(90deg, #06b6d4, #10b981); }
+  .stage.s-test::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  .stage-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .stage-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--panel-2); color: var(--h-deep);
+    font-size: 22px; font-weight: 900; flex-shrink: 0;
+    border: 2px solid var(--border);
+  }
+  .stage-title { font-size: 21px; font-weight: 700; color: var(--text); }
+  .stage-subtitle { font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+  .callout {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 16px 0;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .callout-idea {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-left: 5px solid var(--orange);
+    color: #78350f;
+  }
+  .callout-idea b { color: #92400e; }
+  .callout-warn {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    border-left: 5px solid var(--red);
+    color: #7f1d1d;
+  }
+  .callout-warn b { color: #b91c1c; }
+  .callout-note {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-left: 5px solid #3b82f6;
+    color: #1e3a8a;
+  }
+  .callout-note b { color: #1d4ed8; }
+  .callout-ok {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-left: 5px solid var(--green);
+    color: #065f46;
+  }
+  .callout-ok b { color: #047857; }
+
+  .cta { color: var(--accent); font-weight: 800; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .card {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--h-color), var(--accent));
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,.15);
+    border-color: var(--h-deep);
+  }
+  .card .c-title { font-size: 16.5px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .card .c-desc { font-size: 15.5px; color: var(--muted); line-height: 1.65; }
+  .card .c-desc b { color: var(--text); }
+
+  /* Таймлайн */
+  .timeline { position: relative; padding: 10px 0; margin-top: 10px; }
+  .timeline-track {
+    display: flex; gap: 0; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+  }
+  .timeline-track::-webkit-scrollbar { height: 8px; }
+  .timeline-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .timeline-item {
+    flex: 0 0 auto; width: 210px; padding: 16px; margin-right: 12px;
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; cursor: pointer; transition: all .25s;
+    scroll-snap-align: start; text-align: center;
+  }
+  .timeline-item:hover { transform: translateY(-3px); border-color: var(--h-deep); }
+  .timeline-item.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+  }
+  .timeline-item .t-emoji { font-size: 30px; }
+  .timeline-item .t-era {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep); margin-top: 6px;
+  }
+  .timeline-item .t-name { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+  .timeline-detail {
+    margin-top: 14px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 14px; color: #e2e8f0; min-height: 140px;
+    transition: all .3s;
+  }
+  .timeline-detail .td-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+  .timeline-detail .td-text { font-size: 15.5px; line-height: 1.75; color: #cbd5e1; }
+  .timeline-detail .td-text b { color: #fff; }
+
+  /* Сетка задач */
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .task-card {
+    padding: 20px; background: var(--panel-2); border-radius: 14px;
+    border: 1.5px solid var(--border); transition: all .25s;
+  }
+  .task-card:hover {
+    border-color: var(--h-deep); transform: translateY(-3px);
+    box-shadow: 0 8px 20px -8px rgba(6,182,212,.3);
+  }
+  .task-card .tc-emoji { font-size: 32px; line-height: 1; }
+  .task-card .tc-title { font-size: 16px; font-weight: 800; margin-top: 8px; }
+  .task-card .tc-desc { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .task-card .tc-examples { font-size: 13.5px; color: var(--text); margin-top: 8px; line-height: 1.55; }
+  .task-card .tc-examples span { display: inline-block; background: #fff; padding: 3px 8px; border-radius: 6px; margin: 2px 3px 2px 0; border: 1px solid var(--border); font-weight: 600; }
+
+  /* Игры */
+  .game-area {
+    background: var(--panel-2); border-radius: 14px;
+    padding: 22px; margin-top: 18px;
+  }
+  .game-area h4 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .game-area .game-hint { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+
+  .dual-basket {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .basket {
+    border: 2.5px dashed var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    min-height: 160px;
+    text-align: center;
+    transition: all .25s;
+    background: #fff;
+  }
+  .basket.hover { border-color: var(--accent); background: #f5f3ff; }
+  .basket .basket-title {
+    font-size: 14px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .basket .basket-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .basket .basket-chip {
+    background: var(--panel-2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .basket.good { border-color: var(--green); background: #ecfdf5; }
+  .basket.bad { border-color: var(--red); background: #fef2f2; }
+
+  .game-pool {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-height: 100px;
+    margin-bottom: 14px;
+  }
+  .game-pool .pool-item {
+    background: var(--panel-2);
+    border: 2px solid var(--border);
+    border-radius: 10px; padding: 10px 18px;
+    cursor: grab; font-size: 15px; font-weight: 700;
+    transition: all .2s; user-select: none;
+  }
+  .game-pool .pool-item:hover { border-color: var(--h-deep); transform: translateY(-2px); }
+  .game-pool .pool-item.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .game-pool .pool-item.dragging { opacity: .5; }
+  .game-pool .pool-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: #fef2f2; }
+
+  .reset-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 50px;
+    background: var(--panel-2); color: var(--text);
+    border: 1.5px solid var(--border);
+    cursor: pointer; font-size: 14px; font-weight: 700;
+    transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--h-deep); color: var(--h-deep); }
+
+  .game-feedback { margin-top: 14px; font-size: 15.5px; font-weight: 700; min-height: 24px; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Треугольник Джонстона: стили припаркованы для Модуля 4б (введение);
+     в ранних модулях блок не используется */
+  .johnstone-wrap {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px;
+    align-items: center; margin-top: 18px;
+  }
+  .johnstone-svg-wrap {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 2px solid var(--border); border-radius: 14px; padding: 14px;
+  }
+  .johnstone-svg-wrap svg { width: 100%; height: auto; display: block; }
+  .johnstone-info {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; min-height: 220px;
+  }
+  .johnstone-info .ji-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--h-deep); }
+  .johnstone-info .ji-text { font-size: 15.5px; line-height: 1.7; color: var(--text); }
+  .johnstone-info .ji-example {
+    margin-top: 14px; padding: 12px 16px;
+    background: #fff; border-radius: 10px;
+    border-left: 4px solid var(--accent);
+    font-size: 14.5px; color: #4c1d95;
+  }
+  .johnstone-info .ji-example b { color: #5b21b6; }
+
+  .sciences-svg-wrap {
+    background: linear-gradient(180deg, #faf5ff, #fff);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 16px;
+  }
+  .sciences-svg-wrap svg { width: 100%; height: auto; display: block; }
+
+  /* Методы познания */
+  .method-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border-radius: 14px;
+    border: 2px solid var(--border);
+  }
+  .method-step {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 18px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-width: 130px;
+    transition: all .35s;
+    cursor: pointer;
+  }
+  .method-step.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+    transform: scale(1.05);
+  }
+  .method-step .ms-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--h-deep); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .method-step.active .ms-num { background: var(--accent); }
+  .method-step .ms-icon { font-size: 28px; }
+  .method-step .ms-name { font-size: 14px; font-weight: 800; margin-top: 6px; text-align: center; }
+  .method-arrow {
+    font-size: 24px; color: var(--muted); animation: slide 2s infinite;
+  }
+  @keyframes slide {
+    0%,100% { transform: translateX(0); opacity: .5; }
+    50% { transform: translateX(4px); opacity: 1; color: var(--accent); }
+  }
+  .method-detail-box {
+    margin-top: 16px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px;
+    color: #e2e8f0;
+    min-height: 130px;
+    transition: all .3s;
+  }
+  .method-detail-box .mb-title { font-size: 16px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .method-detail-box .mb-text { font-size: 15px; line-height: 1.7; color: #cbd5e1; }
+  .method-detail-box .mb-text b { color: #fff; }
+
+  /* Свойства веществ */
+  .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .property-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    transition: all .25s;
+  }
+  .property-card:hover { transform: translateY(-4px); border-color: var(--h-deep); box-shadow: var(--shadow-lg); }
+  .property-card .pc-svg {
+    height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .property-card .pc-title { font-size: 16px; font-weight: 800; }
+  .property-card .pc-desc { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.55; }
+
+  /* Процессы жизни */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .process-card {
+    background: linear-gradient(180deg, #fff, #f0fdf4);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: all .25s;
+  }
+  .process-card:hover { transform: translateY(-4px); border-color: var(--green); box-shadow: var(--shadow-lg); }
+  .process-card .prc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .process-card .prc-icon { font-size: 32px; }
+  .process-card .prc-name { font-size: 16px; font-weight: 800; }
+  .process-card .prc-eq {
+    background: #fff; border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px; font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    font-style: italic;
+  }
+  .process-card .prc-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* Правила безопасности */
+  .safety-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .safety-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px; background: var(--panel-2);
+    border-radius: 12px; border: 2px solid var(--border);
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .safety-item:hover { border-color: var(--h-deep); transform: translateX(4px); }
+  .safety-item .si-icon { font-size: 30px; line-height: 1; flex-shrink: 0; }
+  .safety-item .si-check {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: transparent; font-weight: 900;
+    transition: all .25s; background: #fff;
+    margin-top: 2px;
+  }
+  .safety-item.checked { border-color: var(--green); background: #ecfdf5; }
+  .safety-item.checked .si-check {
+    background: var(--green); border-color: var(--green); color: #fff;
+  }
+  .safety-item .si-text { font-size: 15.5px; line-height: 1.6; flex: 1; }
+  .safety-item .si-text b { color: var(--red); }
+
+  /* Оборудование */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .equip-card {
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; padding: 14px; text-align: center;
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .equip-card:hover { transform: translateY(-4px); border-color: var(--h-deep); }
+  .equip-card.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .equip-card .eq-icon { font-size: 44px; line-height: 1; }
+  .equip-card .eq-name { font-size: 14px; font-weight: 800; margin-top: 8px; }
+
+  .equip-detail {
+    margin-top: 16px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px; color: #e2e8f0;
+    min-height: 120px; transition: all .3s;
+  }
+  .equip-detail .ed-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .equip-detail .ed-text { font-size: 15.5px; line-height: 1.7; color: #cbd5e1; }
+
+  /* Тест */
+  .test-question {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .test-question .q-text {
+    font-size: 17px; font-weight: 700; margin-bottom: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .test-question .q-num {
+    background: var(--h-deep); color: #fff;
+    border-radius: 50%; width: 30px; height: 30px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+  .test-options { display: flex; flex-direction: column; gap: 10px; }
+  .test-option {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; font-size: 15.5px; transition: all .25s;
+  }
+  .test-option:hover { border-color: var(--h-deep); }
+  .test-option .opt-marker {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    transition: all .25s;
+  }
+  .test-option.correct { border-color: var(--green); background: #ecfdf5; }
+  .test-option.correct .opt-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .test-option.wrong { border-color: var(--red); background: #fef2f2; }
+  .test-option.wrong .opt-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .test-option.disabled { cursor: default; }
+  .test-option.disabled:hover { border-color: var(--border); }
+  .test-option.correct.disabled:hover { border-color: var(--green); }
+  .test-option.wrong.disabled:hover { border-color: var(--red); }
+
+  .explanation {
+    margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+    font-size: 15px; line-height: 1.65; display: none;
+    animation: fadeSlide .35s ease;
+  }
+  .explanation.show { display: block; }
+  .explanation.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .explanation.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+  .explanation b { font-weight: 800; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .test-score {
+    margin-top: 22px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 18px; font-weight: 800;
+    background: var(--panel-2); border: 2px solid var(--border);
+    transition: all .4s;
+  }
+  .test-score.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .test-score.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+  .test-score.bad { background: #fef2f2; border-color: var(--red); color: #dc2626; }
+
+  .retry-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 12px 26px; border-radius: 50px;
+    background: var(--accent); color: #fff; border: none;
+    cursor: pointer; font-size: 15px; font-weight: 800;
+    transition: all .2s;
+    box-shadow: 0 6px 16px -6px rgba(139,92,246,.5);
+  }
+  .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(139,92,246,.6); }
+
+  /* Branching scenarios */
+  .scenario-card {
+    background: linear-gradient(180deg, #fff, #fef2f2);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    transition: all .25s;
+  }
+  .scenario-card .sc-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .scenario-card .sc-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--red); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900; flex-shrink: 0;
+  }
+  .scenario-card .sc-title { font-size: 16.5px; font-weight: 800; }
+  .scenario-card .sc-situation {
+    background: #fff; border-radius: 10px; padding: 14px 18px;
+    font-size: 15.5px; line-height: 1.65; margin-bottom: 14px;
+    border-left: 4px solid var(--orange);
+  }
+  .scenario-actions { display: flex; flex-direction: column; gap: 8px; }
+  .scenario-action {
+    padding: 12px 16px; background: #fff;
+    border: 2px solid var(--border); border-radius: 10px;
+    cursor: pointer; font-size: 15px; transition: all .2s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .scenario-action:hover { border-color: var(--h-deep); }
+  .scenario-action .sa-marker {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .scenario-action.correct { border-color: var(--green); background: #ecfdf5; }
+  .scenario-action.correct .sa-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .scenario-action.wrong { border-color: var(--red); background: #fef2f2; }
+  .scenario-action.wrong .sa-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .scenario-action.disabled { cursor: default; }
+  .scenario-action.disabled:hover { border-color: var(--border); }
+  .scenario-action.correct.disabled:hover { border-color: var(--green); }
+  .scenario-action.wrong.disabled:hover { border-color: var(--red); }
+
+  .scenario-feedback {
+    margin-top: 12px; padding: 12px 16px; border-radius: 10px;
+    font-size: 14.5px; line-height: 1.6; display: none;
+  }
+  .scenario-feedback.show { display: block; animation: fadeSlide .3s ease; }
+  .scenario-feedback.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .scenario-feedback.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+
+  /* Слот под видео (YouTube/Instagram). Пока видео нет — блок не вставляется, вёрстка не едет.
+     Когда появится: <div class="video-slot"><iframe ...></iframe></div> */
+  .video-slot {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: 14px; margin-top: 16px; border: 2px solid var(--border);
+  }
+  .video-slot iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+
+  .footer {
+    text-align: center; padding: 40px 0 60px;
+    color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .subhead {
+    font-size: 17px; font-weight: 800;
+    margin: 26px 0 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .subhead-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+
+  .legend-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .legend-card {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: #fff;
+  }
+  .legend-card .lc-header { display: flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 800; margin-bottom: 6px; }
+  .legend-card .lc-body { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .legend-card .lc-body b { color: var(--text); }
+
+  /* Разогрев (без оценки) */
+  .entry-result {
+    margin-top: 20px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 16px; font-weight: 700;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: none;
+  }
+  .entry-result.show { display: block; animation: fadeSlide .35s ease; }
+  .entry-result.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .entry-result.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+
+  @media (max-width: 900px) {
+    .johnstone-wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 800px) {
+    .dual-basket { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 20px; }
+    .stage { padding: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .timeline-item { width: 180px; }
+    body { font-size: 16px; }
+  }
+
+  /* Раскрывающиеся блоки-шпаргалки (легенда, метод Фейнмана) */
+  details.fold {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 22px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  details.fold summary {
+    list-style: none; cursor: pointer;
+    padding: 16px 22px; font-size: 16px; font-weight: 800;
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    user-select: none;
+  }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary::before {
+    content: '\25B6'; font-size: 12px; color: var(--h-deep);
+    transition: transform .25s;
+  }
+  details.fold[open] summary::before { transform: rotate(90deg); }
+  details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
+  details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
+
+  /* Навигация по урокам: карточки + пилюли */
+  .lesson-nav {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 12px; align-items: stretch; margin: 26px 0 8px;
+  }
+  .ln-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 14px 18px;
+    text-decoration: none; color: var(--text);
+    display: flex; flex-direction: column; gap: 4px; transition: all .2s;
+  }
+  a.ln-card:hover {
+    border-color: var(--h-deep); transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .ln-card.ln-next { text-align: right; }
+  .ln-dir {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep);
+  }
+  .ln-title { font-size: 15px; font-weight: 700; }
+  .ln-card.done { border-style: dashed; color: var(--muted); cursor: default; }
+  .ln-map { display: flex; gap: 8px; align-items: center; justify-content: center; }
+  .ln-pill {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 2px solid var(--border); display: inline-flex;
+    align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: var(--muted);
+    text-decoration: none; background: #fff;
+  }
+  a.ln-pill:hover { border-color: var(--h-deep); }
+  .ln-pill.now { background: var(--h-deep); border-color: var(--h-deep); color: #fff; }
+  @media (max-width: 600px) {
+    .lesson-nav { grid-template-columns: 1fr; }
+    .ln-card.ln-next { text-align: left; }
+    .ln-map { order: -1; }
+  }
+
+  /* Вопросы hero: 3 риторических вопроса модуля/урока */
+  .hero-questions {
+    display: flex; flex-direction: column; gap: 8px;
+    max-width: 640px; margin: 14px auto 0; text-align: left;
+  }
+  .hero-questions div {
+    background: rgba(255,255,255,.75);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 8px 14px; font-size: 15.5px; font-weight: 600;
+  }
+
+  /* Цвета карточек легенды по смыслу */
+  .legend-card { border: 2px solid var(--border); }
+  .legend-card.lc-warm { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #f59e0b; }
+  .legend-card.lc-danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-color: #ef4444; }
+  .legend-card.lc-info { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6; }
+  .legend-card.lc-ok { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #10b981; }
+  .legend-card.lc-act { background: #fff; border-style: dashed; }
+
+  /* Домашнее задание */
+  .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+  .homework ol { margin: 12px 0 0 22px; line-height: 1.9; font-size: 15.5px; }
+  .homework ol li { margin-bottom: 6px; }
+  .homework .hw-star { color: var(--accent); font-weight: 800; }
+
+  /* Карточки вопросов: нумерованный вопрос-промпт, без эмодзи и ответов.
+     Вопрос задаётся ученику по ходу урока — ответ рождается в уроке. */
+  .qa-list { display: flex; flex-direction: column; gap: 10px;
+    max-width: 680px; margin: 14px auto 0; text-align: left; }
+  .qa-card {
+    background: rgba(255,255,255,.85);
+    border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 12px 16px; border-left: 5px solid var(--accent);
+  }
+  .qa-q { font-size: 15.5px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
+  .qa-num {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; transform: translateY(3px);
+  }
+
+  /* Чипсы навигации модуля */
+  .mod-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+  .mod-chip {
+    padding: 9px 20px; border-radius: 50px; text-decoration: none;
+    background: rgba(255,255,255,.8); border: 1.5px solid var(--border);
+    font-size: 14.5px; font-weight: 800; color: var(--text); transition: all .2s;
+  }
+  a.mod-chip:hover { border-color: var(--h-deep); color: var(--h-deep); transform: translateY(-2px); }
+</style>
+</head>
+<body>
+<!-- built by src/build.py v1 · 2026-09-28 · module_2/entry · manifest-driven -->
+<header class="hero">
+  <div class="badge">Модуль 2 · Входной тест · ~15 минут</div>
+  <h1>Проверь готовность</h1>
+  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="entry.html">Вход</a> · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Тест</a></p>
+</header>
+<div class="container">
+
+<section class="section">
+  <div class="stage s-entry fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🚪</div>
+      <div>
+        <div class="stage-title">Входной тест</div>
+        <div class="stage-subtitle">10 вопросов по Модулю 1 · порог 80% (8 правильных)</div>
+      </div>
+    </div>
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      Модуль 2 опирается на Модуль 1: тела и вещества, свойства, методы познания,
+      безопасность. Наберёшь 8+ — иди дальше. Нет — повтори первый модуль, он короткий.
+    </p>
+    <div id="entryTestContainer"></div>
+    <div class="entry-result" id="entryResult"></div>
+  </div>
+</section>
+<nav class="lesson-nav">
+<span class="ln-card done"><span class="ln-dir">Старт</span><span class="ln-title">Ты в начале модуля</span></span>
+<div class="ln-map"><span class="ln-pill now">•</span><a class="ln-pill" href="u1.html">1</a><a class="ln-pill" href="u2.html">2</a><a class="ln-pill" href="u3.html">3</a><a class="ln-pill" href="final.html">✓</a></div>
+<a class="ln-card ln-next" href="u1.html"><span class="ln-dir">Вперёд →</span><span class="ln-title">Урок 1. Агрегатные состояния вещества</span></a>
+</nav>
+</div>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Химия · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">
+    Простое объяснение · пример из жизни · наглядный опыт · запись в тетрадь
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  ВХОДНОЙ ТЕСТ МОДУЛЯ 2 (10 вопросов по Модулю 1, порог 80%)
+// ============================================================
+(function initEntryTest() {
+  const container = document.getElementById('entryTestContainer');
+  const resultBox = document.getElementById('entryResult');
+  if (!container || !resultBox) return;
+
+  const QUESTIONS = [
+    {
+      q: 'Что изучает химия?',
+      options: [
+        'Только живые организмы',
+        'Вещества, их свойства и превращения',
+        'Только звёзды',
+        'Только числа'
+      ],
+      correct: 1,
+      why: 'Химия — наука о веществах, их свойствах и превращениях.'
+    },
+    {
+      q: 'Что из перечисленного — физическое тело?',
+      options: [
+        'Вода',
+        'Кислород',
+        'Колба',
+        'Алюминий'
+      ],
+      correct: 2,
+      why: 'Колба — тело (форма и объём). Остальное — вещества.'
+    },
+    {
+      q: 'Что такое вещество?',
+      options: [
+        'То, что имеет форму',
+        'То, из чего состоят тела',
+        'То, что светится',
+        'То, что движется'
+      ],
+      correct: 1,
+      why: 'Вещество — то, из чего состоят тела.'
+    },
+    {
+      q: 'Что из перечисленного — свойство вещества?',
+      options: [
+        'Ложка',
+        'Прозрачность',
+        'Стакан',
+        'Пробирка'
+      ],
+      correct: 1,
+      why: 'Прозрачность — свойство. Остальное — тела.'
+    },
+    {
+      q: 'Что такое наблюдение?',
+      options: [
+        'Воздействие на вещество',
+        'Изучение явления без вмешательства',
+        'Измерение температуры',
+        'Выдвижение гипотезы'
+      ],
+      correct: 1,
+      why: 'Наблюдение — смотрим и замечаем, не вмешиваясь.'
+    },
+    {
+      q: 'Что такое эксперимент?',
+      options: [
+        'Пассивное созерцание',
+        'Активное воздействие на вещество',
+        'Запись в тетрадь',
+        'Чтение учебника'
+      ],
+      correct: 1,
+      why: 'Эксперимент — воздействуем и смотрим, что будет.'
+    },
+    {
+      q: 'Что НЕЛЬЗЯ делать в лаборатории?',
+      options: [
+        'Носить халат',
+        'Пробовать вещества на вкус',
+        'Мыть руки',
+        'Слушать учителя'
+      ],
+      correct: 1,
+      why: 'Пробовать на вкус запрещено всегда.'
+    },
+    {
+      q: 'Разбил пробирку. Первое действие?',
+      options: [
+        'Собрать осколки руками',
+        'Сообщить учителю, убрать щёткой и совком',
+        'Продолжить работу',
+        'Спрятать осколки'
+      ],
+      correct: 1,
+      why: 'Руками — нельзя. Учителю сообщить, убрать инструментами.'
+    },
+    {
+      q: 'Как правильно понюхать вещество?',
+      options: [
+        'Вдохнуть прямо из сосуда',
+        'Направить пары ладонью к носу',
+        'Наклониться над колбой',
+        'Нюхать с закрытыми глазами'
+      ],
+      correct: 1,
+      why: 'Только ладонью, осторожно. Наклоняться над сосудом опасно.'
+    },
+    {
+      q: 'Что такое гипотеза?',
+      options: [
+        'Доказанное знание',
+        'Догадка, которую нужно проверить',
+        'Результат опыта',
+        'Прибор'
+      ],
+      correct: 1,
+      why: 'Гипотеза — предположение, требующее проверки.'
+    }
+  ];
+  const THRESHOLD = 8;
+
+  let correctCount = 0;
+  let answered = 0;
+
+  container.innerHTML = QUESTIONS.map((q, i) => `
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i + 1}</span><span>${q.q}</span></div>
+      <div class="test-options">
+        ${q.options.map((o, j) => `
+          <div class="test-option" data-q="${i}" data-o="${j}">
+            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
+            <span>${o}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="entryExp-${i}"></div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.test-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const qIdx = parseInt(opt.dataset.q);
+      const oIdx = parseInt(opt.dataset.o);
+      const q = QUESTIONS[qIdx];
+      const exp = document.getElementById(`entryExp-${qIdx}`);
+      if (exp.classList.contains('show')) return;
+
+      const isCorrect = oIdx === q.correct;
+      container.querySelectorAll(`[data-q="${qIdx}"]`).forEach(o => {
+        o.classList.add('disabled');
+        const idx = parseInt(o.dataset.o);
+        if (idx === q.correct) o.classList.add('correct');
+        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
+      });
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+
+      if (isCorrect) correctCount++;
+      answered++;
+
+      if (answered === QUESTIONS.length) {
+        resultBox.classList.add('show');
+        if (correctCount >= THRESHOLD) {
+          resultBox.classList.add('good');
+          resultBox.innerHTML = `🎉 <b>Готов!</b> ${correctCount} из ${QUESTIONS.length} — база Модуля 1 есть. Можно идти в Модуль 2.`;
+        } else {
+          resultBox.classList.add('mid');
+          resultBox.innerHTML = `👍 ${correctCount} из ${QUESTIONS.length}. Стоит повторить Модуль 1 — без базы дальше будет трудно.`;
+        }
+      }
+    });
+  });
+})();
+
+</script>
+</body>
+</html>

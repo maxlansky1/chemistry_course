@@ -1,0 +1,3202 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Модуль 1. Химия как наука</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --h-deep: #0e7490;
+    --h-color: #06b6d4;
+    --accent: #8b5cf6;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --radius: 16px;
+    --shadow: 0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg: 0 12px 40px -12px rgba(0,0,0,.15);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    font-size: 17px;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+  .hero {
+    text-align: center; padding: 56px 0 26px;
+    background: linear-gradient(180deg, #ecfeff 0%, var(--bg) 100%);
+  }
+  .hero .badge {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--h-deep);
+    border: 1.5px solid var(--h-deep); padding: 6px 18px;
+    border-radius: 50px; margin-bottom: 20px; background: rgba(6,182,212,.05);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 800;
+    letter-spacing: -1px; line-height: 1.15;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 14px;
+  }
+  .hero p { color: var(--muted); font-size: 17px; max-width: 750px; margin: 0 auto; }
+
+  .section { padding: 24px 0; }
+
+  .stage {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 26px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .stage::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  }
+  .stage.s-legend::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b); }
+  .stage.s-entry::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .stage.s-intro::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6); }
+  .stage.s-why::before   { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s1::before      { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+  .stage.s2::before      { background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+  .stage.s3::before      { background: linear-gradient(90deg, #10b981, #059669); }
+  .stage.s4::before      { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+  .stage.s-feyn::before  { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s-prac::before  { background: linear-gradient(90deg, #06b6d4, #10b981); }
+  .stage.s-test::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  .stage-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .stage-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--panel-2); color: var(--h-deep);
+    font-size: 22px; font-weight: 900; flex-shrink: 0;
+    border: 2px solid var(--border);
+  }
+  .stage-title { font-size: 21px; font-weight: 700; color: var(--text); }
+  .stage-subtitle { font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+  .callout {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 16px 0;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  .callout-idea {
+    background: linear-gradient(135deg, #fffbeb, #fef3c7);
+    border-left: 5px solid var(--orange);
+    color: #78350f;
+  }
+  .callout-idea b { color: #92400e; }
+  .callout-warn {
+    background: linear-gradient(135deg, #fef2f2, #fee2e2);
+    border-left: 5px solid var(--red);
+    color: #7f1d1d;
+  }
+  .callout-warn b { color: #b91c1c; }
+  .callout-note {
+    background: linear-gradient(135deg, #eff6ff, #dbeafe);
+    border-left: 5px solid #3b82f6;
+    color: #1e3a8a;
+  }
+  .callout-note b { color: #1d4ed8; }
+  .callout-ok {
+    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+    border-left: 5px solid var(--green);
+    color: #065f46;
+  }
+  .callout-ok b { color: #047857; }
+
+  .cta { color: var(--accent); font-weight: 800; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .card {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--h-color), var(--accent));
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,.15);
+    border-color: var(--h-deep);
+  }
+  .card .c-title { font-size: 16.5px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .card .c-desc { font-size: 15.5px; color: var(--muted); line-height: 1.65; }
+  .card .c-desc b { color: var(--text); }
+
+  /* Таймлайн */
+  .timeline { position: relative; padding: 10px 0; margin-top: 10px; }
+  .timeline-track {
+    display: flex; gap: 0; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+  }
+  .timeline-track::-webkit-scrollbar { height: 8px; }
+  .timeline-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .timeline-item {
+    flex: 0 0 auto; width: 210px; padding: 16px; margin-right: 12px;
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; cursor: pointer; transition: all .25s;
+    scroll-snap-align: start; text-align: center;
+  }
+  .timeline-item:hover { transform: translateY(-3px); border-color: var(--h-deep); }
+  .timeline-item.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+  }
+  .timeline-item .t-emoji { font-size: 30px; }
+  .timeline-item .t-era {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep); margin-top: 6px;
+  }
+  .timeline-item .t-name { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+  .timeline-detail {
+    margin-top: 14px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 14px; color: #e2e8f0; min-height: 140px;
+    transition: all .3s;
+  }
+  .timeline-detail .td-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+  .timeline-detail .td-text { font-size: 15.5px; line-height: 1.75; color: #cbd5e1; }
+  .timeline-detail .td-text b { color: #fff; }
+
+  /* Сетка задач */
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .task-card {
+    padding: 20px; background: var(--panel-2); border-radius: 14px;
+    border: 1.5px solid var(--border); transition: all .25s;
+  }
+  .task-card:hover {
+    border-color: var(--h-deep); transform: translateY(-3px);
+    box-shadow: 0 8px 20px -8px rgba(6,182,212,.3);
+  }
+  .task-card .tc-emoji { font-size: 32px; line-height: 1; }
+  .task-card .tc-title { font-size: 16px; font-weight: 800; margin-top: 8px; }
+  .task-card .tc-desc { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .task-card .tc-examples { font-size: 13.5px; color: var(--text); margin-top: 8px; line-height: 1.55; }
+  .task-card .tc-examples span { display: inline-block; background: #fff; padding: 3px 8px; border-radius: 6px; margin: 2px 3px 2px 0; border: 1px solid var(--border); font-weight: 600; }
+
+  /* Игры */
+  .game-area {
+    background: var(--panel-2); border-radius: 14px;
+    padding: 22px; margin-top: 18px;
+  }
+  .game-area h4 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .game-area .game-hint { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+
+  .dual-basket {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .basket {
+    border: 2.5px dashed var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    min-height: 160px;
+    text-align: center;
+    transition: all .25s;
+    background: #fff;
+  }
+  .basket.hover { border-color: var(--accent); background: #f5f3ff; }
+  .basket .basket-title {
+    font-size: 14px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .basket .basket-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .basket .basket-chip {
+    background: var(--panel-2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .basket.good { border-color: var(--green); background: #ecfdf5; }
+  .basket.bad { border-color: var(--red); background: #fef2f2; }
+
+  .game-pool {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-height: 100px;
+    margin-bottom: 14px;
+  }
+  .game-pool .pool-item {
+    background: var(--panel-2);
+    border: 2px solid var(--border);
+    border-radius: 10px; padding: 10px 18px;
+    cursor: grab; font-size: 15px; font-weight: 700;
+    transition: all .2s; user-select: none;
+  }
+  .game-pool .pool-item:hover { border-color: var(--h-deep); transform: translateY(-2px); }
+  .game-pool .pool-item.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .game-pool .pool-item.dragging { opacity: .5; }
+  .game-pool .pool-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: #fef2f2; }
+
+  .reset-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 50px;
+    background: var(--panel-2); color: var(--text);
+    border: 1.5px solid var(--border);
+    cursor: pointer; font-size: 14px; font-weight: 700;
+    transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--h-deep); color: var(--h-deep); }
+
+  .game-feedback { margin-top: 14px; font-size: 15.5px; font-weight: 700; min-height: 24px; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Треугольник Джонстона: стили припаркованы для Модуля 4б (введение);
+     в ранних модулях блок не используется */
+  .johnstone-wrap {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px;
+    align-items: center; margin-top: 18px;
+  }
+  .johnstone-svg-wrap {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 2px solid var(--border); border-radius: 14px; padding: 14px;
+  }
+  .johnstone-svg-wrap svg { width: 100%; height: auto; display: block; }
+  .johnstone-info {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; min-height: 220px;
+  }
+  .johnstone-info .ji-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--h-deep); }
+  .johnstone-info .ji-text { font-size: 15.5px; line-height: 1.7; color: var(--text); }
+  .johnstone-info .ji-example {
+    margin-top: 14px; padding: 12px 16px;
+    background: #fff; border-radius: 10px;
+    border-left: 4px solid var(--accent);
+    font-size: 14.5px; color: #4c1d95;
+  }
+  .johnstone-info .ji-example b { color: #5b21b6; }
+
+  .sciences-svg-wrap {
+    background: linear-gradient(180deg, #faf5ff, #fff);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 16px;
+  }
+  .sciences-svg-wrap svg { width: 100%; height: auto; display: block; }
+
+  /* Методы познания */
+  .method-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border-radius: 14px;
+    border: 2px solid var(--border);
+  }
+  .method-step {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 18px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-width: 130px;
+    transition: all .35s;
+    cursor: pointer;
+  }
+  .method-step.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+    transform: scale(1.05);
+  }
+  .method-step .ms-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--h-deep); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .method-step.active .ms-num { background: var(--accent); }
+  .method-step .ms-icon { font-size: 28px; }
+  .method-step .ms-name { font-size: 14px; font-weight: 800; margin-top: 6px; text-align: center; }
+  .method-arrow {
+    font-size: 24px; color: var(--muted); animation: slide 2s infinite;
+  }
+  @keyframes slide {
+    0%,100% { transform: translateX(0); opacity: .5; }
+    50% { transform: translateX(4px); opacity: 1; color: var(--accent); }
+  }
+  .method-detail-box {
+    margin-top: 16px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px;
+    color: #e2e8f0;
+    min-height: 130px;
+    transition: all .3s;
+  }
+  .method-detail-box .mb-title { font-size: 16px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .method-detail-box .mb-text { font-size: 15px; line-height: 1.7; color: #cbd5e1; }
+  .method-detail-box .mb-text b { color: #fff; }
+
+  /* Свойства веществ */
+  .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .property-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    transition: all .25s;
+  }
+  .property-card:hover { transform: translateY(-4px); border-color: var(--h-deep); box-shadow: var(--shadow-lg); }
+  .property-card .pc-svg {
+    height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .property-card .pc-title { font-size: 16px; font-weight: 800; }
+  .property-card .pc-desc { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.55; }
+
+  /* Процессы жизни */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .process-card {
+    background: linear-gradient(180deg, #fff, #f0fdf4);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: all .25s;
+  }
+  .process-card:hover { transform: translateY(-4px); border-color: var(--green); box-shadow: var(--shadow-lg); }
+  .process-card .prc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .process-card .prc-icon { font-size: 32px; }
+  .process-card .prc-name { font-size: 16px; font-weight: 800; }
+  .process-card .prc-eq {
+    background: #fff; border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px; font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    font-style: italic;
+  }
+  .process-card .prc-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* Правила безопасности */
+  .safety-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .safety-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px; background: var(--panel-2);
+    border-radius: 12px; border: 2px solid var(--border);
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .safety-item:hover { border-color: var(--h-deep); transform: translateX(4px); }
+  .safety-item .si-icon { font-size: 30px; line-height: 1; flex-shrink: 0; }
+  .safety-item .si-check {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: transparent; font-weight: 900;
+    transition: all .25s; background: #fff;
+    margin-top: 2px;
+  }
+  .safety-item.checked { border-color: var(--green); background: #ecfdf5; }
+  .safety-item.checked .si-check {
+    background: var(--green); border-color: var(--green); color: #fff;
+  }
+  .safety-item .si-text { font-size: 15.5px; line-height: 1.6; flex: 1; }
+  .safety-item .si-text b { color: var(--red); }
+
+  /* Оборудование */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .equip-card {
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; padding: 14px; text-align: center;
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .equip-card:hover { transform: translateY(-4px); border-color: var(--h-deep); }
+  .equip-card.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .equip-card .eq-icon { font-size: 44px; line-height: 1; }
+  .equip-card .eq-name { font-size: 14px; font-weight: 800; margin-top: 8px; }
+
+  .equip-detail {
+    margin-top: 16px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px; color: #e2e8f0;
+    min-height: 120px; transition: all .3s;
+  }
+  .equip-detail .ed-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .equip-detail .ed-text { font-size: 15.5px; line-height: 1.7; color: #cbd5e1; }
+
+  /* Тест */
+  .test-question {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .test-question .q-text {
+    font-size: 17px; font-weight: 700; margin-bottom: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .test-question .q-num {
+    background: var(--h-deep); color: #fff;
+    border-radius: 50%; width: 30px; height: 30px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+  .test-options { display: flex; flex-direction: column; gap: 10px; }
+  .test-option {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; font-size: 15.5px; transition: all .25s;
+  }
+  .test-option:hover { border-color: var(--h-deep); }
+  .test-option .opt-marker {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    transition: all .25s;
+  }
+  .test-option.correct { border-color: var(--green); background: #ecfdf5; }
+  .test-option.correct .opt-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .test-option.wrong { border-color: var(--red); background: #fef2f2; }
+  .test-option.wrong .opt-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .test-option.disabled { cursor: default; }
+  .test-option.disabled:hover { border-color: var(--border); }
+  .test-option.correct.disabled:hover { border-color: var(--green); }
+  .test-option.wrong.disabled:hover { border-color: var(--red); }
+
+  .explanation {
+    margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+    font-size: 15px; line-height: 1.65; display: none;
+    animation: fadeSlide .35s ease;
+  }
+  .explanation.show { display: block; }
+  .explanation.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .explanation.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+  .explanation b { font-weight: 800; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .test-score {
+    margin-top: 22px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 18px; font-weight: 800;
+    background: var(--panel-2); border: 2px solid var(--border);
+    transition: all .4s;
+  }
+  .test-score.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .test-score.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+  .test-score.bad { background: #fef2f2; border-color: var(--red); color: #dc2626; }
+
+  .retry-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 12px 26px; border-radius: 50px;
+    background: var(--accent); color: #fff; border: none;
+    cursor: pointer; font-size: 15px; font-weight: 800;
+    transition: all .2s;
+    box-shadow: 0 6px 16px -6px rgba(139,92,246,.5);
+  }
+  .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(139,92,246,.6); }
+
+  /* Branching scenarios */
+  .scenario-card {
+    background: linear-gradient(180deg, #fff, #fef2f2);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    transition: all .25s;
+  }
+  .scenario-card .sc-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .scenario-card .sc-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--red); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900; flex-shrink: 0;
+  }
+  .scenario-card .sc-title { font-size: 16.5px; font-weight: 800; }
+  .scenario-card .sc-situation {
+    background: #fff; border-radius: 10px; padding: 14px 18px;
+    font-size: 15.5px; line-height: 1.65; margin-bottom: 14px;
+    border-left: 4px solid var(--orange);
+  }
+  .scenario-actions { display: flex; flex-direction: column; gap: 8px; }
+  .scenario-action {
+    padding: 12px 16px; background: #fff;
+    border: 2px solid var(--border); border-radius: 10px;
+    cursor: pointer; font-size: 15px; transition: all .2s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .scenario-action:hover { border-color: var(--h-deep); }
+  .scenario-action .sa-marker {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .scenario-action.correct { border-color: var(--green); background: #ecfdf5; }
+  .scenario-action.correct .sa-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .scenario-action.wrong { border-color: var(--red); background: #fef2f2; }
+  .scenario-action.wrong .sa-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .scenario-action.disabled { cursor: default; }
+  .scenario-action.disabled:hover { border-color: var(--border); }
+  .scenario-action.correct.disabled:hover { border-color: var(--green); }
+  .scenario-action.wrong.disabled:hover { border-color: var(--red); }
+
+  .scenario-feedback {
+    margin-top: 12px; padding: 12px 16px; border-radius: 10px;
+    font-size: 14.5px; line-height: 1.6; display: none;
+  }
+  .scenario-feedback.show { display: block; animation: fadeSlide .3s ease; }
+  .scenario-feedback.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .scenario-feedback.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+
+  /* Слот под видео (YouTube/Instagram). Пока видео нет — блок не вставляется, вёрстка не едет.
+     Когда появится: <div class="video-slot"><iframe ...></iframe></div> */
+  .video-slot {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: 14px; margin-top: 16px; border: 2px solid var(--border);
+  }
+  .video-slot iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+
+  .footer {
+    text-align: center; padding: 40px 0 60px;
+    color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .subhead {
+    font-size: 17px; font-weight: 800;
+    margin: 26px 0 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .subhead-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+
+  .legend-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .legend-card {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: #fff;
+  }
+  .legend-card .lc-header { display: flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 800; margin-bottom: 6px; }
+  .legend-card .lc-body { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .legend-card .lc-body b { color: var(--text); }
+
+  /* Разогрев (без оценки) */
+  .entry-result {
+    margin-top: 20px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 16px; font-weight: 700;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: none;
+  }
+  .entry-result.show { display: block; animation: fadeSlide .35s ease; }
+  .entry-result.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .entry-result.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+
+  @media (max-width: 900px) {
+    .johnstone-wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 800px) {
+    .dual-basket { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 20px; }
+    .stage { padding: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .timeline-item { width: 180px; }
+    body { font-size: 16px; }
+  }
+
+  /* Раскрывающиеся блоки-шпаргалки (легенда, метод Фейнмана) */
+  details.fold {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 22px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  details.fold summary {
+    list-style: none; cursor: pointer;
+    padding: 16px 22px; font-size: 16px; font-weight: 800;
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    user-select: none;
+  }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary::before {
+    content: '\25B6'; font-size: 12px; color: var(--h-deep);
+    transition: transform .25s;
+  }
+  details.fold[open] summary::before { transform: rotate(90deg); }
+  details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
+  details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
+
+  /* Навигация по урокам: карточки + пилюли */
+  .lesson-nav {
+    display: grid; grid-template-columns: 1fr auto 1fr;
+    gap: 12px; align-items: stretch; margin: 26px 0 8px;
+  }
+  .ln-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: 14px; padding: 14px 18px;
+    text-decoration: none; color: var(--text);
+    display: flex; flex-direction: column; gap: 4px; transition: all .2s;
+  }
+  a.ln-card:hover {
+    border-color: var(--h-deep); transform: translateY(-2px);
+    box-shadow: var(--shadow);
+  }
+  .ln-card.ln-next { text-align: right; }
+  .ln-dir {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep);
+  }
+  .ln-title { font-size: 15px; font-weight: 700; }
+  .ln-card.done { border-style: dashed; color: var(--muted); cursor: default; }
+  .ln-map { display: flex; gap: 8px; align-items: center; justify-content: center; }
+  .ln-pill {
+    width: 34px; height: 34px; border-radius: 50%;
+    border: 2px solid var(--border); display: inline-flex;
+    align-items: center; justify-content: center;
+    font-weight: 800; font-size: 14px; color: var(--muted);
+    text-decoration: none; background: #fff;
+  }
+  a.ln-pill:hover { border-color: var(--h-deep); }
+  .ln-pill.now { background: var(--h-deep); border-color: var(--h-deep); color: #fff; }
+  @media (max-width: 600px) {
+    .lesson-nav { grid-template-columns: 1fr; }
+    .ln-card.ln-next { text-align: left; }
+    .ln-map { order: -1; }
+  }
+
+  /* Вопросы hero: 3 риторических вопроса модуля/урока */
+  .hero-questions {
+    display: flex; flex-direction: column; gap: 8px;
+    max-width: 640px; margin: 14px auto 0; text-align: left;
+  }
+  .hero-questions div {
+    background: rgba(255,255,255,.75);
+    border: 1px solid var(--border); border-radius: 10px;
+    padding: 8px 14px; font-size: 15.5px; font-weight: 600;
+  }
+
+  /* Цвета карточек легенды по смыслу */
+  .legend-card { border: 2px solid var(--border); }
+  .legend-card.lc-warm { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #f59e0b; }
+  .legend-card.lc-danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-color: #ef4444; }
+  .legend-card.lc-info { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6; }
+  .legend-card.lc-ok { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #10b981; }
+  .legend-card.lc-act { background: #fff; border-style: dashed; }
+
+  /* Домашнее задание */
+  .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+  .homework ol { margin: 12px 0 0 22px; line-height: 1.9; font-size: 15.5px; }
+  .homework ol li { margin-bottom: 6px; }
+  .homework .hw-star { color: var(--accent); font-weight: 800; }
+
+  /* Карточки вопросов: нумерованный вопрос-промпт, без эмодзи и ответов.
+     Вопрос задаётся ученику по ходу урока — ответ рождается в уроке. */
+  .qa-list { display: flex; flex-direction: column; gap: 10px;
+    max-width: 680px; margin: 14px auto 0; text-align: left; }
+  .qa-card {
+    background: rgba(255,255,255,.85);
+    border: 1.5px solid var(--border); border-radius: 12px;
+    padding: 12px 16px; border-left: 5px solid var(--accent);
+  }
+  .qa-q { font-size: 15.5px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
+  .qa-num {
+    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 900; transform: translateY(3px);
+  }
+
+  /* Чипсы навигации модуля */
+  .mod-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
+  .mod-chip {
+    padding: 9px 20px; border-radius: 50px; text-decoration: none;
+    background: rgba(255,255,255,.8); border: 1.5px solid var(--border);
+    font-size: 14.5px; font-weight: 800; color: var(--text); transition: all .2s;
+  }
+  a.mod-chip:hover { border-color: var(--h-deep); color: var(--h-deep); transform: translateY(-2px); }
+</style>
+</head>
+<body>
+<!-- built by src/build.py v1 · 2026-09-28 · module_1 WHOLE-MODULE · manifest-driven -->
+<header class="hero">
+  <div class="badge">Модуль 1 · Химия как наука · ~1 час</div>
+  <h1>Модуль 1. Химия как наука</h1>
+  <p style="max-width:700px;margin:0 auto;">Химия — наука о веществах и их превращениях. В этом модуле разберёмся, чем тело отличается от вещества, как учёные познают мир и как работать в лаборатории безопасно.</p>
+<div class="qa-list">
+<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Из чего состоит всё вокруг нас?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Почему одни вещества горят, а другие растворяются?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как изучать вещества и не навредить себе?</span></div></div>
+</div>
+  <div class="mod-chips"><a class="mod-chip" href="#m-u1">Урок 1</a> <a class="mod-chip" href="#m-u2">Урок 2</a> <a class="mod-chip" href="#m-u3">Урок 3</a> <a class="mod-chip" href="#m-final">Тест</a></div>
+</header>
+<details class="fold fade-in">
+<summary>📚 Обозначения (открой, если забыл)</summary>
+<div class="fold-body">
+<div class="legend-grid">
+<div class="legend-card lc-warm"><div class="lc-header">💡 <span>Жёлтый блок</span></div><div class="lc-body">Ключевая мысль, сравнение или аналогия простыми словами.</div></div>
+<div class="legend-card lc-danger"><div class="lc-header">⚠️ <span>Красный блок</span></div><div class="lc-body">Предупреждение или правило безопасности. <b>Обязательно к запоминанию.</b></div></div>
+<div class="legend-card lc-info"><div class="lc-header">📌 <span>Синий блок</span></div><div class="lc-body">Заметка, пояснение или интересный факт.</div></div>
+<div class="legend-card lc-ok"><div class="lc-header">✅ <span>Зелёный блок</span></div><div class="lc-body">Правильный ответ, успех или итоговый вывод.</div></div>
+<div class="legend-card lc-act"><div class="lc-header">🔷 <span>Фиолетовый текст</span></div><div class="lc-body"><b>Призыв к действию:</b> нажми, подвигай, перетащи.</div></div>
+<div class="legend-card lc-info"><div class="lc-header">🎮 <span>Игра</span></div><div class="lc-body">Сортировка, выбор, классификация — без скучной зубрёжки.</div></div>
+<div class="legend-card lc-info"><div class="lc-header">📝 <span>Тест</span></div><div class="lc-body">Проверка с объяснением, почему ответ такой.</div></div>
+</div>
+</div>
+</details>
+<details class="fold fade-in" open>
+<summary>🧠 Как мы будем изучать химию: метод Фейнмана</summary>
+<div class="fold-body">
+<p style="font-size:15.5px;line-height:1.8;">Знаменитый физик <b>Ричард Фейнман</b> говорил: <b>«Если не можешь объяснить просто — значит, не понял»</b>. Поэтому учимся так:</p>
+<div class="card-grid">
+<div class="card"><div class="c-title">1️⃣ Объясняй просто</div><div class="c-desc">Как младшему брату или бабушке: никаких сложных терминов — только понятные слова.</div></div>
+<div class="card"><div class="c-title">2️⃣ Приводи примеры из жизни</div><div class="c-desc">Всё, что изучаем, есть дома, на кухне, на улице. Химия — вокруг нас.</div></div>
+<div class="card"><div class="c-title">3️⃣ Смотри и пробуй</div><div class="c-desc">Схемы, анимации и мини-игры: увидеть, как работает, а не зазубрить.</div></div>
+<div class="card"><div class="c-title">4️⃣ Проверяй себя</div><div class="c-desc">Тесты с объяснениями — сразу. В конце модуля — итоговая проверка.</div></div>
+</div>
+<p style="font-size:15px;margin-top:10px;">Главное правило модуля: <b>объясни вслух сыну, дочке, брату или сестре — и запиши в тетрадь</b>. Проверяет учитель.</p>
+</div>
+</details>
+
+<div class="container">
+<div id="m-u1">
+<header class="hero">
+  <div class="badge">Модуль 1 · Урок 1 из 3 · ~20 минут</div>
+  <h1>Как учимся и что изучает химия</h1>
+  <div class="qa-list">
+<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Что изучает химия?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Чем тело отличается от вещества?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как учёные познают мир?</span></div></div>
+</div>
+  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Итоговый тест</a></p>
+</header></header>
+
+
+<!-- ============ ЛЕГЕНДА (fold) ============ -->
+
+
+<!-- ==================== РАЗОГРЕВ (без оценки) ==================== -->
+<section class="section">
+  <div class="stage s-entry fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🚪</div>
+      <div>
+        <div class="stage-title">Разогрев: проверь себя</div>
+        <div class="stage-subtitle">5 вопросов без оценки · просто чтобы размяться перед темой</div>
+      </div>
+    </div>
+
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      Это <b>не экзамен</b>: оценка не ставится и ни на что не влияет.
+      Отвечай как получится — неправильные ответы лишь покажут, на что обратить внимание в модуле.
+    </p>
+
+    <div id="entryTestContainer"></div>
+
+    <div class="entry-result" id="entryResult"></div>
+  </div>
+</section>
+
+<!-- s-intro удалён: метод Фейнмана живёт в fold-блоке в начале каждого урока -->
+
+
+<!-- ==================== ЗАЧЕМ НУЖНА ХИМИЯ ==================== -->
+<section class="section">
+  <div class="stage s-why fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🌍</div>
+      <div>
+        <div class="stage-title">Зачем человечеству химия</div>
+        <div class="stage-subtitle">Какие проблемы привели к её появлению и что она решает сегодня</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;color:var(--text);">
+      Химия появилась не в лаборатории — она родилась из <b>нужды</b>. Людям всегда было нужно:
+      есть, лечиться, строить, одеваться, защищаться. Давай посмотрим, как это происходило.
+    </p>
+
+    <h3 class="subhead">📜 История: от костра до лаборатории</h3>
+    <p class="subhead-sub"><span class="cta">👆 Нажми на любую эпоху</span>, чтобы узнать подробности.</p>
+
+    <div class="timeline">
+      <div class="timeline-track" id="timelineTrack">
+        <div class="timeline-item" data-era="0">
+          <div class="t-emoji">🔥</div>
+          <div class="t-era">до н.э.</div>
+          <div class="t-name">Древний мир</div>
+        </div>
+        <div class="timeline-item" data-era="1">
+          <div class="t-emoji">⚗️</div>
+          <div class="t-era">IV–XVII вв.</div>
+          <div class="t-name">Алхимия</div>
+        </div>
+        <div class="timeline-item" data-era="2">
+          <div class="t-emoji">🔬</div>
+          <div class="t-era">XVII–XVIII вв.</div>
+          <div class="t-name">Рождение науки</div>
+        </div>
+        <div class="timeline-item" data-era="3">
+          <div class="t-emoji">📊</div>
+          <div class="t-era">1869</div>
+          <div class="t-name">Таблица Менделеева</div>
+        </div>
+        <div class="timeline-item" data-era="4">
+          <div class="t-emoji">💊</div>
+          <div class="t-era">XX век</div>
+          <div class="t-name">Химия меняет мир</div>
+        </div>
+        <div class="timeline-item" data-era="5">
+          <div class="t-emoji">🌱</div>
+          <div class="t-era">XXI век</div>
+          <div class="t-name">Зелёная химия</div>
+        </div>
+      </div>
+      <div class="timeline-detail" id="timelineDetail"></div>
+    </div>
+
+    <h3 class="subhead">🎯 Что химия даёт человеку сегодня</h3>
+    <p class="subhead-sub">Наведи курсор на карточку, чтобы её подсветить.</p>
+
+    <div class="task-grid">
+      <div class="task-card">
+        <div class="tc-emoji">🏥</div>
+        <div class="tc-title">Здоровье</div>
+        <div class="tc-desc">Лекарства спасают миллионы жизней, а материалы помогают врачам.</div>
+        <div class="tc-examples">
+          <span>💊 таблетки</span>
+          <span>💉 вакцины</span>
+          <span>🩹 бинты</span>
+          <span>🦷 пломбы</span>
+          <span>🧬 анализ</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">🍞</div>
+        <div class="tc-title">Еда</div>
+        <div class="tc-desc">Химия помогает выращивать, сохранять и делать еду безопасной.</div>
+        <div class="tc-examples">
+          <span>🌾 удобрения</span>
+          <span>🧊 консерванты</span>
+          <span>🍯 витамины</span>
+          <span>🥫 упаковка</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">🏠</div>
+        <div class="tc-title">Материалы</div>
+        <div class="tc-desc">Пластик, стекло, металлы, ткани — всё создано или очищено химией.</div>
+        <div class="tc-examples">
+          <span>🧴 пластик</span>
+          <span>🔩 сплавы</span>
+          <span>🧵 волокна</span>
+          <span>🎨 краски</span>
+          <span>🏗 бетон</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">⚡</div>
+        <div class="tc-title">Энергия</div>
+        <div class="tc-desc">Без химии не было бы ни батареек, ни топлива, ни солнечных панелей.</div>
+        <div class="tc-examples">
+          <span>🔋 батарейки</span>
+          <span>⛽ бензин</span>
+          <span>☀️ фотоэлементы</span>
+          <span>💧 водород</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">🌊</div>
+        <div class="tc-title">Экология</div>
+        <div class="tc-desc">Очистка воды и воздуха, переработка мусора, безопасные технологии.</div>
+        <div class="tc-examples">
+          <span>💧 фильтры</span>
+          <span>♻️ переработка</span>
+          <span>🌫 очистка воздуха</span>
+        </div>
+      </div>
+      <div class="task-card">
+        <div class="tc-emoji">🧴</div>
+        <div class="tc-title">Быт</div>
+        <div class="tc-desc">Мыло, шампунь, зубная паста, духи — всё это результат химии.</div>
+        <div class="tc-examples">
+          <span>🧼 мыло</span>
+          <span>🪥 паста</span>
+          <span>🧴 шампунь</span>
+          <span>🌸 духи</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 1: ЧТО ИЗУЧАЕТ ХИМИЯ ==================== -->
+<section class="section">
+  <div class="stage s1 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">1</div>
+      <div>
+        <div class="stage-title">Что изучает химия</div>
+        <div class="stage-subtitle">Наука о веществах и их превращениях</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      <b>Химия</b> — это наука о <b>веществах</b>: из чего они состоят, какие у них <b>свойства</b>
+      и как одни вещества <b>превращаются</b> в другие.
+    </p>
+
+    <div class="callout callout-idea">
+      Посмотри вокруг: воздух, которым дышишь, вода из крана, металл ложки, стекло окна —
+      всё это <b>вещества</b>. А когда дрова горят в печи или железо ржавеет, одни вещества
+      <b>превращаются</b> в другие. Вот эти превращения и изучает химия.
+    </div>
+    <!-- VIDEO-SLOT: сюда можно встроить короткое видео с яркой реакцией (YouTube/Instagram iframe).
+         Пока видео нет — блок скрыт, вёрстка не едет. Пример:
+         <div class="video-slot"><iframe src="URL" ...></iframe></div> -->
+
+    <h3 class="subhead">🔗 Место химии среди других наук</h3>
+    <p class="subhead-sub">
+      Химия — не одинокая наука. Она стоит в центре естествознания и тесно связана почти со всеми
+      другими дисциплинами. Посмотри на схему: <span class="cta">👆 наведи курсор на любую науку</span>,
+      чтобы увидеть, чем она помогает химии и чем химия помогает ей.
+    </p>
+
+    <div class="sciences-svg-wrap">
+      <svg viewBox="0 0 700 500" xmlns="http://www.w3.org/2000/svg" id="sciencesSvg">
+        <g stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6 6">
+          <line x1="350" y1="250" x2="130" y2="100"/>
+          <line x1="350" y1="250" x2="570" y2="100"/>
+          <line x1="350" y1="250" x2="80" y2="250"/>
+          <line x1="350" y1="250" x2="620" y2="250"/>
+          <line x1="350" y1="250" x2="130" y2="400"/>
+          <line x1="350" y1="250" x2="570" y2="400"/>
+          <line x1="350" y1="250" x2="350" y2="60"/>
+          <line x1="350" y1="250" x2="350" y2="440"/>
+        </g>
+
+        <circle cx="350" cy="250" r="80" fill="url(#centerGrad)" stroke="#0e7490" stroke-width="3"/>
+        <defs>
+          <radialGradient id="centerGrad">
+            <stop offset="0%" stop-color="#67e8f9"/>
+            <stop offset="100%" stop-color="#06b6d4"/>
+          </radialGradient>
+        </defs>
+        <text x="350" y="242" text-anchor="middle" font-size="32">🧪</text>
+        <text x="350" y="272" text-anchor="middle" font-size="18" font-weight="900" fill="#fff">ХИМИЯ</text>
+
+        <g class="sci-node" data-sci="physics" style="cursor:pointer;">
+          <circle cx="130" cy="100" r="58" fill="#eff6ff" stroke="#3b82f6" stroke-width="2.5"/>
+          <text x="130" y="90" text-anchor="middle" font-size="26">⚛️</text>
+          <text x="130" y="115" text-anchor="middle" font-size="14" font-weight="800" fill="#1e40af">Физика</text>
+        </g>
+
+        <g class="sci-node" data-sci="biology" style="cursor:pointer;">
+          <circle cx="570" cy="100" r="58" fill="#ecfdf5" stroke="#10b981" stroke-width="2.5"/>
+          <text x="570" y="90" text-anchor="middle" font-size="26">🧬</text>
+          <text x="570" y="115" text-anchor="middle" font-size="14" font-weight="800" fill="#065f46">Биология</text>
+        </g>
+
+        <g class="sci-node" data-sci="geology" style="cursor:pointer;">
+          <circle cx="80" cy="250" r="58" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
+          <text x="80" y="240" text-anchor="middle" font-size="26">🌍</text>
+          <text x="80" y="265" text-anchor="middle" font-size="13" font-weight="800" fill="#92400e">Геология</text>
+        </g>
+
+        <g class="sci-node" data-sci="medicine" style="cursor:pointer;">
+          <circle cx="620" cy="250" r="58" fill="#fee2e2" stroke="#ef4444" stroke-width="2.5"/>
+          <text x="620" y="240" text-anchor="middle" font-size="26">💊</text>
+          <text x="620" y="265" text-anchor="middle" font-size="14" font-weight="800" fill="#991b1b">Медицина</text>
+        </g>
+
+        <g class="sci-node" data-sci="ecology" style="cursor:pointer;">
+          <circle cx="130" cy="400" r="58" fill="#d1fae5" stroke="#10b981" stroke-width="2.5"/>
+          <text x="130" y="390" text-anchor="middle" font-size="26">🌱</text>
+          <text x="130" y="415" text-anchor="middle" font-size="14" font-weight="800" fill="#065f46">Экология</text>
+        </g>
+
+        <g class="sci-node" data-sci="materials" style="cursor:pointer;">
+          <circle cx="570" cy="400" r="58" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2.5"/>
+          <text x="570" y="390" text-anchor="middle" font-size="26">🔩</text>
+          <text x="570" y="415" text-anchor="middle" font-size="12" font-weight="800" fill="#5b21b6">Материалы</text>
+        </g>
+
+        <g class="sci-node" data-sci="math" style="cursor:pointer;">
+          <circle cx="350" cy="60" r="48" fill="#e0e7ff" stroke="#6366f1" stroke-width="2.5"/>
+          <text x="350" y="52" text-anchor="middle" font-size="22">📐</text>
+          <text x="350" y="74" text-anchor="middle" font-size="12" font-weight="800" fill="#3730a3">Математика</text>
+        </g>
+
+        <g class="sci-node" data-sci="it" style="cursor:pointer;">
+          <circle cx="350" cy="440" r="48" fill="#fce7f3" stroke="#ec4899" stroke-width="2.5"/>
+          <text x="350" y="432" text-anchor="middle" font-size="22">💻</text>
+          <text x="350" y="454" text-anchor="middle" font-size="12" font-weight="800" fill="#9d174d">Информатика</text>
+        </g>
+      </svg>
+    </div>
+
+    <div class="method-detail-box" id="sciDetail" style="margin-top:14px;">
+      <div class="mb-title">⚛️ Физика</div>
+      <div class="mb-text">
+        Физика объясняет, как устроены атомы и молекулы, как они движутся, какие силы действуют между ними.
+        Химия, в свою очередь, даёт физикам новые материалы — сверхпроводники, полупроводники, кристаллы.
+      </div>
+    </div>
+
+    <h3 class="subhead">📦 Физическое тело и вещество</h3>
+    <p class="subhead-sub">Эти два понятия часто путают. Давай разберёмся раз и навсегда.</p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title"><span style="font-size:26px;">📦</span> Физическое тело</div>
+        <div class="c-desc">
+          Всё, что нас окружает и имеет форму: <b>ложка 🥄, стакан 🥛, стол 🪑, карандаш ✏️, дом 🏠</b>.
+          Тело можно потрогать, оно занимает место в пространстве.
+        </div>
+      </div>
+      <div class="card">
+        <div class="c-title"><span style="font-size:26px;">🧪</span> Вещество</div>
+        <div class="c-desc">
+          То, из чего состоят тела: <b>алюминий 🪨, стекло 🔷, дерево 🪵, вода 💧, железо ⚙️</b>.
+          Одно и то же тело может быть сделано из разных веществ — например, ложка бывает деревянной, алюминиевой или серебряной.
+        </div>
+      </div>
+    </div>
+
+    <div class="game-area">
+      <h4>🎮 Мини-игра: тело или вещество?</h4>
+      <p class="game-hint">
+        <span class="cta">Перетащи каждую карточку</span> в нужную корзину: физическое тело или вещество.
+        Если перетаскивание не работает — <span class="cta">нажми на карточку, а затем на корзину</span>.
+      </p>
+
+      <div class="game-pool" id="bodySubstancePool"></div>
+
+      <div class="dual-basket">
+        <div class="basket" data-cat="substance">
+          <div class="basket-title">🧪 Вещество</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="body">
+          <div class="basket-title">📦 Физическое тело</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px;">
+        <button class="reset-btn" id="resetBodySubstance">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbBodySubstance"></div>
+    </div>
+
+    <h3 class="subhead">🔍 Алгоритм познания в химии</h3>
+    <p class="subhead-sub">
+      Как учёные узнают то, что знают? Существует пять шагов, которые образуют алгоритм.
+      <span class="cta">👆 Нажми на любой шаг</span>, чтобы увидеть подробности и пример из химии.
+    </p>
+
+    <div class="method-flow" id="methodFlow">
+      <div class="method-step" data-step="0">
+        <div class="ms-num">1</div>
+        <div class="ms-icon">👁</div>
+        <div class="ms-name">Наблюдение</div>
+      </div>
+      <div class="method-arrow">➡️</div>
+      <div class="method-step" data-step="1">
+        <div class="ms-num">2</div>
+        <div class="ms-icon">🧠</div>
+        <div class="ms-name">Гипотеза</div>
+      </div>
+      <div class="method-arrow">➡️</div>
+      <div class="method-step" data-step="2">
+        <div class="ms-num">3</div>
+        <div class="ms-icon">🧪</div>
+        <div class="ms-name">Эксперимент</div>
+      </div>
+      <div class="method-arrow">➡️</div>
+      <div class="method-step" data-step="3">
+        <div class="ms-num">4</div>
+        <div class="ms-icon">📏</div>
+        <div class="ms-name">Измерение</div>
+      </div>
+      <div class="method-arrow">➡️</div>
+      <div class="method-step" data-step="4">
+        <div class="ms-num">5</div>
+        <div class="ms-icon">🔮</div>
+        <div class="ms-name">Модель</div>
+      </div>
+    </div>
+
+    <div class="method-detail-box" id="methodDetail"></div>
+
+    <div class="callout callout-idea" style="margin-top:18px;">
+      <b>Так рождается научное знание:</b> сначала мы замечаем что-то в мире (наблюдение), потом
+      пытаемся объяснить (гипотеза), проверяем свою догадку в опыте (эксперимент), измеряем результат
+      (измерение), а затем строим упрощённое описание — модель, которая помогает понять всё до конца.
+    </div>
+
+    <!-- ВИРТУАЛЬНАЯ ЛАБОРАТОРИЯ -->
+    <h3 class="subhead">🔬 Виртуальная лаборатория «Первое наблюдение»</h3>
+    <p class="subhead-sub">Перед тобой 5 опытов — от простого к сложному. На каждом шаге выбирай правильный ход исследования. <span class="cta">👆 Выбери вариант</span> — и сразу увидишь объяснение.</p>
+
+    <div id="labScenario"></div>
+  </div>
+</section>
+<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Минимум 5 задач · письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+<li>Составь таблицу: 5 физических тел дома и вещества, из которых они состоят.</li>
+<li>Опиши стакан воды дважды: что изучала бы в нём физика, а что — химия? По 3 предложения.</li>
+<li>Возьми любое наблюдение из жизни и разбери его по шагам познания: наблюдение → предположение → проверка → вывод.</li>
+<li>Найди дома 3 вещества с необычными свойствами. Запиши вещество и его свойство.</li>
+<li><span class="hw-star">★ Почему вещество нельзя узнать только по цвету? Приведи 2 примера разных веществ одного цвета.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+<nav class="lesson-nav">
+<span class="ln-card done"><span class="ln-dir">Старт</span><span class="ln-title">Ты в начале модуля</span></span>
+<div class="ln-map"><span class="ln-pill now">1</span><a class="ln-pill" href="#m-u2">2</a><a class="ln-pill" href="#m-u3">3</a><a class="ln-pill" href="#m-final">✓</a></div>
+<a class="ln-card ln-next" href="#m-u2"><span class="ln-dir">Вперёд →</span><span class="ln-title">Урок 2. Свойства веществ и химия вокруг нас</span></a>
+</nav>
+</div>
+<div id="m-u2">
+<header class="hero">
+  <div class="badge">Модуль 1 · Урок 2 из 3 · ~20 минут</div>
+  <h1>Свойства веществ и химия вокруг нас</h1>
+  <div class="qa-list">
+<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Как различить вещества вокруг нас?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Из чего состоим мы сами?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Где химия в твоём доме?</span></div></div>
+</div>
+  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Итоговый тест</a></p>
+</header></header>
+
+
+<section class="section" id="sess2">
+  <div class="stage s2 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">2</div>
+      <div>
+        <div class="stage-title">Свойства веществ</div>
+        <div class="stage-subtitle">По каким признакам различают вещества</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Вещества окружают нас повсюду. Одни мы видим каждый день, другие — редкие гости.
+      Но у каждого вещества есть свои <b>свойства</b>, по которым его можно узнать.
+    </p>
+
+    <h3 class="subhead">🔍 По каким свойствам различают вещества</h3>
+
+    <div class="property-grid">
+      <div class="property-card">
+        <div class="pc-svg">
+          <svg viewBox="0 0 100 70" width="120" height="70">
+            <circle cx="30" cy="35" r="18" fill="#fbbf24"/>
+            <circle cx="55" cy="35" r="18" fill="#06b6d4" opacity="0.9"/>
+            <circle cx="80" cy="35" r="18" fill="#ec4899" opacity="0.85"/>
+          </svg>
+        </div>
+        <div class="pc-title">👁 Цвет и блеск</div>
+        <div class="pc-desc">Медь — рыжая, золото — жёлтое и блестящее, вода — прозрачная, уголь — чёрный.</div>
+      </div>
+
+      <div class="property-card">
+        <div class="pc-svg">
+          <svg viewBox="0 0 100 70" width="120" height="70">
+            <path d="M 35 20 Q 50 12 65 20 Q 72 35 60 50 L 40 50 Q 28 35 35 20 Z" fill="#fb923c"/>
+            <circle cx="50" cy="20" r="6" fill="#f97316"/>
+            <path d="M 40 52 L 60 52 L 58 62 L 42 62 Z" fill="#ea580c"/>
+          </svg>
+        </div>
+        <div class="pc-title">👃 Запах</div>
+        <div class="pc-desc">Уксус пахнет резко, лимон — свежо, бензин — специфически, а вода не пахнет вовсе.</div>
+      </div>
+
+      <div class="property-card">
+        <div class="pc-svg">
+          <svg viewBox="0 0 100 70" width="120" height="70">
+            <polygon points="50,10 62,32 88,36 68,52 74,78 50,64 26,78 32,52 12,36 38,32" fill="#e0e7ff" stroke="#6366f1" stroke-width="2"/>
+            <polygon points="50,22 58,36 74,38 62,48 66,64 50,56 34,64 38,48 26,38 42,36" fill="#c7d2fe"/>
+          </svg>
+        </div>
+        <div class="pc-title">🔨 Твёрдость</div>
+        <div class="pc-desc">Алмаз царапает стекло, а воск — нет. Твёрдость определяют «по царапинам».</div>
+      </div>
+
+      <div class="property-card">
+        <div class="pc-svg">
+          <svg viewBox="0 0 100 70" width="120" height="70">
+            <path d="M 50 15 Q 40 30 40 42 Q 40 55 50 55 Q 60 55 60 42 Q 60 30 50 15 Z" fill="#f97316"/>
+            <path d="M 50 25 Q 45 35 45 43 Q 45 50 50 50 Q 55 50 55 43 Q 55 35 50 25 Z" fill="#fbbf24"/>
+            <path d="M 40 60 L 60 60 M 45 65 L 55 65" stroke="#94a3b8" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div class="pc-title">🔥 Горючесть</div>
+        <div class="pc-desc">Бензин и спирт горят, а вода и песок — нет.</div>
+      </div>
+    </div>
+
+    <div class="game-area" style="margin-top:22px;">
+      <h4>🎮 Симулятор «Определи свойство»</h4>
+      <p class="game-hint">
+        Сейчас тебе покажут вещество, а ты должен выбрать <b>правильное описание его свойств</b>.
+        <span class="cta">👆 Нажимай на вариант</span> — и сразу увидишь, прав ты или нет.
+      </p>
+
+      <div id="propertySimulator"></div>
+    </div>
+  </div>
+</section><!-- ==================== УРОК 3: ХИМИЯ И ЖИЗНЬ ==================== -->
+<section class="section">
+  <div class="stage s3 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">3</div>
+      <div>
+        <div class="stage-title">Химия и жизнь</div>
+        <div class="stage-subtitle">Как химия объясняет жизнь и помогает человеку</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Самый удивительный химический «завод» — это сам человек. В нашем организме непрерывно
+      происходят тысячи химических превращений: мы дышим, едим, двигаемся, думаем — и всё это химия.
+    </p>
+
+    <div class="callout callout-idea">
+      Представь завод, который работает без остановки всю твою жизнь. Цех дыхания забирает
+      кислород из воздуха. Цех пищеварения разбирает еду на молекулы-кирпичики. Энергетический
+      цех сжигает часть кирпичиков и выдаёт тепло и движение. Строительный цех собирает из них
+      мышцы, кости и кровь. А лаборатория мозга управляет всем этим сразу. Сырьё — еда и воздух,
+      отходы — углекислый газ и вода. И всё это — химия, которая идёт прямо сейчас внутри тебя.
+    </div>
+
+    <h3 class="subhead">🌱 Главные химические процессы жизни на Земле</h3>
+    <p class="subhead-sub">
+      Жизнь на нашей планете держится на нескольких ключевых химических превращениях. Без них
+      не было бы ни растений, ни животных, ни нас с тобой.
+    </p>
+
+    <div class="process-grid">
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🌿</div>
+          <div class="prc-name">Фотосинтез</div>
+        </div>
+        <div class="prc-eq">Из углекислого газа и воды образуется глюкоза и выделяется кислород</div>
+        <div class="prc-desc">
+          В зелёных листьях на свету из углекислого газа и воды образуется глюкоза и выделяется кислород.
+          Это главный источник кислорода на Земле.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🫁</div>
+          <div class="prc-name">Клеточное дыхание</div>
+        </div>
+        <div class="prc-eq">Глюкоза соединяется с кислородом, образуя углекислый газ, воду и энергию</div>
+        <div class="prc-desc">
+          В наших клетках глюкоза «сгорает» с помощью кислорода, выделяя энергию для жизни.
+          Обратный процесс фотосинтезу.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🫘</div>
+          <div class="prc-name">Азотфиксация</div>
+        </div>
+        <div class="prc-eq">Азот воздуха превращается в соединения, доступные растениям</div>
+        <div class="prc-desc">
+          Клубеньковые бактерии на корнях бобовых превращают азот воздуха в соединения, доступные растениям.
+          Без этого не было бы плодородной почвы.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🔥</div>
+          <div class="prc-name">Горение метана</div>
+        </div>
+        <div class="prc-eq">Метан соединяется с кислородом, выделяя углекислый газ, воду и тепло</div>
+        <div class="prc-desc">
+          Природный газ, который горит на кухонной плите, — это метан. При горении выделяется
+          тепло и углекислый газ.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">⛽</div>
+          <div class="prc-name">Образование нефти</div>
+        </div>
+        <div class="prc-eq">Остатки планктона без доступа кислорода превращаются в углеводороды</div>
+        <div class="prc-desc">
+          Миллионы лет назад остатки морских организмов опускались на дно, без доступа кислорода
+          превращались в нефть и газ. Это невозобновляемый ресурс.
+        </div>
+      </div>
+
+      <div class="process-card">
+        <div class="prc-header">
+          <div class="prc-icon">🍂</div>
+          <div class="prc-name">Гниение и брожение</div>
+        </div>
+        <div class="prc-eq">Органические остатки разлагаются до углекислого газа, воды и метана</div>
+        <div class="prc-desc">
+          Бактерии и грибы разлагают мёртвые остатки, возвращая углерод и другие элементы
+          в круговорот природы. Именно поэтому лес «убирает» за собой.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-note" style="margin-top:18px;">
+      <b>Обрати внимание:</b> фотосинтез и дыхание — это два противоположных процесса, которые
+      поддерживают баланс кислорода и углекислого газа в атмосфере. Один производит кислород,
+      другой его потребляет. Так природа сама себя регулирует.
+    </div>
+
+    <h3 class="subhead">🧬 Из чего состоит человек</h3>
+    <p class="subhead-sub">
+      Если разложить тело человека на «простые составляющие» — химические элементы — получится такая картина.
+      Слева — сам человек, справа — из чего он «сделан».
+    </p>
+
+    <div class="sciences-svg-wrap">
+      <svg viewBox="0 0 800 500" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <clipPath id="humanClip2">
+            <circle cx="160" cy="70" r="42"/>
+            <rect x="118" y="112" width="84" height="180" rx="26"/>
+            <rect x="84" y="122" width="30" height="150" rx="15"/>
+            <rect x="206" y="122" width="30" height="150" rx="15"/>
+            <rect x="120" y="290" width="34" height="190" rx="16"/>
+            <rect x="166" y="290" width="34" height="190" rx="16"/>
+          </clipPath>
+        </defs>
+
+        <g clip-path="url(#humanClip2)">
+          <rect x="0" y="0" width="320" height="312" fill="#ef4444"/>
+          <rect x="0" y="312" width="320" height="86" fill="#475569"/>
+          <rect x="0" y="398" width="320" height="48" fill="#06b6d4"/>
+          <rect x="0" y="446" width="320" height="14" fill="#3b82f6"/>
+          <rect x="0" y="460" width="320" height="7" fill="#f59e0b"/>
+          <rect x="0" y="467" width="320" height="5" fill="#8b5cf6"/>
+          <rect x="0" y="472" width="320" height="8" fill="#94a3b8"/>
+        </g>
+
+        <g clip-path="url(#humanClip2)" fill="none">
+          <circle cx="160" cy="70" r="42" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="118" y="112" width="84" height="180" rx="26" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="84" y="122" width="30" height="150" rx="15" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="206" y="122" width="30" height="150" rx="15" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="120" y="290" width="34" height="190" rx="16" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+          <rect x="166" y="290" width="34" height="190" rx="16" stroke="rgba(15,23,42,.35)" stroke-width="1.5"/>
+        </g>
+
+        <g font-family="Inter, system-ui, sans-serif">
+          <text x="400" y="40" font-size="18" font-weight="900" fill="#1e293b">Состав тела человека по массе</text>
+
+          <g transform="translate(400, 70)">
+            <rect width="30" height="30" rx="6" fill="#ef4444"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Кислород</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">65%</text>
+          </g>
+
+          <g transform="translate(400, 115)">
+            <rect width="30" height="30" rx="6" fill="#475569"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Углерод</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">18%</text>
+          </g>
+
+          <g transform="translate(400, 160)">
+            <rect width="30" height="30" rx="6" fill="#06b6d4"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Водород</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">10%</text>
+          </g>
+
+          <g transform="translate(400, 205)">
+            <rect width="30" height="30" rx="6" fill="#3b82f6"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Азот</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">3%</text>
+          </g>
+
+          <g transform="translate(400, 250)">
+            <rect width="30" height="30" rx="6" fill="#f59e0b"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Кальций</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">1,5%</text>
+          </g>
+
+          <g transform="translate(400, 295)">
+            <rect width="30" height="30" rx="6" fill="#8b5cf6"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Фосфор</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">1%</text>
+          </g>
+
+          <g transform="translate(400, 340)">
+            <rect width="30" height="30" rx="6" fill="#94a3b8"/>
+            <text x="42" y="21" font-size="16" font-weight="800" fill="#1e293b">Все остальные элементы</text>
+            <text x="300" y="21" font-size="16" font-weight="900" fill="#0e7490" text-anchor="end">1,5%</text>
+          </g>
+
+          <g transform="translate(400, 395)">
+            <rect width="300" height="70" rx="12" fill="#f1f5f9" stroke="#e2e8f0" stroke-width="1.5"/>
+            <text x="20" y="30" font-size="14" font-weight="700" fill="#64748b">Всего в теле человека</text>
+            <text x="20" y="54" font-size="14" font-weight="700" fill="#64748b">обнаружено около <tspan font-size="20" fill="#0e7490" font-weight="900">60</tspan> элементов</text>
+          </g>
+        </g>
+      </svg>
+    </div>
+
+    <div class="callout callout-idea" style="margin-top:18px;">
+      Получается, что мы почти на <b>две трети</b> состоим из кислорода и на <b>десятую часть</b> — из водорода.
+      А вместе с углеродом эти три элемента дают <b>больше 90%</b> массы нашего тела.
+    </div>
+
+    <h3 class="subhead">🏡 Химия в твоём доме</h3>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🍳 Кухня</div>
+        <div class="c-desc">Соль, сахар, сода, уксус, растительное масло — всё это химические вещества. А ещё — выпечка, жарка, варка: это химические превращения.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧼 Ванная</div>
+        <div class="c-desc">Мыло, шампунь, зубная паста, стиральный порошок — химия помогает нам быть чистыми и здоровыми.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">💊 Аптечка</div>
+        <div class="c-desc">Лекарства, антисептики, бинты и пластыри — всё это результат работы химиков и врачей.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🚗 На улице</div>
+        <div class="c-desc">Бензин, асфальт, шины, дорожные знаки, краска на стенах — химия повсюду.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">📱 В кармане</div>
+        <div class="c-desc">Телефон сделан из десятков разных материалов: пластик, стекло, металлы, редкие элементы. Всё это — химия.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🌳 На природе</div>
+        <div class="c-desc">Фотосинтез в листьях, дыхание животных, круговорот воды — глобальные химические процессы.</div>
+      </div>
+    </div>
+
+    <div class="callout callout-ok" style="margin-top:18px;">
+      <b>Вывод:</b> химия — не скучная наука из учебника. Это язык, на котором «разговаривает» вся природа
+      и всё, что сделано руками человека. Поняв её, ты начнёшь видеть мир по-другому.
+    </div>
+  </div>
+</section>
+<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Минимум 5 задач · письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+<li>Опиши 3 вещества дома по плану: состояние, цвет, запах, растворимость в воде.</li>
+<li>Опусти в два стакана с водой ложку соли и ложку масла. Что наблюдаешь? Запиши вывод.</li>
+<li>Нарисуй схему «путь хлеба»: какие превращения происходят от зерна до энергии в мышцах?</li>
+<li>Найди на 5 этикетках дома названия веществ (состав продуктов, шампуня). Выпиши их.</li>
+<li><span class="hw-star">★ Железный гвоздь тонет, а деревянная ложка плавает. Какое свойство за это отвечает? Объясни.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+<nav class="lesson-nav">
+<a class="ln-card" href="#m-u1"><span class="ln-dir">← Назад</span><span class="ln-title">Урок 1. Как учимся и что изучает химия</span></a>
+<div class="ln-map"><a class="ln-pill" href="#m-u1">1</a><span class="ln-pill now">2</span><a class="ln-pill" href="#m-u3">3</a><a class="ln-pill" href="#m-final">✓</a></div>
+<a class="ln-card ln-next" href="#m-u3"><span class="ln-dir">Вперёд →</span><span class="ln-title">Урок 3. Лаборатория: безопасность и оборудование</span></a>
+</nav>
+</div>
+<div id="m-u3">
+<header class="hero">
+  <div class="badge">Модуль 1 · Урок 3 из 3 · ~20 минут</div>
+  <h1>Лаборатория: безопасность и оборудование</h1>
+  <div class="qa-list">
+<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Как работать в лаборатории безопасно?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Как называется оборудование и зачем оно?</span></div></div>
+<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как описать вещество по плану?</span></div></div>
+</div>
+  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Итоговый тест</a></p>
+</header></header>
+
+
+<section class="section" id="sess3">
+  <div class="stage s4 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">4</div>
+      <div>
+        <div class="stage-title">Химическая лаборатория</div>
+        <div class="stage-subtitle">Правила безопасности и лабораторное оборудование</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Химия — наука экспериментальная. Но лаборатория — это место, где нужно быть
+      <b>внимательным и осторожным</b>. Прежде чем смешивать что-либо, нужно выучить правила
+      безопасности и узнать, как называется оборудование.
+    </p>
+
+    <div class="callout callout-idea">
+      Представь, что ты водитель. Прежде чем сесть за руль, ты учишь правила дорожного движения.
+      В лаборатории то же самое: правила безопасности — это твой «кодекс», без которого нельзя начинать.
+    </div>
+
+    <h3 class="subhead">⚠️ Правила безопасности</h3>
+    <p class="subhead-sub">
+      <span class="cta">👆 Нажимай на правила</span>, чтобы отметить их как «изученные». Это поможет запомнить.
+    </p>
+
+    <div class="safety-list" id="safetyList">
+      <div class="safety-item" data-id="1">
+        <div class="si-icon">🥼</div>
+        <div class="si-text"><b>Работай только в халате.</b> Он защитит одежду и кожу от капель реактивов.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="2">
+        <div class="si-icon">🚫😋</div>
+        <div class="si-text"><b>Не пробуй вещества на вкус.</b> Никогда. Даже если это «сахар». В лаборатории все вещества — потенциально опасны.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="3">
+        <div class="si-icon">👃</div>
+        <div class="si-text"><b>Не наклоняйся над сосудом.</b> При нагревании брызги могут попасть в лицо. Нюхай осторожно, направляя воздух ладонью.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="4">
+        <div class="si-icon">🧴</div>
+        <div class="si-text"><b>Работай над столом, а не над полом.</b> Если что-то прольётся — не будет лужи под ногами.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="5">
+        <div class="si-icon">🧹</div>
+        <div class="si-text"><b>Держи рабочее место в порядке.</b> Лишние предметы мешают и могут стать причиной аварии.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="6">
+        <div class="si-icon">🍔🚫</div>
+        <div class="si-text"><b>Не ешь и не пей в лаборатории.</b> Частицы реактивов могут попасть в еду.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="7">
+        <div class="si-icon">🩹</div>
+        <div class="si-text"><b>При ожоге или порезе — сразу сообщи учителю.</b> Не пытайся лечиться сам.</div>
+        <div class="si-check">✓</div>
+      </div>
+      <div class="safety-item" data-id="8">
+        <div class="si-icon">🧼</div>
+        <div class="si-text"><b>После работы убери всё на место и вымой руки.</b> Чистота — залог безопасности.</div>
+        <div class="si-check">✓</div>
+      </div>
+    </div>
+
+    <h3 class="subhead">🎭 Пять ситуаций: как поступить?</h3>
+    <p class="subhead-sub">
+      В лаборатории бывают неожиданные ситуации. Проверь, знаешь ли ты, как правильно действовать.
+      <span class="cta">👆 Выбери один вариант</span> — и сразу увидишь объяснение.
+      <b>Пропуск дальше: разбери все 5 ситуаций.</b> Ошибаться можно — читай объяснение и пробуй снова.
+    </p>
+
+    <div id="scenariosContainer"></div>
+
+    <div class="test-score" id="safetyGate"><span id="safetyGateText">🔒 Загрузка…</span><br><button class="retry-btn" id="retryScenarios">↺ Сбросить всё и начать заново</button></div>
+
+    <div class="game-area" style="margin-top:22px;">
+      <h4>🎮 Игра: разбери действия по настоящим правилам лаборатории</h4>
+      <p class="game-hint">
+        Здесь 12 действий — как из реальной инструкции по технике безопасности.
+        <span class="cta">Перетащи каждое действие</span> в корзину «можно» или «нельзя».
+        Если перетаскивание не работает — <span class="cta">нажми на карточку, а затем на корзину</span>.
+      </p>
+
+      <div class="game-pool" id="safetyQuizPool"></div>
+
+      <div class="dual-basket">
+        <div class="basket" data-cat="can">
+          <div class="basket-title">✅ Можно</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="cannot">
+          <div class="basket-title">❌ Нельзя</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div style="text-align:center; margin-top:16px;">
+        <button class="reset-btn" id="resetSafetyQuiz">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbSafetyQuiz"></div>
+    </div>
+
+    <h3 class="subhead">🧰 Лабораторное оборудование</h3>
+    <p class="subhead-sub">
+      <span class="cta">👆 Нажми на карточку</span>, чтобы узнать, как называется прибор и для чего он нужен.
+    </p>
+
+    <div class="equip-grid" id="equipGrid">
+      <div class="equip-card" data-eq="0"><div class="eq-icon">🧪</div><div class="eq-name">Пробирка</div></div>
+      <div class="equip-card" data-eq="1"><div class="eq-icon">⚗️</div><div class="eq-name">Колба</div></div>
+      <div class="equip-card" data-eq="2"><div class="eq-icon">🥛</div><div class="eq-name">Мензурка</div></div>
+      <div class="equip-card" data-eq="3"><div class="eq-icon">⚖️</div><div class="eq-name">Весы</div></div>
+      <div class="equip-card" data-eq="4"><div class="eq-icon">🔥</div><div class="eq-name">Спиртовка</div></div>
+      <div class="equip-card" data-eq="5"><div class="eq-icon">🥄</div><div class="eq-name">Шпатель</div></div>
+      <div class="equip-card" data-eq="6"><div class="eq-icon">🧫</div><div class="eq-name">Чашка Петри</div></div>
+      <div class="equip-card" data-eq="7"><div class="eq-icon">🌡</div><div class="eq-name">Термометр</div></div>
+      <div class="equip-card" data-eq="8"><div class="eq-icon">🕳</div><div class="eq-name">Воронка</div></div>
+      <div class="equip-card" data-eq="9"><div class="eq-icon">📏</div><div class="eq-name">Линейка</div></div>
+      <div class="equip-card" data-eq="10"><div class="eq-icon">🧴</div><div class="eq-name">Капельница</div></div>
+      <div class="equip-card" data-eq="11"><div class="eq-icon">🔬</div><div class="eq-name">Микроскоп</div></div>
+    </div>
+
+    <div class="equip-detail" id="equipDetail">
+      <div class="ed-title">🧪 Пробирка</div>
+      <div class="ed-text">
+        Узкий стеклянный сосуд для проведения небольших опытов с малым количеством вещества.
+        Пробирки закрепляют в штативе или держат специальным зажимом.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🧠</div>
+      <div>
+        <div class="stage-title">Рефлексия по Фейнману</div>
+        <div class="stage-subtitle">Объясни своими словами и запиши в тетрадь — проверит учитель</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
+      Это не тест: готовых вариантов нет. Объясни вслух — сыну, дочке, брату или сестре
+      (или представь, что объясняешь им), а затем <b>запиши объяснения в тетрадь</b>.
+    </p>
+
+    <div class="callout callout-note">
+      <b>📝 Задание в тетрадь — ответь письменно на три вопроса:</b>
+      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+        <li>Чем химия отличается от физики? Объясни на примере стакана воды.</li>
+        <li>Чем физическое тело отличается от вещества? Приведи по два примера из дома и из лаборатории.</li>
+        <li>Почему в лаборатории нельзя пробовать вещества на вкус и нюхать их напрямую? Что делать вместо этого?</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Как понять, что получилось:</b> перечитай написанное и спроси себя —
+      поймёт ли это младший школьник? Если где-то запнулся или ушёл в умные слова —
+      вернись к этому месту модуля и разберись заново. Именно «застревание» и есть обучение.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ПРАКТИЧЕСКОЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практическое задание: опиши вещество по плану</div>
+        <div class="stage-subtitle">Проверь, умеешь ли ты применять знания о свойствах веществ</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      Настоящий химик умеет <b>описывать вещество по плану</b>: цвет, блеск, запах, твёрдость,
+      растворимость, горючесть. Сейчас мы потренируемся.
+    </p>
+
+    <div id="practicalTask"></div>
+
+    <div class="callout callout-note" style="margin-top:16px;">
+      <b>📝 В тетрадь:</b> выбери одно вещество дома (например, сахар, соль, монету)
+      и опиши его письменно по плану выше. Это задание проверит учитель.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== ЗАДАЧКА НА ПОДУМАТЬ ==================== -->
+<section class="section">
+  <div class="stage s-feyn fade-in">
+    <div class="stage-header">
+      <div class="stage-number">★</div>
+      <div>
+        <div class="stage-title">Задачка на подумать</div>
+        <div class="stage-subtitle">Без ответа в файле — разбираем на уроке</div>
+      </div>
+    </div>
+
+    <p style="font-size:16.5px;line-height:1.8;">
+      На столе два одинаковых белых порошка без подписей: <b>сахар и соль</b>.
+      Пробовать на вкус <b>запрещено</b> (мы же помним правила безопасности!).
+      Придумай, как различить их, используя только то, что изучили в модуле:
+      свойства веществ и методы познания. Запиши свой способ в тетрадь.
+    </p>
+  </div>
+</section>
+
+<!-- ==================== КАРТОЧКА-ВЫЖИМКА ==================== -->
+<section class="section">
+  <div class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📇</div>
+      <div>
+        <div class="stage-title">Выжимка модуля: самое главное</div>
+        <div class="stage-subtitle">Перепиши в тетрадь — это твой конспект</div>
+      </div>
+    </div>
+
+    <div class="callout callout-ok">
+      <b>5 тезисов модуля:</b>
+      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+        <li><b>Химия</b> — наука о веществах, их свойствах и превращениях.</li>
+        <li><b>Тело</b> имеет форму и объём; <b>вещество</b> — то, из чего состоят тела.</li>
+        <li>Путь познания: наблюдение → эксперимент → измерение → моделирование → вывод.</li>
+        <li>Вещества различают по свойствам: цвет, запах, твёрдость, растворимость, горючесть и др.</li>
+        <li>Лаборатория требует правил: ничего не пробовать на вкус, сообщать учителю об авариях, убирать за собой.</li>
+      </ol>
+    </div>
+
+    <div class="callout callout-note">
+      <b>Новые термины:</b> вещество · физическое тело · свойство вещества ·
+      наблюдение · эксперимент · измерение · моделирование · гипотеза · лаборатория.
+    </div>
+  </div>
+</section>
+<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+<section class="section">
+  <div class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Минимум 5 задач · письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+<li>Перепиши 5 главных правил безопасности своими словами — как запомнил, а не дословно.</li>
+<li>Нарисуй и подпиши 6 лабораторных приборов. Рядом с каждым — для чего он нужен.</li>
+<li>Опиши по шагам свои действия, если разбил пробирку с раствором.</li>
+<li>Объясни: почему пары нюхают ладонью, а не из сосуда? Назови 2 причины.</li>
+<li><span class="hw-star">★ Придумай ситуацию №6 для этого урока: опиши происшествие, дай правильный и два неправильных действия.</span></li>
+      </ol>
+    </div>
+  </div>
+</section>
+<nav class="lesson-nav">
+<a class="ln-card" href="#m-u2"><span class="ln-dir">← Назад</span><span class="ln-title">Урок 2. Свойства веществ и химия вокруг нас</span></a>
+<div class="ln-map"><a class="ln-pill" href="#m-u1">1</a><a class="ln-pill" href="#m-u2">2</a><span class="ln-pill now">3</span><a class="ln-pill" href="#m-final">✓</a></div>
+<a class="ln-card ln-next" href="#m-final"><span class="ln-dir">Вперёд →</span><span class="ln-title">Итоговый тест</span></a>
+</nav>
+</div>
+<div id="m-final">
+<header class="hero">
+  <div class="badge">Модуль 1 · Итоговый тест · ~10 минут</div>
+  <h1>Итоговый тест по Модулю 1</h1>
+  <p>15 вопросов · порог 80% (12 правильных). Покажи результат учителю.</p>
+  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Итоговый тест</a></p>
+</header></header>
+
+
+<!-- ==================== ИТОГОВЫЙ ТЕСТ ==================== -->
+<section class="section">
+  <div class="stage s-test fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📝</div>
+      <div>
+        <div class="stage-title">Итоговый тест по Модулю 1</div>
+        <div class="stage-subtitle">15 вопросов · ~10 минут · порог — 80% (12 правильных)</div>
+      </div>
+    </div>
+
+    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+      <span class="cta">👆 Нажми на вариант ответа</span> — он сразу подсветится, а под вопросом появится объяснение.
+      Ошибаться не страшно: главное — понять, почему правильный ответ именно такой.
+      В конце ты увидишь свой результат и кнопку «Пройти заново», если порог не достигнут.
+    </p>
+
+    <div id="testContainer"></div>
+
+    <div class="test-score" id="testScore">
+      Правильных ответов: <span id="scoreNum">0</span> из 15
+    </div>
+
+    <div id="retryBox" style="text-align:center;"></div>
+  </div>
+</section>
+<nav class="lesson-nav">
+<a class="ln-card" href="#m-u3"><span class="ln-dir">← Назад</span><span class="ln-title">Урок 3. Лаборатория: безопасность и оборудование</span></a>
+<div class="ln-map"><a class="ln-pill" href="#m-u1">1</a><a class="ln-pill" href="#m-u2">2</a><a class="ln-pill" href="#m-u3">3</a><span class="ln-pill now">✓</span></div>
+<span class="ln-card ln-next done"><span class="ln-dir">Финиш</span><span class="ln-title">Модуль пройден — покажи результат учителю</span></span>
+</nav>
+</div>
+</div>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Химия · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">
+    Простое объяснение · пример из жизни · наглядный опыт · запись в тетрадь
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  ТАЙМЛАЙН
+// ============================================================
+(function initTimeline() {
+  const items = document.querySelectorAll('.timeline-item');
+  const detail = document.getElementById('timelineDetail');
+  if (!items.length || !detail) return;
+
+  const DATA = [
+    {
+      title: '🔥 Древний мир',
+      text: 'Люди научились добывать огонь, плавить металлы, делать краски для наскальных рисунков, выделывать кожу, варить пиво и вино, изготовлять мыло и стекло. <b>Но они не понимали, почему всё это работает</b> — просто повторяли то, что однажды случайно получилось. Именно тогда появились первые «рецепты» — задолго до самой науки. Знания передавались от мастера к ученику как тайное искусство, часто в сопровождении магических ритуалов.'
+    },
+    {
+      title: '⚗️ Алхимия (IV–XVII вв.)',
+      text: 'Алхимики мечтали превратить свинец в золото (с помощью «философского камня») и найти эликсир бессмертия. <b>Ни того, ни другого они не получили</b>, зато случайно открыли сотни веществ и превращений: серную, азотную и соляную кислоты, царскую водку, фосфор, порох. Именно алхимия подарила миру первые лабораторные инструменты — колбы, реторты, тигли, перегонные кубы. А ещё — методы дистилляции, фильтрации и кристаллизации, которыми пользуются до сих пор.'
+    },
+    {
+      title: '🔬 Рождение науки (XVII–XVIII вв.)',
+      text: 'Роберт Бойль в книге «Скептический химик» (1661) дал первое научное определение химического элемента. Антуан Лавуазье в 1770-х показал роль кислорода в горении и сформулировал <b>закон сохранения массы</b>: вещество нельзя создать из ничего и нельзя уничтожить бесследно — оно лишь превращается в другое. Это был ключевой шаг: химия перестала быть магией и стала точной наукой, основанной на опытах и измерениях.'
+    },
+    {
+      title: '📊 Таблица Менделеева (1869)',
+      text: 'Дмитрий Иванович Менделеев упорядочил все известные химические элементы по их атомным массам и увидел в этом <b>закономерность</b>. Он даже предсказал существование элементов, которые ещё не были открыты, — и оказался прав: галлий, скандий и германий нашли в последующие 15 лет. Сегодня эта таблица — «азбука» химии, которой пользуются во всём мире.'
+    },
+    {
+      title: '💊 XX век: химия меняет мир',
+      text: 'Появились антибиотики (пенициллин спас миллионы жизней), синтетические удобрения (накормили планету), пластик, синтетические волокна, бензин, моющие средства. <b>Химия стала двигателем прогресса</b> — и одновременно породила проблему загрязнения окружающей среды: пластиковые отходы, пестициды, выбросы заводов. Человечество осознало: за прогресс нужно платить.'
+    },
+    {
+      title: '🌱 XXI век: зелёная химия',
+      text: 'Сегодня химики работают над тем, чтобы новые вещества были <b>безопасными для природы и человека</b>: биоразлагаемый пластик, новые лекарства без побочных эффектов, чистые источники энергии, эффективная переработка мусора. Появились 12 принципов «зелёной химии». Химия становится ответственной наукой, которая думает о будущем планеты.'
+    }
+  ];
+
+  items.forEach((item, i) => {
+    item.addEventListener('click', () => {
+      items.forEach(it => it.classList.remove('active'));
+      item.classList.add('active');
+      const d = DATA[i];
+      detail.innerHTML = `<div class="td-title">${d.title}</div><div class="td-text">${d.text}</div>`;
+    });
+  });
+
+  items[0].click();
+})();
+
+// ============================================================
+//  СХЕМА НАУК
+// ============================================================
+(function initSciences() {
+  const nodes = document.querySelectorAll('.sci-node');
+  const detail = document.getElementById('sciDetail');
+  if (!nodes.length || !detail) return;
+
+  const DATA = {
+    physics: {
+      title: '⚛️ Физика',
+      text: 'Физика объясняет, как устроены атомы и молекулы, как они движутся, какие силы действуют между ними. Химия, в свою очередь, даёт физикам новые материалы — сверхпроводники, полупроводники, кристаллы.'
+    },
+    biology: {
+      title: '🧬 Биология',
+      text: 'Все живые организмы — это сложные химические «фабрики». Биохимия объясняет, как работают клетки, как усваивается пища, как передаётся наследственная информация. Химия даёт биологии инструменты: лекарства, реагенты, методы анализа.'
+    },
+    geology: {
+      title: '🌍 Геология',
+      text: 'Геология изучает состав земной коры, а химия помогает определять, из каких элементов состоят минералы и горные породы, как образуются полезные ископаемые, почему происходят извержения вулканов.'
+    },
+    medicine: {
+      title: '💊 Медицина',
+      text: 'Современная медицина невозможна без химии: лекарства, вакцины, антисептики, материалы для имплантов, методы диагностики — всё это создано химиками. Анализ крови и мочи — это тоже химический анализ.'
+    },
+    ecology: {
+      title: '🌱 Экология',
+      text: 'Экология изучает взаимодействие живого с окружающей средой. Химия помогает очищать воду и воздух, перерабатывать отходы, придумывать безопасные материалы и технологии.'
+    },
+    materials: {
+      title: '🔩 Материаловедение',
+      text: 'Материаловеды создают новые сплавы, полимеры, керамику, композиты. В основе любого материала — химия: его состав, строение и свойства. Именно химики придумывают, как получить более прочное, лёгкое или дешёвое вещество.'
+    },
+    math: {
+      title: '📐 Математика',
+      text: 'Математика — язык химии. Формулы, уравнения реакций, расчёты массы и объёма, статистика экспериментов — всё это требует математических знаний. Без математики химия была бы лишь набором наблюдений без количественных законов.'
+    },
+    it: {
+      title: '💻 Информатика',
+      text: 'Сегодня химики активно используют компьютеры: моделируют молекулы, предсказывают свойства веществ, анализируют результаты экспериментов, работают с базами данных. Искусственный интеллект помогает открывать новые лекарства.'
+    }
+  };
+
+  nodes.forEach(node => {
+    node.addEventListener('mouseenter', () => {
+      const key = node.dataset.sci;
+      const d = DATA[key];
+      if (!d) return;
+      detail.innerHTML = `<div class="mb-title">${d.title}</div><div class="mb-text">${d.text}</div>`;
+    });
+    node.addEventListener('click', () => {
+      const key = node.dataset.sci;
+      const d = DATA[key];
+      if (!d) return;
+      detail.innerHTML = `<div class="mb-title">${d.title}</div><div class="mb-text">${d.text}</div>`;
+    });
+  });
+})();
+
+// ============================================================
+//  МЕТОДЫ ПОЗНАНИЯ
+// ============================================================
+(function initMethods() {
+  const steps = document.querySelectorAll('.method-step');
+  const detail = document.getElementById('methodDetail');
+  if (!steps.length || !detail) return;
+
+  const DATA = [
+    {
+      title: '👁 Наблюдение',
+      text: 'Мы смотрим на явление и замечаем, что происходит, <b>не вмешиваясь</b> в процесс. Например: ржавеет гвоздь, тает лёд, темнеет чай с лимоном. Наблюдение отвечает на вопрос «что происходит?», но не объясняет «почему?».',
+      example: '<b>Пример из химии:</b> мы замечаем, что железный гвоздь со временем покрывается рыхлым рыжим налётом.'
+    },
+    {
+      title: '🧠 Гипотеза',
+      text: 'Учёный выдвигает <b>предположение</b>, почему явление происходит именно так. Это ещё не доказанное объяснение, но разумная догадка. Гипотезу можно проверить.',
+      example: '<b>Пример из химии:</b> «Возможно, гвоздь ржавеет потому, что в воздухе есть кислород и вода».'
+    },
+    {
+      title: '🧪 Эксперимент',
+      text: 'Проверяем гипотезу в контролируемых условиях: смешиваем растворы, нагреваем, охлаждаем, добавляем реагенты. Эксперимент — это <b>активное воздействие</b> на вещество, чтобы увидеть реакцию.',
+      example: '<b>Пример из химии:</b> кладём один гвоздь в банку с водой (без воздуха), а другой — во влажный воздух. Смотрим, где появится ржавчина.'
+    },
+    {
+      title: '📏 Измерение',
+      text: 'Определяем числовые характеристики: массу, объём, температуру, плотность, кислотность. Без измерений химия не была бы точной наукой — <b>числа превращают догадку в знание</b>.',
+      example: '<b>Пример из химии:</b> взвешиваем гвоздь до и после эксперимента и замеряем, сколько ржавчины образовалось.'
+    },
+    {
+      title: '🔮 Модель',
+      text: 'Строим <b>упрощённое описание</b> объекта: модель атома, шаростержневую молекулу, компьютерную симуляцию реакции. Модель не заменяет реальность, но помогает её понять и предсказать новые свойства.',
+      example: '<b>Пример из химии:</b> рисуем схему, как частицы кислорода соединяются с частицами железа, образуя ржавчину.'
+    }
+  ];
+
+  function activate(i) {
+    steps.forEach((s, idx) => {
+      s.classList.toggle('active', idx === i);
+    });
+    const d = DATA[i];
+    detail.innerHTML = `
+      <div class="mb-title">${d.title}</div>
+      <div class="mb-text">${d.text}</div>
+      <div class="mb-text" style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(255,255,255,.15);font-size:14.5px;">${d.example}</div>
+    `;
+  }
+
+  steps.forEach((step, i) => {
+    step.addEventListener('click', () => activate(i));
+  });
+
+  activate(0);
+})();
+
+// ============================================================
+//  ВИРТУАЛЬНАЯ ЛАБОРАТОРИЯ «ПЕРВОЕ НАБЛЮДЕНИЕ»
+// ============================================================
+(function initFirstLab() {
+  const container = document.getElementById('labScenario');
+  if (!container) return;
+
+  const STEPS = [
+    {
+      situation: 'Опыт 1. Стакан с прозрачной жидкостью. Можно ли сказать, что это вода?',
+      options: [
+        'Да: прозрачная — значит, вода',
+        'Нет: прозрачных жидкостей много, нужен ещё хотя бы один признак',
+        'Да, если ничем не пахнет',
+        'Нет: это точно кислота'
+      ],
+      correct: 1,
+      why: 'Один признак — не вывод. Прозрачные: вода, спирт, уксус, раствор соли. Учёный всегда требует второе независимое подтверждение.'
+    },
+    {
+      situation: 'Опыт 2. Два белых порошка без подписей: соль и сахар. Пробовать запрещено. Как различить?',
+      options: [
+        'Никак — они одинаковые',
+        'Нагреть по щепотке: сахар потемнеет и запахнет карамелью, соль — нет',
+        'Понюхать: соль пахнет сильнее',
+        'Потрясти: соль звенит'
+      ],
+      correct: 1,
+      why: 'Разные вещества по-разному переносят нагревание: сахар плавится и разлагается (карамелизуется), соль выдерживает. Это уже использование свойства как инструмента.'
+    },
+    {
+      situation: 'Опыт 3. Две капли на бумаге: вода и подсолнечное масло. Через 10 минут пятно воды исчезло, масла — осталось. Вывод?',
+      options: [
+        'Масло впиталось в бумагу навсегда, а вода — нет',
+        'Вода испарилась (летучая), масло — нет; по скорости исчезновения судят о летучести',
+        'Бумага съела воду',
+        'Масло тяжелее, поэтому осталось'
+      ],
+      correct: 1,
+      why: 'Исчезновение пятна — испарение. Разная скорость исчезновения = разная летучесть. Так из простого наблюдения рождается измеримое свойство.'
+    },
+    {
+      situation: 'Опыт 4. Железный гвоздь заржавел: цвет, прочность и масса изменились, а предмет вроде тот же. Новое вещество или нет?',
+      options: [
+        'То же вещество — ведь гвоздь остался гвоздём',
+        'Новое вещество: свойства изменились необратимо — это признак превращения',
+        'Новое вещество, только если гвоздь сломался',
+        'Нельзя сказать без микроскопа'
+      ],
+      correct: 1,
+      why: 'Критерий — свойства, а не форма. Ржавчина — новое вещество с другими свойствами. Необратимое изменение свойств = химическое превращение (подробно — в Модуле 3).'
+    },
+    {
+      situation: 'Опыт 5. Спор: «сахар исчез» против «сахар спрятался». Какой опыт рассудит?',
+      options: [
+        'Попробовать воду: сладкая — значит, сахар там',
+        'Взвесить стакан до и после: масса сохранилась — значит, сахар никуда не делся',
+        'Подождать: если сахар не всплывёт — он исчез',
+        'Спор неразрешим — оба правы'
+      ],
+      correct: 1,
+      why: 'Взвешивание — решающий опыт: масса сохранилась, значит, сахар в стакане. Сохранение массы при превращениях — великий закон (Модуль 3б). Вкус подтверждает, но весы — доказывают.'
+    }
+  ];
+
+  let step = 0;
+  let correctCount = 0;
+
+  function render() {
+    if (step >= STEPS.length) {
+      const msg = correctCount === STEPS.length
+        ? '🎉 Отлично! Ты настоящий юный исследователь!'
+        : '👍 Хорошо! Ты прошёл лабораторию. Обрати внимание на объяснения — они помогут понять детали.';
+      container.innerHTML = `
+        <div class="callout callout-ok" style="margin-top:0;">
+          <b>Лаборатория завершена!</b> ${msg} Правильных ответов: ${correctCount} из ${STEPS.length}.
+        </div>
+        <div style="text-align:center;margin-top:14px;">
+          <button class="retry-btn" id="retryLab">↺ Пройти заново</button>
+        </div>
+      `;
+      document.getElementById('retryLab').addEventListener('click', () => {
+        step = 0; correctCount = 0; render();
+      });
+      return;
+    }
+
+    const s = STEPS[step];
+    container.innerHTML = `
+      <div style="background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <div style="width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;">${step + 1}</div>
+          <div style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);">Шаг ${step + 1} из ${STEPS.length}</div>
+        </div>
+        <div style="font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;">${s.situation}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${s.options.map((o, i) => `
+            <div class="test-option" data-i="${i}">
+              <span class="opt-marker">${String.fromCharCode(65 + i)}</span>
+              <span>${o}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="explanation" id="labExp"></div>
+      </div>
+    `;
+
+    container.querySelectorAll('.test-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const i = parseInt(opt.dataset.i);
+        if (opt.classList.contains('disabled')) return;
+        const isCorrect = i === s.correct;
+        container.querySelectorAll('.test-option').forEach(o => {
+          o.classList.add('disabled');
+          const idx = parseInt(o.dataset.i);
+          if (idx === s.correct) o.classList.add('correct');
+          if (idx === i && !isCorrect) o.classList.add('wrong');
+        });
+        const exp = document.getElementById('labExp');
+        exp.classList.add('show', isCorrect ? 'ok' : 'no');
+        exp.innerHTML = `<b>${isCorrect ? '✅ Верно!' : '❌ Не совсем.'}</b> ${s.why}`;
+        if (isCorrect) correctCount++;
+        setTimeout(() => { step++; render(); }, 2200);
+      });
+    });
+  }
+
+  render();
+})();
+
+// ============================================================
+//  РАЗОГРЕВ (5 вопросов без оценки)
+// ============================================================
+(function initEntryTest() {
+  const container = document.getElementById('entryTestContainer');
+  const resultBox = document.getElementById('entryResult');
+  if (!container || !resultBox) return;
+
+  const QUESTIONS = [
+    {
+      q: 'Что изучает химия?',
+      options: ['Только живые организмы', 'Вещества, их свойства и превращения', 'Только звёзды и планеты', 'Только числа и формулы'],
+      correct: 1,
+      why: 'Химия — наука о веществах, их свойствах и превращениях.'
+    },
+    {
+      q: 'Что из перечисленного — физическое тело?',
+      options: ['Вода', 'Алюминий', 'Ложка', 'Кислород'],
+      correct: 2,
+      why: 'Ложка — физическое тело: у неё есть форма и объём. Вода, алюминий и кислород — это вещества.'
+    },
+    {
+      q: 'Что такое вещество?',
+      options: ['То, что имеет форму и объём', 'То, из чего состоят физические тела', 'То, что светит в темноте', 'То, что движется'],
+      correct: 1,
+      why: 'Вещество — то, из чего состоят тела. Форма и объём — признак тела, а не вещества.'
+    },
+    {
+      q: 'Что НЕЛЬЗЯ делать в химической лаборатории?',
+      options: ['Носить халат', 'Пробовать вещества на вкус', 'Мыть руки после работы', 'Слушать учителя'],
+      correct: 1,
+      why: 'Пробовать вещества на вкус категорически запрещено: даже «безобидное» вещество в лаборатории может быть опасным.'
+    },
+    {
+      q: 'Что такое наблюдение?',
+      options: [
+        'Активное воздействие на вещество',
+        'Внимательное изучение явления без вмешательства в процесс',
+        'Измерение температуры',
+        'Выдвижение предположения'
+      ],
+      correct: 1,
+      why: 'Наблюдение — это когда мы смотрим на явление и замечаем, что происходит, не вмешиваясь в процесс.'
+    }
+  ];
+
+  let correctCount = 0;
+  let answered = 0;
+
+  container.innerHTML = QUESTIONS.map((q, i) => `
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i + 1}</span><span>${q.q}</span></div>
+      <div class="test-options">
+        ${q.options.map((o, j) => `
+          <div class="test-option" data-q="${i}" data-o="${j}">
+            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
+            <span>${o}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="entryExp-${i}"></div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.test-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const qIdx = parseInt(opt.dataset.q);
+      const oIdx = parseInt(opt.dataset.o);
+      const q = QUESTIONS[qIdx];
+      const exp = document.getElementById(`entryExp-${qIdx}`);
+      if (exp.classList.contains('show')) return;
+
+      const isCorrect = oIdx === q.correct;
+      container.querySelectorAll(`[data-q="${qIdx}"]`).forEach(o => {
+        o.classList.add('disabled');
+        const idx = parseInt(o.dataset.o);
+        if (idx === q.correct) o.classList.add('correct');
+        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
+      });
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+
+      if (isCorrect) correctCount++;
+      answered++;
+
+      if (answered === QUESTIONS.length) {
+        resultBox.classList.add('show');
+        resultBox.classList.add('mid');
+        resultBox.innerHTML = `👍 <b>Разминка пройдена!</b> Правильных ответов: ${correctCount} из ${QUESTIONS.length}. Запомни вопросы, где ошибся, — ответы найдёшь в модуле. А теперь — за дело!`;
+      }
+    });
+  });
+})();
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+// ============================================================
+//  СИМУЛЯТОР «ОПРЕДЕЛИ СВОЙСТВО»
+// ============================================================
+(function initPropertySimulator() {
+  const container = document.getElementById('propertySimulator');
+  if (!container) return;
+
+  const QUESTIONS = [
+    {
+      substance: '🥉 Медь',
+      question: 'Выбери правильное описание свойств меди:',
+      options: [
+        'Имеет резкий запах',
+        'Рыжая, блестящая, хорошо проводит ток',
+        'Белая, без запаха, не проводит ток',
+        'Растворяется в воде с выделением тепла'
+      ],
+      correct: 1,
+      why: 'Медь — рыжий металл с характерным блеском. Она хорошо проводит электрический ток, поэтому из неё делают провода.'
+    },
+    {
+      substance: '🧴 Уксус',
+      question: 'Выбери правильное описание свойств уксуса:',
+      options: [
+        'Бесцветная жидкость с резким запахом',
+        'Твёрдое вещество жёлтого цвета',
+        'Газ без цвета и запаха',
+        'Металл, блестящий и твёрдый'
+      ],
+      correct: 0,
+      why: 'Уксус — это бесцветная жидкость с очень резким запахом. Именно запах — его главное отличительное свойство.'
+    },
+    {
+      substance: '🍬 Сахар',
+      question: 'Выбери правильное описание свойств сахара:',
+      options: [
+        'Твёрдое, сладкое на вкус, растворяется в воде',
+        'Жидкость с горьким вкусом',
+        'Газ с запахом',
+        'Металл'
+      ],
+      correct: 0,
+      why: 'Сахар — твёрдое кристаллическое вещество, сладкое на вкус, хорошо растворяется в воде.'
+    },
+    {
+      substance: '⚫ Уголь',
+      question: 'Выбери правильное описание свойств угля:',
+      options: [
+        'Белое твёрдое вещество',
+        'Чёрное твёрдое вещество, горит',
+        'Прозрачная жидкость',
+        'Газ без запаха'
+      ],
+      correct: 1,
+      why: 'Уголь — чёрное твёрдое вещество. Его главное свойство — горючесть: он хорошо горит и даёт тепло.'
+    },
+    {
+      substance: '💧 Вода',
+      question: 'Выбери правильное описание свойств воды:',
+      options: [
+        'Имеет резкий запах',
+        'Прозрачная жидкость без запаха',
+        'Жёлтая жидкость',
+        'Твёрдое вещество'
+      ],
+      correct: 1,
+      why: 'Вода — прозрачная жидкость без цвета и запаха. Это её главные свойства.'
+    }
+  ];
+
+  let current = 0;
+  let answered = 0;
+  let correctCount = 0;
+
+  function render() {
+    if (current >= QUESTIONS.length) {
+      const msg = correctCount >= 4
+        ? '🎉 Отлично! Ты хорошо различаешь свойства веществ!'
+        : correctCount >= 3
+          ? '👍 Хорошо! Ещё немного практики — и будет отлично.'
+          : '💪 Стоит повторить свойства веществ. Попробуй ещё раз!';
+      container.innerHTML = `
+        <div class="callout callout-ok" style="margin-top:0;">
+          <b>Результат:</b> ${correctCount} из ${QUESTIONS.length}. ${msg}
+        </div>
+        <div style="text-align:center;margin-top:14px;">
+          <button class="retry-btn" id="retryProperty">↺ Пройти заново</button>
+        </div>
+      `;
+      document.getElementById('retryProperty').addEventListener('click', () => {
+        current = 0; answered = 0; correctCount = 0;
+        render();
+      });
+      return;
+    }
+
+    const q = QUESTIONS[current];
+    container.innerHTML = `
+      <div style="background:#fff;border:2px solid var(--border);border-radius:14px;padding:22px;">
+        <div style="font-size:40px;text-align:center;margin-bottom:10px;">${q.substance}</div>
+        <div style="font-size:16.5px;font-weight:800;margin-bottom:14px;">${q.question}</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          ${q.options.map((o, i) => `
+            <div class="test-option" data-i="${i}">
+              <span class="opt-marker">${String.fromCharCode(65 + i)}</span>
+              <span>${o}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="explanation" id="propExp"></div>
+      </div>
+      <div style="text-align:center;margin-top:12px;color:var(--muted);font-size:14px;">
+        Вопрос ${current + 1} из ${QUESTIONS.length}
+      </div>
+    `;
+
+    container.querySelectorAll('.test-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const i = parseInt(opt.dataset.i);
+        if (opt.classList.contains('disabled')) return;
+        const isCorrect = i === q.correct;
+        container.querySelectorAll('.test-option').forEach(o => {
+          o.classList.add('disabled');
+          const idx = parseInt(o.dataset.i);
+          if (idx === q.correct) o.classList.add('correct');
+          if (idx === i && !isCorrect) o.classList.add('wrong');
+        });
+        const exp = document.getElementById('propExp');
+        exp.classList.add('show', isCorrect ? 'ok' : 'no');
+        exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+        if (isCorrect) correctCount++;
+        answered++;
+        setTimeout(() => { current++; render(); }, 1600);
+      });
+    });
+  }
+
+  render();
+})();
+
+// ============================================================
+//  ДРОП-ИГРЫ (универсальная механика)
+// ============================================================
+function makeDropGame(opts) {
+  const pool = document.getElementById(opts.poolId);
+  const baskets = document.querySelectorAll('.basket');
+  const fb = document.getElementById(opts.feedbackId);
+  const resetBtn = document.getElementById(opts.resetId);
+  if (!pool || !fb) return;
+
+  let selected = null;
+
+  function buildPool() {
+    pool.innerHTML = '';
+    (opts.items || []).forEach(it => {
+      const el = document.createElement('div');
+      el.className = 'pool-item';
+      el.textContent = it.label;
+      el.dataset.cat = it.cat;
+      el.draggable = true;
+      el.addEventListener('dragstart', (e) => {
+        e.dataTransfer.setData('text/plain', it.label);
+        e.dataTransfer.effectAllowed = 'move';
+        selected = el;
+        el.classList.add('dragging');
+      });
+      el.addEventListener('dragend', () => {
+        el.classList.remove('dragging');
+      });
+      el.addEventListener('click', () => {
+        if (el.classList.contains('placed')) return;
+        pool.querySelectorAll('.pool-item').forEach(i => i.classList.remove('selected'));
+        if (selected === el) {
+          selected = null;
+          fb.textContent = '';
+          return;
+        }
+        selected = el;
+        el.classList.add('selected');
+        fb.style.color = 'var(--muted)';
+        fb.textContent = `Выбрано: ${el.textContent}. Теперь нажми на нужную корзину.`;
+      });
+      pool.appendChild(el);
+    });
+  }
+
+  function resetBaskets() {
+    baskets.forEach(b => {
+      const items = b.querySelector('.basket-items');
+      if (items) items.innerHTML = '';
+      b.classList.remove('good', 'bad');
+    });
+  }
+
+  function checkComplete() {
+    const remaining = pool.querySelectorAll('.pool-item').length;
+    if (remaining === 0) {
+      fb.style.color = 'var(--green)';
+      const messages = [
+        '🎉 Отлично! Всё разложено правильно!',
+        '✅ Превосходно! Ты справился!',
+        '🌟 Супер! Все карточки на своих местах!'
+      ];
+      fb.textContent = messages[Math.floor(Math.random() * messages.length)];
+    }
+  }
+
+  function tryPlace(item, basket) {
+    if (!item || !basket) return;
+    if (item.classList.contains('placed')) return;
+
+    const target = basket.dataset.cat;
+    const correct = item.dataset.cat === target;
+
+    if (correct) {
+      const container = basket.querySelector('.basket-items');
+      const chip = document.createElement('div');
+      chip.className = 'basket-chip';
+      chip.textContent = item.textContent;
+      container.appendChild(chip);
+      item.classList.add('placed');
+      item.remove();
+      selected = null;
+      basket.classList.add('good');
+      setTimeout(() => basket.classList.remove('good'), 500);
+      fb.style.color = 'var(--green)';
+      const okMessages = ['✅ Верно!', '👍 Точно!', '🎯 Правильно!', '🌟 В точку!'];
+      fb.textContent = okMessages[Math.floor(Math.random() * okMessages.length)];
+      checkComplete();
+    } else {
+      basket.classList.add('bad');
+      setTimeout(() => basket.classList.remove('bad'), 500);
+      item.classList.add('wrong-flash');
+      setTimeout(() => item.classList.remove('wrong-flash'), 600);
+      fb.style.color = 'var(--red)';
+      const badMessages = [
+        '❌ Подумай ещё раз.',
+        '❌ Будь внимательнее.',
+        '❌ Давай разберёмся: это не сюда.',
+        '❌ Почти! Но не в эту корзину.',
+        '❌ Хм, не то. Попробуй снова.'
+      ];
+      fb.textContent = badMessages[Math.floor(Math.random() * badMessages.length)];
+    }
+  }
+
+  baskets.forEach(basket => {
+    basket.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      basket.classList.add('hover');
+    });
+    basket.addEventListener('dragleave', () => basket.classList.remove('hover'));
+    basket.addEventListener('drop', (e) => {
+      e.preventDefault();
+      basket.classList.remove('hover');
+      if (selected) tryPlace(selected, basket);
+    });
+    basket.addEventListener('click', () => {
+      if (selected) tryPlace(selected, basket);
+    });
+  });
+
+  if (resetBtn) {
+    resetBtn.addEventListener('click', () => {
+      resetBaskets();
+      buildPool();
+      selected = null;
+      fb.textContent = '';
+    });
+  }
+
+  buildPool();
+}
+
+// Игра 1: тело или вещество
+makeDropGame({
+  poolId: 'bodySubstancePool',
+  feedbackId: 'fbBodySubstance',
+  resetId: 'resetBodySubstance',
+  items: [
+    { label: 'древесина', cat: 'substance' },
+    { label: 'железо', cat: 'substance' },
+    { label: 'гвоздь', cat: 'body' },
+    { label: 'ваза', cat: 'body' },
+    { label: 'стекло', cat: 'substance' },
+    { label: 'сахар', cat: 'substance' },
+    { label: 'проволока', cat: 'body' },
+    { label: 'медь', cat: 'substance' },
+    { label: 'нож', cat: 'body' },
+    { label: 'сталь', cat: 'substance' },
+    { label: 'ртуть', cat: 'substance' },
+    { label: 'термометр', cat: 'body' }
+  ]
+});
+
+// Игра 2: правила безопасности
+makeDropGame({
+  poolId: 'safetyQuizPool',
+  feedbackId: 'fbSafetyQuiz',
+  resetId: 'resetSafetyQuiz',
+  items: [
+    { label: '🥽 Работать в защитных очках при нагревании', cat: 'can' },
+    { label: '😋 Пробовать реактивы на вкус', cat: 'cannot' },
+    { label: '👃 Нюхать пары, направляя их ладонью', cat: 'can' },
+    { label: '🧪 Нагревать жидкость в закрытой колбе', cat: 'cannot' },
+    { label: '↩️ Направлять отверстие пробирки от себя и соседей', cat: 'can' },
+    { label: '💇 Убирать длинные волосы перед работой', cat: 'can' },
+    { label: '🧴 Выливать остатки реактива обратно в склянку', cat: 'cannot' },
+    { label: '🏷️ Читать этикетку дважды перед взятием реактива', cat: 'can' },
+    { label: '🙇 Наклоняться над нагреваемым сосудом', cat: 'cannot' },
+    { label: '🧹 Сообщать учителю о любом проливе и бое', cat: 'can' },
+    { label: '🔥 Оставлять зажжённую спиртовку без присмотра', cat: 'cannot' },
+    { label: '🧤 Убирать осколки только щёткой и совком', cat: 'can' }
+  ]
+});
+
+// ============================================================
+//  ПРАВИЛА БЕЗОПАСНОСТИ (чек-лист)
+// ============================================================
+(function initSafetyChecklist() {
+  const items = document.querySelectorAll('.safety-item');
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      item.classList.toggle('checked');
+    });
+  });
+})();
+
+// ============================================================
+//  BRANCHING SCENARIOS (5 ситуаций)
+// ============================================================
+(function initScenarios() {
+  const container = document.getElementById('scenariosContainer');
+  if (!container) return;
+
+  const SCENARIOS = [
+    {
+      situation: 'Ты случайно разбил пробирку с раствором соли. Осколки и лужа на столе.',
+      actions: [
+        'Соберу осколки руками',
+        'Сообщу учителю и уберу осколки щёткой и совком в специальный контейнер',
+        'Закопаю осколки в мусорное ведро',
+        'Продолжу работу — это неважно'
+      ],
+      correct: 1,
+      why: 'Осколки нельзя собирать руками — можно порезаться. Нужно сообщить учителю и убрать специальными инструментами.'
+    },
+    {
+      situation: 'На кожу попала капля концентрированной серной кислоты.',
+      actions: [
+        'Сразу смою большим количеством воды',
+        'Осторожно промокну сухой салфеткой, затем промою водой и сообщу учителю',
+        'Нейтрализую уксусом',
+        'Вытру рукавом и продолжу работу'
+      ],
+      correct: 1,
+      why: 'Концентрированная серная кислота с водой разогревается — ожог станет хуже. Сначала снимаем кислоту насухо салфеткой и только потом промываем большим количеством воды. Разбавленные кислоты смывают водой сразу, но концентрированную — сначала насухо!'
+    },
+    {
+      situation: 'Ты хочешь понюхать неизвестное вещество в колбе.',
+      actions: [
+        'Наклонюсь и вдохну прямо из сосуда',
+        'Направлю пары ладонью к носу и осторожно понюхаю',
+        'Понюхаю, но закрою один глаз',
+        'Не буду нюхать, это запрещено правилами'
+      ],
+      correct: 1,
+      why: 'Нюхать можно только осторожно, направляя пары ладонью. Наклоняться над сосудом и вдыхать напрямую — опасно.'
+    },
+    {
+      situation: 'Ты закончил работу с реактивами.',
+      actions: [
+        'Уйду сразу — урок закончился',
+        'Уберу всё на место и вымою руки',
+        'Оставлю реактивы на столе — может ещё пригодятся',
+        'Начну новую работу без уборки'
+      ],
+      correct: 1,
+      why: 'После работы обязательно нужно убрать всё на место и вымыть руки — это правило безопасности.'
+    },
+    {
+      situation: 'Учитель просит нагреть раствор в пробирке.',
+      actions: [
+        'Накрою пробирку рукой и подержу над пламенем',
+        'Зажму пробирку держателем, направлю отверстие от себя и от соседей',
+        'Нагрею пробирку, направив отверстие на соседа',
+        'Откажусь — это опасно'
+      ],
+      correct: 1,
+      why: 'Пробирку нужно держать специальным держателем и направлять отверстие от себя и соседей, чтобы брызги никого не обожгли.'
+    }
+  ];
+
+  container.innerHTML = SCENARIOS.map((s, i) => `
+    <div class="scenario-card" data-scenario="${i}">
+      <div class="sc-header">
+        <div class="sc-num">${i + 1}</div>
+        <div class="sc-title">Ситуация ${i + 1}</div>
+      </div>
+      <div class="sc-situation">${s.situation}</div>
+      <div class="scenario-actions">
+        ${s.actions.map((a, j) => `
+          <div class="scenario-action" data-sc="${i}" data-act="${j}">
+            <span class="sa-marker">${String.fromCharCode(65 + j)}</span>
+            <span>${a}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="scenario-feedback" id="scfb-${i}"></div>
+    </div>
+  `).join('');
+
+  const solved = new Set();
+  let attempts = 0;
+
+  function updateGate() {
+    const gate = document.getElementById('safetyGate');
+    const gateText = document.getElementById('safetyGateText');
+    if (solved.size === SCENARIOS.length) {
+      gate.classList.add('good');
+      gateText.innerHTML = `🎉 <b>Пропуск получен!</b> Все ${SCENARIOS.length} ситуаций разобраны (попыток: ${attempts}). Можно идти дальше.`;
+    } else {
+      gate.classList.remove('good');
+      gateText.innerHTML = `🔒 <b>Пропуск дальше:</b> разбери все ${SCENARIOS.length} ситуаций. Ошибаться можно — читай объяснение и пробуй снова. Разобрано: <b>${solved.size}/${SCENARIOS.length}</b> · попыток: ${attempts}.`;
+    }
+  }
+
+  function resetCard(scIdx) {
+    container.querySelectorAll(`[data-sc="${scIdx}"]`).forEach(a =>
+      a.classList.remove('disabled', 'correct', 'wrong'));
+    const fb = document.getElementById(`scfb-${scIdx}`);
+    fb.classList.remove('show', 'ok', 'no');
+    fb.innerHTML = '';
+  }
+
+  container.querySelectorAll('.scenario-action').forEach(act => {
+    act.addEventListener('click', () => {
+      const scIdx = parseInt(act.dataset.sc);
+      const aIdx = parseInt(act.dataset.act);
+      const s = SCENARIOS[scIdx];
+      const actions = container.querySelectorAll(`[data-sc="${scIdx}"]`);
+      const fb = document.getElementById(`scfb-${scIdx}`);
+      if (fb.classList.contains('show')) return;
+
+      attempts++;
+      const isCorrect = aIdx === s.correct;
+      actions.forEach(a => {
+        a.classList.add('disabled');
+        const idx = parseInt(a.dataset.act);
+        if (idx === s.correct) a.classList.add('correct');
+        if (idx === aIdx && !isCorrect) a.classList.add('wrong');
+      });
+
+      fb.classList.add('show', isCorrect ? 'ok' : 'no');
+      if (isCorrect) {
+        solved.add(scIdx);
+        fb.innerHTML = `<b>✅ Правильно!</b> ${s.why}`;
+      } else {
+        fb.innerHTML = `<b>❌ Не совсем.</b> Правильный ответ выделен зелёным. ${s.why}<br><button class="retry-btn" data-retry="${scIdx}" style="margin-top:10px;">↺ Понял, пробую снова</button>`;
+        fb.querySelector('[data-retry]').addEventListener('click', (e) => {
+          e.stopPropagation();
+          resetCard(scIdx);
+          updateGate();
+        });
+      }
+      updateGate();
+    });
+  });
+
+  document.getElementById('retryScenarios').addEventListener('click', () => {
+    solved.clear();
+    attempts = 0;
+    for (let i = 0; i < SCENARIOS.length; i++) resetCard(i);
+    updateGate();
+  });
+
+  updateGate();
+})();
+
+// ============================================================
+//  ЛАБОРАТОРНОЕ ОБОРУДОВАНИЕ
+// ============================================================
+(function initEquipment() {
+  const cards = document.querySelectorAll('.equip-card');
+  const detail = document.getElementById('equipDetail');
+  if (!cards.length || !detail) return;
+
+  const DATA = [
+    { title: '🧪 Пробирка', text: 'Узкий стеклянный сосуд для проведения небольших опытов с малым количеством вещества. Пробирки закрепляют в штативе или держат специальным зажимом.' },
+    { title: '⚗️ Колба', text: 'Сосуд с широким дном и узким горлом. Бывает коническая (Эрленмейера), круглая, плоскодонная. Используется для смешивания, нагревания и хранения растворов.' },
+    { title: '🥛 Мензурка', text: 'Стеклянный цилиндр с делениями для измерения объёма жидкостей. Незаменима, когда нужно отмерить точный объём.' },
+    { title: '⚖️ Весы', text: 'Прибор для измерения массы вещества. В школьной лаборатории чаще всего используют электронные весы с точностью до 0,01 г.' },
+    { title: '🔥 Спиртовка', text: 'Небольшой прибор для нагревания. Состоит из стеклянного резервуара со спиртом, фитиля и колпачка. Даёт небольшое, но ровное пламя.' },
+    { title: '🥄 Шпатель', text: 'Ложечка для взятия твёрдых сыпучих веществ. Позволяет аккуратно перенести порошок из банки в пробирку.' },
+    { title: '🧫 Чашка Петри', text: 'Плоская прозрачная чашка с крышкой. Используется для наблюдения за кристаллизацией, выращивания микроорганизмов, хранения образцов.' },
+    { title: '🌡 Термометр', text: 'Прибор для измерения температуры. В химии используют лабораторные термометры, часто со шкалой до 200–300 °C.' },
+    { title: '🕳 Воронка', text: 'Приспособление для переливания жидкостей и фильтрования. В неё вставляют фильтр, чтобы отделить осадок от раствора.' },
+    { title: '📏 Линейка', text: 'Инструмент для измерения длины. В лаборатории нужна для измерения размеров образцов и работы с моделями.' },
+    { title: '🧴 Капельница', text: 'Небольшой сосуд с пипеткой для дозированного добавления жидкости по каплям. Используется в качественном анализе.' },
+    { title: '🔬 Микроскоп', text: 'Оптический прибор для увеличения мелких объектов. Позволяет рассмотреть кристаллы, клетки, структуру веществ.' }
+  ];
+
+  cards.forEach((card, i) => {
+    card.addEventListener('click', () => {
+      cards.forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      const d = DATA[i];
+      detail.innerHTML = `<div class="ed-title">${d.title}</div><div class="ed-text">${d.text}</div>`;
+    });
+  });
+
+  cards[0].click();
+})();
+
+// ============================================================
+//  ПРАКТИЧЕСКОЕ ЗАДАНИЕ (тест)
+// ============================================================
+(function initPracticalTask() {
+  const container = document.getElementById('practicalTask');
+  if (!container) return;
+
+  const QUESTIONS = [
+    {
+      plan: 'Цвет и блеск',
+      q: 'Какого цвета медь и есть ли у неё блеск?',
+      options: [
+        'Белая, без блеска',
+        'Рыжая (красноватая), есть металлический блеск',
+        'Чёрная, без блеска',
+        'Прозрачная, без блеска'
+      ],
+      correct: 1,
+      why: 'Медь — рыжий металл с характерным металлическим блеском.'
+    },
+    {
+      plan: 'Запах',
+      q: 'Есть ли запах у чистой воды?',
+      options: [
+        'Резкий запах',
+        'Сладкий запах',
+        'Нет запаха',
+        'Запах гари'
+      ],
+      correct: 2,
+      why: 'Чистая вода не имеет запаха. Это одно из её свойств.'
+    },
+    {
+      plan: 'Твёрдость',
+      q: 'Какое из этих веществ самое твёрдое?',
+      options: [
+        'Воск',
+        'Алмаз',
+        'Стекло',
+        'Дерево'
+      ],
+      correct: 1,
+      why: 'Алмаз — самое твёрдое природное вещество. Он царапает стекло, а воск и дерево — нет.'
+    },
+    {
+      plan: 'Растворимость',
+      q: 'Какое вещество растворяется в воде?',
+      options: [
+        'Песок',
+        'Мел',
+        'Сахар',
+        'Стекло'
+      ],
+      correct: 2,
+      why: 'Сахар хорошо растворяется в воде. Песок, мел и стекло — не растворяются.'
+    },
+    {
+      plan: 'Горючесть',
+      q: 'Какое вещество горит?',
+      options: [
+        'Вода',
+        'Песок',
+        'Спирт',
+        'Соль'
+      ],
+      correct: 2,
+      why: 'Спирт — горючее вещество. Вода, песок и соль не горят.'
+    }
+  ];
+
+  let correctCount = 0;
+  let answered = 0;
+
+  container.innerHTML = QUESTIONS.map((q, i) => `
+    <div class="test-question">
+      <div class="q-text"><span class="q-num">${i + 1}</span><span><b>${q.plan}.</b> ${q.q}</span></div>
+      <div class="test-options">
+        ${q.options.map((o, j) => `
+          <div class="test-option" data-pq="${i}" data-po="${j}">
+            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
+            <span>${o}</span>
+          </div>
+        `).join('')}
+      </div>
+      <div class="explanation" id="pracExp-${i}"></div>
+    </div>
+  `).join('');
+
+  container.querySelectorAll('.test-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const qIdx = parseInt(opt.dataset.pq);
+      const oIdx = parseInt(opt.dataset.po);
+      const q = QUESTIONS[qIdx];
+      const exp = document.getElementById(`pracExp-${qIdx}`);
+      if (exp.classList.contains('show')) return;
+
+      const isCorrect = oIdx === q.correct;
+      container.querySelectorAll(`[data-pq="${qIdx}"]`).forEach(o => {
+        o.classList.add('disabled');
+        const idx = parseInt(o.dataset.po);
+        if (idx === q.correct) o.classList.add('correct');
+        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
+      });
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+
+      if (isCorrect) correctCount++;
+      answered++;
+
+      if (answered === QUESTIONS.length) {
+        const msg = correctCount >= 4
+          ? '🎉 <b>Отлично!</b> Ты умеешь описывать вещества по плану.'
+          : '👍 <b>Хорошо!</b> Но стоит ещё раз повторить свойства веществ.';
+        const box = document.createElement('div');
+        box.className = 'callout callout-ok';
+        box.style.marginTop = '14px';
+        box.innerHTML = `Правильных ответов: <b>${correctCount} из ${QUESTIONS.length}</b>. ${msg}`;
+        container.appendChild(box);
+      }
+    });
+  });
+})();
+
+// ============================================================
+//  ИТОГОВЫЙ ТЕСТ (15 вопросов, порог 80%)
+// ============================================================
+const TEST_QUESTIONS = [
+  {
+    q: 'Что изучает химия?',
+    options: ['Только живые организмы', 'Вещества, их свойства и превращения', 'Только звёзды и планеты', 'Только числа и формулы'],
+    correct: 1,
+    why: 'Химия — наука о веществах, их свойствах и превращениях. Живые организмы изучает биология, небесные тела — астрономия, числа — математика.'
+  },
+  {
+    q: 'Что из перечисленного — физическое тело?',
+    options: ['Вода', 'Алюминий', 'Ложка', 'Кислород'],
+    correct: 2,
+    why: 'Ложка — физическое тело: у неё есть форма и объём. Вода, алюминий и кислород — это вещества.'
+  },
+  {
+    q: 'Что такое вещество?',
+    options: ['То, что имеет форму и объём', 'То, из чего состоят физические тела', 'То, что светит в темноте', 'То, что движется'],
+    correct: 1,
+    why: 'Вещество — то, из чего состоят тела. Форма и объём — признак тела, а не вещества.'
+  },
+  {
+    q: 'Какой метод познания предполагает активное воздействие на объект?',
+    options: ['Наблюдение', 'Эксперимент', 'Размышление', 'Чтение учебника'],
+    correct: 1,
+    why: 'Эксперимент — это активное воздействие на вещество с целью проверки гипотезы. Наблюдение — пассивно.'
+  },
+  {
+    q: 'Что такое научная модель?',
+    options: [
+      'Точная копия объекта',
+      'Упрощённое представление объекта, помогающее его понять',
+      'То же самое, что эксперимент',
+      'То же самое, что гипотеза'
+    ],
+    correct: 1,
+    why: 'Модель — упрощённое описание объекта. Она не копирует реальность, но помогает понять её и предсказать свойства.'
+  },
+  {
+    q: 'Что такое гипотеза?',
+    options: [
+      'Доказанное знание',
+      'Предположение, которое нужно проверить',
+      'Результат эксперимента',
+      'Прибор для опытов'
+    ],
+    correct: 1,
+    why: 'Гипотеза — это разумное предположение, которое проверяется экспериментом. Пока гипотеза не доказана — она остаётся догадкой.'
+  },
+  {
+    q: 'Сколько примерно воды в организме человека?',
+    options: ['10%', '30%', '70%', '99%'],
+    correct: 2,
+    why: 'Организм человека примерно на 60–70% состоит из воды. Она нужна для работы клеток, крови, пищеварения и терморегуляции.'
+  },
+  {
+    q: 'Какой элемент преобладает в организме человека по массе?',
+    options: ['Углерод', 'Водород', 'Кислород', 'Азот'],
+    correct: 2,
+    why: 'Кислород — самый «массивный» элемент тела: около 65% массы. Он входит в состав воды и множества органических веществ.'
+  },
+  {
+    q: 'Что НЕЛЬЗЯ делать в химической лаборатории?',
+    options: ['Носить халат', 'Пробовать вещества на вкус', 'Мыть руки после работы', 'Слушать учителя'],
+    correct: 1,
+    why: 'Пробовать вещества на вкус категорически запрещено: даже «безобидное» вещество в лаборатории может быть опасным.'
+  },
+  {
+    q: 'Для чего нужна мензурка?',
+    options: ['Для нагревания', 'Для измерения объёма жидкости', 'Для взвешивания', 'Для фильтрования'],
+    correct: 1,
+    why: 'Мензурка — стеклянный цилиндр с делениями, предназначенный для измерения объёма жидкостей.'
+  },
+  {
+    q: 'Что нужно сделать в первую очередь, если разбил пробирку?',
+    options: [
+      'Собрать осколки руками',
+      'Сообщить учителю и убрать осколки щёткой и совком',
+      'Продолжить работу как ни в чём не бывало',
+      'Спрятать осколки в парту'
+    ],
+    correct: 1,
+    why: 'Осколки нельзя трогать руками — можно порезаться. Сообщаем учителю и убираем специальными инструментами.'
+  },
+  {
+    q: 'Зачем человечеству нужна химия?',
+    options: ['Только чтобы сдавать экзамены', 'Чтобы понимать мир и решать важные задачи: здоровье, еду, материалы, энергию', 'Только чтобы зарабатывать деньги', 'Она не нужна'],
+    correct: 1,
+    why: 'Химия помогает решать ключевые задачи человечества: лечить болезни, кормить людей, создавать материалы, добывать энергию и защищать природу.'
+  },
+  {
+    q: 'Что такое наблюдение?',
+    options: [
+      'Активное воздействие на вещество',
+      'Внимательное изучение явления без вмешательства в процесс',
+      'Измерение температуры',
+      'Выдвижение предположения'
+    ],
+    correct: 1,
+    why: 'Наблюдение — это когда мы смотрим на явление и замечаем, что происходит, не вмешиваясь в процесс.'
+  },
+  {
+    q: 'Какой прибор нужен для измерения массы вещества?',
+    options: ['Мензурка', 'Термометр', 'Весы', 'Воронка'],
+    correct: 2,
+    why: 'Весы — прибор для измерения массы. Мензурка — для объёма, термометр — для температуры, воронка — для фильтрования.'
+  },
+  {
+    q: 'Что из перечисленного — свойство вещества?',
+    options: [
+      'То, что тело имеет форму',
+      'Цвет, запах, твёрдость, горючесть',
+      'То, что тело занимает место',
+      'То, что тело можно потрогать'
+    ],
+    correct: 1,
+    why: 'Цвет, запах, твёрдость, горючесть, растворимость — это свойства вещества. Форма, объём и возможность потрогать — это признаки тела.'
+  }
+];
+
+(function renderTest() {
+  const container = document.getElementById('testContainer');
+  const scoreBox = document.getElementById('testScore');
+  const retryBox = document.getElementById('retryBox');
+  if (!container) return;
+
+  const TOTAL = TEST_QUESTIONS.length;
+  const THRESHOLD = Math.ceil(TOTAL * 0.8);
+
+  let answered = 0;
+  let correctCount = 0;
+  let questionStates = new Array(TOTAL).fill(null);
+
+  function renderAll() {
+    answered = 0;
+    correctCount = 0;
+    container.innerHTML = '';
+    retryBox.innerHTML = '';
+    scoreBox.classList.remove('good', 'mid', 'bad');
+    scoreBox.innerHTML = `Правильных ответов: <span id="scoreNum">0</span> из ${TOTAL}`;
+
+    const WRONG_HEADERS = [
+      '❌ Подумай ещё раз.',
+      '❌ Будь внимательнее.',
+      '❌ Давай разберёмся.',
+      '❌ Почти! Но не совсем так.',
+      '❌ Есть над чем подумать.',
+      '❌ Не спеши, посмотри ещё раз.',
+      '❌ Хм, не то. Попробуй снова.'
+    ];
+
+    TEST_QUESTIONS.forEach((q, i) => {
+      const block = document.createElement('div');
+      block.className = 'test-question';
+      block.innerHTML = `
+        <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
+        <div class="test-options">
+          ${q.options.map((opt, j) => `
+            <div class="test-option" data-q="${i}" data-opt="${j}">
+              <span class="opt-marker">${String.fromCharCode(65+j)}</span>
+              <span>${opt}</span>
+            </div>
+          `).join('')}
+        </div>
+        <div class="explanation" id="exp-${i}"></div>
+      `;
+      container.appendChild(block);
+    });
+
+    container.querySelectorAll('.test-option').forEach(opt => {
+      opt.addEventListener('click', () => {
+        const qIdx = parseInt(opt.dataset.q);
+        const oIdx = parseInt(opt.dataset.opt);
+        const question = TEST_QUESTIONS[qIdx];
+        const options = container.querySelectorAll(`[data-q="${qIdx}"]`);
+        const exp = document.getElementById(`exp-${qIdx}`);
+
+        if (exp.classList.contains('show')) return;
+
+        const isCorrect = (oIdx === question.correct);
+
+        options.forEach(o => {
+          o.classList.add('disabled');
+          const idx = parseInt(o.dataset.opt);
+          if (idx === question.correct) o.classList.add('correct');
+          if (idx === oIdx && !isCorrect) o.classList.add('wrong');
+        });
+
+        exp.classList.add('show');
+        exp.classList.add(isCorrect ? 'ok' : 'no');
+
+        if (isCorrect) {
+          correctCount++;
+          exp.innerHTML = `<b>✅ Правильно!</b> ${question.why}`;
+        } else {
+          const header = WRONG_HEADERS[Math.floor(Math.random() * WRONG_HEADERS.length)];
+          exp.innerHTML = `<b>${header}</b> Правильный ответ выделен зелёным. ${question.why}`;
+        }
+
+        answered++;
+        const scoreNum = document.getElementById('scoreNum');
+        if (scoreNum) scoreNum.textContent = correctCount;
+
+        if (answered === TOTAL) {
+          scoreBox.classList.remove('good', 'mid', 'bad');
+          if (correctCount >= THRESHOLD) {
+            scoreBox.classList.add('good');
+            scoreBox.innerHTML = `🎉 <b>Модуль пройден!</b> ${correctCount} из ${TOTAL} (порог: ${THRESHOLD}).`;
+          } else if (correctCount >= Math.ceil(TOTAL * 0.6)) {
+            scoreBox.classList.add('mid');
+            scoreBox.innerHTML = `👍 <b>Почти получилось!</b> ${correctCount} из ${TOTAL}. Порог — ${THRESHOLD}. Перечитай объяснения и попробуй снова.`;
+          } else {
+            scoreBox.classList.add('bad');
+            scoreBox.innerHTML = `💪 <b>Есть над чем поработать:</b> ${correctCount} из ${TOTAL}. Перечитай модуль и попробуй снова.`;
+          }
+
+          retryBox.innerHTML = `
+            <button class="retry-btn" id="retryTest">↺ Пройти тест заново</button>
+          `;
+          document.getElementById('retryTest').addEventListener('click', () => {
+            renderAll();
+            window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
+          });
+        } else {
+          scoreBox.classList.remove('good', 'mid', 'bad');
+          scoreBox.innerHTML = `Правильных ответов: <span id="scoreNum">${correctCount}</span> из ${TOTAL}`;
+        }
+      });
+    });
+  }
+
+  renderAll();
+})();
+
+</script>
+</body>
+</html>

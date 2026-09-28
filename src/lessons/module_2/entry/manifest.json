@@ -1,0 +1,12 @@
+{
+  "module": "module_2",
+  "lesson": "entry",
+  "title": "Входной тест",
+  "badge": "Модуль 2 · Входной тест · ~15 минут",
+  "css": [
+    "core"
+  ],
+  "js": [
+    "m2_entry"
+  ]
+}
