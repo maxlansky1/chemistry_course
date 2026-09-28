@@ -815,6 +815,34 @@
     font-size: 15px; line-height: 1.5;
   }
 
+  /* Утилиты раскладки (канон, вместо инлайн-стилей) */
+  .mt-14 { margin-top: 14px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-18 { margin-top: 18px; }
+  .mt-22 { margin-top: 22px; }
+  .center-mt16 { text-align: center; margin-top: 16px; }
+  .prose { font-size: 16.5px; line-height: 1.8; }
+  .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
+  .hero-nav { margin-top: 8px; font-size: 15px; }
+  .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
+  .fs-26 { font-size: 26px; }
+  .sci-node { cursor: pointer; }
+  .hero-digest { max-width: 700px; margin: 0 auto; }
+  .lesson-nav.toc {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(248,250,252,.92); backdrop-filter: blur(8px);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 14px; margin: 0 0 18px;
+  }
+  .toc-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px; }
+  .toc-items { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toc-item { text-decoration: none; font-size: 14px; font-weight: 700;
+    color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
+  .toc-pill { display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 12px;
+    background: var(--panel-2); border: 1px solid var(--border); }
+
   /* Quiz: multi и match */
   .quiz-errors { margin-top: 10px; }
   .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
@@ -833,10 +861,9 @@
   <div class="badge">Модуль 1 · Итоговый тест · ~10 минут</div>
   <h1>Итоговый тест по Модулю 1</h1>
   <p>15 вопросов · порог 80% (12 правильных). Покажи результат учителю.</p>
-  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
+  <p class="hero-nav">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
 </header>
 <div class="container">
-
 
 <!-- ==================== ИТОГОВЫЙ ТЕСТ ==================== -->
 <section class="section">
@@ -849,7 +876,7 @@
       </div>
     </div>
 
-    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+    <p class="lead">
       <span class="cta">👆 Нажми на вариант ответа</span> — он сразу подсветится, а под вопросом появится объяснение.
       Ошибаться не страшно: главное — понять, почему правильный ответ именно такой.
       В конце ты увидишь свой результат и кнопку «Пройти заново», если порог не достигнут.
@@ -861,11 +888,6 @@
 </script>
   </div>
 </section>
-<nav class="lesson-nav">
-<a class="ln-card" href="u3.html"><span class="ln-dir">← Назад</span><span class="ln-title">Урок 3. Лаборатория: безопасность и оборудование</span></a>
-<div class="ln-map"><a class="ln-pill" href="u1.html">1</a><a class="ln-pill" href="u2.html">2</a><a class="ln-pill" href="u3.html">3</a><span class="ln-pill now">✓</span></div>
-<span class="ln-card ln-next done"><span class="ln-dir">Финиш</span><span class="ln-title">Модуль пройден — покажи результат учителю</span></span>
-</nav>
 </div>
 <script type="application/json" id="glossary">{
   "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },

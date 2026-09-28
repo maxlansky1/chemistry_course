@@ -103,9 +103,8 @@ def build(mod, lesson):
         rest = tail
     if 'questions' in lmeta:
         hero = hero.replace('<!--QA-->', qa_cards(lmeta['questions']))
-    nav = lesson_nav(mod_meta, lesson, lambda f: f + '.html')
     content = (hero + '</header>\n<div class="container">\n' + rest
-               + '\n' + nav + '\n</div>\n' + glossary_island() + messages_island())
+               + '\n</div>\n' + glossary_island() + messages_island())
     html = shell(lmeta.get('title', mod_meta['title']), load_css(css_names),
                  content, load_js(js_names), stamp)
     outdir = os.path.join(DIST, mod)
@@ -113,6 +112,17 @@ def build(mod, lesson):
     out = os.path.join(outdir, lesson + '.html')
     open(out, 'w', encoding='utf-8').write(html)
     return out, html
+
+
+def module_toc(meta, href):
+    """Оглавление модуля вместо prev/next навигации."""
+    items = []
+    for L in meta['lessons']:
+        label = L.get('chip') or L.get('title', L['file'])
+        items.append(f'<a class="ln-pill toc-item" href="{href(L["file"])}">'
+                     f'<span class="toc-pill">{L.get("pill", "•")}</span>{label}</a>')
+    return ('<nav class="lesson-nav toc"><div class="toc-title">Содержание модуля</div>'
+            '<div class="toc-items">' + ''.join(items) + '</div></nav>')
 
 
 def build_module(mod):
@@ -149,7 +159,6 @@ def build_module(mod):
         for other in order:
             chunk = chunk.replace(f'href="{other}.html"', f'href="#m-{other}"')
             chunk = chunk.replace(f'{mod}/{other}.html', f'#{other}')
-        chunk += '\n' + lesson_nav(meta, lesson, lambda f: '#m-' + f)
         parts.append(f'<div id="m-{lesson}">\n{chunk}\n</div>')
     def short_title(L, idx):
         if L['file'] == 'final':
@@ -164,11 +173,13 @@ def build_module(mod):
         '<header class="hero">\n'
         f'  <div class="badge">{meta["badge"]}</div>\n'
         f'  <h1>{meta["title"]}</h1>\n'
-        f'  <p style="max-width:700px;margin:0 auto;">{meta.get("digest", "")}</p>\n'
+        f'  <p class="hero-digest">{meta.get("digest", "")}</p>\n'
         + qa_cards(meta.get('questions', [])) +
         f'\n  <div class="mod-chips">{chips}</div>\n'
         '</header>\n' + snippet('legend_fold.html') + snippet('feynman_fold.html'))
-    content = (mod_hero + '\n<div class="container">\n' + '\n'.join(parts)
+    content = (mod_hero + '\n<div class="container">\n'
+               + module_toc(meta, lambda f: '#m-' + f) + '\n'
+               + '\n'.join(parts)
                + '\n</div>\n' + glossary_island() + messages_island())
 
     stamp = (f'<!-- built by src/build.py v1 · {date.today().isoformat()} · '
@@ -200,35 +211,6 @@ def load_css(names):
 def load_js(names):
     return '\n'.join(open(os.path.join(SRC, 'shared', 'js', j + '.js'),
                           encoding='utf-8').read() for j in names)
-
-
-def lesson_nav(meta, current, href):
-    """Nav cards + pills. href(f) -> link target (sibling file or #anchor)."""
-    order = meta['order']
-    titles = {L['file']: L['title'] for L in meta['lessons']}
-    pills = {L['file']: L.get('pill', L['file']) for L in meta['lessons']}
-    i = order.index(current)
-    prev_html = (f'<a class="ln-card" href="{href(order[i-1])}">'
-                 f'<span class="ln-dir">← Назад</span>'
-                 f'<span class="ln-title">{titles[order[i-1]]}</span></a>'
-                 if i > 0 else
-                 '<span class="ln-card done"><span class="ln-dir">Старт</span>'
-                 '<span class="ln-title">Ты в начале модуля</span></span>')
-    if i < len(order) - 1:
-        next_html = (f'<a class="ln-card ln-next" href="{href(order[i+1])}">'
-                     f'<span class="ln-dir">Вперёд →</span>'
-                     f'<span class="ln-title">{titles[order[i+1]]}</span></a>')
-    else:
-        next_html = ('<span class="ln-card ln-next done"><span class="ln-dir">Финиш</span>'
-                     '<span class="ln-title">Модуль пройден — покажи результат учителю</span></span>')
-    dots = []
-    for f in order:
-        if f == current:
-            dots.append(f'<span class="ln-pill now">{pills[f]}</span>')
-        else:
-            dots.append(f'<a class="ln-pill" href="{href(f)}">{pills[f]}</a>')
-    return (f'<nav class="lesson-nav">\n{prev_html}\n'
-            f'<div class="ln-map">{"".join(dots)}</div>\n{next_html}\n</nav>')
 
 
 def tg_message(meta):

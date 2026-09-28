@@ -815,6 +815,34 @@
     font-size: 15px; line-height: 1.5;
   }
 
+  /* Утилиты раскладки (канон, вместо инлайн-стилей) */
+  .mt-14 { margin-top: 14px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-18 { margin-top: 18px; }
+  .mt-22 { margin-top: 22px; }
+  .center-mt16 { text-align: center; margin-top: 16px; }
+  .prose { font-size: 16.5px; line-height: 1.8; }
+  .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
+  .hero-nav { margin-top: 8px; font-size: 15px; }
+  .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
+  .fs-26 { font-size: 26px; }
+  .sci-node { cursor: pointer; }
+  .hero-digest { max-width: 700px; margin: 0 auto; }
+  .lesson-nav.toc {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(248,250,252,.92); backdrop-filter: blur(8px);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 14px; margin: 0 0 18px;
+  }
+  .toc-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px; }
+  .toc-items { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toc-item { text-decoration: none; font-size: 14px; font-weight: 700;
+    color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
+  .toc-pill { display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 12px;
+    background: var(--panel-2); border: 1px solid var(--border); }
+
   /* Quiz: multi и match */
   .quiz-errors { margin-top: 10px; }
   .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
@@ -837,10 +865,9 @@
 <div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Чем тело отличается от вещества?</span></div></div>
 <div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как учёные познают мир?</span></div></div>
 </div>
-  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
+  <p class="hero-nav">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
 </header>
 <div class="container">
-
 
 <!-- ============ ЛЕГЕНДА (fold) ============ -->
 
@@ -856,7 +883,7 @@
       </div>
     </div>
 
-    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+    <p class="lead">
       Это <b>не экзамен</b>: оценка не ставится и ни на что не влияет.
       Отвечай как получится — неправильные ответы лишь покажут, на что обратить внимание в модуле.
     </p>
@@ -882,7 +909,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;color:var(--text);">
+    <p class="prose">
       Химия появилась не в лаборатории — она родилась из <b>нужды</b>. Людям всегда было нужно:
       есть, лечиться, строить, одеваться, защищаться. Давай посмотрим, как это происходило.
     </p>
@@ -1012,7 +1039,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       <b>Химия</b> — это наука о <b>веществах</b>: из чего они состоят, какие у них <b>свойства</b>
       и как одни вещества <b>превращаются</b> в другие.
     </p>
@@ -1056,49 +1083,49 @@
         <text x="350" y="242" text-anchor="middle" font-size="32">🧪</text>
         <text x="350" y="272" text-anchor="middle" font-size="18" font-weight="900" fill="#fff">ХИМИЯ</text>
 
-        <g class="sci-node" data-sci="physics" style="cursor:pointer;">
+        <g class="sci-node" data-sci="physics">
           <circle cx="130" cy="100" r="58" fill="#eff6ff" stroke="#3b82f6" stroke-width="2.5"/>
           <text x="130" y="90" text-anchor="middle" font-size="26">⚛️</text>
           <text x="130" y="115" text-anchor="middle" font-size="14" font-weight="800" fill="#1e40af">Физика</text>
         </g>
 
-        <g class="sci-node" data-sci="biology" style="cursor:pointer;">
+        <g class="sci-node" data-sci="biology">
           <circle cx="570" cy="100" r="58" fill="#ecfdf5" stroke="#10b981" stroke-width="2.5"/>
           <text x="570" y="90" text-anchor="middle" font-size="26">🧬</text>
           <text x="570" y="115" text-anchor="middle" font-size="14" font-weight="800" fill="#065f46">Биология</text>
         </g>
 
-        <g class="sci-node" data-sci="geology" style="cursor:pointer;">
+        <g class="sci-node" data-sci="geology">
           <circle cx="80" cy="250" r="58" fill="#fef3c7" stroke="#f59e0b" stroke-width="2.5"/>
           <text x="80" y="240" text-anchor="middle" font-size="26">🌍</text>
           <text x="80" y="265" text-anchor="middle" font-size="13" font-weight="800" fill="#92400e">Геология</text>
         </g>
 
-        <g class="sci-node" data-sci="medicine" style="cursor:pointer;">
+        <g class="sci-node" data-sci="medicine">
           <circle cx="620" cy="250" r="58" fill="#fee2e2" stroke="#ef4444" stroke-width="2.5"/>
           <text x="620" y="240" text-anchor="middle" font-size="26">💊</text>
           <text x="620" y="265" text-anchor="middle" font-size="14" font-weight="800" fill="#991b1b">Медицина</text>
         </g>
 
-        <g class="sci-node" data-sci="ecology" style="cursor:pointer;">
+        <g class="sci-node" data-sci="ecology">
           <circle cx="130" cy="400" r="58" fill="#d1fae5" stroke="#10b981" stroke-width="2.5"/>
           <text x="130" y="390" text-anchor="middle" font-size="26">🌱</text>
           <text x="130" y="415" text-anchor="middle" font-size="14" font-weight="800" fill="#065f46">Экология</text>
         </g>
 
-        <g class="sci-node" data-sci="materials" style="cursor:pointer;">
+        <g class="sci-node" data-sci="materials">
           <circle cx="570" cy="400" r="58" fill="#ede9fe" stroke="#8b5cf6" stroke-width="2.5"/>
           <text x="570" y="390" text-anchor="middle" font-size="26">🔩</text>
           <text x="570" y="415" text-anchor="middle" font-size="12" font-weight="800" fill="#5b21b6">Материалы</text>
         </g>
 
-        <g class="sci-node" data-sci="math" style="cursor:pointer;">
+        <g class="sci-node" data-sci="math">
           <circle cx="350" cy="60" r="48" fill="#e0e7ff" stroke="#6366f1" stroke-width="2.5"/>
           <text x="350" y="52" text-anchor="middle" font-size="22">📐</text>
           <text x="350" y="74" text-anchor="middle" font-size="12" font-weight="800" fill="#3730a3">Математика</text>
         </g>
 
-        <g class="sci-node" data-sci="it" style="cursor:pointer;">
+        <g class="sci-node" data-sci="it">
           <circle cx="350" cy="440" r="48" fill="#fce7f3" stroke="#ec4899" stroke-width="2.5"/>
           <text x="350" y="432" text-anchor="middle" font-size="22">💻</text>
           <text x="350" y="454" text-anchor="middle" font-size="12" font-weight="800" fill="#9d174d">Информатика</text>
@@ -1106,7 +1133,7 @@
       </svg>
     </div>
 
-    <div class="method-detail-box" id="sciDetail" style="margin-top:14px;">
+    <div class="method-detail-box" id="sciDetail" class="mt-14">
       <div class="mb-title">⚛️ Физика</div>
       <div class="mb-text">
         Физика объясняет, как устроены атомы и молекулы, как они движутся, какие силы действуют между ними.
@@ -1119,14 +1146,14 @@
 
     <div class="card-grid">
       <div class="card">
-        <div class="c-title"><span style="font-size:26px;">📦</span> Физическое тело</div>
+        <div class="c-title"><span class="fs-26">📦</span> Физическое тело</div>
         <div class="c-desc">
           Всё, что нас окружает и имеет форму: <b>ложка 🥄, стакан 🥛, стол 🪑, карандаш ✏️, дом 🏠</b>.
           Тело можно потрогать, оно занимает место в пространстве.
         </div>
       </div>
       <div class="card">
-        <div class="c-title"><span style="font-size:26px;">🧪</span> Вещество</div>
+        <div class="c-title"><span class="fs-26">🧪</span> Вещество</div>
         <div class="c-desc">
           То, из чего состоят тела: <b>алюминий 🪨, стекло 🔷, дерево 🪵, вода 💧, железо ⚙️</b>.
           Одно и то же тело может быть сделано из разных веществ — например, ложка бывает деревянной, алюминиевой или серебряной.
@@ -1154,7 +1181,7 @@
         </div>
       </div>
 
-      <div style="text-align:center; margin-top:16px;">
+      <div class="center-mt16">
         <button class="reset-btn" id="resetBodySubstance">↺ Сбросить игру</button>
       </div>
 
@@ -1201,7 +1228,7 @@
 
     <div class="method-detail-box" id="methodDetail"></div>
 
-    <div class="callout callout-idea" style="margin-top:18px;">
+    <div class="callout callout-idea" class="mt-18">
       <b>Так рождается научное знание:</b> сначала мы замечаем что-то в мире (наблюдение), потом
       пытаемся объяснить (гипотеза), проверяем свою догадку в опыте (эксперимент), измеряем результат
       (измерение), а затем строим упрощённое описание — модель, которая помогает понять всё до конца.
@@ -1235,11 +1262,6 @@
     </div>
   </div>
 </section>
-<nav class="lesson-nav">
-<span class="ln-card done"><span class="ln-dir">Старт</span><span class="ln-title">Ты в начале модуля</span></span>
-<div class="ln-map"><span class="ln-pill now">1</span><a class="ln-pill" href="u2.html">2</a><a class="ln-pill" href="u3.html">3</a><a class="ln-pill" href="final.html">✓</a></div>
-<a class="ln-card ln-next" href="u2.html"><span class="ln-dir">Вперёд →</span><span class="ln-title">Урок 2. Свойства веществ и химия вокруг нас</span></a>
-</nav>
 </div>
 <script type="application/json" id="glossary">{
   "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },

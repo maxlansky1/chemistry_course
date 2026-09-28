@@ -815,6 +815,34 @@
     font-size: 15px; line-height: 1.5;
   }
 
+  /* Утилиты раскладки (канон, вместо инлайн-стилей) */
+  .mt-14 { margin-top: 14px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-18 { margin-top: 18px; }
+  .mt-22 { margin-top: 22px; }
+  .center-mt16 { text-align: center; margin-top: 16px; }
+  .prose { font-size: 16.5px; line-height: 1.8; }
+  .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
+  .hero-nav { margin-top: 8px; font-size: 15px; }
+  .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
+  .fs-26 { font-size: 26px; }
+  .sci-node { cursor: pointer; }
+  .hero-digest { max-width: 700px; margin: 0 auto; }
+  .lesson-nav.toc {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(248,250,252,.92); backdrop-filter: blur(8px);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 14px; margin: 0 0 18px;
+  }
+  .toc-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px; }
+  .toc-items { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toc-item { text-decoration: none; font-size: 14px; font-weight: 700;
+    color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
+  .toc-pill { display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 12px;
+    background: var(--panel-2); border: 1px solid var(--border); }
+
   /* Quiz: multi и match */
   .quiz-errors { margin-top: 10px; }
   .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
@@ -837,10 +865,9 @@
 <div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Из чего состоим мы сами?</span></div></div>
 <div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Где химия в твоём доме?</span></div></div>
 </div>
-  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
+  <p class="hero-nav">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
 </header>
 <div class="container">
-
 
 <section class="section" id="sess2">
   <div class="stage s2 fade-in">
@@ -852,7 +879,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Вещества окружают нас повсюду. Одни мы видим каждый день, другие — редкие гости.
       Но у каждого вещества есть свои <b>свойства</b>, по которым его можно узнать.
     </p>
@@ -908,7 +935,7 @@
       </div>
     </div>
 
-    <div class="game-area" style="margin-top:22px;">
+    <div class="game-area" class="mt-22">
       <h4>🎮 Симулятор «Определи свойство»</h4>
       <p class="game-hint">
         Сейчас тебе покажут вещество, а ты должен выбрать <b>правильное описание его свойств</b>.
@@ -929,7 +956,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Самый удивительный химический «завод» — это сам человек. В нашем организме непрерывно
       происходят тысячи химических превращений: мы дышим, едим, двигаемся, думаем — и всё это химия.
     </p>
@@ -1022,7 +1049,7 @@
       </div>
     </div>
 
-    <div class="callout callout-note" style="margin-top:18px;">
+    <div class="callout callout-note" class="mt-18">
       <b>Обрати внимание:</b> фотосинтез и дыхание — это два противоположных процесса, которые
       поддерживают баланс кислорода и углекислого газа в атмосфере. Один производит кислород,
       другой его потребляет. Так природа сама себя регулирует.
@@ -1120,7 +1147,7 @@
       </svg>
     </div>
 
-    <div class="callout callout-idea" style="margin-top:18px;">
+    <div class="callout callout-idea" class="mt-18">
       Получается, что мы почти на <b>две трети</b> состоим из кислорода и на <b>десятую часть</b> — из водорода.
       А вместе с углеродом эти три элемента дают <b>больше 90%</b> массы нашего тела.
     </div>
@@ -1153,7 +1180,7 @@
       </div>
     </div>
 
-    <div class="callout callout-ok" style="margin-top:18px;">
+    <div class="callout callout-ok" class="mt-18">
       <b>Вывод:</b> химия — не скучная наука из учебника. Это язык, на котором «разговаривает» вся природа
       и всё, что сделано руками человека. Поняв её, ты начнёшь видеть мир по-другому.
     </div>
@@ -1180,11 +1207,6 @@
     </div>
   </div>
 </section>
-<nav class="lesson-nav">
-<a class="ln-card" href="u1.html"><span class="ln-dir">← Назад</span><span class="ln-title">Урок 1. Как учимся и что изучает химия</span></a>
-<div class="ln-map"><a class="ln-pill" href="u1.html">1</a><span class="ln-pill now">2</span><a class="ln-pill" href="u3.html">3</a><a class="ln-pill" href="final.html">✓</a></div>
-<a class="ln-card ln-next" href="u3.html"><span class="ln-dir">Вперёд →</span><span class="ln-title">Урок 3. Лаборатория: безопасность и оборудование</span></a>
-</nav>
 </div>
 <script type="application/json" id="glossary">{
   "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },

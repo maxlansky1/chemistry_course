@@ -815,6 +815,34 @@
     font-size: 15px; line-height: 1.5;
   }
 
+  /* Утилиты раскладки (канон, вместо инлайн-стилей) */
+  .mt-14 { margin-top: 14px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-18 { margin-top: 18px; }
+  .mt-22 { margin-top: 22px; }
+  .center-mt16 { text-align: center; margin-top: 16px; }
+  .prose { font-size: 16.5px; line-height: 1.8; }
+  .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
+  .hero-nav { margin-top: 8px; font-size: 15px; }
+  .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
+  .fs-26 { font-size: 26px; }
+  .sci-node { cursor: pointer; }
+  .hero-digest { max-width: 700px; margin: 0 auto; }
+  .lesson-nav.toc {
+    position: sticky; top: 0; z-index: 20;
+    background: rgba(248,250,252,.92); backdrop-filter: blur(8px);
+    border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 10px 14px; margin: 0 0 18px;
+  }
+  .toc-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
+    color: var(--muted); margin-bottom: 8px; }
+  .toc-items { display: flex; gap: 8px; flex-wrap: wrap; }
+  .toc-item { text-decoration: none; font-size: 14px; font-weight: 700;
+    color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
+  .toc-pill { display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 12px;
+    background: var(--panel-2); border: 1px solid var(--border); }
+
   /* Quiz: multi и match */
   .quiz-errors { margin-top: 10px; }
   .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
@@ -837,10 +865,9 @@
 <div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Как называется оборудование и зачем оно?</span></div></div>
 <div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как описать вещество по плану?</span></div></div>
 </div>
-  <p style="margin-top:8px; font-size:15px;">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
+  <p class="hero-nav">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
 </header>
 <div class="container">
-
 
 <section class="section" id="sess3">
   <div class="stage s4 fade-in">
@@ -852,7 +879,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Химия — наука экспериментальная. Но лаборатория — это место, где нужно быть
       <b>внимательным и осторожным</b>. Прежде чем смешивать что-либо, нужно выучить правила
       безопасности и узнать, как называется оборудование.
@@ -922,7 +949,7 @@
 
     <div class="test-score" id="safetyGate"><span id="safetyGateText">🔒 Загрузка…</span><br><button class="retry-btn" id="retryScenarios">↺ Сбросить всё и начать заново</button></div>
 
-    <div class="game-area" style="margin-top:22px;">
+    <div class="game-area" class="mt-22">
       <h4>🎮 Игра: разбери действия по настоящим правилам лаборатории</h4>
       <p class="game-hint">
         Здесь 12 действий — как из реальной инструкции по технике безопасности.
@@ -943,7 +970,7 @@
         </div>
       </div>
 
-      <div style="text-align:center; margin-top:16px;">
+      <div class="center-mt16">
         <button class="reset-btn" id="resetSafetyQuiz">↺ Сбросить игру</button>
       </div>
 
@@ -991,7 +1018,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
       Это не тест: готовых вариантов нет. Объясни вслух — сыну, дочке, брату или сестре
       (или представь, что объясняешь им), а затем <b>запиши объяснения в тетрадь</b>.
@@ -999,7 +1026,7 @@
 
     <div class="callout callout-note">
       <b>📝 Задание в тетрадь — ответь письменно на три вопроса:</b>
-      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+      <ol class="list-note">
         <li>Чем химия отличается от физики? Объясни на примере стакана воды.</li>
         <li>Чем физическое тело отличается от вещества? Приведи по два примера из дома и из лаборатории.</li>
         <li>Почему в лаборатории нельзя пробовать вещества на вкус и нюхать их напрямую? Что делать вместо этого?</li>
@@ -1025,7 +1052,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Настоящий химик умеет <b>описывать вещество по плану</b>: цвет, блеск, запах, твёрдость,
       растворимость, горючесть. Сейчас мы потренируемся.
     </p>
@@ -1035,7 +1062,7 @@
 {"config": "practice", "questions": [{"type": "single", "q": "Цвет и блеск. Какого цвета медь и есть ли у неё блеск?", "options": ["Белая, без блеска", "Рыжая (красноватая), есть металлический блеск", "Чёрная, без блеска", "Прозрачная, без блеска"], "correct": 1, "why": "Медь — рыжий металл с характерным металлическим блеском."}, {"type": "single", "q": "Запах. Есть ли запах у чистой воды?", "options": ["Резкий запах", "Сладкий запах", "Нет запаха", "Запах гари"], "correct": 2, "why": "Чистая вода не имеет запаха. Это одно из её свойств."}, {"type": "single", "q": "Твёрдость. Какое из этих веществ самое твёрдое?", "options": ["Воск", "Алмаз", "Стекло", "Дерево"], "correct": 1, "why": "Алмаз — самое твёрдое природное вещество. Он царапает стекло, а воск и дерево — нет."}, {"type": "single", "q": "Растворимость. Какое вещество растворяется в воде?", "options": ["Песок", "Мел", "Сахар", "Стекло"], "correct": 2, "why": "Сахар хорошо растворяется в воде. Песок, мел и стекло — не растворяются."}, {"type": "single", "q": "Горючесть. Какое вещество горит?", "options": ["Вода", "Песок", "Спирт", "Соль"], "correct": 2, "why": "Спирт — горючее вещество. Вода, песок и соль не горят."}]}
 </script>
 
-    <div class="callout callout-note" style="margin-top:16px;">
+    <div class="callout callout-note" class="mt-16">
       <b>📝 В тетрадь:</b> выбери одно вещество дома (например, сахар, соль, монету)
       и опиши его письменно по плану выше. Это задание проверит учитель.
     </div>
@@ -1053,7 +1080,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       На столе два одинаковых белых порошка без подписей: <b>сахар и соль</b>.
       Пробовать на вкус <b>запрещено</b> (мы же помним правила безопасности!).
       Придумай, как различить их, используя только то, что изучили в модуле:
@@ -1075,7 +1102,7 @@
 
     <div class="callout callout-ok">
       <b>5 тезисов модуля:</b>
-      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+      <ol class="list-note">
         <li><b>Химия</b> — наука о веществах, их свойствах и превращениях.</li>
         <li><b>Тело</b> имеет форму и объём; <b>вещество</b> — то, из чего состоят тела.</li>
         <li>Путь познания: наблюдение → эксперимент → измерение → моделирование → вывод.</li>
@@ -1111,11 +1138,6 @@
     </div>
   </div>
 </section>
-<nav class="lesson-nav">
-<a class="ln-card" href="u2.html"><span class="ln-dir">← Назад</span><span class="ln-title">Урок 2. Свойства веществ и химия вокруг нас</span></a>
-<div class="ln-map"><a class="ln-pill" href="u1.html">1</a><a class="ln-pill" href="u2.html">2</a><span class="ln-pill now">3</span><a class="ln-pill" href="final.html">✓</a></div>
-<a class="ln-card ln-next" href="final.html"><span class="ln-dir">Вперёд →</span><span class="ln-title">Итоговый тест</span></a>
-</nav>
 </div>
 <script type="application/json" id="glossary">{
   "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },
