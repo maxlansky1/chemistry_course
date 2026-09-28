@@ -266,11 +266,20 @@ python3 src/lint.py module_1   # LINT OK / FAIL
 - `using-git-worktrees`.
 - `repowise-auto` — работа с индексом кода (MCP), если `.repowise/` есть.
 
-**Проектный скилл (планируется)** — «химический урок»: читает `components.json` +
-DESIGN + SIMULATIONS + `course.json`/`module.json` и собирает канонический
-`body.html` + `answers.md` из `lesson.md`. Отдельные под-скиллы:
-`lesson-builder`, `quiz-author`, `sim-creator`, `formula-writer`,
-`glossary-keeper`, `module-scaffold`.
+**Проектные скиллы** (в репозитории, `.opencode/skills/`):
+- `chemistry-lesson` — мастер: планирование и написание урока из `lesson.md` в
+  канонический `body.html` + `answers.md`. Разделы (`references/`): `planning`,
+  `prose`, `blocks`, `formulas`, `glossary`.
+- `chemistry-interactive` — тесты/квизы, drop-игры, сценарии, карты/таймлайны,
+  оборудование. Разделы: `quiz`, `games`, `scenarios`, `maps`.
+- `chemistry-review` — педагогическая приёмка написанного урока (выписывает
+  замечания, не правит). Раздел: `checklist`.
+- `chemistry-sim` — симуляции (пишется после появления `makeSim`/`ChemDraw`, P2).
+
+Порядок вызовов: `chemistry-lesson` вызывает `chemistry-interactive` (и позже
+`chemistry-sim`), в конце уместен `chemistry-review`. Карта проекта и правила —
+в `AGENTS.md`. Скиллы ссылаются на `components.json` и доки как на источник
+правды, а не копируют их.
 
 **Спека и план этого рефакторинга** лежат в `docs/superpowers/` — читать при
 погружении в контекст: `specs/…-design.md` и `plans/…-foundation-pilot.md`.
