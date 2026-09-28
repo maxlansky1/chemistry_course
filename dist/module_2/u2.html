@@ -783,6 +783,38 @@
   }
   a.mod-chip:hover { border-color: var(--h-deep); color: var(--h-deep); transform: translateY(-2px); }
 
+  /* Формулы и химические записи */
+  .formula { font-variant-numeric: lining-nums; white-space: nowrap; }
+  .formula sub { font-size: .7em; vertical-align: -.25em; }
+  .formula sup { font-size: .7em; vertical-align: .5em; }
+  .formula-block {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    flex-wrap: wrap; padding: 16px; margin: 14px 0;
+    background: var(--panel-2); border-radius: var(--radius);
+    font-size: 20px; overflow-x: auto;
+  }
+  .reaction-arrow { position: relative; display: inline-block; padding: 0 10px; }
+  .reaction-arrow > .cond {
+    position: absolute; left: 0; right: 0; font-size: 12px; color: var(--muted);
+  }
+  .reaction-arrow > .cond.top { bottom: 100%; }
+  .reaction-arrow > .cond.bottom { top: 100%; }
+  .state-tag { font-size: .8em; color: var(--muted); }
+  .ox-state { display: inline-block; font-size: .75em; font-weight: 700; }
+  .atom-chip {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700;
+    color: #111; border: 1.5px solid rgba(0,0,0,.35); vertical-align: middle;
+    cursor: pointer;
+  }
+  .term { border-bottom: 1px dashed var(--accent); cursor: pointer; }
+  .glossary-pop {
+    position: absolute; z-index: 50; max-width: 260px;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow-lg);
+    font-size: 15px; line-height: 1.5;
+  }
+
   .visual-card {
     background: linear-gradient(180deg, #f8fafc, #fff);
     border: 1.5px solid var(--border); border-radius: 14px;
@@ -1496,6 +1528,29 @@
 <a class="ln-card ln-next" href="u3.html"><span class="ln-dir">Вперёд →</span><span class="ln-title">Урок 3. Разделение смесей</span></a>
 </nav>
 </div>
+<script type="application/json" id="glossary">{
+  "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },
+  "физическое тело": { "definition": "отдельный предмет, имеющий форму и объём", "module": "module_1" },
+  "свойство вещества": { "definition": "признак, по которому вещества различают и описывают", "module": "module_1" },
+  "наблюдение": { "definition": "внимательное изучение явления без вмешательства в процесс", "module": "module_1" },
+  "эксперимент": { "definition": "изучение явления через активное воздействие на вещество", "module": "module_1" },
+  "измерение": { "definition": "сравнение величины с эталоном", "module": "module_1" },
+  "моделирование": { "definition": "замена объекта упрощённой схемой для изучения", "module": "module_1" },
+  "гипотеза": { "definition": "разумное предположение, которое ещё нужно проверить", "module": "module_1" },
+  "лаборатория": { "definition": "помещение со специальным оборудованием для опытов", "module": "module_1" },
+  "агрегатное состояние": { "definition": "состояние вещества (твёрдое, жидкое, газообразное) при данных условиях", "module": "module_2" },
+  "плавление": { "definition": "переход вещества из твёрдого состояния в жидкое при нагревании", "module": "module_2" },
+  "кипение": { "definition": "переход жидкости в газ по всему объёму при температуре кипения", "module": "module_2" },
+  "конденсация": { "definition": "переход вещества из газообразного состояния в жидкое при охлаждении", "module": "module_2" },
+  "замерзание": { "definition": "переход жидкости в твёрдое состояние при охлаждении", "module": "module_2" },
+  "сублимация": { "definition": "переход вещества из твёрдого состояния сразу в газообразное, минуя жидкость", "module": "module_2" },
+  "чистое вещество": { "definition": "вещество, состоящее из одинаковых частиц", "module": "module_2" },
+  "смесь": { "definition": "система из разных веществ, сохраняющих свои свойства", "module": "module_2" },
+  "гомогенная смесь": { "definition": "однородная смесь, составные части неразличимы глазом", "module": "module_2" },
+  "гетерогенная смесь": { "definition": "неоднородная смесь, части различимы", "module": "module_2" },
+  "отстаивание": { "definition": "разделение смеси по разной плотности: тяжёлое оседает", "module": "module_2" }
+}
+</script>
 
 <footer class="footer">
   <div>Интерактивный модуль · Химия · 2026</div>
