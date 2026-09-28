@@ -16,12 +16,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'src')
 DIST = os.path.join(ROOT, 'dist')
 
-FOOTER = ('<footer class="footer">\n'
-          '  <div>Интерактивный модуль · Химия · 2026</div>\n'
-          '  <div style="margin-top:8px;font-size:13px;opacity:.6;">\n'
-          '    Простое объяснение · пример из жизни · наглядный опыт · запись в тетрадь\n'
-          '  </div>\n</footer>')
-
 
 def qa_cards(questions):
     """Universal question cards: numbered prompt, no emoji, no answers.
@@ -142,11 +136,12 @@ def build_module(mod):
 
 
 def shell(title, css, content, js, stamp):
-    return (f'<!DOCTYPE html>\n<html lang="ru">\n<head>\n<meta charset="UTF-8">\n'
-            f'<meta name="viewport" content="width=device-width, initial-scale=1.0">\n'
-            f'<title>{title}</title>\n'
-            f'<style>{css}</style>\n</head>\n<body>\n{stamp}\n'
-            f'{content}\n\n{FOOTER}\n\n<script>\n{js}\n</script>\n</body>\n</html>\n')
+    tpl = open(os.path.join(SRC, 'shared', 'shell.html'), encoding='utf-8').read()
+    return (tpl.replace('{{TITLE}}', title)
+               .replace('{{CSS}}', css)
+               .replace('{{CONTENT}}', content)
+               .replace('{{JS}}', js)
+               .replace('{{STAMP}}', stamp))
 
 
 def load_css(names):
