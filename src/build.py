@@ -260,23 +260,75 @@ def check(html):
 def report(tag, html):
     ok, divs, secs, missing = check(html)
     status = 'OK' if (ok and divs == 0 and secs == 0 and not missing) else 'FAIL'
-    print(f'{tag}: {status} | JS:{"OK" if ok else "FAIL"} '
-          f'div:{divs} section:{secs} missing:{missing or "none"} '
-          f'KB:{len(html)//1024}')
-    return status == 'OK'
+    line = (f'{tag}: {status} | JS:{"OK" if ok else "FAIL"} '
+            f'div:{divs} section:{secs} missing:{missing or "none"} '
+            f'KB:{len(html)//1024}')
+    print(line)
+    return line
+
+
+def load_env():
+    env = {}
+    path = os.path.join(ROOT, '.env')
+    if os.path.isfile(path):
+        for line in open(path, encoding='utf-8'):
+            if '=' in line and not line.strip().startswith('#'):
+                k, v = line.strip().split('=', 1)
+                env[k.strip()] = v.strip()
+    return env
+
+
+def send_telegram(text, doc_path=None):
+    import urllib.request
+    import urllib.parse
+    env = load_env()
+    token = env.get('TELEGRAM_BOT_TOKEN')
+    chat = env.get('TELEGRAM_CHAT_ID')
+    if not token or not chat:
+        print('SEND skipped: нет TELEGRAM_BOT_TOKEN/TELEGRAM_CHAT_ID')
+        return
+    base = f'https://api.telegram.org/bot{token}/'
+    data = urllib.parse.urlencode({'chat_id': chat, 'text': text,
+                                   'parse_mode': 'HTML'}).encode()
+    urllib.request.urlopen(base + 'sendMessage', data=data).read()
+    if doc_path and os.path.isfile(doc_path):
+        boundary = '----chem'
+        body = b''
+        body += (f'--{boundary}\r\nContent-Disposition: form-data; name="chat_id"\r\n\r\n'
+                 f'{chat}\r\n').encode()
+        body += (f'--{boundary}\r\nContent-Disposition: form-data; name="document"; '
+                 f'filename="{os.path.basename(doc_path)}"\r\n\r\n').encode()
+        body += open(doc_path, 'rb').read() + b'\r\n'
+        body += f'--{boundary}--\r\n'.encode()
+        req = urllib.request.Request(
+            base + 'sendDocument', data=body,
+            headers={'Content-Type': f'multipart/form-data; boundary={boundary}'})
+        urllib.request.urlopen(req).read()
+    print('SEND ok')
 
 
 def main():
-    mods = sys.argv[1:] or sorted(os.listdir(os.path.join(SRC, 'lessons')))
+    argv = sys.argv[1:]
+    do_send = '--send' in argv
+    mods = ([a for a in argv if not a.startswith('--')]
+            or sorted(d for d in os.listdir(os.path.join(SRC, 'lessons'))
+                      if os.path.isdir(os.path.join(SRC, 'lessons', d))))
+    lines = []
+    last_mod_file = None
     for mod in mods:
         ldir = os.path.join(SRC, 'lessons', mod)
         for lesson in sorted(os.listdir(ldir)):
             if not os.path.isdir(os.path.join(ldir, lesson)):
                 continue
             out, html = build(mod, lesson)
-            report(f'{mod}/{lesson}', html)
+            lines.append(report(f'{mod}/{lesson}', html))
         out, html = build_module(mod)
-        report(f'{mod} WHOLE', html)
+        last_mod_file = out
+        lines.append(report(f'{mod} WHOLE', html))
+    if do_send:
+        title = '📦 Сборка курса'
+        text = title + '\n' + '\n'.join(lines)
+        send_telegram(text, last_mod_file)
 
 
 if __name__ == '__main__':
