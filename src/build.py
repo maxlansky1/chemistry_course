@@ -34,14 +34,25 @@ def snippet(name):
                 encoding='utf-8').read()
 
 
+def resolve_assets(mod, lesson, lmeta, body):
+    """css/js для урока: сначала из module.json, затем из legacy manifest.json."""
+    if 'css' in lmeta or 'js' in lmeta:
+        return lmeta.get('css', ['core']), lmeta.get('js', [])
+    mf = os.path.join(SRC, 'lessons', mod, lesson, 'manifest.json')
+    if os.path.isfile(mf):
+        m = json.load(open(mf, encoding='utf-8'))
+        return m.get('css', ['core']), m.get('js', [])
+    return ['core'], []
+
+
 def build(mod, lesson):
     ldir = os.path.join(SRC, 'lessons', mod, lesson)
-    manifest = json.load(open(os.path.join(ldir, 'manifest.json'), encoding='utf-8'))
     body = open(os.path.join(ldir, 'body.html'), encoding='utf-8').read()
-    css = '\n'.join(open(os.path.join(SRC, 'shared', 'css', c + '.css'),
-                         encoding='utf-8').read() for c in manifest['css'])
-    js = '\n'.join(open(os.path.join(SRC, 'shared', 'js', j + '.js'),
-                        encoding='utf-8').read() for j in manifest['js'])
+    mod_meta = json.load(open(os.path.join(SRC, 'lessons', mod, 'module.json'),
+                              encoding='utf-8'))
+    lmeta = next((L for L in mod_meta['lessons'] if L['file'] == lesson), {})
+    css_names, js_names = resolve_assets(mod, lesson, lmeta, body)
+    js_names = list(dict.fromkeys(js_names))
     stamp = (f'<!-- built by src/build.py v1 · {date.today().isoformat()} · '
              f'{mod}/{lesson} · manifest-driven -->')
     hero, rest = body.split('</header>', 1)
@@ -51,17 +62,13 @@ def build(mod, lesson):
     # strip legacy container close only if content stays section-complete
     if tail.endswith(('</section>', '</details>')):
         rest = tail
-    mod_meta = json.load(open(os.path.join(SRC, 'lessons', mod, 'module.json'),
-                              encoding='utf-8'))
-    lmeta = next((L for L in mod_meta['lessons'] if L['file'] == lesson), {})
     if 'questions' in lmeta:
         hero = hero.replace('<!--QA-->', qa_cards(lmeta['questions']))
-    js_names = list(dict.fromkeys(manifest['js']))
     nav = lesson_nav(mod_meta, lesson, lambda f: f + '.html')
     content = (hero + '</header>\n<div class="container">\n' + rest
                + '\n' + nav + '\n</div>')
-    html = shell(manifest["title"], load_css(manifest['css']), content,
-                 load_js(js_names), stamp)
+    html = shell(lmeta.get('title', mod_meta['title']), load_css(css_names),
+                 content, load_js(js_names), stamp)
     outdir = os.path.join(DIST, mod)
     os.makedirs(outdir, exist_ok=True)
     out = os.path.join(outdir, lesson + '.html')
@@ -76,14 +83,15 @@ def build_module(mod):
     meta = json.load(open(os.path.join(mdir, 'module.json'), encoding='utf-8'))
     order = meta['order']
     css_names, js_names, bodies = [], [], []
+    lmetas = {L['file']: L for L in meta['lessons']}
     for lesson in order:
-        manifest = json.load(open(os.path.join(mdir, lesson, 'manifest.json'),
-                                  encoding='utf-8'))
         body = open(os.path.join(mdir, lesson, 'body.html'), encoding='utf-8').read()
-        for c in manifest['css']:
+        lmeta = lmetas.get(lesson, {})
+        lc, lj = resolve_assets(mod, lesson, lmeta, body)
+        for c in lc:
             if c not in css_names:
                 css_names.append(c)
-        for j in manifest['js']:
+        for j in lj:
             if j not in js_names:
                 js_names.append(j)
         hero, rest = body.split('</header>', 1)
