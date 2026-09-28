@@ -16,6 +16,32 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SRC = os.path.join(ROOT, 'src')
 DIST = os.path.join(ROOT, 'dist')
 
+COMPONENTS = json.load(open(os.path.join(SRC, 'shared', 'data', 'components.json'),
+                            encoding='utf-8'))['components']
+
+
+def detect_assets(body, mod):
+    """Собрать css/js по блокам, найденным в body.html (класс или detect_id)."""
+    css, js = [], []
+    for comp in COMPONENTS:
+        hit = any(re.search(r'class="[^"]*\b' + re.escape(c) + r'\b', body)
+                  for c in comp.get('classes', []))
+        if not hit:
+            hit = any(('id="' + d + '"') in body for d in comp.get('detect_ids', []))
+        if hit:
+            prod_css = comp['produces'].get('css', [])
+            if isinstance(prod_css, str):
+                prod_css = [prod_css]
+            for c in prod_css:
+                if c not in css:
+                    css.append(c)
+            for j in comp['produces'].get('js', []):
+                if j not in js:
+                    js.append(j)
+    if mod == 'module_2' and 'mod02' not in css:
+        css.append('mod02')
+    return css or ['core'], js
+
 
 def qa_cards(questions):
     """Universal question cards: numbered prompt, no emoji, no answers.
@@ -42,7 +68,7 @@ def resolve_assets(mod, lesson, lmeta, body):
     if os.path.isfile(mf):
         m = json.load(open(mf, encoding='utf-8'))
         return m.get('css', ['core']), m.get('js', [])
-    return ['core'], []
+    return detect_assets(body, mod)
 
 
 def build(mod, lesson):
