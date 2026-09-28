@@ -69,6 +69,10 @@ def glossary_island():
     return data_island('glossary', 'glossary.json')
 
 
+def messages_island():
+    return data_island('messages', 'messages.json')
+
+
 def resolve_assets(mod, lesson, lmeta, body):
     """css/js для урока: сначала из module.json, затем из legacy manifest.json."""
     if 'css' in lmeta or 'js' in lmeta:
@@ -101,7 +105,7 @@ def build(mod, lesson):
         hero = hero.replace('<!--QA-->', qa_cards(lmeta['questions']))
     nav = lesson_nav(mod_meta, lesson, lambda f: f + '.html')
     content = (hero + '</header>\n<div class="container">\n' + rest
-               + '\n' + nav + '\n</div>\n' + glossary_island())
+               + '\n' + nav + '\n</div>\n' + glossary_island() + messages_island())
     html = shell(lmeta.get('title', mod_meta['title']), load_css(css_names),
                  content, load_js(js_names), stamp)
     outdir = os.path.join(DIST, mod)
@@ -165,7 +169,7 @@ def build_module(mod):
         f'\n  <div class="mod-chips">{chips}</div>\n'
         '</header>\n' + snippet('legend_fold.html') + snippet('feynman_fold.html'))
     content = (mod_hero + '\n<div class="container">\n' + '\n'.join(parts)
-               + '\n</div>\n' + glossary_island())
+               + '\n</div>\n' + glossary_island() + messages_island())
 
     stamp = (f'<!-- built by src/build.py v1 · {date.today().isoformat()} · '
              f'{mod} WHOLE-MODULE · manifest-driven -->')

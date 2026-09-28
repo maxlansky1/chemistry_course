@@ -808,3 +808,14 @@
     border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow-lg);
     font-size: 15px; line-height: 1.5;
   }
+
+  /* Quiz: multi и match */
+  .quiz-errors { margin-top: 10px; }
+  .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
+  .match-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .match-left { flex: 1 1 180px; }
+  .match-select {
+    flex: 0 0 auto; min-height: 44px; padding: 8px 12px; font-size: 15px;
+    border: 1.5px solid var(--border); border-radius: 10px; background: var(--panel);
+    color: var(--text);
+  }

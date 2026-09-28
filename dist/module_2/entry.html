@@ -814,6 +814,17 @@
     border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow-lg);
     font-size: 15px; line-height: 1.5;
   }
+
+  /* Quiz: multi и match */
+  .quiz-errors { margin-top: 10px; }
+  .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
+  .match-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .match-left { flex: 1 1 180px; }
+  .match-select {
+    flex: 0 0 auto; min-height: 44px; padding: 8px 12px; font-size: 15px;
+    border: 1.5px solid var(--border); border-radius: 10px; background: var(--panel);
+    color: var(--text);
+  }
 </style>
 </head>
 <body>
@@ -869,6 +880,28 @@
   "гомогенная смесь": { "definition": "однородная смесь, составные части неразличимы глазом", "module": "module_2" },
   "гетерогенная смесь": { "definition": "неоднородная смесь, части различимы", "module": "module_2" },
   "отстаивание": { "definition": "разделение смеси по разной плотности: тяжёлое оседает", "module": "module_2" }
+}
+</script><script type="application/json" id="messages">{
+  "entryFail": [
+    "Не страшно — сейчас всё узнаешь. Повтори предыдущий урок и пройди входной снова.",
+    "Это входной тест, а не оценка. Загляни в прошлый урок и попробуй ещё раз."
+  ],
+  "finalPass": [
+    "🎉 Модуль пройден!",
+    "🎉 Отлично, ты справился с итоговым тестом!"
+  ],
+  "finalFail": [
+    "Есть над чем поработать. Вернись к текущему уроку и попробуй ещё раз.",
+    "Пока не хватает до порога. Перечитай урок и пройди снова."
+  ],
+  "warmupDone": [
+    "Разминка пройдена.",
+    "Разминка готова — двигаемся дальше."
+  ],
+  "practiceDone": [
+    "Хорошо! Двигаемся дальше.",
+    "Верно! Закрепим это в тетради."
+  ]
 }
 </script>
 

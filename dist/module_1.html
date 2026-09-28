@@ -814,6 +814,17 @@
     border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow-lg);
     font-size: 15px; line-height: 1.5;
   }
+
+  /* Quiz: multi и match */
+  .quiz-errors { margin-top: 10px; }
+  .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
+  .match-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .match-left { flex: 1 1 180px; }
+  .match-select {
+    flex: 0 0 auto; min-height: 44px; padding: 8px 12px; font-size: 15px;
+    border: 1.5px solid var(--border); border-radius: 10px; background: var(--panel);
+    color: var(--text);
+  }
 </style>
 </head>
 <body>
@@ -890,9 +901,10 @@
       Отвечай как получится — неправильные ответы лишь покажут, на что обратить внимание в модуле.
     </p>
 
-    <div id="entryTestContainer"></div>
-
-    <div class="entry-result" id="entryResult"></div>
+    <div id="quiz-u1-warmup" data-config="warmup"></div>
+<script type="application/json" id="quiz-u1-warmup-data">
+{"config": "warmup", "questions": [{"type": "single", "q": "Что изучает химия?", "options": ["Только живые организмы", "Вещества, их свойства и превращения", "Только звёзды и планеты", "Только числа и формулы"], "correct": 1, "why": "Химия — наука о веществах, их свойствах и превращениях."}, {"type": "single", "q": "Что из перечисленного — физическое тело?", "options": ["Вода", "Алюминий", "Ложка", "Кислород"], "correct": 2, "why": "Ложка — физическое тело: у неё есть форма и объём. Вода, алюминий и кислород — это вещества."}, {"type": "single", "q": "Что такое вещество?", "options": ["То, что имеет форму и объём", "То, из чего состоят физические тела", "То, что светит в темноте", "То, что движется"], "correct": 1, "why": "Вещество — то, из чего состоят тела. Форма и объём — признак тела, а не вещества."}, {"type": "single", "q": "Что НЕЛЬЗЯ делать в химической лаборатории?", "options": ["Носить халат", "Пробовать вещества на вкус", "Мыть руки после работы", "Слушать учителя"], "correct": 1, "why": "Пробовать вещества на вкус категорически запрещено: даже «безобидное» вещество в лаборатории может быть опасным."}, {"type": "single", "q": "Что такое наблюдение?", "options": ["Активное воздействие на вещество", "Внимательное изучение явления без вмешательства в процесс", "Измерение температуры", "Выдвижение предположения"], "correct": 1, "why": "Наблюдение — это когда мы смотрим на явление и замечаем, что происходит, не вмешиваясь в процесс."}]}
+</script>
   </div>
 </section>
 
@@ -1827,7 +1839,10 @@
       растворимость, горючесть. Сейчас мы потренируемся.
     </p>
 
-    <div id="practicalTask"></div>
+    <div id="quiz-u3-practice" data-config="practice"></div>
+<script type="application/json" id="quiz-u3-practice-data">
+{"config": "practice", "questions": [{"type": "single", "q": "Цвет и блеск. Какого цвета медь и есть ли у неё блеск?", "options": ["Белая, без блеска", "Рыжая (красноватая), есть металлический блеск", "Чёрная, без блеска", "Прозрачная, без блеска"], "correct": 1, "why": "Медь — рыжий металл с характерным металлическим блеском."}, {"type": "single", "q": "Запах. Есть ли запах у чистой воды?", "options": ["Резкий запах", "Сладкий запах", "Нет запаха", "Запах гари"], "correct": 2, "why": "Чистая вода не имеет запаха. Это одно из её свойств."}, {"type": "single", "q": "Твёрдость. Какое из этих веществ самое твёрдое?", "options": ["Воск", "Алмаз", "Стекло", "Дерево"], "correct": 1, "why": "Алмаз — самое твёрдое природное вещество. Он царапает стекло, а воск и дерево — нет."}, {"type": "single", "q": "Растворимость. Какое вещество растворяется в воде?", "options": ["Песок", "Мел", "Сахар", "Стекло"], "correct": 2, "why": "Сахар хорошо растворяется в воде. Песок, мел и стекло — не растворяются."}, {"type": "single", "q": "Горючесть. Какое вещество горит?", "options": ["Вода", "Песок", "Спирт", "Соль"], "correct": 2, "why": "Спирт — горючее вещество. Вода, песок и соль не горят."}]}
+</script>
 
     <div class="callout callout-note" style="margin-top:16px;">
       <b>📝 В тетрадь:</b> выбери одно вещество дома (например, сахар, соль, монету)
@@ -1937,13 +1952,10 @@
       В конце ты увидишь свой результат и кнопку «Пройти заново», если порог не достигнут.
     </p>
 
-    <div id="testContainer"></div>
-
-    <div class="test-score" id="testScore">
-      Правильных ответов: <span id="scoreNum">0</span> из 15
-    </div>
-
-    <div id="retryBox" style="text-align:center;"></div>
+    <div id="quiz-final" data-config="final"></div>
+<script type="application/json" id="quiz-final-data">
+{"config": "final", "questions": [{"q": "Что изучает химия?", "options": ["Только живые организмы", "Вещества, их свойства и превращения", "Только звёзды и планеты", "Только числа и формулы"], "correct": 1, "why": "Химия — наука о веществах, их свойствах и превращениях. Живые организмы изучает биология, небесные тела — астрономия, числа — математика.", "type": "single"}, {"q": "Что из перечисленного — физическое тело?", "options": ["Вода", "Алюминий", "Ложка", "Кислород"], "correct": 2, "why": "Ложка — физическое тело: у неё есть форма и объём. Вода, алюминий и кислород — это вещества.", "type": "single"}, {"q": "Что такое вещество?", "options": ["То, что имеет форму и объём", "То, из чего состоят физические тела", "То, что светит в темноте", "То, что движется"], "correct": 1, "why": "Вещество — то, из чего состоят тела. Форма и объём — признак тела, а не вещества.", "type": "single"}, {"q": "Какой метод познания предполагает активное воздействие на объект?", "options": ["Наблюдение", "Эксперимент", "Размышление", "Чтение учебника"], "correct": 1, "why": "Эксперимент — это активное воздействие на вещество с целью проверки гипотезы. Наблюдение — пассивно.", "type": "single"}, {"q": "Что такое научная модель?", "options": ["Точная копия объекта", "Упрощённое представление объекта, помогающее его понять", "То же самое, что эксперимент", "То же самое, что гипотеза"], "correct": 1, "why": "Модель — упрощённое описание объекта. Она не копирует реальность, но помогает понять её и предсказать свойства.", "type": "single"}, {"q": "Что такое гипотеза?", "options": ["Доказанное знание", "Предположение, которое нужно проверить", "Результат эксперимента", "Прибор для опытов"], "correct": 1, "why": "Гипотеза — это разумное предположение, которое проверяется экспериментом. Пока гипотеза не доказана — она остаётся догадкой.", "type": "single"}, {"q": "Сколько примерно воды в организме человека?", "options": ["10%", "30%", "70%", "99%"], "correct": 2, "why": "Организм человека примерно на 60–70% состоит из воды. Она нужна для работы клеток, крови, пищеварения и терморегуляции.", "type": "single"}, {"q": "Какой элемент преобладает в организме человека по массе?", "options": ["Углерод", "Водород", "Кислород", "Азот"], "correct": 2, "why": "Кислород — самый «массивный» элемент тела: около 65% массы. Он входит в состав воды и множества органических веществ.", "type": "single"}, {"q": "Что НЕЛЬЗЯ делать в химической лаборатории?", "options": ["Носить халат", "Пробовать вещества на вкус", "Мыть руки после работы", "Слушать учителя"], "correct": 1, "why": "Пробовать вещества на вкус категорически запрещено: даже «безобидное» вещество в лаборатории может быть опасным.", "type": "single"}, {"q": "Для чего нужна мензурка?", "options": ["Для нагревания", "Для измерения объёма жидкости", "Для взвешивания", "Для фильтрования"], "correct": 1, "why": "Мензурка — стеклянный цилиндр с делениями, предназначенный для измерения объёма жидкостей.", "type": "single"}, {"q": "Что нужно сделать в первую очередь, если разбил пробирку?", "options": ["Собрать осколки руками", "Сообщить учителю и убрать осколки щёткой и совком", "Продолжить работу как ни в чём не бывало", "Спрятать осколки в парту"], "correct": 1, "why": "Осколки нельзя трогать руками — можно порезаться. Сообщаем учителю и убираем специальными инструментами.", "type": "single"}, {"q": "Зачем человечеству нужна химия?", "options": ["Только чтобы сдавать экзамены", "Чтобы понимать мир и решать важные задачи: здоровье, еду, материалы, энергию", "Только чтобы зарабатывать деньги", "Она не нужна"], "correct": 1, "why": "Химия помогает решать ключевые задачи человечества: лечить болезни, кормить людей, создавать материалы, добывать энергию и защищать природу.", "type": "single"}, {"q": "Что такое наблюдение?", "options": ["Активное воздействие на вещество", "Внимательное изучение явления без вмешательства в процесс", "Измерение температуры", "Выдвижение предположения"], "correct": 1, "why": "Наблюдение — это когда мы смотрим на явление и замечаем, что происходит, не вмешиваясь в процесс.", "type": "single"}, {"q": "Какой прибор нужен для измерения массы вещества?", "options": ["Мензурка", "Термометр", "Весы", "Воронка"], "correct": 2, "why": "Весы — прибор для измерения массы. Мензурка — для объёма, термометр — для температуры, воронка — для фильтрования.", "type": "single"}, {"q": "Что из перечисленного — свойство вещества?", "options": ["То, что тело имеет форму", "Цвет, запах, твёрдость, горючесть", "То, что тело занимает место", "То, что тело можно потрогать"], "correct": 1, "why": "Цвет, запах, твёрдость, горючесть, растворимость — это свойства вещества. Форма, объём и возможность потрогать — это признаки тела.", "type": "single"}]}
+</script>
   </div>
 </section>
 <nav class="lesson-nav">
@@ -1974,6 +1986,28 @@
   "гомогенная смесь": { "definition": "однородная смесь, составные части неразличимы глазом", "module": "module_2" },
   "гетерогенная смесь": { "definition": "неоднородная смесь, части различимы", "module": "module_2" },
   "отстаивание": { "definition": "разделение смеси по разной плотности: тяжёлое оседает", "module": "module_2" }
+}
+</script><script type="application/json" id="messages">{
+  "entryFail": [
+    "Не страшно — сейчас всё узнаешь. Повтори предыдущий урок и пройди входной снова.",
+    "Это входной тест, а не оценка. Загляни в прошлый урок и попробуй ещё раз."
+  ],
+  "finalPass": [
+    "🎉 Модуль пройден!",
+    "🎉 Отлично, ты справился с итоговым тестом!"
+  ],
+  "finalFail": [
+    "Есть над чем поработать. Вернись к текущему уроку и попробуй ещё раз.",
+    "Пока не хватает до порога. Перечитай урок и пройди снова."
+  ],
+  "warmupDone": [
+    "Разминка пройдена.",
+    "Разминка готова — двигаемся дальше."
+  ],
+  "practiceDone": [
+    "Хорошо! Двигаемся дальше.",
+    "Верно! Закрепим это в тетради."
+  ]
 }
 </script>
 
@@ -2276,97 +2310,195 @@
   render();
 })();
 
-// ============================================================
-//  РАЗОГРЕВ (5 вопросов без оценки)
-// ============================================================
-(function initEntryTest() {
-  const container = document.getElementById('entryTestContainer');
-  const resultBox = document.getElementById('entryResult');
-  if (!container || !resultBox) return;
+(function initQuizzes() {
+  const islands = document.querySelectorAll('script[type="application/json"][id^="quiz-"]');
+  if (!islands.length) return;
 
-  const QUESTIONS = [
-    {
-      q: 'Что изучает химия?',
-      options: ['Только живые организмы', 'Вещества, их свойства и превращения', 'Только звёзды и планеты', 'Только числа и формулы'],
-      correct: 1,
-      why: 'Химия — наука о веществах, их свойствах и превращениях.'
-    },
-    {
-      q: 'Что из перечисленного — физическое тело?',
-      options: ['Вода', 'Алюминий', 'Ложка', 'Кислород'],
-      correct: 2,
-      why: 'Ложка — физическое тело: у неё есть форма и объём. Вода, алюминий и кислород — это вещества.'
-    },
-    {
-      q: 'Что такое вещество?',
-      options: ['То, что имеет форму и объём', 'То, из чего состоят физические тела', 'То, что светит в темноте', 'То, что движется'],
-      correct: 1,
-      why: 'Вещество — то, из чего состоят тела. Форма и объём — признак тела, а не вещества.'
-    },
-    {
-      q: 'Что НЕЛЬЗЯ делать в химической лаборатории?',
-      options: ['Носить халат', 'Пробовать вещества на вкус', 'Мыть руки после работы', 'Слушать учителя'],
-      correct: 1,
-      why: 'Пробовать вещества на вкус категорически запрещено: даже «безобидное» вещество в лаборатории может быть опасным.'
-    },
-    {
-      q: 'Что такое наблюдение?',
-      options: [
-        'Активное воздействие на вещество',
-        'Внимательное изучение явления без вмешательства в процесс',
-        'Измерение температуры',
-        'Выдвижение предположения'
-      ],
-      correct: 1,
-      why: 'Наблюдение — это когда мы смотрим на явление и замечаем, что происходит, не вмешиваясь в процесс.'
+  const msgIsland = document.getElementById('messages');
+  let MSG = {};
+  try { MSG = msgIsland ? JSON.parse(msgIsland.textContent) : {}; } catch (e) { MSG = {}; }
+
+  function pick(kind) {
+    const arr = MSG[kind] || [];
+    return arr.length ? arr[Math.floor(Math.random() * arr.length)] : '';
+  }
+
+  function shuffle(a) {
+    const r = a.slice();
+    for (let i = r.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [r[i], r[j]] = [r[j], r[i]];
     }
-  ];
+    return r;
+  }
 
-  let correctCount = 0;
-  let answered = 0;
+  const PASS_RATIO = 0.8;
+  const LETTERS = 'ABCDEFGH';
 
-  container.innerHTML = QUESTIONS.map((q, i) => `
-    <div class="test-question">
-      <div class="q-text"><span class="q-num">${i + 1}</span><span>${q.q}</span></div>
-      <div class="test-options">
-        ${q.options.map((o, j) => `
-          <div class="test-option" data-q="${i}" data-o="${j}">
-            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
-            <span>${o}</span>
-          </div>
-        `).join('')}
-      </div>
-      <div class="explanation" id="entryExp-${i}"></div>
-    </div>
-  `).join('');
+  islands.forEach((island) => {
+    let data;
+    try { data = JSON.parse(island.textContent); } catch (e) { return; }
+    const targetId = data.target || island.id.replace(/-data$/, '');
+    const host = document.getElementById(targetId);
+    if (!host) return;
+    const questions = data.questions || [];
+    const config = data.config || host.dataset.config || 'practice';
+    const threshold = data.threshold != null
+      ? data.threshold
+      : Math.ceil(questions.length * PASS_RATIO);
 
-  container.querySelectorAll('.test-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      const qIdx = parseInt(opt.dataset.q);
-      const oIdx = parseInt(opt.dataset.o);
-      const q = QUESTIONS[qIdx];
-      const exp = document.getElementById(`entryExp-${qIdx}`);
-      if (exp.classList.contains('show')) return;
+    const state = { answered: 0, correct: 0, wrong: [] };
 
-      const isCorrect = oIdx === q.correct;
-      container.querySelectorAll(`[data-q="${qIdx}"]`).forEach(o => {
-        o.classList.add('disabled');
-        const idx = parseInt(o.dataset.o);
-        if (idx === q.correct) o.classList.add('correct');
-        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
+    function render() {
+      host.innerHTML = '';
+      state.answered = 0;
+      state.correct = 0;
+      state.wrong = [];
+
+      const score = document.createElement('div');
+      score.className = 'test-score';
+      score.textContent = 'Правильных ответов: 0 из ' + questions.length;
+      host.appendChild(score);
+
+      const ordered = data.shuffle === false
+        ? questions.map((q, i) => ({ q: q, idx: i }))
+        : shuffle(questions.map((q, i) => ({ q: q, idx: i })));
+
+      ordered.forEach(({ q, idx }, displayIndex) => {
+        const block = document.createElement('div');
+        block.className = 'test-question';
+        block.dataset.q = String(idx);
+        block.innerHTML = '<div class="q-text"><span class="q-num">' +
+          (displayIndex + 1) + '</span><span>' + q.q + '</span></div>' +
+          '<div class="test-options"></div>' +
+          '<div class="explanation" id="exp-' + island.id + '-' + idx + '"></div>';
+
+        const optBox = block.querySelector('.test-options');
+        if (q.type === 'match') {
+          q.left.forEach((leftText, li) => {
+            const row = document.createElement('div');
+            row.className = 'test-option match-row';
+            const opts = q.right.map((rt, ri) =>
+              '<option value="' + ri + '">' + rt + '</option>').join('');
+            row.innerHTML = '<span class="match-left">' + leftText + '</span>' +
+              '<select class="match-select" data-left="' + li + '">' +
+              '<option value="">—</option>' + opts + '</select>';
+            optBox.appendChild(row);
+          });
+          const btn = document.createElement('button');
+          btn.className = 'retry-btn';
+          btn.type = 'button';
+          btn.textContent = 'Проверить';
+          btn.addEventListener('click', () => checkMatch(block, q, idx));
+          optBox.appendChild(btn);
+        } else {
+          q.options.forEach((optText, oi) => {
+            const opt = document.createElement('div');
+            opt.className = 'test-option';
+            opt.dataset.opt = String(oi);
+            opt.innerHTML = '<span class="opt-marker">' +
+              (q.type === 'multi' ? '☐' : LETTERS[oi]) +
+              '</span><span>' + optText + '</span>';
+            opt.addEventListener('click', () => {
+              if (q.type === 'multi') {
+                opt.classList.toggle('picked');
+                return;
+              }
+              answerSingle(block, q, idx, oi);
+            });
+            optBox.appendChild(opt);
+          });
+          if (q.type === 'multi') {
+            const btn = document.createElement('button');
+            btn.className = 'retry-btn';
+            btn.type = 'button';
+            btn.textContent = 'Проверить';
+            btn.addEventListener('click', () => checkMulti(block, q, idx));
+            optBox.appendChild(btn);
+          }
+        }
+        host.appendChild(block);
       });
+    }
+
+    function finish(block, exp, isCorrect, q) {
+      block.querySelectorAll('.test-option').forEach((o) => o.classList.add('disabled'));
+      block.querySelectorAll('button').forEach((b) => (b.disabled = true));
       exp.classList.add('show', isCorrect ? 'ok' : 'no');
-      exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+      exp.innerHTML = '<b>' + (isCorrect ? '✅ Правильно!' : '❌ Не совсем.') +
+        '</b> ' + (q.why || '');
+      if (isCorrect) state.correct++; else state.wrong.push(q.q);
+      state.answered++;
+      const score = host.querySelector('.test-score');
+      if (score) score.textContent = 'Правильных ответов: ' +
+        state.correct + ' из ' + questions.length;
+      if (state.answered === questions.length) summarize();
+    }
 
-      if (isCorrect) correctCount++;
-      answered++;
+    function answerSingle(block, q, idx, oi) {
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (i === q.correct) o.classList.add('correct');
+        if (i === oi && oi !== q.correct) o.classList.add('wrong');
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx),
+        oi === q.correct, q);
+    }
 
-      if (answered === QUESTIONS.length) {
-        resultBox.classList.add('show');
-        resultBox.classList.add('mid');
-        resultBox.innerHTML = `👍 <b>Разминка пройдена!</b> Правильных ответов: ${correctCount} из ${QUESTIONS.length}. Запомни вопросы, где ошибся, — ответы найдёшь в модуле. А теперь — за дело!`;
+    function checkMulti(block, q, idx) {
+      const picked = Array.from(block.querySelectorAll('.test-option.picked'))
+        .map((o) => parseInt(o.dataset.opt, 10)).sort();
+      const correct = q.correct.slice().sort();
+      const ok = picked.length === correct.length &&
+        picked.every((v, i) => v === correct[i]);
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (q.correct.indexOf(i) !== -1) o.classList.add('correct');
+        else if (o.classList.contains('picked')) o.classList.add('wrong');
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function checkMatch(block, q, idx) {
+      let ok = true;
+      block.querySelectorAll('.match-select').forEach((sel) => {
+        const li = parseInt(sel.dataset.left, 10);
+        const val = parseInt(sel.value, 10);
+        if (val !== q.correct[li]) ok = false;
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function summarize() {
+      const box = document.createElement('div');
+      const passed = state.correct >= threshold;
+      let text;
+      if (config === 'final') {
+        text = passed ? pick('finalPass') : pick('finalFail');
+      } else if (config === 'entry') {
+        text = passed ? pick('practiceDone') : pick('entryFail');
+      } else if (config === 'warmup') {
+        text = pick('warmupDone');
+      } else {
+        text = pick('practiceDone');
       }
-    });
+      box.className = 'callout ' + (passed ? 'callout-ok' : 'callout-warn');
+      let html = text + ' <b>' + state.correct + ' из ' + questions.length + '</b>';
+      if (state.wrong.length) {
+        html += '<div class="recap-card quiz-errors"><b>Разбор ошибок:</b><ul>' +
+          state.wrong.map((w) => '<li>' + w + '</li>').join('') + '</ul></div>';
+      }
+      box.innerHTML = html;
+      const retry = document.createElement('button');
+      retry.className = 'retry-btn';
+      retry.type = 'button';
+      retry.textContent = 'Пройти заново';
+      retry.addEventListener('click', render);
+      box.appendChild(retry);
+      host.appendChild(box);
+    }
+
+    render();
   });
 })();
 
@@ -2378,6 +2510,39 @@
     entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
   }, { threshold: 0.08 });
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+(function initGlossary() {
+  const island = document.getElementById('glossary');
+  const terms = document.querySelectorAll('.term[data-term]');
+  if (!island || !terms.length) return;
+
+  let DATA = {};
+  try { DATA = JSON.parse(island.textContent); } catch (e) { return; }
+
+  const pop = document.createElement('div');
+  pop.className = 'glossary-pop';
+  pop.setAttribute('role', 'tooltip');
+  pop.hidden = true;
+  document.body.appendChild(pop);
+
+  function hide() { pop.hidden = true; }
+
+  terms.forEach(el => {
+    el.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const item = DATA[el.dataset.term];
+      if (!item) return;
+      pop.textContent = item.definition;
+      const r = el.getBoundingClientRect();
+      pop.style.left = Math.max(8, Math.min(window.innerWidth - 280, r.left)) + 'px';
+      pop.style.top = (r.bottom + window.scrollY + 8) + 'px';
+      pop.hidden = false;
+    });
+  });
+
+  document.addEventListener('click', hide);
+  window.addEventListener('scroll', hide, { passive: true });
 })();
 
 // ============================================================
@@ -2892,364 +3057,6 @@ makeDropGame({
   });
 
   cards[0].click();
-})();
-
-// ============================================================
-//  ПРАКТИЧЕСКОЕ ЗАДАНИЕ (тест)
-// ============================================================
-(function initPracticalTask() {
-  const container = document.getElementById('practicalTask');
-  if (!container) return;
-
-  const QUESTIONS = [
-    {
-      plan: 'Цвет и блеск',
-      q: 'Какого цвета медь и есть ли у неё блеск?',
-      options: [
-        'Белая, без блеска',
-        'Рыжая (красноватая), есть металлический блеск',
-        'Чёрная, без блеска',
-        'Прозрачная, без блеска'
-      ],
-      correct: 1,
-      why: 'Медь — рыжий металл с характерным металлическим блеском.'
-    },
-    {
-      plan: 'Запах',
-      q: 'Есть ли запах у чистой воды?',
-      options: [
-        'Резкий запах',
-        'Сладкий запах',
-        'Нет запаха',
-        'Запах гари'
-      ],
-      correct: 2,
-      why: 'Чистая вода не имеет запаха. Это одно из её свойств.'
-    },
-    {
-      plan: 'Твёрдость',
-      q: 'Какое из этих веществ самое твёрдое?',
-      options: [
-        'Воск',
-        'Алмаз',
-        'Стекло',
-        'Дерево'
-      ],
-      correct: 1,
-      why: 'Алмаз — самое твёрдое природное вещество. Он царапает стекло, а воск и дерево — нет.'
-    },
-    {
-      plan: 'Растворимость',
-      q: 'Какое вещество растворяется в воде?',
-      options: [
-        'Песок',
-        'Мел',
-        'Сахар',
-        'Стекло'
-      ],
-      correct: 2,
-      why: 'Сахар хорошо растворяется в воде. Песок, мел и стекло — не растворяются.'
-    },
-    {
-      plan: 'Горючесть',
-      q: 'Какое вещество горит?',
-      options: [
-        'Вода',
-        'Песок',
-        'Спирт',
-        'Соль'
-      ],
-      correct: 2,
-      why: 'Спирт — горючее вещество. Вода, песок и соль не горят.'
-    }
-  ];
-
-  let correctCount = 0;
-  let answered = 0;
-
-  container.innerHTML = QUESTIONS.map((q, i) => `
-    <div class="test-question">
-      <div class="q-text"><span class="q-num">${i + 1}</span><span><b>${q.plan}.</b> ${q.q}</span></div>
-      <div class="test-options">
-        ${q.options.map((o, j) => `
-          <div class="test-option" data-pq="${i}" data-po="${j}">
-            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
-            <span>${o}</span>
-          </div>
-        `).join('')}
-      </div>
-      <div class="explanation" id="pracExp-${i}"></div>
-    </div>
-  `).join('');
-
-  container.querySelectorAll('.test-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      const qIdx = parseInt(opt.dataset.pq);
-      const oIdx = parseInt(opt.dataset.po);
-      const q = QUESTIONS[qIdx];
-      const exp = document.getElementById(`pracExp-${qIdx}`);
-      if (exp.classList.contains('show')) return;
-
-      const isCorrect = oIdx === q.correct;
-      container.querySelectorAll(`[data-pq="${qIdx}"]`).forEach(o => {
-        o.classList.add('disabled');
-        const idx = parseInt(o.dataset.po);
-        if (idx === q.correct) o.classList.add('correct');
-        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
-      });
-      exp.classList.add('show', isCorrect ? 'ok' : 'no');
-      exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
-
-      if (isCorrect) correctCount++;
-      answered++;
-
-      if (answered === QUESTIONS.length) {
-        const msg = correctCount >= 4
-          ? '🎉 <b>Отлично!</b> Ты умеешь описывать вещества по плану.'
-          : '👍 <b>Хорошо!</b> Но стоит ещё раз повторить свойства веществ.';
-        const box = document.createElement('div');
-        box.className = 'callout callout-ok';
-        box.style.marginTop = '14px';
-        box.innerHTML = `Правильных ответов: <b>${correctCount} из ${QUESTIONS.length}</b>. ${msg}`;
-        container.appendChild(box);
-      }
-    });
-  });
-})();
-
-// ============================================================
-//  ИТОГОВЫЙ ТЕСТ (15 вопросов, порог 80%)
-// ============================================================
-const TEST_QUESTIONS = [
-  {
-    q: 'Что изучает химия?',
-    options: ['Только живые организмы', 'Вещества, их свойства и превращения', 'Только звёзды и планеты', 'Только числа и формулы'],
-    correct: 1,
-    why: 'Химия — наука о веществах, их свойствах и превращениях. Живые организмы изучает биология, небесные тела — астрономия, числа — математика.'
-  },
-  {
-    q: 'Что из перечисленного — физическое тело?',
-    options: ['Вода', 'Алюминий', 'Ложка', 'Кислород'],
-    correct: 2,
-    why: 'Ложка — физическое тело: у неё есть форма и объём. Вода, алюминий и кислород — это вещества.'
-  },
-  {
-    q: 'Что такое вещество?',
-    options: ['То, что имеет форму и объём', 'То, из чего состоят физические тела', 'То, что светит в темноте', 'То, что движется'],
-    correct: 1,
-    why: 'Вещество — то, из чего состоят тела. Форма и объём — признак тела, а не вещества.'
-  },
-  {
-    q: 'Какой метод познания предполагает активное воздействие на объект?',
-    options: ['Наблюдение', 'Эксперимент', 'Размышление', 'Чтение учебника'],
-    correct: 1,
-    why: 'Эксперимент — это активное воздействие на вещество с целью проверки гипотезы. Наблюдение — пассивно.'
-  },
-  {
-    q: 'Что такое научная модель?',
-    options: [
-      'Точная копия объекта',
-      'Упрощённое представление объекта, помогающее его понять',
-      'То же самое, что эксперимент',
-      'То же самое, что гипотеза'
-    ],
-    correct: 1,
-    why: 'Модель — упрощённое описание объекта. Она не копирует реальность, но помогает понять её и предсказать свойства.'
-  },
-  {
-    q: 'Что такое гипотеза?',
-    options: [
-      'Доказанное знание',
-      'Предположение, которое нужно проверить',
-      'Результат эксперимента',
-      'Прибор для опытов'
-    ],
-    correct: 1,
-    why: 'Гипотеза — это разумное предположение, которое проверяется экспериментом. Пока гипотеза не доказана — она остаётся догадкой.'
-  },
-  {
-    q: 'Сколько примерно воды в организме человека?',
-    options: ['10%', '30%', '70%', '99%'],
-    correct: 2,
-    why: 'Организм человека примерно на 60–70% состоит из воды. Она нужна для работы клеток, крови, пищеварения и терморегуляции.'
-  },
-  {
-    q: 'Какой элемент преобладает в организме человека по массе?',
-    options: ['Углерод', 'Водород', 'Кислород', 'Азот'],
-    correct: 2,
-    why: 'Кислород — самый «массивный» элемент тела: около 65% массы. Он входит в состав воды и множества органических веществ.'
-  },
-  {
-    q: 'Что НЕЛЬЗЯ делать в химической лаборатории?',
-    options: ['Носить халат', 'Пробовать вещества на вкус', 'Мыть руки после работы', 'Слушать учителя'],
-    correct: 1,
-    why: 'Пробовать вещества на вкус категорически запрещено: даже «безобидное» вещество в лаборатории может быть опасным.'
-  },
-  {
-    q: 'Для чего нужна мензурка?',
-    options: ['Для нагревания', 'Для измерения объёма жидкости', 'Для взвешивания', 'Для фильтрования'],
-    correct: 1,
-    why: 'Мензурка — стеклянный цилиндр с делениями, предназначенный для измерения объёма жидкостей.'
-  },
-  {
-    q: 'Что нужно сделать в первую очередь, если разбил пробирку?',
-    options: [
-      'Собрать осколки руками',
-      'Сообщить учителю и убрать осколки щёткой и совком',
-      'Продолжить работу как ни в чём не бывало',
-      'Спрятать осколки в парту'
-    ],
-    correct: 1,
-    why: 'Осколки нельзя трогать руками — можно порезаться. Сообщаем учителю и убираем специальными инструментами.'
-  },
-  {
-    q: 'Зачем человечеству нужна химия?',
-    options: ['Только чтобы сдавать экзамены', 'Чтобы понимать мир и решать важные задачи: здоровье, еду, материалы, энергию', 'Только чтобы зарабатывать деньги', 'Она не нужна'],
-    correct: 1,
-    why: 'Химия помогает решать ключевые задачи человечества: лечить болезни, кормить людей, создавать материалы, добывать энергию и защищать природу.'
-  },
-  {
-    q: 'Что такое наблюдение?',
-    options: [
-      'Активное воздействие на вещество',
-      'Внимательное изучение явления без вмешательства в процесс',
-      'Измерение температуры',
-      'Выдвижение предположения'
-    ],
-    correct: 1,
-    why: 'Наблюдение — это когда мы смотрим на явление и замечаем, что происходит, не вмешиваясь в процесс.'
-  },
-  {
-    q: 'Какой прибор нужен для измерения массы вещества?',
-    options: ['Мензурка', 'Термометр', 'Весы', 'Воронка'],
-    correct: 2,
-    why: 'Весы — прибор для измерения массы. Мензурка — для объёма, термометр — для температуры, воронка — для фильтрования.'
-  },
-  {
-    q: 'Что из перечисленного — свойство вещества?',
-    options: [
-      'То, что тело имеет форму',
-      'Цвет, запах, твёрдость, горючесть',
-      'То, что тело занимает место',
-      'То, что тело можно потрогать'
-    ],
-    correct: 1,
-    why: 'Цвет, запах, твёрдость, горючесть, растворимость — это свойства вещества. Форма, объём и возможность потрогать — это признаки тела.'
-  }
-];
-
-(function renderTest() {
-  const container = document.getElementById('testContainer');
-  const scoreBox = document.getElementById('testScore');
-  const retryBox = document.getElementById('retryBox');
-  if (!container) return;
-
-  const TOTAL = TEST_QUESTIONS.length;
-  const THRESHOLD = Math.ceil(TOTAL * 0.8);
-
-  let answered = 0;
-  let correctCount = 0;
-  let questionStates = new Array(TOTAL).fill(null);
-
-  function renderAll() {
-    answered = 0;
-    correctCount = 0;
-    container.innerHTML = '';
-    retryBox.innerHTML = '';
-    scoreBox.classList.remove('good', 'mid', 'bad');
-    scoreBox.innerHTML = `Правильных ответов: <span id="scoreNum">0</span> из ${TOTAL}`;
-
-    const WRONG_HEADERS = [
-      '❌ Подумай ещё раз.',
-      '❌ Будь внимательнее.',
-      '❌ Давай разберёмся.',
-      '❌ Почти! Но не совсем так.',
-      '❌ Есть над чем подумать.',
-      '❌ Не спеши, посмотри ещё раз.',
-      '❌ Хм, не то. Попробуй снова.'
-    ];
-
-    TEST_QUESTIONS.forEach((q, i) => {
-      const block = document.createElement('div');
-      block.className = 'test-question';
-      block.innerHTML = `
-        <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
-        <div class="test-options">
-          ${q.options.map((opt, j) => `
-            <div class="test-option" data-q="${i}" data-opt="${j}">
-              <span class="opt-marker">${String.fromCharCode(65+j)}</span>
-              <span>${opt}</span>
-            </div>
-          `).join('')}
-        </div>
-        <div class="explanation" id="exp-${i}"></div>
-      `;
-      container.appendChild(block);
-    });
-
-    container.querySelectorAll('.test-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        const qIdx = parseInt(opt.dataset.q);
-        const oIdx = parseInt(opt.dataset.opt);
-        const question = TEST_QUESTIONS[qIdx];
-        const options = container.querySelectorAll(`[data-q="${qIdx}"]`);
-        const exp = document.getElementById(`exp-${qIdx}`);
-
-        if (exp.classList.contains('show')) return;
-
-        const isCorrect = (oIdx === question.correct);
-
-        options.forEach(o => {
-          o.classList.add('disabled');
-          const idx = parseInt(o.dataset.opt);
-          if (idx === question.correct) o.classList.add('correct');
-          if (idx === oIdx && !isCorrect) o.classList.add('wrong');
-        });
-
-        exp.classList.add('show');
-        exp.classList.add(isCorrect ? 'ok' : 'no');
-
-        if (isCorrect) {
-          correctCount++;
-          exp.innerHTML = `<b>✅ Правильно!</b> ${question.why}`;
-        } else {
-          const header = WRONG_HEADERS[Math.floor(Math.random() * WRONG_HEADERS.length)];
-          exp.innerHTML = `<b>${header}</b> Правильный ответ выделен зелёным. ${question.why}`;
-        }
-
-        answered++;
-        const scoreNum = document.getElementById('scoreNum');
-        if (scoreNum) scoreNum.textContent = correctCount;
-
-        if (answered === TOTAL) {
-          scoreBox.classList.remove('good', 'mid', 'bad');
-          if (correctCount >= THRESHOLD) {
-            scoreBox.classList.add('good');
-            scoreBox.innerHTML = `🎉 <b>Модуль пройден!</b> ${correctCount} из ${TOTAL} (порог: ${THRESHOLD}).`;
-          } else if (correctCount >= Math.ceil(TOTAL * 0.6)) {
-            scoreBox.classList.add('mid');
-            scoreBox.innerHTML = `👍 <b>Почти получилось!</b> ${correctCount} из ${TOTAL}. Порог — ${THRESHOLD}. Перечитай объяснения и попробуй снова.`;
-          } else {
-            scoreBox.classList.add('bad');
-            scoreBox.innerHTML = `💪 <b>Есть над чем поработать:</b> ${correctCount} из ${TOTAL}. Перечитай модуль и попробуй снова.`;
-          }
-
-          retryBox.innerHTML = `
-            <button class="retry-btn" id="retryTest">↺ Пройти тест заново</button>
-          `;
-          document.getElementById('retryTest').addEventListener('click', () => {
-            renderAll();
-            window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
-          });
-        } else {
-          scoreBox.classList.remove('good', 'mid', 'bad');
-          scoreBox.innerHTML = `Правильных ответов: <span id="scoreNum">${correctCount}</span> из ${TOTAL}`;
-        }
-      });
-    });
-  }
-
-  renderAll();
 })();
 
 </script>
