@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 3. Что внутри атома?</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --h-deep: #0e7490;
+    --h-color: #06b6d4;
+    --accent: #8b5cf6;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --radius: 16px;
+    --shadow: 0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg: 0 12px 40px -12px rgba(0,0,0,.15);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    font-size: 17px;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+  .hero {
+    text-align: center; padding: 56px 0 26px;
+    background: linear-gradient(180deg, #ecfeff 0%, var(--bg) 100%);
+  }
+  .hero .badge {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--h-deep);
+    border: 1.5px solid var(--h-deep); padding: 6px 18px;
+    border-radius: 50px; margin-bottom: 20px; background: rgba(6,182,212,.05);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 800;
+    letter-spacing: -1px; line-height: 1.15;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 14px;
+  }
+  .hero p { color: var(--muted); font-size: 17px; max-width: 750px; margin: 0 auto; }
+
+  .section { padding: 24px 0; }
+
+  .stage {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 26px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .stage::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  }
+  .stage.s-legend::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b); }
+  .stage.s-entry::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .stage.s-intro::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6); }
+  .stage.s-why::before   { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s1::before      { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+  .stage.s2::before      { background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+  .stage.s3::before      { background: linear-gradient(90deg, #10b981, #059669); }
+  .stage.s4::before      { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+  .stage.s-feyn::before  { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s-prac::before  { background: linear-gradient(90deg, #06b6d4, #10b981); }
+  .stage.s-test::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  .stage-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .stage-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--panel-2); color: var(--h-deep);
+    font-size: 22px; font-weight: 900; flex-shrink: 0;
+    border: 2px solid var(--border);
+  }
+  .stage-title { font-size: 21px; font-weight: 700; color: var(--text); }
+  .stage-subtitle { font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+  .callout {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 16px 0;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  /* Единая палитра: коллауты совпадают с «Условными обозначениями» */
+  .callout-idea {
+    background: #FFF9E6; border-left: 5px solid #FFE0B2; color: #7A5F00;
+  }
+  .callout-idea b { color: #7A5F00; }
+  .callout-warn {
+    background: #FDF2F2; border-left: 5px solid #FDE8E8; color: #9B1C1C;
+  }
+  .callout-warn b { color: #9B1C1C; }
+  .callout-note {
+    background: #EBF5FF; border-left: 5px solid #E1EFFE; color: #1E429F;
+  }
+  .callout-note b { color: #1E429F; }
+  .callout-ok {
+    background: #EDF7ED; border-left: 5px solid #C8E6C9; color: #1E4620;
+  }
+  .callout-ok b { color: #1E4620; }
+  .callout-game {
+    background: #F3E8FF; border-left: 5px solid #E9D5FF; color: #6B21A8;
+  }
+  .callout-game b { color: #6B21A8; }
+  .callout-test {
+    background: #F1F5F9; border-left: 5px solid #E2E8F0; color: #475569;
+  }
+  .callout-test b { color: #475569; }
+
+  .cta { color: #6875F5; font-weight: 800; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .card {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--h-color), var(--accent));
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,.15);
+    border-color: var(--h-deep);
+  }
+  .card .c-title { font-size: 16.5px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .card .c-desc { font-size: 15.5px; color: var(--muted); line-height: 1.65; }
+  .card .c-desc b { color: var(--text); }
+
+  /* Таймлайн */
+  .timeline { position: relative; padding: 10px 0; margin-top: 10px; }
+  .timeline-track {
+    display: flex; gap: 0; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+  }
+  .timeline-track::-webkit-scrollbar { height: 8px; }
+  .timeline-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .timeline-item {
+    flex: 0 0 auto; width: 210px; padding: 16px; margin-right: 12px;
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; cursor: pointer; transition: all .25s;
+    scroll-snap-align: start; text-align: center;
+  }
+  .timeline-item:hover { transform: translateY(-3px); border-color: var(--h-deep); }
+  .timeline-item.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+  }
+  .timeline-item .t-emoji { font-size: 30px; }
+  .timeline-item .t-era {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep); margin-top: 6px;
+  }
+  .timeline-item .t-name { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+  .timeline-detail {
+    margin-top: 14px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 14px; color: #e2e8f0; min-height: 140px;
+    transition: all .3s;
+  }
+  .timeline-detail .td-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+  .timeline-detail .td-text { font-size: 15.5px; line-height: 1.75; color: #cbd5e1; }
+  .timeline-detail .td-text b { color: #fff; }
+
+  /* Сетка задач */
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .task-card {
+    padding: 20px; background: var(--panel-2); border-radius: 14px;
+    border: 1.5px solid var(--border); transition: all .25s;
+  }
+  .task-card:hover {
+    border-color: var(--h-deep); transform: translateY(-3px);
+    box-shadow: 0 8px 20px -8px rgba(6,182,212,.3);
+  }
+  .task-card .tc-emoji { font-size: 32px; line-height: 1; }
+  .task-card .tc-title { font-size: 16px; font-weight: 800; margin-top: 8px; }
+  .task-card .tc-desc { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .task-card .tc-examples { font-size: 13.5px; color: var(--text); margin-top: 8px; line-height: 1.55; }
+  .task-card .tc-examples span { display: inline-block; background: #fff; padding: 3px 8px; border-radius: 6px; margin: 2px 3px 2px 0; border: 1px solid var(--border); font-weight: 600; }
+
+  /* Игры */
+  .game-area {
+    background: var(--panel-2); border-radius: 14px;
+    padding: 22px; margin-top: 18px;
+  }
+  .game-area h4 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .game-area .game-hint { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+
+  .dual-basket {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .basket {
+    border: 2.5px dashed var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    min-height: 160px;
+    text-align: center;
+    transition: all .25s;
+    background: #fff;
+  }
+  .basket.hover { border-color: var(--accent); background: #f5f3ff; }
+  .basket .basket-title {
+    font-size: 14px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .basket .basket-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .basket .basket-chip {
+    background: var(--panel-2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .basket.good { border-color: var(--green); background: #ecfdf5; }
+  .basket.bad { border-color: var(--red); background: #fef2f2; }
+
+  .game-pool {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-height: 100px;
+    margin-bottom: 14px;
+  }
+  .game-pool .pool-item {
+    background: var(--panel-2);
+    border: 2px solid var(--border);
+    border-radius: 10px; padding: 10px 18px;
+    cursor: grab; font-size: 15px; font-weight: 700;
+    transition: all .2s; user-select: none;
+  }
+  .game-pool .pool-item:hover { border-color: var(--h-deep); transform: translateY(-2px); }
+  .game-pool .pool-item.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .game-pool .pool-item.dragging { opacity: .5; }
+  .game-pool .pool-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: #fef2f2; }
+
+  .reset-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 50px;
+    background: var(--panel-2); color: var(--text);
+    border: 1.5px solid var(--border);
+    cursor: pointer; font-size: 14px; font-weight: 700;
+    transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--h-deep); color: var(--h-deep); }
+
+  .game-feedback { margin-top: 14px; font-size: 15.5px; font-weight: 700; min-height: 24px; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Треугольник Джонстона: стили припаркованы для Модуля 4б (введение);
+     в ранних модулях блок не используется */
+  .johnstone-wrap {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px;
+    align-items: center; margin-top: 18px;
+  }
+  .johnstone-svg-wrap {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 2px solid var(--border); border-radius: 14px; padding: 14px;
+  }
+  .johnstone-svg-wrap svg { width: 100%; height: auto; display: block; }
+  .johnstone-info {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; min-height: 220px;
+  }
+  .johnstone-info .ji-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--h-deep); }
+  .johnstone-info .ji-text { font-size: 15.5px; line-height: 1.7; color: var(--text); }
+  .johnstone-info .ji-example {
+    margin-top: 14px; padding: 12px 16px;
+    background: #fff; border-radius: 10px;
+    border-left: 4px solid var(--accent);
+    font-size: 14.5px; color: #4c1d95;
+  }
+  .johnstone-info .ji-example b { color: #5b21b6; }
+
+  .sciences-svg-wrap {
+    background: linear-gradient(180deg, #faf5ff, #fff);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 16px;
+  }
+  .sciences-svg-wrap svg { width: 100%; height: auto; display: block; }
+
+  /* Методы познания */
+  .method-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border-radius: 14px;
+    border: 2px solid var(--border);
+  }
+  .method-step {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 18px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-width: 130px;
+    transition: all .35s;
+    cursor: pointer;
+  }
+  .method-step.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+    transform: scale(1.05);
+  }
+  .method-step .ms-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--h-deep); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .method-step.active .ms-num { background: var(--accent); }
+  .method-step .ms-icon { font-size: 28px; }
+  .method-step .ms-name { font-size: 14px; font-weight: 800; margin-top: 6px; text-align: center; }
+  .method-arrow {
+    font-size: 24px; color: var(--muted); animation: slide 2s infinite;
+  }
+  @keyframes slide {
+    0%,100% { transform: translateX(0); opacity: .5; }
+    50% { transform: translateX(4px); opacity: 1; color: var(--accent); }
+  }
+  .method-detail-box {
+    margin-top: 16px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px;
+    color: #e2e8f0;
+    min-height: 130px;
+    transition: all .3s;
+  }
+  .method-detail-box .mb-title { font-size: 16px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .method-detail-box .mb-text { font-size: 15px; line-height: 1.7; color: #cbd5e1; }
+  .method-detail-box .mb-text b { color: #fff; }
+
+  /* Свойства веществ */
+  .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .property-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    transition: all .25s;
+  }
+  .property-card:hover { transform: translateY(-4px); border-color: var(--h-deep); box-shadow: var(--shadow-lg); }
+  .property-card .pc-svg {
+    height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .property-card .pc-title { font-size: 16px; font-weight: 800; }
+  .property-card .pc-desc { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.55; }
+
+  /* Процессы жизни */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .process-card {
+    background: linear-gradient(180deg, #fff, #f0fdf4);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: all .25s;
+  }
+  .process-card:hover { transform: translateY(-4px); border-color: var(--green); box-shadow: var(--shadow-lg); }
+  .process-card .prc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .process-card .prc-icon { font-size: 32px; }
+  .process-card .prc-name { font-size: 16px; font-weight: 800; }
+  .process-card .prc-eq {
+    background: #fff; border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px; font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    font-style: italic;
+  }
+  .process-card .prc-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* Правила безопасности */
+  .safety-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .safety-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px; background: var(--panel-2);
+    border-radius: 12px; border: 2px solid var(--border);
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .safety-item:hover { border-color: var(--h-deep); transform: translateX(4px); }
+  .safety-item .si-icon { font-size: 30px; line-height: 1; flex-shrink: 0; }
+  .safety-item .si-check {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: transparent; font-weight: 900;
+    transition: all .25s; background: #fff;
+    margin-top: 2px;
+  }
+  .safety-item.checked { border-color: var(--green); background: #ecfdf5; }
+  .safety-item.checked .si-check {
+    background: var(--green); border-color: var(--green); color: #fff;
+  }
+  .safety-item .si-text { font-size: 15.5px; line-height: 1.6; flex: 1; }
+  .safety-item .si-text b { color: var(--red); }
+
+  /* Оборудование */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .equip-card {
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; padding: 14px; text-align: center;
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .equip-card:hover { transform: translateY(-4px); border-color: var(--h-deep); }
+  .equip-card.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .equip-card .eq-icon { font-size: 44px; line-height: 1; }
+  .equip-card .eq-name { font-size: 14px; font-weight: 800; margin-top: 8px; }
+
+  .equip-detail {
+    margin-top: 16px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px; color: #e2e8f0;
+    min-height: 120px; transition: all .3s;
+  }
+  .equip-detail .ed-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .equip-detail .ed-text { font-size: 15.5px; line-height: 1.7; color: #cbd5e1; }
+
+  /* Тест */
+  .test-question {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .test-question .q-text {
+    font-size: 17px; font-weight: 700; margin-bottom: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .test-question .q-num {
+    background: var(--h-deep); color: #fff;
+    border-radius: 50%; width: 30px; height: 30px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+  .test-options { display: flex; flex-direction: column; gap: 10px; }
+  .test-option {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; font-size: 15.5px; transition: all .25s;
+  }
+  .test-option:hover { border-color: var(--h-deep); }
+  .test-option .opt-marker {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    transition: all .25s;
+  }
+  .test-option.correct { border-color: var(--green); background: #ecfdf5; }
+  .test-option.correct .opt-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .test-option.wrong { border-color: var(--red); background: #fef2f2; }
+  .test-option.wrong .opt-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .test-option.disabled { cursor: default; }
+  .test-option.disabled:hover { border-color: var(--border); }
+  .test-option.correct.disabled:hover { border-color: var(--green); }
+  .test-option.wrong.disabled:hover { border-color: var(--red); }
+
+  .explanation {
+    margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+    font-size: 15px; line-height: 1.65; display: none;
+    animation: fadeSlide .35s ease;
+  }
+  .explanation.show { display: block; }
+  .explanation.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .explanation.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+  .explanation b { font-weight: 800; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .test-score {
+    margin-top: 22px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 18px; font-weight: 800;
+    background: var(--panel-2); border: 2px solid var(--border);
+    transition: all .4s;
+  }
+  .test-score.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .test-score.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+  .test-score.bad { background: #fef2f2; border-color: var(--red); color: #dc2626; }
+
+  .retry-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 12px 26px; border-radius: 50px;
+    background: var(--accent); color: #fff; border: none;
+    cursor: pointer; font-size: 15px; font-weight: 800;
+    transition: all .2s;
+    box-shadow: 0 6px 16px -6px rgba(139,92,246,.5);
+  }
+  .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(139,92,246,.6); }
+
+  /* Branching scenarios */
+  .scenario-card {
+    background: linear-gradient(180deg, #fff, #fef2f2);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    transition: all .25s;
+  }
+  .scenario-card .sc-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .scenario-card .sc-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--red); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900; flex-shrink: 0;
+  }
+  .scenario-card .sc-title { font-size: 16.5px; font-weight: 800; }
+  .scenario-card .sc-situation {
+    background: #fff; border-radius: 10px; padding: 14px 18px;
+    font-size: 15.5px; line-height: 1.65; margin-bottom: 14px;
+    border-left: 4px solid var(--orange);
+  }
+  .scenario-actions { display: flex; flex-direction: column; gap: 8px; }
+  .scenario-action {
+    padding: 12px 16px; background: #fff;
+    border: 2px solid var(--border); border-radius: 10px;
+    cursor: pointer; font-size: 15px; transition: all .2s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .scenario-action:hover { border-color: var(--h-deep); }
+  .scenario-action .sa-marker {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .scenario-action.correct { border-color: var(--green); background: #ecfdf5; }
+  .scenario-action.correct .sa-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .scenario-action.wrong { border-color: var(--red); background: #fef2f2; }
+  .scenario-action.wrong .sa-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .scenario-action.disabled { cursor: default; }
+  .scenario-action.disabled:hover { border-color: var(--border); }
+  .scenario-action.correct.disabled:hover { border-color: var(--green); }
+  .scenario-action.wrong.disabled:hover { border-color: var(--red); }
+
+  .scenario-feedback {
+    margin-top: 12px; padding: 12px 16px; border-radius: 10px;
+    font-size: 14.5px; line-height: 1.6; display: none;
+  }
+  .scenario-feedback.show { display: block; animation: fadeSlide .3s ease; }
+  .scenario-feedback.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .scenario-feedback.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+
+  /* Слот под видео (YouTube/Instagram). Пока видео нет — блок не вставляется, вёрстка не едет.
+     Когда появится: <div class="video-slot"><iframe ...></iframe></div> */
+  .video-slot {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: 14px; margin-top: 16px; border: 2px solid var(--border);
+  }
+  .video-slot iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+
+  .footer {
+    text-align: center; padding: 40px 0 60px;
+    color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .subhead {
+    font-size: 17px; font-weight: 800;
+    margin: 26px 0 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .subhead-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+
+  .legend-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .legend-card {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: #fff;
+  }
+  .legend-card .lc-header { display: flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 800; margin-bottom: 6px; }
+  .legend-card .lc-body { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .legend-card .lc-body b { color: var(--text); }
+
+  /* Разогрев (без оценки) */
+  .entry-result {
+    margin-top: 20px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 16px; font-weight: 700;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: none;
+  }
+  .entry-result.show { display: block; animation: fadeSlide .35s ease; }
+  .entry-result.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .entry-result.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+
+  @media (max-width: 900px) {
+    .johnstone-wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 800px) {
+    .dual-basket { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 20px; }
+    .stage { padding: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .timeline-item { width: 180px; }
+    body { font-size: 16px; }
+  }
+
+  /* Раскрывающиеся блоки-шпаргалки (легенда, метод Фейнмана) */
+  details.fold {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 22px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  details.fold summary {
+    list-style: none; cursor: pointer;
+    padding: 16px 22px; font-size: 16px; font-weight: 800;
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    user-select: none;
+  }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary::before {
+    content: '\25B6'; font-size: 12px; color: var(--h-deep);
+    transition: transform .25s;
+  }
+  details.fold[open] summary::before { transform: rotate(90deg); }
+  details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
+  details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
+
+  /* Навигация: триггер + выезжающий drawer + «наверх» */
+  .nav-trigger {
+    position: fixed; top: 12px; left: 12px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 8px 16px; border-radius: 50px;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font: inherit; font-size: 14px; font-weight: 800; color: var(--text);
+    cursor: pointer; box-shadow: var(--shadow); transition: border-color .2s, color .2s;
+  }
+  .nav-trigger:hover { border-color: #6875F5; color: #6875F5; }
+  .nav-trigger-icon { font-size: 18px; line-height: 1; }
+  .nav-backdrop {
+    position: fixed; inset: 0; z-index: 70; background: rgba(15,23,42,.5);
+    opacity: 0; transition: opacity .3s ease-in-out;
+  }
+  .nav-backdrop.show { opacity: 1; }
+  .nav-drawer {
+    position: fixed; top: 0; left: 0; height: 100%; width: min(85%, 360px);
+    z-index: 80; background: #fafafa; box-shadow: var(--shadow-lg);
+    transform: translateX(-100%); visibility: hidden; overflow-y: auto;
+    transition: transform .3s ease-in-out, visibility .3s;
+    padding: 18px 16px 28px; -webkit-overflow-scrolling: touch;
+  }
+  .nav-drawer.open { transform: translateX(0); visibility: visible; }
+  body.nav-open { overflow: hidden; }
+  .nav-drawer-head { font-size: 16px; font-weight: 800; margin: 6px 8px 14px; line-height: 1.35; }
+  .nav-tree { list-style: none; margin: 0; padding: 0; }
+  .nav-tree a {
+    display: block; padding: 12px; border-radius: 10px; text-decoration: none;
+    color: var(--text); font-size: 15px; font-weight: 700; min-height: 44px;
+  }
+  .nav-tree a:hover { background: #eef2f7; }
+  .nav-lesson.nav-current > a { color: #6875F5; }
+  .nav-subs {
+    list-style: none; margin: 2px 0 8px 12px; padding: 0 0 0 10px;
+    border-left: 2px solid var(--border);
+  }
+  .nav-subs a { font-size: 13.5px; font-weight: 500; color: var(--muted); padding: 9px 10px; min-height: 40px; }
+  .nav-subs a.nav-active {
+    color: #6875F5; font-weight: 700; background: rgba(104,117,245,.10);
+    border-left: 2px solid #6875F5; margin-left: -12px; padding-left: 12px;
+  }
+  .to-top {
+    position: fixed; right: 14px; bottom: 16px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow);
+  }
+  .to-top:hover { border-color: #6875F5; color: #6875F5; }
+  [data-stage], [id^="m-"] { scroll-margin-top: 72px; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-drawer, .nav-backdrop { transition: none; }
+  }
+
+  /* Палитра карточек легенды */
+  .legend-card { border: 2px solid var(--border); }
+  .legend-card.lc-warm { background: #FFF9E6; border-color: #FFE0B2; }
+  .legend-card.lc-warm .lc-header { color: #7A5F00; }
+  .legend-card.lc-danger { background: #FDF2F2; border-color: #FDE8E8; }
+  .legend-card.lc-danger .lc-header { color: #9B1C1C; }
+  .legend-card.lc-info { background: #EBF5FF; border-color: #E1EFFE; }
+  .legend-card.lc-info .lc-header { color: #1E429F; }
+  .legend-card.lc-ok { background: #EDF7ED; border-color: #C8E6C9; }
+  .legend-card.lc-ok .lc-header { color: #1E4620; }
+  .legend-card.lc-act { background: #fff; border-color: #6875F5; }
+  .legend-card.lc-act .lc-header,
+  .legend-card.lc-act .lc-body,
+  .legend-card.lc-act .lc-body b { color: #6875F5; }
+  .legend-card.lc-accent { border-color: #6875F5; }
+  .legend-card.lc-game { background: #F3E8FF; border-color: #E9D5FF; }
+  .legend-card.lc-game .lc-header { color: #6B21A8; }
+  .legend-card.lc-test { background: #F1F5F9; border-color: #E2E8F0; }
+  .legend-card.lc-test .lc-header { color: #475569; }
+  .lc-vi { color: #6875F5; }
+
+  /* Домашнее задание */
+  .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+  .homework ol { margin: 12px 0 0 22px; line-height: 1.9; font-size: 15.5px; }
+  .homework ol li { margin-bottom: 6px; }
+  .homework .hw-star { color: var(--accent); font-weight: 800; }
+
+
+
+  /* Формулы и химические записи */
+  .formula { font-variant-numeric: lining-nums; white-space: nowrap; }
+  .formula sub { font-size: .7em; vertical-align: -.25em; }
+  .formula sup { font-size: .7em; vertical-align: .5em; }
+  .formula-block {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    flex-wrap: wrap; padding: 16px; margin: 14px 0;
+    background: var(--panel-2); border-radius: var(--radius);
+    font-size: 20px; overflow-x: auto;
+  }
+  .reaction-arrow { position: relative; display: inline-block; padding: 0 10px; }
+  .reaction-arrow > .cond {
+    position: absolute; left: 0; right: 0; font-size: 12px; color: var(--muted);
+  }
+  .reaction-arrow > .cond.top { bottom: 100%; }
+  .reaction-arrow > .cond.bottom { top: 100%; }
+  .state-tag { font-size: .8em; color: var(--muted); }
+  .ox-state { display: inline-block; font-size: .75em; font-weight: 700; }
+  .atom-chip {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700;
+    color: #111; border: 1.5px solid rgba(0,0,0,.35); vertical-align: middle;
+    cursor: pointer;
+  }
+  .term { border-bottom: 1px dashed var(--accent); cursor: pointer; }
+  .glossary-pop {
+    position: absolute; z-index: 50; max-width: 260px;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow-lg);
+    font-size: 15px; line-height: 1.5;
+  }
+
+  /* Утилиты раскладки (канон, вместо инлайн-стилей) */
+  .mt-14 { margin-top: 14px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-18 { margin-top: 18px; }
+  .mt-22 { margin-top: 22px; }
+  .center-mt16 { text-align: center; margin-top: 16px; }
+  .prose { font-size: 16.5px; line-height: 1.8; }
+  .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
+  .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
+  .fs-26 { font-size: 26px; }
+  .sci-node { cursor: pointer; }
+  .hero-digest { max-width: 700px; margin: 0 auto; }
+
+  /* Quiz: multi и match */
+  .quiz-errors { margin-top: 10px; }
+  .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
+  .match-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .match-left { flex: 1 1 180px; }
+  .match-select {
+    flex: 0 0 auto; min-height: 44px; padding: 8px 12px; font-size: 15px;
+    border: 1.5px solid var(--border); border-radius: 10px; background: var(--panel);
+    color: var(--text);
+  }
+
+  /* Карта курса */
+  .map-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: var(--radius); padding: 18px; display: flex;
+    flex-direction: column; gap: 8px; box-shadow: var(--shadow);
+  }
+  .map-card.ready { border-color: var(--green); }
+  .map-card.wip { border-color: var(--orange); }
+  .map-icon { font-size: 30px; line-height: 1; }
+  .map-title { font-size: 17px; font-weight: 800; letter-spacing: -.3px; }
+  .map-meta { font-size: 13px; color: var(--muted); }
+  .map-badge {
+    align-self: flex-start; font-size: 11px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 50px;
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+  }
+  .map-card.ready .map-badge { color: #fff; background: var(--green); border-color: var(--green); }
+  .map-topics { font-size: 14.5px; }
+  .map-skills { font-size: 14px; color: var(--muted); }
+  .map-prereq { font-size: 13px; color: var(--orange); font-weight: 700; }
+  .map-grid {
+    display: grid; gap: 14px; margin-top: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  .map-level-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
+
+/* module_5 (4а) — атомы, модели, строение атома */
+
+.canvas-wrap{position:relative;background:linear-gradient(180deg,#f0f9ff 0%,#e0f2fe 100%);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+
+.canvas-wrap canvas{display:block;width:100%;height:auto;}
+
+.canvas-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+
+.btn{padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;border:none;color:#fff;background:var(--accent);box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+
+.btn:hover{transform:translateY(-2px);}
+
+.btn.ghost{background:var(--panel-2);color:var(--text);border:1.5px solid var(--border);box-shadow:none;}
+
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+.btn.cyan{background:#06b6d4;box-shadow:0 6px 16px -6px rgba(6,182,212,.5);}
+
+.btn.violet{background:#8b5cf6;box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+
+.btn.red{background:#ef4444;box-shadow:0 6px 16px -6px rgba(239,68,68,.5);}
+
+.btn.green{background:#10b981;box-shadow:0 6px 16px -6px rgba(16,185,129,.5);}
+
+.tl-year{flex-shrink:0;scroll-snap-align:start;min-width:160px;background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .25s;text-align:center;}
+
+.tl-year:hover{border-color:var(--accent);transform:translateY(-3px);}
+
+.tl-year.active{background:linear-gradient(180deg,#f5f3ff,#fff);border-color:var(--accent);box-shadow:0 8px 20px -8px rgba(139,92,246,.4);}
+
+.tl-year .tl-num{font-size:22px;font-weight:900;color:var(--accent);}
+
+.tl-year .tl-who{font-size:13px;font-weight:700;margin:6px 0 4px;color:var(--text);}
+
+.tl-year .tl-what{font-size:12px;color:var(--muted);line-height:1.4;}
+
+.tl-detail{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;animation:fadeSlide .35s ease;}
+
+.tl-detail.show{display:block;}
+
+.tl-detail .tl-d-title{font-size:18px;font-weight:800;margin-bottom:8px;}
+
+.tl-detail .tl-d-text{font-size:15.5px;line-height:1.75;color:var(--text);}
+
+.model-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+
+.model-tab{padding:10px 20px;border-radius:50px;background:var(--panel-2);border:2px solid var(--border);cursor:pointer;font-size:14px;font-weight:700;transition:all .25s;color:var(--text);}
+
+.model-tab:hover{border-color:var(--accent);}
+
+.model-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px -4px rgba(139,92,246,.5);}
+
+.model-view{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;}
+
+.model-view.active{display:block;}
+
+.model-view .mv-title{font-size:18px;font-weight:800;margin-bottom:12px;}
+
+.model-view .mv-text{font-size:15.5px;line-height:1.75;}
+
+.model-view .mv-text b{color:var(--accent);}
+
+.model-view .mv-problem{margin-top:14px;padding:12px 16px;background:#fef2f2;border-radius:10px;border-left:4px solid var(--red);font-size:14.5px;color:#991b1b;}
+
+.model-view .mv-problem b{color:#b91c1c;}
+
+.model-view .mv-problem.ok{background:#ecfdf5;border-left-color:var(--green);color:#065f46;}
+
+.atom-3d-wrap{margin-top:16px;background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:14px;padding:30px;text-align:center;position:relative;overflow:hidden;min-height:400px;display:flex;align-items:center;justify-content:center;}
+
+.atom-3d-wrap .atom-svg{width:100%;max-width:520px;height:auto;}
+
+.atom-3d-wrap .atom-label{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:14px;font-weight:700;color:#94a3b8;}
+
+@keyframes electronOrbit1{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+@keyframes electronOrbit2{0%{transform:rotate(60deg)}100%{transform:rotate(420deg)}}
+
+@keyframes electronOrbit3{0%{transform:rotate(120deg)}100%{transform:rotate(480deg)}}
+
+@keyframes nucleusPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+.electron-orbit-1{animation:electronOrbit1 4s linear infinite;transform-origin:260px 200px;}
+
+.electron-orbit-2{animation:electronOrbit2 5s linear infinite;transform-origin:260px 200px;}
+
+.electron-orbit-3{animation:electronOrbit3 6s linear infinite;transform-origin:260px 200px;}
+
+.nucleus-pulse{animation:nucleusPulse 2s ease-in-out infinite;transform-origin:260px 200px;}
+
+.particles-table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;border-radius:12px;overflow:hidden;border:2px solid var(--border);}
+
+.particles-table th{background:var(--panel-2);padding:12px;font-size:14px;text-align:left;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border);}
+
+.particles-table td{padding:12px;font-size:15px;border-bottom:1px solid var(--border);}
+
+.particles-table tr:last-child td{border-bottom:none;}
+
+.particles-table .pt-pro{background:#fef2f2;font-weight:900;color:#b91c1c;}
+
+.particles-table .pt-neu{background:#f1f5f9;font-weight:900;color:#475569;}
+
+.particles-table .pt-ele{background:#eff6ff;font-weight:900;color:#1d4ed8;}
+
+.johnstone-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px;}
+
+.bohr-controls{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+
+.quark-wrap{margin-top:16px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:14px;padding:24px;text-align:center;color:#e0e7ff;position:relative;overflow:hidden;min-height:320px;}
+
+.quark-wrap canvas{display:block;width:100%;height:auto;}
+
+.scale-wrap{margin-top:16px;background:linear-gradient(180deg,#0f172a,#1e293b);border-radius:14px;padding:24px;color:#e2e8f0;position:relative;overflow:hidden;min-height:420px;}
+
+.scale-wrap canvas{display:block;width:100%;height:auto;}
+
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+.practical-step{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;}
+
+.practical-step .ps-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+
+.practical-step .ps-num{width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;}
+
+.practical-step .ps-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);}
+
+.practical-step .ps-situation{font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;}
+
+@media (max-width:800px){.dual-basket{grid-template-columns:1fr;}.johnstone-trio{grid-template-columns:1fr;}}
+
+@media (max-width:600px){.container{padding:0 14px;}.hero{padding:40px 0 20px;}.stage{padding:20px;}.card-grid{grid-template-columns:1fr;}body{font-size:16px;}}
+
+/* утилиты (вынесено из инлайн-стилей) */
+.cw-light { background: linear-gradient(180deg, #f0f9ff, #e0f2fe); }
+.cw-plain { background: #f0f9ff; }
+.cw-dark { background: linear-gradient(180deg, #0f172a, #1e293b); }
+.ct-col { flex-direction: column; align-items: center; gap: 8px; }
+.lbl-muted { color: #94a3b8; font-size: 14px; font-weight: 700; }
+.range-wide { width: 300px; accent-color: #8b5cf6; }
+.dark-strong { color: #e0e7ff; font-weight: 800; }
+.note-sm { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+.center-note { text-align: center; margin-top: 10px; color: #94a3b8; font-size: 14px; }
+.link-strong { color: var(--h-deep); font-weight: 700; }
+.btn-ghost-dark { background: rgba(255,255,255,.1); color: #e0e7ff; border-color: rgba(255,255,255,.3); }
+.stat-card { padding: 20px; border-radius: 14px; text-align: center; }
+.stat-green { border: 2px solid var(--green); background: linear-gradient(180deg, #ecfdf5, #fff); }
+.stat-accent { border: 2px solid var(--accent); background: linear-gradient(180deg, #f5f3ff, #fff); }
+.stat-cyan { border: 2px solid var(--h-color); background: linear-gradient(180deg, #ecfeff, #fff); }
+.stat-emoji { font-size: 40px; line-height: 1; margin-bottom: 10px; }
+.stat-label { font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.stat-green .stat-label { color: #065f46; }
+.stat-accent .stat-label { color: #5b21b6; }
+.stat-cyan .stat-label { color: #0e7490; }
+.stat-text { font-size: 14.5px; line-height: 1.6; }
+</style>
+</head>
+<body>
+<!-- built by src/build.py v1 · 2026-09-29 · module_5/u3 · manifest-driven -->
+<header class="hero">
+  <div class="badge">Модуль 5 · Атомы: доказательства и модели · ~20 минут</div>
+  <h1>Что внутри атома?</h1>
+</header>
+<div class="container">
+<button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
+<div class="nav-backdrop" id="navBackdrop" hidden></div>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 5. Атомы: доказательства и модели</div><ul class="nav-tree"><li class="nav-lesson"><a href="entry.html">Начало</a></li><li class="nav-lesson"><a href="u1.html">Урок 1</a></li><li class="nav-lesson"><a href="u2.html">Урок 2</a></li><li class="nav-lesson nav-current"><a href="#" aria-current="true">Урок 3</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u3-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u3-2">Что внутри атома?</a></li><li><a class="nav-sub" href="#s-u3-3">Практикум: Модель ядра и электронов</a></li><li><a class="nav-sub" href="#s-u3-4">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="final.html">Тест</a></li></ul></nav>
+<button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
+<section class="section">
+  <div id="s-u3-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📌</div>
+      <div>
+        <div class="stage-title">О чём этот урок</div>
+      </div>
+    </div>
+    <p class="prose">Атом делим: ядро, электроны и почти пустое пространство. Заглянем внутрь.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">⚛️ Ядро и электроны</div>
+        <div class="c-desc">Что такое ядро и электроны?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🔬 Протоны и нейтроны</div>
+        <div class="c-desc">Из чего состоит ядро?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🕳 Насколько пуст атом</div>
+        <div class="c-desc">Насколько атом «пустой»?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div id="s-u3-2" data-stage class="stage s3 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">3</div>
+      <div>
+        <div class="stage-title">Что внутри атома?</div>
+        <div class="stage-subtitle">Протоны, нейтроны, электроны — и кварки</div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Мы знаем: атом состоит из <b>ядра</b> и <b>электронов</b>. Но из чего состоит само ядро?
+      В 1919 году Резерфорд открыл <b>протон</b>. А в 1932 году Джеймс Чедвик — <b>нейтрон</b>.
+    </p>
+
+    <!-- 3D атом -->
+    <div class="atom-3d-wrap">
+      <svg class="atom-svg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="nucleusGrad" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#f87171"/><stop offset="100%" stop-color="#dc2626"/>
+          </radialGradient>
+          <radialGradient id="electronGrad" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#67e8f9"/><stop offset="100%" stop-color="#06b6d4"/>
+          </radialGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(30 260 200)"/>
+        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(90 260 200)"/>
+        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(150 260 200)"/>
+        <g class="nucleus-pulse">
+          <circle cx="260" cy="200" r="35" fill="url(#nucleusGrad)" filter="url(#glow)"/>
+          <circle cx="250" cy="190" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="250" y="194" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
+          <circle cx="270" cy="195" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="270" y="199" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
+          <circle cx="260" cy="215" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="260" y="219" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
+          <circle cx="268" cy="210" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="252" cy="205" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="265" cy="185" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
+        </g>
+        <g class="electron-orbit-1"><circle cx="440" cy="200" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="440" y="204" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
+        <g class="electron-orbit-2"><circle cx="260" cy="140" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="260" y="144" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
+        <g class="electron-orbit-3"><circle cx="170" cy="260" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="170" y="264" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
+      </svg>
+      <div class="atom-label">Ядро (протоны + нейтроны) и электроны на орбитах</div>
+    </div>
+
+    <!-- ТАБЛИЦА ЧАСТИЦ -->
+    <h3 class="subhead">📋 Три главные частицы</h3>
+    <table class="particles-table">
+      <thead><tr><th>Частица</th><th>Заряд</th><th>Масса</th><th>Где</th><th>Кто открыл</th></tr></thead>
+      <tbody>
+        <tr><td class="pt-pro">Протон (p⁺)</td><td>+1</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Резерфорд, 1919</td></tr>
+        <tr><td class="pt-neu">Нейтрон (n⁰)</td><td>0</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Чедвик, 1932</td></tr>
+        <tr><td class="pt-ele">Электрон (e⁻)</td><td>−1</td><td>≈1/1836 а.е.м.*</td><td>Вокруг ядра</td><td>Томсон, 1897</td></tr>
+      </tbody>
+    </table>
+    <p class="note-sm">
+      * <b>а.е.м.</b> — атомная единица массы. Это удобная «единица измерения» для масс атомов и частиц.
+      Мы подробно разберём её в Модуле 4б. Пока просто запомни: <b>протон и нейтрон примерно одинаковы по массе,
+      а электрон в ~1836 раз легче</b>.
+    </p>
+
+    <!-- ЗАРЯД ПО ФЕЙНМАНУ -->
+    <h3 class="subhead">⚡ Откуда взялся заряд? (объяснение по Фейнману)</h3>
+
+    <p class="prose">
+      Представь, что ты никогда не слышал слово «заряд». Как объяснить его, не используя само слово?
+    </p>
+
+    <div class="callout callout-idea">
+      <b>Мысленный эксперимент:</b> возьми два одинаковых шарика. Потри их о шерсть и подвесь рядом.
+      Они <b>оттолкнутся</b> друг от друга. Потри один шарик о шерсть, а другой — о стекло.
+      Теперь они <b>притянутся</b>.
+      <br><br>
+      Значит, у шариков есть какое-то свойство, которое заставляет их либо отталкиваться, либо притягиваться.
+      Мы назвали это свойство <b>зарядом</b>. Природа выбрала <b>два типа</b> заряда — условно «плюс» и «минус».
+      Одинаковые заряды отталкиваются, разные — притягиваются.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Ключевая мысль:</b> заряд — это <b>не вещество</b> и <b>не «придела» к частице</b>.
+      Это <b>фундаментальное свойство</b> материи, такое же, как масса. Ты не можешь объяснить,
+      «почему» у протона именно плюс, а не минус. Мы просто <b>так назвали</b> два противоположных типа взаимодействия.
+      Главное — <b>баланс</b>: в атоме сколько плюсов, столько и минусов.
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> заряд — это <b>не энергия</b> и <b>не «топливо»</b>. Это свойство, которое определяет,
+      как частицы взаимодействуют друг с другом. Электроны удерживаются возле ядра именно потому,
+      что их отрицательный заряд притягивается к положительному заряду протонов.
+    </div>
+
+    <!-- МАСШТАБ -->
+    <h3 class="subhead">📏 Масштаб атома — от кварка до Вселенной</h3>
+    <p class="subhead-sub">
+      Самое сложное в атоме — <b>почувствовать</b> его масштаб. Ядро в 10 000–100 000 раз меньше атома.
+      Мы не можем нарисовать это «в лоб» — понадобится экран размером с дом. Вместо этого мы используем
+      <b>логарифмическую шкалу</b> — как в знаменитом проекте «Scale of the Universe».
+    </p>
+
+    <div class="canvas-wrap cw-dark">
+      <canvas id="scaleCanvas" width="900" height="480"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn ghost" id="scaleIn">🔍 Приблизить</button>
+      <button class="btn ghost" id="scaleOut">🔭 Отдалить</button>
+      <button class="btn ghost" id="scaleReset">↺ Сброс</button>
+    </div>
+    <div class="center-note" id="scaleInfo">
+      Текущий масштаб: <b>1 метр</b> — человек
+    </div>
+
+    <div class="callout callout-note mt-16">
+      <b>Хочешь больше?</b> Открой <a href="https://universe.pavelfrolov.com/" target="_blank" class="link-strong">интерактивную шкалу масштабов Вселенной</a> —
+      там можно пролететь от кварка до observable universe за 43 порядка величины. Это завораживает.
+    </div>
+
+    <!-- КВАРКИ -->
+    <h3 class="subhead">🌈 Что находится ещё глубже? Кварки, фермионы и бозоны</h3>
+    <p class="prose">
+      Протоны и нейтроны <b>тоже делятся</b>. Они состоят из <b>кварков</b> — самых маленьких
+      известных частиц. Но кварки — не единственные «кирпичики». Современная физика делит все
+      элементарные частицы на <b>два больших класса</b>:
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧱 Фермионы — «кирпичики материи»</div>
+        <div class="c-desc">
+          Названы в честь Энрико Ферми. Это частицы, из которых <b>состоит вещество</b>.
+          У них полуцелый спин (это квантовое свойство, подробно — позже).
+          <br><br>
+          <b>Кварки</b> (6 типов: u, d, s, c, b, t) и <b>лептоны</b> (6 типов: электрон, мюон, тау и три нейтрино).
+          <br><br>
+          Протон = u + u + d. Нейтрон = u + d + d.
+        </div>
+      </div>
+      <div class="card">
+        <div class="c-title">🔗 Бозоны — «переносчики сил»</div>
+        <div class="c-desc">
+          Названы в честь Шатьендраната Бозе. Эти частицы <b>не составляют вещество</b> —
+          они <b>переносят взаимодействия</b> между фермионами.
+          <br><br>
+          <b>Фотон</b> — электромагнитная сила. <b>Глюоны</b> (8 типов) — сильная сила,
+          «склеивают» кварки. <b>W и Z-бозоны</b> — слабая сила. <b>Бозон Хиггса</b> — даёт массу.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> кварки <b>никогда не встречаются поодиночке</b>. Их «склеивают» глюоны,
+      и если попытаться «вытащить» один кварк, энергия натяжения «струны» станет настолько большой,
+      что родится новая пара кварк-антикварк. Это называется <b>конфайнмент</b> (от англ. confinement — удержание).
+    </div>
+
+    <!-- АНИМАЦИЯ КВАРКОВ -->
+    <div class="quark-wrap">
+      <canvas id="quarkCanvas" width="900" height="360"></canvas>
+    </div>
+    <div class="canvas-toolbar mt-14">
+      <button class="btn ghost btn-ghost-dark" id="quarkToggle">⏸ Пауза</button>
+    </div>
+
+    <div class="callout callout-idea mt-16">
+      <b>Зачем это изучают?</b> Чтобы понять, из чего состоит материя на самом фундаментальном уровне.
+      Это не просто любопытство. Знания о кварках и фундаментальных силах уже дали человечеству:
+      <ul class="list-note">
+        <li><b>Ядерную энергетику</b> — понимание ядерных сил позволяет получать энергию из атомов.</li>
+        <li><b>Медицину</b> — ускорители частиц используются для лечения рака.</li>
+        <li><b>Технологии будущего</b> — квантовые компьютеры, сверхпроводники, новые материалы.</li>
+        <li><b>Понимание Вселенной</b> — что было в первые секунды после Большого взрыва.</li>
+      </ul>
+      <br>
+      Этим занимаются на <b>Большом адронном коллайдере</b> (ЦЕРН, Швейцария) и в других лабораториях мира.
+      Возможно, когда ты вырастешь, ты откроешь что-то ещё глубже!
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> в химических реакциях атомы <b>не делятся</b> на кварки. Кварки «работают» только
+      при огромных энергиях — в ускорителях частиц или в звёздах. Для химии атом — это <b>предел деления</b>.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== --><section class="section">
+  <div id="s-u3-3" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Модель ядра и электронов</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">Собери модель атома, показав ядро и электронное облако.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>пластилин</li><li>бусины/крупа</li><li>бумага</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Слепи ядро из протонов и нейтронов (два цвета).</li><li>Размести электроны вокруг ядра.</li><li>Отметь, что большая часть атома — пустое пространство.</li><li>Подпиши части и их заряды.</li></ol>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> схему атома: ядро (протоны + нейтроны) и электроны.</div>
+  </div>
+</section>
+<section class="section">
+  <div id="s-u3-4" data-stage class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+        <li>Назови части атома и их заряды.</li>
+        <li>Опиши, из чего состоит ядро.</li>
+        <li>Объясни, почему атом «почти пустой».</li>
+        <li>Нарисуй схему атома с подписями.</li>
+        <li><span class="hw-star">★ Что общего у протона и нейтрона и чем они отличаются?</span></li>
+        <li>Объясни, что находится внутри атома, простыми словами.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+</div>
+<script type="application/json" id="glossary">{
+  "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },
+  "физическое тело": { "definition": "отдельный предмет, имеющий форму и объём", "module": "module_1" },
+  "свойство вещества": { "definition": "признак, по которому вещества различают и описывают", "module": "module_1" },
+  "наблюдение": { "definition": "внимательное изучение явления без вмешательства в процесс", "module": "module_1" },
+  "эксперимент": { "definition": "изучение явления через активное воздействие на вещество", "module": "module_1" },
+  "измерение": { "definition": "сравнение величины с эталоном", "module": "module_1" },
+  "моделирование": { "definition": "замена объекта упрощённой схемой для изучения", "module": "module_1" },
+  "гипотеза": { "definition": "разумное предположение, которое ещё нужно проверить", "module": "module_1" },
+  "лаборатория": { "definition": "помещение со специальным оборудованием для опытов", "module": "module_1" },
+  "агрегатное состояние": { "definition": "состояние вещества (твёрдое, жидкое, газообразное) при данных условиях", "module": "module_2" },
+  "плавление": { "definition": "переход вещества из твёрдого состояния в жидкое при нагревании", "module": "module_2" },
+  "кипение": { "definition": "переход жидкости в газ по всему объёму при температуре кипения", "module": "module_2" },
+  "конденсация": { "definition": "переход вещества из газообразного состояния в жидкое при охлаждении", "module": "module_2" },
+  "замерзание": { "definition": "переход жидкости в твёрдое состояние при охлаждении", "module": "module_2" },
+  "сублимация": { "definition": "переход вещества из твёрдого состояния сразу в газообразное, минуя жидкость", "module": "module_2" },
+  "чистое вещество": { "definition": "вещество, состоящее из одинаковых частиц", "module": "module_2" },
+  "смесь": { "definition": "система из разных веществ, сохраняющих свои свойства", "module": "module_2" },
+  "гомогенная смесь": { "definition": "однородная смесь, составные части неразличимы глазом", "module": "module_2" },
+  "гетерогенная смесь": { "definition": "неоднородная смесь, части различимы", "module": "module_2" },
+  "отстаивание": { "definition": "разделение смеси по разной плотности: тяжёлое оседает", "module": "module_2" }
+}
+</script><script type="application/json" id="messages">{
+  "entryFail": [
+    "Не страшно — сейчас всё узнаешь. Повтори предыдущий урок и пройди входной снова.",
+    "Это входной тест, а не оценка. Загляни в прошлый урок и попробуй ещё раз."
+  ],
+  "finalPass": [
+    "🎉 Модуль пройден!",
+    "🎉 Отлично, ты справился с итоговым тестом!"
+  ],
+  "finalFail": [
+    "Есть над чем поработать. Вернись к текущему уроку и попробуй ещё раз.",
+    "Пока не хватает до порога. Перечитай урок и пройди снова."
+  ],
+  "warmupDone": [
+    "Разминка пройдена.",
+    "Разминка готова — двигаемся дальше."
+  ],
+  "practiceDone": [
+    "Хорошо! Двигаемся дальше.",
+    "Верно! Закрепим это в тетради."
+  ]
+}
+</script>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Химия · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">
+    Простое объяснение · пример из жизни · наглядный опыт · запись в тетрадь
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  module_5 (4а) — внутри атома: шкала масштабов, кварки
+// ============================================================
+/* ============================================================
+   УТИЛИТЫ
+   ============================================================ */
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
+    this.beginPath();this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);
+    this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath();return this;
+  };
+}
+var rand = (a,b)=>a+Math.random()*(b-a);
+
+/* ============================================================
+   ДИФФУЗИЯ
+   ============================================================ */
+
+(function(){
+  const canvas = document.getElementById('scaleCanvas');
+  const btnIn = document.getElementById('scaleIn');
+  const btnOut = document.getElementById('scaleOut');
+  const btnReset = document.getElementById('scaleReset');
+  const info = document.getElementById('scaleInfo');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+
+  // Логарифмическая шкала: от 10^-18 м (кварк) до 10^7 м (Земля)
+  // log10 от -18 до 7 = 25 порядков
+  const MIN_LOG = -18, MAX_LOG = 7;
+  let currentLog = 0; // 1 метр
+
+  const OBJECTS = [
+    {log:-18, name:'Кварк', r:2, color:'#a78bfa', label:'< 10⁻¹⁸ м'},
+    {log:-15, name:'Протон', r:4, color:'#f87171', label:'~10⁻¹⁵ м'},
+    {log:-14, name:'Ядро атома', r:6, color:'#ef4444', label:'~10⁻¹⁴ м'},
+    {log:-10, name:'Атом', r:20, color:'#38bdf8', label:'~10⁻¹⁰ м'},
+    {log:-9, name:'Молекула', r:25, color:'#06b6d4', label:'~10⁻⁹ м'},
+    {log:-7, name:'Вирус', r:30, color:'#10b981', label:'~10⁻⁷ м'},
+    {log:-6, name:'Бактерия', r:35, color:'#22c55e', label:'~10⁻⁶ м'},
+    {log:-4, name:'Клетка', r:45, color:'#84cc16', label:'~10⁻⁴ м'},
+    {log:-2, name:'Пылинка', r:50, color:'#eab308', label:'~10⁻² м'},
+    {log:0, name:'Человек', r:70, color:'#f97316', label:'1 м'},
+    {log:4, name:'Гора', r:100, color:'#78716c', label:'~10⁴ м'},
+    {log:7, name:'Земля', r:150, color:'#3b82f6', label:'~10⁷ м'}
+  ];
+
+  // Находим ближайший объект к текущему масштабу
+  function nearestObject(log){
+    let best = OBJECTS[0], bestDist = Infinity;
+    OBJECTS.forEach(o=>{
+      const d = Math.abs(o.log - log);
+      if (d < bestDist){ bestDist = d; best = o; }
+    });
+    return best;
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    const bg = ctx.createLinearGradient(0,0,0,H);
+    bg.addColorStop(0,'#0f172a'); bg.addColorStop(1,'#1e293b');
+    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
+
+    // Центральный объект
+    const obj = nearestObject(currentLog);
+    const cx = W/2, cy = H/2 - 20;
+
+    // Пульсация
+    const pulse = 1 + Math.sin(Date.now()*0.003) * 0.05;
+    const radius = obj.r * pulse;
+
+    // Свечение
+    const glow = ctx.createRadialGradient(cx,cy,0,cx,cy,radius*3);
+    glow.addColorStop(0, obj.color + '66');
+    glow.addColorStop(1, obj.color + '00');
+    ctx.beginPath(); ctx.arc(cx,cy,radius*3,0,Math.PI*2);
+    ctx.fillStyle = glow; ctx.fill();
+
+    // Объект
+    ctx.beginPath(); ctx.arc(cx,cy,radius,0,Math.PI*2);
+    ctx.fillStyle = obj.color; ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+    // Название
+    ctx.font = 'bold 24px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#e2e8f0';
+    ctx.fillText(obj.name, cx, cy + radius + 40);
+    ctx.font = '16px Inter, sans-serif';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText(obj.label, cx, cy + radius + 65);
+
+    // Шкала (логарифмическая линейка)
+    const barY = H - 60;
+    const barX = 60;
+    const barW = W - 120;
+    const barH = 12;
+
+    ctx.fillStyle = '#334155';
+    ctx.beginPath(); ctx.roundRect(barX, barY, barW, barH, 6); ctx.fill();
+
+    // Заполнение
+    const fillW = ((currentLog - MIN_LOG) / (MAX_LOG - MIN_LOG)) * barW;
+    const grad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
+    grad.addColorStop(0, '#a78bfa');
+    grad.addColorStop(0.5, '#38bdf8');
+    grad.addColorStop(1, '#f97316');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.roundRect(barX, barY, fillW, barH, 6); ctx.fill();
+
+    // Метки на шкале
+    ctx.font = 'bold 11px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    const marks = [-18, -15, -12, -9, -6, -3, 0, 3, 6];
+    marks.forEach(m=>{
+      const x = barX + ((m - MIN_LOG) / (MAX_LOG - MIN_LOG)) * barW;
+      ctx.fillStyle = '#64748b';
+      ctx.fillRect(x-1, barY+barH, 2, 6);
+      ctx.fillStyle = '#94a3b8';
+      const label = m === 0 ? '1 м' : `10${m < 0 ? '⁻' : ''}${Math.abs(m)} м`;
+      ctx.fillText(label, x, barY + barH + 22);
+    });
+
+    // Подпись
+    ctx.font = 'bold 14px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#8b5cf6';
+    ctx.fillText(`Текущий масштаб: 10${currentLog < 0 ? '⁻' : ''}${Math.abs(Math.round(currentLog))} м`, cx, 40);
+
+    // Инфо
+    info.innerHTML = `Текущий масштаб: <b>${obj.label}</b> — ${obj.name}`;
+  }
+
+  btnIn.addEventListener('click',()=>{ currentLog = Math.max(MIN_LOG, currentLog - 1); draw(); });
+  btnOut.addEventListener('click',()=>{ currentLog = Math.min(MAX_LOG, currentLog + 1); draw(); });
+  btnReset.addEventListener('click',()=>{ currentLog = 0; draw(); });
+
+  draw();
+})();
+
+/* ============================================================
+   КВАРКИ — АНИМИРОВАННЫЙ ОБМЕН ГЛЮОНАМИ
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById('quarkCanvas');
+  const toggleBtn = document.getElementById('quarkToggle');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width, H = canvas.height;
+  const cx = W/2, cy = H/2;
+  let running = true;
+  let rafId = null;
+  let t = 0;
+
+  // Три кварка
+  const quarks = [
+    {angle: 0, radius: 70, color: '#a78bfa', label: 'u', offset: 0},
+    {angle: 2*Math.PI/3, radius: 70, color: '#a78bfa', label: 'u', offset: Math.PI/3},
+    {angle: 4*Math.PI/3, radius: 70, color: '#7dd3fc', label: 'd', offset: 2*Math.PI/3}
+  ];
+
+  // Глюоны — 6 частиц, которые летают между кварками
+  const gluons = [];
+  for (let i=0;i<6;i++){
+    gluons.push({
+      from: i % 3,
+      to: (i+1) % 3,
+      progress: Math.random(),
+      speed: 0.005 + Math.random()*0.01
+    });
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = '#1e1b4b'; ctx.fillRect(0,0,W,H);
+
+    // Свечение протона
+    const g = ctx.createRadialGradient(cx,cy,0,cx,cy,130);
+    g.addColorStop(0,'rgba(167,139,250,.15)');
+    g.addColorStop(1,'rgba(167,139,250,0)');
+    ctx.beginPath(); ctx.arc(cx,cy,130,0,Math.PI*2); ctx.fillStyle = g; ctx.fill();
+
+    // Контур протона
+    ctx.beginPath(); ctx.arc(cx,cy,120,0,Math.PI*2);
+    ctx.strokeStyle = 'rgba(167,139,250,.3)';
+    ctx.lineWidth = 2; ctx.setLineDash([8,6]); ctx.stroke(); ctx.setLineDash([]);
+
+    // Позиции кварков
+    const pos = quarks.map(q=>{
+      const a = q.angle + t * 0.01;
+      return { x: cx + Math.cos(a) * q.radius, y: cy + Math.sin(a) * q.radius };
+    });
+
+    // Глюоны (линии между кварками)
+    gluons.forEach(gl=>{
+      const from = pos[gl.from];
+      const to = pos[gl.to];
+      const gx = from.x + (to.x - from.x) * gl.progress;
+      const gy = from.y + (to.y - from.y) * gl.progress;
+
+      // Линия
+      ctx.beginPath();
+      ctx.moveTo(from.x, from.y);
+      ctx.lineTo(to.x, to.y);
+      ctx.strokeStyle = `rgba(251,191,36,${0.2 + gl.progress * 0.3})`;
+      ctx.lineWidth = 2;
+      ctx.setLineDash([4,4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Глюон (жёлтая точка)
+      ctx.beginPath();
+      ctx.arc(gx, gy, 4, 0, Math.PI*2);
+      ctx.fillStyle = '#fbbf24';
+      ctx.fill();
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1; ctx.stroke();
+
+      gl.progress += gl.speed;
+      if (gl.progress > 1){ gl.progress = 0; gl.from = gl.to; gl.to = (gl.to+1)%3; }
+    });
+
+    // Кварки
+    quarks.forEach((q,i)=>{
+      const p = pos[i];
+      ctx.beginPath(); ctx.arc(p.x, p.y, 26, 0, Math.PI*2);
+      const qg = ctx.createRadialGradient(p.x-6,p.y-6,4,p.x,p.y,26);
+      qg.addColorStop(0, q.color);
+      qg.addColorStop(1, q.color === '#a78bfa' ? '#7c3aed' : '#0284c7');
+      ctx.fillStyle = qg; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+      ctx.fillStyle = '#fff';
+      ctx.font = 'bold 18px Inter, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillText(q.label, p.x, p.y + 6);
+    });
+
+    // Подписи
+    ctx.font = 'bold 14px Inter, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillStyle = '#c7d2fe';
+    ctx.fillText('Протон: два u-кварка и один d-кварк', cx, 30);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fillText('Жёлтые точки — глюоны, «склеивающие» кварки', cx, H - 20);
+
+    t++;
+  }
+
+  function loop(){
+    if (!running) return;
+    draw();
+    rafId = requestAnimationFrame(loop);
+  }
+
+  toggleBtn.addEventListener('click',()=>{
+    if (running){ running = false; toggleBtn.textContent = '▶ Продолжить'; }
+    else { running = true; toggleBtn.textContent = '⏸ Пауза'; loop(); }
+  });
+
+  loop();
+})();
+
+/* ============================================================
+   ВХОДНОЙ ТЕСТ
+   ============================================================ */
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+// ============================================================
+//  Навигация: триггер + выезжающий drawer + scroll-spy + «наверх»
+//  Разметку (navTrigger/navDrawer/navBackdrop/toTop) рендерит билдер.
+// ============================================================
+(function () {
+  const trigger = document.getElementById('navTrigger');
+  const drawer = document.getElementById('navDrawer');
+  const backdrop = document.getElementById('navBackdrop');
+  const toTop = document.getElementById('toTop');
+  if (!trigger || !drawer) return;
+
+  const reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastFocus = null;
+
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    drawer.classList.add('open');
+    requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    drawer.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+    const first = drawer.querySelector('a, button');
+    if (first) first.focus();
+    document.addEventListener('keydown', onKey);
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('show');
+    window.setTimeout(function () { backdrop.hidden = true; }, reduce ? 0 : 300);
+    drawer.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+    document.removeEventListener('keydown', onKey);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') { closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    const f = drawer.querySelectorAll('a, button');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  trigger.addEventListener('click', function () {
+    if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  backdrop.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) closeDrawer();
+  });
+
+  // Scroll-spy: подсвечиваем активный подраздел
+  const subs = Array.prototype.slice.call(drawer.querySelectorAll('a.nav-sub'));
+  if (subs.length && 'IntersectionObserver' in window) {
+    const byId = {};
+    subs.forEach(function (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') byId[href.slice(1)] = a;
+    });
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        subs.forEach(function (a) { a.classList.remove('nav-active'); });
+        const a = byId[en.target.id];
+        if (a) a.classList.add('nav-active');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  // Кнопка «Наверх»
+  if (toTop) {
+    const onScroll = function () { toTop.hidden = window.scrollY < 600; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
+})();
+
+</script>
+</body>
+</html>

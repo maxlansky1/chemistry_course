@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Рефлексия, практикум и итоговый тест</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --h-deep: #0e7490;
+    --h-color: #06b6d4;
+    --accent: #8b5cf6;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --radius: 16px;
+    --shadow: 0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg: 0 12px 40px -12px rgba(0,0,0,.15);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    font-size: 17px;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+  .hero {
+    text-align: center; padding: 56px 0 26px;
+    background: linear-gradient(180deg, #ecfeff 0%, var(--bg) 100%);
+  }
+  .hero .badge {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--h-deep);
+    border: 1.5px solid var(--h-deep); padding: 6px 18px;
+    border-radius: 50px; margin-bottom: 20px; background: rgba(6,182,212,.05);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 800;
+    letter-spacing: -1px; line-height: 1.15;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 14px;
+  }
+  .hero p { color: var(--muted); font-size: 17px; max-width: 750px; margin: 0 auto; }
+
+  .section { padding: 24px 0; }
+
+  .stage {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 26px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .stage::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  }
+  .stage.s-legend::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b); }
+  .stage.s-entry::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .stage.s-intro::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6); }
+  .stage.s-why::before   { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s1::before      { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+  .stage.s2::before      { background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+  .stage.s3::before      { background: linear-gradient(90deg, #10b981, #059669); }
+  .stage.s4::before      { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+  .stage.s-feyn::before  { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s-prac::before  { background: linear-gradient(90deg, #06b6d4, #10b981); }
+  .stage.s-test::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  .stage-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .stage-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--panel-2); color: var(--h-deep);
+    font-size: 22px; font-weight: 900; flex-shrink: 0;
+    border: 2px solid var(--border);
+  }
+  .stage-title { font-size: 21px; font-weight: 700; color: var(--text); }
+  .stage-subtitle { font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+  .callout {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 16px 0;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  /* Единая палитра: коллауты совпадают с «Условными обозначениями» */
+  .callout-idea {
+    background: #FFF9E6; border-left: 5px solid #FFE0B2; color: #7A5F00;
+  }
+  .callout-idea b { color: #7A5F00; }
+  .callout-warn {
+    background: #FDF2F2; border-left: 5px solid #FDE8E8; color: #9B1C1C;
+  }
+  .callout-warn b { color: #9B1C1C; }
+  .callout-note {
+    background: #EBF5FF; border-left: 5px solid #E1EFFE; color: #1E429F;
+  }
+  .callout-note b { color: #1E429F; }
+  .callout-ok {
+    background: #EDF7ED; border-left: 5px solid #C8E6C9; color: #1E4620;
+  }
+  .callout-ok b { color: #1E4620; }
+  .callout-game {
+    background: #F3E8FF; border-left: 5px solid #E9D5FF; color: #6B21A8;
+  }
+  .callout-game b { color: #6B21A8; }
+  .callout-test {
+    background: #F1F5F9; border-left: 5px solid #E2E8F0; color: #475569;
+  }
+  .callout-test b { color: #475569; }
+
+  .cta { color: #6875F5; font-weight: 800; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .card {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--h-color), var(--accent));
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,.15);
+    border-color: var(--h-deep);
+  }
+  .card .c-title { font-size: 16.5px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .card .c-desc { font-size: 15.5px; color: var(--muted); line-height: 1.65; }
+  .card .c-desc b { color: var(--text); }
+
+  /* Таймлайн */
+  .timeline { position: relative; padding: 10px 0; margin-top: 10px; }
+  .timeline-track {
+    display: flex; gap: 0; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+  }
+  .timeline-track::-webkit-scrollbar { height: 8px; }
+  .timeline-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .timeline-item {
+    flex: 0 0 auto; width: 210px; padding: 16px; margin-right: 12px;
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; cursor: pointer; transition: all .25s;
+    scroll-snap-align: start; text-align: center;
+  }
+  .timeline-item:hover { transform: translateY(-3px); border-color: var(--h-deep); }
+  .timeline-item.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+  }
+  .timeline-item .t-emoji { font-size: 30px; }
+  .timeline-item .t-era {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep); margin-top: 6px;
+  }
+  .timeline-item .t-name { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+  .timeline-detail {
+    margin-top: 14px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 14px; color: #e2e8f0; min-height: 140px;
+    transition: all .3s;
+  }
+  .timeline-detail .td-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+  .timeline-detail .td-text { font-size: 15.5px; line-height: 1.75; color: #cbd5e1; }
+  .timeline-detail .td-text b { color: #fff; }
+
+  /* Сетка задач */
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .task-card {
+    padding: 20px; background: var(--panel-2); border-radius: 14px;
+    border: 1.5px solid var(--border); transition: all .25s;
+  }
+  .task-card:hover {
+    border-color: var(--h-deep); transform: translateY(-3px);
+    box-shadow: 0 8px 20px -8px rgba(6,182,212,.3);
+  }
+  .task-card .tc-emoji { font-size: 32px; line-height: 1; }
+  .task-card .tc-title { font-size: 16px; font-weight: 800; margin-top: 8px; }
+  .task-card .tc-desc { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .task-card .tc-examples { font-size: 13.5px; color: var(--text); margin-top: 8px; line-height: 1.55; }
+  .task-card .tc-examples span { display: inline-block; background: #fff; padding: 3px 8px; border-radius: 6px; margin: 2px 3px 2px 0; border: 1px solid var(--border); font-weight: 600; }
+
+  /* Игры */
+  .game-area {
+    background: var(--panel-2); border-radius: 14px;
+    padding: 22px; margin-top: 18px;
+  }
+  .game-area h4 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .game-area .game-hint { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+
+  .dual-basket {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .basket {
+    border: 2.5px dashed var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    min-height: 160px;
+    text-align: center;
+    transition: all .25s;
+    background: #fff;
+  }
+  .basket.hover { border-color: var(--accent); background: #f5f3ff; }
+  .basket .basket-title {
+    font-size: 14px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .basket .basket-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .basket .basket-chip {
+    background: var(--panel-2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .basket.good { border-color: var(--green); background: #ecfdf5; }
+  .basket.bad { border-color: var(--red); background: #fef2f2; }
+
+  .game-pool {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-height: 100px;
+    margin-bottom: 14px;
+  }
+  .game-pool .pool-item {
+    background: var(--panel-2);
+    border: 2px solid var(--border);
+    border-radius: 10px; padding: 10px 18px;
+    cursor: grab; font-size: 15px; font-weight: 700;
+    transition: all .2s; user-select: none;
+  }
+  .game-pool .pool-item:hover { border-color: var(--h-deep); transform: translateY(-2px); }
+  .game-pool .pool-item.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .game-pool .pool-item.dragging { opacity: .5; }
+  .game-pool .pool-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: #fef2f2; }
+
+  .reset-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 50px;
+    background: var(--panel-2); color: var(--text);
+    border: 1.5px solid var(--border);
+    cursor: pointer; font-size: 14px; font-weight: 700;
+    transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--h-deep); color: var(--h-deep); }
+
+  .game-feedback { margin-top: 14px; font-size: 15.5px; font-weight: 700; min-height: 24px; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Треугольник Джонстона: стили припаркованы для Модуля 4б (введение);
+     в ранних модулях блок не используется */
+  .johnstone-wrap {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px;
+    align-items: center; margin-top: 18px;
+  }
+  .johnstone-svg-wrap {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 2px solid var(--border); border-radius: 14px; padding: 14px;
+  }
+  .johnstone-svg-wrap svg { width: 100%; height: auto; display: block; }
+  .johnstone-info {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; min-height: 220px;
+  }
+  .johnstone-info .ji-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--h-deep); }
+  .johnstone-info .ji-text { font-size: 15.5px; line-height: 1.7; color: var(--text); }
+  .johnstone-info .ji-example {
+    margin-top: 14px; padding: 12px 16px;
+    background: #fff; border-radius: 10px;
+    border-left: 4px solid var(--accent);
+    font-size: 14.5px; color: #4c1d95;
+  }
+  .johnstone-info .ji-example b { color: #5b21b6; }
+
+  .sciences-svg-wrap {
+    background: linear-gradient(180deg, #faf5ff, #fff);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 16px;
+  }
+  .sciences-svg-wrap svg { width: 100%; height: auto; display: block; }
+
+  /* Методы познания */
+  .method-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border-radius: 14px;
+    border: 2px solid var(--border);
+  }
+  .method-step {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 18px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-width: 130px;
+    transition: all .35s;
+    cursor: pointer;
+  }
+  .method-step.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+    transform: scale(1.05);
+  }
+  .method-step .ms-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--h-deep); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .method-step.active .ms-num { background: var(--accent); }
+  .method-step .ms-icon { font-size: 28px; }
+  .method-step .ms-name { font-size: 14px; font-weight: 800; margin-top: 6px; text-align: center; }
+  .method-arrow {
+    font-size: 24px; color: var(--muted); animation: slide 2s infinite;
+  }
+  @keyframes slide {
+    0%,100% { transform: translateX(0); opacity: .5; }
+    50% { transform: translateX(4px); opacity: 1; color: var(--accent); }
+  }
+  .method-detail-box {
+    margin-top: 16px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px;
+    color: #e2e8f0;
+    min-height: 130px;
+    transition: all .3s;
+  }
+  .method-detail-box .mb-title { font-size: 16px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .method-detail-box .mb-text { font-size: 15px; line-height: 1.7; color: #cbd5e1; }
+  .method-detail-box .mb-text b { color: #fff; }
+
+  /* Свойства веществ */
+  .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .property-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    transition: all .25s;
+  }
+  .property-card:hover { transform: translateY(-4px); border-color: var(--h-deep); box-shadow: var(--shadow-lg); }
+  .property-card .pc-svg {
+    height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .property-card .pc-title { font-size: 16px; font-weight: 800; }
+  .property-card .pc-desc { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.55; }
+
+  /* Процессы жизни */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .process-card {
+    background: linear-gradient(180deg, #fff, #f0fdf4);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: all .25s;
+  }
+  .process-card:hover { transform: translateY(-4px); border-color: var(--green); box-shadow: var(--shadow-lg); }
+  .process-card .prc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .process-card .prc-icon { font-size: 32px; }
+  .process-card .prc-name { font-size: 16px; font-weight: 800; }
+  .process-card .prc-eq {
+    background: #fff; border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px; font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    font-style: italic;
+  }
+  .process-card .prc-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* Правила безопасности */
+  .safety-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .safety-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px; background: var(--panel-2);
+    border-radius: 12px; border: 2px solid var(--border);
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .safety-item:hover { border-color: var(--h-deep); transform: translateX(4px); }
+  .safety-item .si-icon { font-size: 30px; line-height: 1; flex-shrink: 0; }
+  .safety-item .si-check {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: transparent; font-weight: 900;
+    transition: all .25s; background: #fff;
+    margin-top: 2px;
+  }
+  .safety-item.checked { border-color: var(--green); background: #ecfdf5; }
+  .safety-item.checked .si-check {
+    background: var(--green); border-color: var(--green); color: #fff;
+  }
+  .safety-item .si-text { font-size: 15.5px; line-height: 1.6; flex: 1; }
+  .safety-item .si-text b { color: var(--red); }
+
+  /* Оборудование */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .equip-card {
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; padding: 14px; text-align: center;
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .equip-card:hover { transform: translateY(-4px); border-color: var(--h-deep); }
+  .equip-card.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .equip-card .eq-icon { font-size: 44px; line-height: 1; }
+  .equip-card .eq-name { font-size: 14px; font-weight: 800; margin-top: 8px; }
+
+  .equip-detail {
+    margin-top: 16px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px; color: #e2e8f0;
+    min-height: 120px; transition: all .3s;
+  }
+  .equip-detail .ed-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .equip-detail .ed-text { font-size: 15.5px; line-height: 1.7; color: #cbd5e1; }
+
+  /* Тест */
+  .test-question {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .test-question .q-text {
+    font-size: 17px; font-weight: 700; margin-bottom: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .test-question .q-num {
+    background: var(--h-deep); color: #fff;
+    border-radius: 50%; width: 30px; height: 30px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+  .test-options { display: flex; flex-direction: column; gap: 10px; }
+  .test-option {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; font-size: 15.5px; transition: all .25s;
+  }
+  .test-option:hover { border-color: var(--h-deep); }
+  .test-option .opt-marker {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    transition: all .25s;
+  }
+  .test-option.correct { border-color: var(--green); background: #ecfdf5; }
+  .test-option.correct .opt-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .test-option.wrong { border-color: var(--red); background: #fef2f2; }
+  .test-option.wrong .opt-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .test-option.disabled { cursor: default; }
+  .test-option.disabled:hover { border-color: var(--border); }
+  .test-option.correct.disabled:hover { border-color: var(--green); }
+  .test-option.wrong.disabled:hover { border-color: var(--red); }
+
+  .explanation {
+    margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+    font-size: 15px; line-height: 1.65; display: none;
+    animation: fadeSlide .35s ease;
+  }
+  .explanation.show { display: block; }
+  .explanation.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .explanation.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+  .explanation b { font-weight: 800; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .test-score {
+    margin-top: 22px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 18px; font-weight: 800;
+    background: var(--panel-2); border: 2px solid var(--border);
+    transition: all .4s;
+  }
+  .test-score.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .test-score.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+  .test-score.bad { background: #fef2f2; border-color: var(--red); color: #dc2626; }
+
+  .retry-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 12px 26px; border-radius: 50px;
+    background: var(--accent); color: #fff; border: none;
+    cursor: pointer; font-size: 15px; font-weight: 800;
+    transition: all .2s;
+    box-shadow: 0 6px 16px -6px rgba(139,92,246,.5);
+  }
+  .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(139,92,246,.6); }
+
+  /* Branching scenarios */
+  .scenario-card {
+    background: linear-gradient(180deg, #fff, #fef2f2);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    transition: all .25s;
+  }
+  .scenario-card .sc-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .scenario-card .sc-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--red); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900; flex-shrink: 0;
+  }
+  .scenario-card .sc-title { font-size: 16.5px; font-weight: 800; }
+  .scenario-card .sc-situation {
+    background: #fff; border-radius: 10px; padding: 14px 18px;
+    font-size: 15.5px; line-height: 1.65; margin-bottom: 14px;
+    border-left: 4px solid var(--orange);
+  }
+  .scenario-actions { display: flex; flex-direction: column; gap: 8px; }
+  .scenario-action {
+    padding: 12px 16px; background: #fff;
+    border: 2px solid var(--border); border-radius: 10px;
+    cursor: pointer; font-size: 15px; transition: all .2s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .scenario-action:hover { border-color: var(--h-deep); }
+  .scenario-action .sa-marker {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .scenario-action.correct { border-color: var(--green); background: #ecfdf5; }
+  .scenario-action.correct .sa-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .scenario-action.wrong { border-color: var(--red); background: #fef2f2; }
+  .scenario-action.wrong .sa-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .scenario-action.disabled { cursor: default; }
+  .scenario-action.disabled:hover { border-color: var(--border); }
+  .scenario-action.correct.disabled:hover { border-color: var(--green); }
+  .scenario-action.wrong.disabled:hover { border-color: var(--red); }
+
+  .scenario-feedback {
+    margin-top: 12px; padding: 12px 16px; border-radius: 10px;
+    font-size: 14.5px; line-height: 1.6; display: none;
+  }
+  .scenario-feedback.show { display: block; animation: fadeSlide .3s ease; }
+  .scenario-feedback.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .scenario-feedback.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+
+  /* Слот под видео (YouTube/Instagram). Пока видео нет — блок не вставляется, вёрстка не едет.
+     Когда появится: <div class="video-slot"><iframe ...></iframe></div> */
+  .video-slot {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: 14px; margin-top: 16px; border: 2px solid var(--border);
+  }
+  .video-slot iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+
+  .footer {
+    text-align: center; padding: 40px 0 60px;
+    color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .subhead {
+    font-size: 17px; font-weight: 800;
+    margin: 26px 0 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .subhead-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+
+  .legend-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .legend-card {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: #fff;
+  }
+  .legend-card .lc-header { display: flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 800; margin-bottom: 6px; }
+  .legend-card .lc-body { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .legend-card .lc-body b { color: var(--text); }
+
+  /* Разогрев (без оценки) */
+  .entry-result {
+    margin-top: 20px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 16px; font-weight: 700;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: none;
+  }
+  .entry-result.show { display: block; animation: fadeSlide .35s ease; }
+  .entry-result.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .entry-result.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+
+  @media (max-width: 900px) {
+    .johnstone-wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 800px) {
+    .dual-basket { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 20px; }
+    .stage { padding: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .timeline-item { width: 180px; }
+    body { font-size: 16px; }
+  }
+
+  /* Раскрывающиеся блоки-шпаргалки (легенда, метод Фейнмана) */
+  details.fold {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 22px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  details.fold summary {
+    list-style: none; cursor: pointer;
+    padding: 16px 22px; font-size: 16px; font-weight: 800;
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    user-select: none;
+  }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary::before {
+    content: '\25B6'; font-size: 12px; color: var(--h-deep);
+    transition: transform .25s;
+  }
+  details.fold[open] summary::before { transform: rotate(90deg); }
+  details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
+  details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
+
+  /* Навигация: триггер + выезжающий drawer + «наверх» */
+  .nav-trigger {
+    position: fixed; top: 12px; left: 12px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 8px 16px; border-radius: 50px;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font: inherit; font-size: 14px; font-weight: 800; color: var(--text);
+    cursor: pointer; box-shadow: var(--shadow); transition: border-color .2s, color .2s;
+  }
+  .nav-trigger:hover { border-color: #6875F5; color: #6875F5; }
+  .nav-trigger-icon { font-size: 18px; line-height: 1; }
+  .nav-backdrop {
+    position: fixed; inset: 0; z-index: 70; background: rgba(15,23,42,.5);
+    opacity: 0; transition: opacity .3s ease-in-out;
+  }
+  .nav-backdrop.show { opacity: 1; }
+  .nav-drawer {
+    position: fixed; top: 0; left: 0; height: 100%; width: min(85%, 360px);
+    z-index: 80; background: #fafafa; box-shadow: var(--shadow-lg);
+    transform: translateX(-100%); visibility: hidden; overflow-y: auto;
+    transition: transform .3s ease-in-out, visibility .3s;
+    padding: 18px 16px 28px; -webkit-overflow-scrolling: touch;
+  }
+  .nav-drawer.open { transform: translateX(0); visibility: visible; }
+  body.nav-open { overflow: hidden; }
+  .nav-drawer-head { font-size: 16px; font-weight: 800; margin: 6px 8px 14px; line-height: 1.35; }
+  .nav-tree { list-style: none; margin: 0; padding: 0; }
+  .nav-tree a {
+    display: block; padding: 12px; border-radius: 10px; text-decoration: none;
+    color: var(--text); font-size: 15px; font-weight: 700; min-height: 44px;
+  }
+  .nav-tree a:hover { background: #eef2f7; }
+  .nav-lesson.nav-current > a { color: #6875F5; }
+  .nav-subs {
+    list-style: none; margin: 2px 0 8px 12px; padding: 0 0 0 10px;
+    border-left: 2px solid var(--border);
+  }
+  .nav-subs a { font-size: 13.5px; font-weight: 500; color: var(--muted); padding: 9px 10px; min-height: 40px; }
+  .nav-subs a.nav-active {
+    color: #6875F5; font-weight: 700; background: rgba(104,117,245,.10);
+    border-left: 2px solid #6875F5; margin-left: -12px; padding-left: 12px;
+  }
+  .to-top {
+    position: fixed; right: 14px; bottom: 16px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow);
+  }
+  .to-top:hover { border-color: #6875F5; color: #6875F5; }
+  [data-stage], [id^="m-"] { scroll-margin-top: 72px; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-drawer, .nav-backdrop { transition: none; }
+  }
+
+  /* Палитра карточек легенды */
+  .legend-card { border: 2px solid var(--border); }
+  .legend-card.lc-warm { background: #FFF9E6; border-color: #FFE0B2; }
+  .legend-card.lc-warm .lc-header { color: #7A5F00; }
+  .legend-card.lc-danger { background: #FDF2F2; border-color: #FDE8E8; }
+  .legend-card.lc-danger .lc-header { color: #9B1C1C; }
+  .legend-card.lc-info { background: #EBF5FF; border-color: #E1EFFE; }
+  .legend-card.lc-info .lc-header { color: #1E429F; }
+  .legend-card.lc-ok { background: #EDF7ED; border-color: #C8E6C9; }
+  .legend-card.lc-ok .lc-header { color: #1E4620; }
+  .legend-card.lc-act { background: #fff; border-color: #6875F5; }
+  .legend-card.lc-act .lc-header,
+  .legend-card.lc-act .lc-body,
+  .legend-card.lc-act .lc-body b { color: #6875F5; }
+  .legend-card.lc-accent { border-color: #6875F5; }
+  .legend-card.lc-game { background: #F3E8FF; border-color: #E9D5FF; }
+  .legend-card.lc-game .lc-header { color: #6B21A8; }
+  .legend-card.lc-test { background: #F1F5F9; border-color: #E2E8F0; }
+  .legend-card.lc-test .lc-header { color: #475569; }
+  .lc-vi { color: #6875F5; }
+
+  /* Домашнее задание */
+  .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+  .homework ol { margin: 12px 0 0 22px; line-height: 1.9; font-size: 15.5px; }
+  .homework ol li { margin-bottom: 6px; }
+  .homework .hw-star { color: var(--accent); font-weight: 800; }
+
+
+
+  /* Формулы и химические записи */
+  .formula { font-variant-numeric: lining-nums; white-space: nowrap; }
+  .formula sub { font-size: .7em; vertical-align: -.25em; }
+  .formula sup { font-size: .7em; vertical-align: .5em; }
+  .formula-block {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    flex-wrap: wrap; padding: 16px; margin: 14px 0;
+    background: var(--panel-2); border-radius: var(--radius);
+    font-size: 20px; overflow-x: auto;
+  }
+  .reaction-arrow { position: relative; display: inline-block; padding: 0 10px; }
+  .reaction-arrow > .cond {
+    position: absolute; left: 0; right: 0; font-size: 12px; color: var(--muted);
+  }
+  .reaction-arrow > .cond.top { bottom: 100%; }
+  .reaction-arrow > .cond.bottom { top: 100%; }
+  .state-tag { font-size: .8em; color: var(--muted); }
+  .ox-state { display: inline-block; font-size: .75em; font-weight: 700; }
+  .atom-chip {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700;
+    color: #111; border: 1.5px solid rgba(0,0,0,.35); vertical-align: middle;
+    cursor: pointer;
+  }
+  .term { border-bottom: 1px dashed var(--accent); cursor: pointer; }
+  .glossary-pop {
+    position: absolute; z-index: 50; max-width: 260px;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow-lg);
+    font-size: 15px; line-height: 1.5;
+  }
+
+  /* Утилиты раскладки (канон, вместо инлайн-стилей) */
+  .mt-14 { margin-top: 14px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-18 { margin-top: 18px; }
+  .mt-22 { margin-top: 22px; }
+  .center-mt16 { text-align: center; margin-top: 16px; }
+  .prose { font-size: 16.5px; line-height: 1.8; }
+  .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
+  .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
+  .fs-26 { font-size: 26px; }
+  .sci-node { cursor: pointer; }
+  .hero-digest { max-width: 700px; margin: 0 auto; }
+
+  /* Quiz: multi и match */
+  .quiz-errors { margin-top: 10px; }
+  .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
+  .match-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .match-left { flex: 1 1 180px; }
+  .match-select {
+    flex: 0 0 auto; min-height: 44px; padding: 8px 12px; font-size: 15px;
+    border: 1.5px solid var(--border); border-radius: 10px; background: var(--panel);
+    color: var(--text);
+  }
+
+  /* Карта курса */
+  .map-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: var(--radius); padding: 18px; display: flex;
+    flex-direction: column; gap: 8px; box-shadow: var(--shadow);
+  }
+  .map-card.ready { border-color: var(--green); }
+  .map-card.wip { border-color: var(--orange); }
+  .map-icon { font-size: 30px; line-height: 1; }
+  .map-title { font-size: 17px; font-weight: 800; letter-spacing: -.3px; }
+  .map-meta { font-size: 13px; color: var(--muted); }
+  .map-badge {
+    align-self: flex-start; font-size: 11px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 50px;
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+  }
+  .map-card.ready .map-badge { color: #fff; background: var(--green); border-color: var(--green); }
+  .map-topics { font-size: 14.5px; }
+  .map-skills { font-size: 14px; color: var(--muted); }
+  .map-prereq { font-size: 13px; color: var(--orange); font-weight: 700; }
+  .map-grid {
+    display: grid; gap: 14px; margin-top: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  .map-level-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
+</style>
+</head>
+<body>
+<!-- built by src/build.py v1 · 2026-09-29 · module_5/final · manifest-driven -->
+<header class="hero">
+  <div class="badge">Модуль 5 · Атомы: доказательства и модели · ~15 минут</div>
+  <h1>Рефлексия, практикум и итоговый тест</h1>
+</header>
+<div class="container">
+<button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
+<div class="nav-backdrop" id="navBackdrop" hidden></div>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 5. Атомы: доказательства и модели</div><ul class="nav-tree"><li class="nav-lesson"><a href="entry.html">Начало</a></li><li class="nav-lesson"><a href="u1.html">Урок 1</a></li><li class="nav-lesson"><a href="u2.html">Урок 2</a></li><li class="nav-lesson"><a href="u3.html">Урок 3</a></li><li class="nav-lesson nav-current"><a href="#" aria-current="true">Тест</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-final-1">Практикум-квиз (самопроверка): собери атом</a></li><li><a class="nav-sub" href="#s-final-2">Итоговый тест по Модулю 4а</a></li></ul></li></ul></nav>
+<button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
+
+
+<!-- ==================== ПРАКТИКУМ ==================== -->
+<section class="section">
+  <div id="s-final-1" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум-квиз (самопроверка): собери атом</div>
+        <div class="stage-subtitle">Пройди 5 шагов и собери модель атома</div>
+      </div>
+    </div>
+    <div id="quiz-prac" data-config="practice"></div>
+<script type="application/json" id="quiz-prac-data">{"config": "practice", "target": "quiz-prac", "questions": [{"type": "single", "q": "Шаг 1: Что должно быть в центре атома?", "options": ["Ядро (протоны и нейтроны)", "Электроны", "Пустота", "Молекулы"], "correct": 0, "why": "В центре атома — ядро из протонов и нейтронов."}, {"type": "single", "q": "Шаг 2: Какие частицы движутся вокруг ядра?", "options": ["Протоны", "Нейтроны", "Электроны", "Кварки"], "correct": 2, "why": "Вокруг ядра движутся электроны — отрицательно заряженные частицы."}, {"type": "single", "q": "Шаг 3: Какой заряд у протона?", "options": ["Положительный (+)", "Отрицательный (−)", "Нет заряда", "Зависит от атома"], "correct": 0, "why": "Протон имеет положительный заряд."}, {"type": "single", "q": "Шаг 4: Откуда вообще взялся заряд у частиц?", "options": ["Заряд — фундаментальное свойство материи, как масса", "Учёные приделали заряд к частицам", "Заряд появляется при движении", "Заряд — это энергия"], "correct": 0, "why": "Заряд — фундаментальное свойство, такое же, как масса. Природа выбрала два типа заряда."}, {"type": "single", "q": "Шаг 5: Какая модель атома современная?", "options": ["Модель Томсона", "Модель Резерфорда", "Модель Бора", "Квантовая модель"], "correct": 3, "why": "Современная модель — квантовая: электрон как «облако вероятности»."}]}</script>
+  </div>
+</section>
+
+<!-- ==================== ИТОГОВЫЙ ТЕСТ ==================== -->
+<section class="section">
+  <div id="s-final-2" data-stage class="stage s-test fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📝</div>
+      <div>
+        <div class="stage-title">Итоговый тест по Модулю 4а</div>
+        <div class="stage-subtitle">15 вопросов · порог — 80% (12 правильных)</div>
+      </div>
+    </div>
+    <p class="lead">
+      <span class="cta">👆 Нажми на вариант</span> — он сразу подсветится, а под вопросом появится объяснение.
+    </p>
+    <div id="quiz-final" data-config="final"></div>
+<script type="application/json" id="quiz-final-data">{"config": "final", "target": "quiz-final", "questions": [{"type": "single", "q": "Кто первым предложил идею атомов?", "options": ["Аристотель", "Демокрит", "Ломоносов", "Менделеев"], "correct": 1, "why": "Демокрит (ок. 460–370 до н.э.) первым предложил идею неделимых частиц — атомов."}, {"type": "single", "q": "Что доказывает броуновское движение?", "options": ["Существование молекул", "Существование электронов", "Существование протонов", "Существование кварков"], "correct": 0, "why": "Броуновское движение — хаотичное движение пыльцы под ударами невидимых молекул. Прямое доказательство существования молекул."}, {"type": "single", "q": "Как называется модель атома Томсона?", "options": ["Планетарная", "Пудинг с изюмом", "Квантовая", "Ядерная"], "correct": 1, "why": "Модель Томсона — «пудинг с изюмом»: положительный шар с электронами."}, {"type": "single", "q": "Что доказал опыт Резерфорда с золотой фольгой?", "options": ["Атом — сплошной шар", "В центре атома — маленькое тяжёлое ядро", "Электроны движутся по орбитам", "Атом неделим"], "correct": 1, "why": "Опыт показал: атом — пустота, в центре — маленькое тяжёлое ядро."}, {"type": "single", "q": "Какие частицы находятся в ядре?", "options": ["Только электроны", "Протоны и нейтроны", "Только протоны", "Только нейтроны"], "correct": 1, "why": "Ядро состоит из протонов (положительных) и нейтронов (нейтральных)."}, {"type": "single", "q": "Какой заряд у электрона?", "options": ["Положительный", "Отрицательный", "Нейтральный", "Зависит от атома"], "correct": 1, "why": "Электрон — отрицательно заряженная частица."}, {"type": "single", "q": "Из чего состоят протоны и нейтроны?", "options": ["Из кварков", "Из электронов", "Из атомов", "Из молекул"], "correct": 0, "why": "Протоны и нейтроны состоят из кварков — самых маленьких известных частиц."}, {"type": "single", "q": "Какая модель атома современная?", "options": ["Томсона", "Резерфорда", "Бора", "Квантовая"], "correct": 3, "why": "Современная модель — квантовая: электрон как «облако вероятности»."}, {"type": "single", "q": "Что такое закон постоянства состава?", "options": ["Состав чистого вещества постоянен независимо от способа получения", "Состав всегда меняется", "Состав зависит от температуры", "Состав зависит от давления"], "correct": 0, "why": "Закон Пруста: всякое химически чистое вещество молекулярного строения имеет постоянный состав."}, {"type": "single", "q": "Почему состав воды всегда одинаков?", "options": ["Атомы соединяются целыми порциями", "Так решили учёные", "Вода — простое вещество", "Это случайность"], "correct": 0, "why": "Атомы соединяются целыми порциями: один, два, три. Нельзя соединить «полтора атома»."}, {"type": "single", "q": "Откуда у частиц берётся заряд?", "options": ["Это фундаментальное свойство материи, как масса", "Учёные приделали заряд", "Заряд появляется при движении", "Заряд — это энергия"], "correct": 0, "why": "Заряд — фундаментальное свойство. Природа выбрала два типа заряда, и они взаимодействуют."}, {"type": "single", "q": "Если атом — футбольный стадион, то ядро — это...", "options": ["Горошина в центре поля", "Мяч", "Трибуна", "Ворота"], "correct": 0, "why": "Ядро в 10 000–100 000 раз меньше атома — как горошина на стадионе."}, {"type": "single", "q": "Какие частицы «склеены» глюонами?", "options": ["Электроны", "Кварки", "Протоны целиком", "Атомы"], "correct": 1, "why": "Кварки склеены глюонами (от англ. glue — клей) и никогда не встречаются поодиночке."}, {"type": "single", "q": "Что такое фермионы?", "options": ["Частицы, из которых состоит вещество", "Частицы, переносящие силы", "Тип атомов", "Тип молекул"], "correct": 0, "why": "Фермионы — «кирпичики материи»: кварки и лептоны. Бозоны — переносчики сил."}, {"type": "single", "q": "Почему атом не делится в химических реакциях?", "options": ["Слишком маленький", "Для деления ядра нужна огромная энергия, которой в химии нет", "Не может делиться", "Так придумали учёные"], "correct": 1, "why": "Для разрушения ядра нужна огромная энергия — она есть только в ядерных реакциях или ускорителях."}]}</script>
+  </div>
+</section>
+</div>
+<script type="application/json" id="glossary">{
+  "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },
+  "физическое тело": { "definition": "отдельный предмет, имеющий форму и объём", "module": "module_1" },
+  "свойство вещества": { "definition": "признак, по которому вещества различают и описывают", "module": "module_1" },
+  "наблюдение": { "definition": "внимательное изучение явления без вмешательства в процесс", "module": "module_1" },
+  "эксперимент": { "definition": "изучение явления через активное воздействие на вещество", "module": "module_1" },
+  "измерение": { "definition": "сравнение величины с эталоном", "module": "module_1" },
+  "моделирование": { "definition": "замена объекта упрощённой схемой для изучения", "module": "module_1" },
+  "гипотеза": { "definition": "разумное предположение, которое ещё нужно проверить", "module": "module_1" },
+  "лаборатория": { "definition": "помещение со специальным оборудованием для опытов", "module": "module_1" },
+  "агрегатное состояние": { "definition": "состояние вещества (твёрдое, жидкое, газообразное) при данных условиях", "module": "module_2" },
+  "плавление": { "definition": "переход вещества из твёрдого состояния в жидкое при нагревании", "module": "module_2" },
+  "кипение": { "definition": "переход жидкости в газ по всему объёму при температуре кипения", "module": "module_2" },
+  "конденсация": { "definition": "переход вещества из газообразного состояния в жидкое при охлаждении", "module": "module_2" },
+  "замерзание": { "definition": "переход жидкости в твёрдое состояние при охлаждении", "module": "module_2" },
+  "сублимация": { "definition": "переход вещества из твёрдого состояния сразу в газообразное, минуя жидкость", "module": "module_2" },
+  "чистое вещество": { "definition": "вещество, состоящее из одинаковых частиц", "module": "module_2" },
+  "смесь": { "definition": "система из разных веществ, сохраняющих свои свойства", "module": "module_2" },
+  "гомогенная смесь": { "definition": "однородная смесь, составные части неразличимы глазом", "module": "module_2" },
+  "гетерогенная смесь": { "definition": "неоднородная смесь, части различимы", "module": "module_2" },
+  "отстаивание": { "definition": "разделение смеси по разной плотности: тяжёлое оседает", "module": "module_2" }
+}
+</script><script type="application/json" id="messages">{
+  "entryFail": [
+    "Не страшно — сейчас всё узнаешь. Повтори предыдущий урок и пройди входной снова.",
+    "Это входной тест, а не оценка. Загляни в прошлый урок и попробуй ещё раз."
+  ],
+  "finalPass": [
+    "🎉 Модуль пройден!",
+    "🎉 Отлично, ты справился с итоговым тестом!"
+  ],
+  "finalFail": [
+    "Есть над чем поработать. Вернись к текущему уроку и попробуй ещё раз.",
+    "Пока не хватает до порога. Перечитай урок и пройди снова."
+  ],
+  "warmupDone": [
+    "Разминка пройдена.",
+    "Разминка готова — двигаемся дальше."
+  ],
+  "practiceDone": [
+    "Хорошо! Двигаемся дальше.",
+    "Верно! Закрепим это в тетради."
+  ]
+}
+</script>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Химия · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">
+    Простое объяснение · пример из жизни · наглядный опыт · запись в тетрадь
+  </div>
+</footer>
+
+<script>
+(function initQuizzes() {
+  const islands = document.querySelectorAll('script[type="application/json"][id^="quiz-"]');
+  if (!islands.length) return;
+
+  const msgIsland = document.getElementById('messages');
+  let MSG = {};
+  try { MSG = msgIsland ? JSON.parse(msgIsland.textContent) : {}; } catch (e) { MSG = {}; }
+
+  function pick(kind) {
+    const arr = MSG[kind] || [];
+    return arr.length ? arr[Math.floor(Math.random() * arr.length)] : '';
+  }
+
+  function shuffle(a) {
+    const r = a.slice();
+    for (let i = r.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [r[i], r[j]] = [r[j], r[i]];
+    }
+    return r;
+  }
+
+  const PASS_RATIO = 0.8;
+  const LETTERS = 'ABCDEFGH';
+
+  islands.forEach((island) => {
+    let data;
+    try { data = JSON.parse(island.textContent); } catch (e) { return; }
+    const targetId = data.target || island.id.replace(/-data$/, '');
+    const host = document.getElementById(targetId);
+    if (!host) return;
+    let questions = data.questions || [];
+    const config = data.config || host.dataset.config || 'practice';
+    if (data.bank && questions.length > data.bank) {
+      questions = shuffle(questions).slice(0, data.bank);
+    }
+    const threshold = data.threshold != null
+      ? data.threshold
+      : Math.ceil(questions.length * PASS_RATIO);
+
+    const state = { answered: 0, correct: 0, wrong: [] };
+
+    function render() {
+      host.innerHTML = '';
+      state.answered = 0;
+      state.correct = 0;
+      state.wrong = [];
+
+      const score = document.createElement('div');
+      score.className = 'test-score';
+      score.textContent = 'Правильных ответов: 0 из ' + questions.length;
+      host.appendChild(score);
+
+      const ordered = data.shuffle === false
+        ? questions.map((q, i) => ({ q: q, idx: i }))
+        : shuffle(questions.map((q, i) => ({ q: q, idx: i })));
+
+      ordered.forEach(({ q, idx }, displayIndex) => {
+        const block = document.createElement('div');
+        block.className = 'test-question';
+        block.dataset.q = String(idx);
+        block.innerHTML = '<div class="q-text"><span class="q-num">' +
+          (displayIndex + 1) + '</span><span>' + q.q + '</span></div>' +
+          '<div class="test-options"></div>' +
+          '<div class="explanation" id="exp-' + island.id + '-' + idx + '"></div>';
+
+        const optBox = block.querySelector('.test-options');
+        if (q.type === 'match') {
+          q.left.forEach((leftText, li) => {
+            const row = document.createElement('div');
+            row.className = 'test-option match-row';
+            const opts = q.right.map((rt, ri) =>
+              '<option value="' + ri + '">' + rt + '</option>').join('');
+            row.innerHTML = '<span class="match-left">' + leftText + '</span>' +
+              '<select class="match-select" data-left="' + li + '">' +
+              '<option value="">—</option>' + opts + '</select>';
+            optBox.appendChild(row);
+          });
+          const btn = document.createElement('button');
+          btn.className = 'retry-btn';
+          btn.type = 'button';
+          btn.textContent = 'Проверить';
+          btn.addEventListener('click', () => checkMatch(block, q, idx));
+          optBox.appendChild(btn);
+        } else {
+          q.options.forEach((optText, oi) => {
+            const opt = document.createElement('div');
+            opt.className = 'test-option';
+            opt.dataset.opt = String(oi);
+            opt.innerHTML = '<span class="opt-marker">' +
+              (q.type === 'multi' ? '☐' : LETTERS[oi]) +
+              '</span><span>' + optText + '</span>';
+            opt.addEventListener('click', () => {
+              if (q.type === 'multi') {
+                opt.classList.toggle('picked');
+                return;
+              }
+              answerSingle(block, q, idx, oi);
+            });
+            optBox.appendChild(opt);
+          });
+          if (q.type === 'multi') {
+            const btn = document.createElement('button');
+            btn.className = 'retry-btn';
+            btn.type = 'button';
+            btn.textContent = 'Проверить';
+            btn.addEventListener('click', () => checkMulti(block, q, idx));
+            optBox.appendChild(btn);
+          }
+        }
+        host.appendChild(block);
+      });
+    }
+
+    function finish(block, exp, isCorrect, q) {
+      block.querySelectorAll('.test-option').forEach((o) => o.classList.add('disabled'));
+      block.querySelectorAll('button').forEach((b) => (b.disabled = true));
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = '<b>' + (isCorrect ? '✅ Правильно!' : '❌ Не совсем.') +
+        '</b> ' + (q.why || '');
+      if (isCorrect) state.correct++; else state.wrong.push(q.q);
+      state.answered++;
+      const score = host.querySelector('.test-score');
+      if (score) score.textContent = 'Правильных ответов: ' +
+        state.correct + ' из ' + questions.length;
+      if (state.answered === questions.length) summarize();
+    }
+
+    function answerSingle(block, q, idx, oi) {
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (i === q.correct) o.classList.add('correct');
+        if (i === oi && oi !== q.correct) o.classList.add('wrong');
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx),
+        oi === q.correct, q);
+    }
+
+    function checkMulti(block, q, idx) {
+      const picked = Array.from(block.querySelectorAll('.test-option.picked'))
+        .map((o) => parseInt(o.dataset.opt, 10)).sort();
+      const correct = q.correct.slice().sort();
+      const ok = picked.length === correct.length &&
+        picked.every((v, i) => v === correct[i]);
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (q.correct.indexOf(i) !== -1) o.classList.add('correct');
+        else if (o.classList.contains('picked')) o.classList.add('wrong');
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function checkMatch(block, q, idx) {
+      let ok = true;
+      block.querySelectorAll('.match-select').forEach((sel) => {
+        const li = parseInt(sel.dataset.left, 10);
+        const val = parseInt(sel.value, 10);
+        if (val !== q.correct[li]) ok = false;
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function summarize() {
+      const box = document.createElement('div');
+      const passed = state.correct >= threshold;
+      let text;
+      if (config === 'final') {
+        text = passed ? pick('finalPass') : pick('finalFail');
+      } else if (config === 'entry') {
+        text = passed ? pick('practiceDone') : pick('entryFail');
+      } else if (config === 'warmup') {
+        text = pick('warmupDone');
+      } else {
+        text = pick('practiceDone');
+      }
+      box.className = 'callout ' + (passed ? 'callout-ok' : 'callout-warn');
+      let html = text + ' <b>' + state.correct + ' из ' + questions.length + '</b>';
+      if (state.wrong.length) {
+        html += '<div class="recap-card quiz-errors"><b>Разбор ошибок:</b><ul>' +
+          state.wrong.map((w) => '<li>' + w + '</li>').join('') + '</ul></div>';
+      }
+      box.innerHTML = html;
+      const retry = document.createElement('button');
+      retry.className = 'retry-btn';
+      retry.type = 'button';
+      retry.textContent = 'Пройти заново';
+      retry.addEventListener('click', render);
+      box.appendChild(retry);
+      host.appendChild(box);
+    }
+
+    render();
+  });
+})();
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+// ============================================================
+//  Навигация: триггер + выезжающий drawer + scroll-spy + «наверх»
+//  Разметку (navTrigger/navDrawer/navBackdrop/toTop) рендерит билдер.
+// ============================================================
+(function () {
+  const trigger = document.getElementById('navTrigger');
+  const drawer = document.getElementById('navDrawer');
+  const backdrop = document.getElementById('navBackdrop');
+  const toTop = document.getElementById('toTop');
+  if (!trigger || !drawer) return;
+
+  const reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastFocus = null;
+
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    drawer.classList.add('open');
+    requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    drawer.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+    const first = drawer.querySelector('a, button');
+    if (first) first.focus();
+    document.addEventListener('keydown', onKey);
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('show');
+    window.setTimeout(function () { backdrop.hidden = true; }, reduce ? 0 : 300);
+    drawer.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+    document.removeEventListener('keydown', onKey);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') { closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    const f = drawer.querySelectorAll('a, button');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  trigger.addEventListener('click', function () {
+    if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  backdrop.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) closeDrawer();
+  });
+
+  // Scroll-spy: подсвечиваем активный подраздел
+  const subs = Array.prototype.slice.call(drawer.querySelectorAll('a.nav-sub'));
+  if (subs.length && 'IntersectionObserver' in window) {
+    const byId = {};
+    subs.forEach(function (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') byId[href.slice(1)] = a;
+    });
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        subs.forEach(function (a) { a.classList.remove('nav-active'); });
+        const a = byId[en.target.id];
+        if (a) a.classList.add('nav-active');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  // Кнопка «Наверх»
+  if (toTop) {
+    const onScroll = function () { toTop.hidden = window.scrollY < 600; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
+})();
+
+</script>
+</body>
+</html>

@@ -1,0 +1,1657 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Урок 4. Простые и сложные вещества</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #f8fafc;
+    --panel: #ffffff;
+    --panel-2: #f1f5f9;
+    --border: #e2e8f0;
+    --text: #1e293b;
+    --muted: #64748b;
+    --h-deep: #0e7490;
+    --h-color: #06b6d4;
+    --accent: #8b5cf6;
+    --green: #10b981;
+    --orange: #f59e0b;
+    --red: #ef4444;
+    --radius: 16px;
+    --shadow: 0 4px 20px -4px rgba(0,0,0,.08);
+    --shadow-lg: 0 12px 40px -12px rgba(0,0,0,.15);
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg); color: var(--text); line-height: 1.7;
+    font-size: 17px;
+    overflow-x: hidden;
+  }
+  .container { max-width: 1140px; margin: 0 auto; padding: 0 20px; }
+
+  .hero {
+    text-align: center; padding: 56px 0 26px;
+    background: linear-gradient(180deg, #ecfeff 0%, var(--bg) 100%);
+  }
+  .hero .badge {
+    display: inline-block; font-size: 12px; letter-spacing: 3px;
+    text-transform: uppercase; color: var(--h-deep);
+    border: 1.5px solid var(--h-deep); padding: 6px 18px;
+    border-radius: 50px; margin-bottom: 20px; background: rgba(6,182,212,.05);
+  }
+  .hero h1 {
+    font-size: clamp(28px, 4.5vw, 48px); font-weight: 800;
+    letter-spacing: -1px; line-height: 1.15;
+    background: linear-gradient(135deg, #06b6d4, #8b5cf6, #10b981);
+    -webkit-background-clip: text; background-clip: text; color: transparent;
+    margin-bottom: 14px;
+  }
+  .hero p { color: var(--muted); font-size: 17px; max-width: 750px; margin: 0 auto; }
+
+  .section { padding: 24px 0; }
+
+  .stage {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 28px; margin-bottom: 26px;
+    box-shadow: var(--shadow); position: relative; overflow: hidden;
+  }
+  .stage::before {
+    content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+  }
+  .stage.s-legend::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6, #f59e0b); }
+  .stage.s-entry::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+  .stage.s-intro::before { background: linear-gradient(90deg, #06b6d4, #8b5cf6); }
+  .stage.s-why::before   { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s1::before      { background: linear-gradient(90deg, #06b6d4, #0891b2); }
+  .stage.s2::before      { background: linear-gradient(90deg, #8b5cf6, #6d28d9); }
+  .stage.s3::before      { background: linear-gradient(90deg, #10b981, #059669); }
+  .stage.s4::before      { background: linear-gradient(90deg, #ef4444, #f59e0b); }
+  .stage.s-feyn::before  { background: linear-gradient(90deg, #8b5cf6, #ec4899); }
+  .stage.s-prac::before  { background: linear-gradient(90deg, #06b6d4, #10b981); }
+  .stage.s-test::before  { background: linear-gradient(90deg, #f59e0b, #ef4444); }
+
+  .stage-header { display: flex; align-items: center; gap: 14px; margin-bottom: 18px; }
+  .stage-number {
+    display: flex; align-items: center; justify-content: center;
+    width: 48px; height: 48px; border-radius: 50%;
+    background: var(--panel-2); color: var(--h-deep);
+    font-size: 22px; font-weight: 900; flex-shrink: 0;
+    border: 2px solid var(--border);
+  }
+  .stage-title { font-size: 21px; font-weight: 700; color: var(--text); }
+  .stage-subtitle { font-size: 14px; color: var(--muted); font-weight: 500; margin-top: 2px; }
+
+  .callout {
+    padding: 16px 20px;
+    border-radius: 12px;
+    margin: 16px 0;
+    font-size: 16px;
+    line-height: 1.7;
+  }
+  /* Единая палитра: коллауты совпадают с «Условными обозначениями» */
+  .callout-idea {
+    background: #FFF9E6; border-left: 5px solid #FFE0B2; color: #7A5F00;
+  }
+  .callout-idea b { color: #7A5F00; }
+  .callout-warn {
+    background: #FDF2F2; border-left: 5px solid #FDE8E8; color: #9B1C1C;
+  }
+  .callout-warn b { color: #9B1C1C; }
+  .callout-note {
+    background: #EBF5FF; border-left: 5px solid #E1EFFE; color: #1E429F;
+  }
+  .callout-note b { color: #1E429F; }
+  .callout-ok {
+    background: #EDF7ED; border-left: 5px solid #C8E6C9; color: #1E4620;
+  }
+  .callout-ok b { color: #1E4620; }
+  .callout-game {
+    background: #F3E8FF; border-left: 5px solid #E9D5FF; color: #6B21A8;
+  }
+  .callout-game b { color: #6B21A8; }
+  .callout-test {
+    background: #F1F5F9; border-left: 5px solid #E2E8F0; color: #475569;
+  }
+  .callout-test b { color: #475569; }
+
+  .cta { color: #6875F5; font-weight: 800; }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+    gap: 18px;
+    margin-top: 16px;
+  }
+  .card {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 1.5px solid var(--border);
+    border-radius: 14px;
+    padding: 20px;
+    transition: all .3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--h-color), var(--accent));
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 30px -12px rgba(0,0,0,.15);
+    border-color: var(--h-deep);
+  }
+  .card .c-title { font-size: 16.5px; font-weight: 800; color: var(--text); margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+  .card .c-desc { font-size: 15.5px; color: var(--muted); line-height: 1.65; }
+  .card .c-desc b { color: var(--text); }
+
+  /* Таймлайн */
+  .timeline { position: relative; padding: 10px 0; margin-top: 10px; }
+  .timeline-track {
+    display: flex; gap: 0; overflow-x: auto; padding-bottom: 12px;
+    scroll-snap-type: x mandatory;
+  }
+  .timeline-track::-webkit-scrollbar { height: 8px; }
+  .timeline-track::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+  .timeline-item {
+    flex: 0 0 auto; width: 210px; padding: 16px; margin-right: 12px;
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; cursor: pointer; transition: all .25s;
+    scroll-snap-align: start; text-align: center;
+  }
+  .timeline-item:hover { transform: translateY(-3px); border-color: var(--h-deep); }
+  .timeline-item.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+  }
+  .timeline-item .t-emoji { font-size: 30px; }
+  .timeline-item .t-era {
+    font-size: 12px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--h-deep); margin-top: 6px;
+  }
+  .timeline-item .t-name { font-size: 14px; font-weight: 700; color: var(--text); margin-top: 4px; }
+  .timeline-detail {
+    margin-top: 14px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 14px; color: #e2e8f0; min-height: 140px;
+    transition: all .3s;
+  }
+  .timeline-detail .td-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 10px; }
+  .timeline-detail .td-text { font-size: 15.5px; line-height: 1.75; color: #cbd5e1; }
+  .timeline-detail .td-text b { color: #fff; }
+
+  /* Сетка задач */
+  .task-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .task-card {
+    padding: 20px; background: var(--panel-2); border-radius: 14px;
+    border: 1.5px solid var(--border); transition: all .25s;
+  }
+  .task-card:hover {
+    border-color: var(--h-deep); transform: translateY(-3px);
+    box-shadow: 0 8px 20px -8px rgba(6,182,212,.3);
+  }
+  .task-card .tc-emoji { font-size: 32px; line-height: 1; }
+  .task-card .tc-title { font-size: 16px; font-weight: 800; margin-top: 8px; }
+  .task-card .tc-desc { font-size: 14.5px; color: var(--muted); margin-top: 6px; line-height: 1.6; }
+  .task-card .tc-examples { font-size: 13.5px; color: var(--text); margin-top: 8px; line-height: 1.55; }
+  .task-card .tc-examples span { display: inline-block; background: #fff; padding: 3px 8px; border-radius: 6px; margin: 2px 3px 2px 0; border: 1px solid var(--border); font-weight: 600; }
+
+  /* Игры */
+  .game-area {
+    background: var(--panel-2); border-radius: 14px;
+    padding: 22px; margin-top: 18px;
+  }
+  .game-area h4 { font-size: 17px; font-weight: 800; margin-bottom: 8px; }
+  .game-area .game-hint { font-size: 15px; color: var(--muted); margin-bottom: 16px; }
+
+  .dual-basket {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-top: 16px;
+  }
+  .basket {
+    border: 2.5px dashed var(--border);
+    border-radius: 14px;
+    padding: 16px;
+    min-height: 160px;
+    text-align: center;
+    transition: all .25s;
+    background: #fff;
+  }
+  .basket.hover { border-color: var(--accent); background: #f5f3ff; }
+  .basket .basket-title {
+    font-size: 14px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 12px;
+  }
+  .basket .basket-items { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+  .basket .basket-chip {
+    background: var(--panel-2);
+    border: 1.5px solid var(--border);
+    border-radius: 8px;
+    padding: 6px 12px;
+    font-size: 14px;
+    font-weight: 700;
+  }
+  .basket.good { border-color: var(--green); background: #ecfdf5; }
+  .basket.bad { border-color: var(--red); background: #fef2f2; }
+
+  .game-pool {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    padding: 16px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-height: 100px;
+    margin-bottom: 14px;
+  }
+  .game-pool .pool-item {
+    background: var(--panel-2);
+    border: 2px solid var(--border);
+    border-radius: 10px; padding: 10px 18px;
+    cursor: grab; font-size: 15px; font-weight: 700;
+    transition: all .2s; user-select: none;
+  }
+  .game-pool .pool-item:hover { border-color: var(--h-deep); transform: translateY(-2px); }
+  .game-pool .pool-item.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .game-pool .pool-item.dragging { opacity: .5; }
+  .game-pool .pool-item.wrong-flash { animation: shake .4s; border-color: var(--red); background: #fef2f2; }
+
+  .reset-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 20px; border-radius: 50px;
+    background: var(--panel-2); color: var(--text);
+    border: 1.5px solid var(--border);
+    cursor: pointer; font-size: 14px; font-weight: 700;
+    transition: all .2s;
+  }
+  .reset-btn:hover { border-color: var(--h-deep); color: var(--h-deep); }
+
+  .game-feedback { margin-top: 14px; font-size: 15.5px; font-weight: 700; min-height: 24px; }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+  /* Треугольник Джонстона: стили припаркованы для Модуля 4б (введение);
+     в ранних модулях блок не используется */
+  .johnstone-wrap {
+    display: grid; grid-template-columns: 1.1fr 1fr; gap: 24px;
+    align-items: center; margin-top: 18px;
+  }
+  .johnstone-svg-wrap {
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border: 2px solid var(--border); border-radius: 14px; padding: 14px;
+  }
+  .johnstone-svg-wrap svg { width: 100%; height: auto; display: block; }
+  .johnstone-info {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; min-height: 220px;
+  }
+  .johnstone-info .ji-title { font-size: 17px; font-weight: 800; margin-bottom: 10px; color: var(--h-deep); }
+  .johnstone-info .ji-text { font-size: 15.5px; line-height: 1.7; color: var(--text); }
+  .johnstone-info .ji-example {
+    margin-top: 14px; padding: 12px 16px;
+    background: #fff; border-radius: 10px;
+    border-left: 4px solid var(--accent);
+    font-size: 14.5px; color: #4c1d95;
+  }
+  .johnstone-info .ji-example b { color: #5b21b6; }
+
+  .sciences-svg-wrap {
+    background: linear-gradient(180deg, #faf5ff, #fff);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 14px;
+    margin-top: 16px;
+  }
+  .sciences-svg-wrap svg { width: 100%; height: auto; display: block; }
+
+  /* Методы познания */
+  .method-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 20px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    border-radius: 14px;
+    border: 2px solid var(--border);
+  }
+  .method-step {
+    display: flex; flex-direction: column; align-items: center;
+    padding: 14px 18px;
+    background: #fff;
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    min-width: 130px;
+    transition: all .35s;
+    cursor: pointer;
+  }
+  .method-step.active {
+    border-color: var(--accent);
+    background: linear-gradient(180deg, #f5f3ff, #ede9fe);
+    box-shadow: 0 8px 20px -8px rgba(139,92,246,.4);
+    transform: scale(1.05);
+  }
+  .method-step .ms-num {
+    width: 28px; height: 28px; border-radius: 50%;
+    background: var(--h-deep); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900;
+    margin-bottom: 8px;
+  }
+  .method-step.active .ms-num { background: var(--accent); }
+  .method-step .ms-icon { font-size: 28px; }
+  .method-step .ms-name { font-size: 14px; font-weight: 800; margin-top: 6px; text-align: center; }
+  .method-arrow {
+    font-size: 24px; color: var(--muted); animation: slide 2s infinite;
+  }
+  @keyframes slide {
+    0%,100% { transform: translateX(0); opacity: .5; }
+    50% { transform: translateX(4px); opacity: 1; color: var(--accent); }
+  }
+  .method-detail-box {
+    margin-top: 16px;
+    padding: 18px 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px;
+    color: #e2e8f0;
+    min-height: 130px;
+    transition: all .3s;
+  }
+  .method-detail-box .mb-title { font-size: 16px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .method-detail-box .mb-text { font-size: 15px; line-height: 1.7; color: #cbd5e1; }
+  .method-detail-box .mb-text b { color: #fff; }
+
+  /* Свойства веществ */
+  .property-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .property-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    text-align: center;
+    transition: all .25s;
+  }
+  .property-card:hover { transform: translateY(-4px); border-color: var(--h-deep); box-shadow: var(--shadow-lg); }
+  .property-card .pc-svg {
+    height: 70px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 10px;
+  }
+  .property-card .pc-title { font-size: 16px; font-weight: 800; }
+  .property-card .pc-desc { font-size: 14px; color: var(--muted); margin-top: 6px; line-height: 1.55; }
+
+  /* Процессы жизни */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+  .process-card {
+    background: linear-gradient(180deg, #fff, #f0fdf4);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 18px;
+    transition: all .25s;
+  }
+  .process-card:hover { transform: translateY(-4px); border-color: var(--green); box-shadow: var(--shadow-lg); }
+  .process-card .prc-header { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; }
+  .process-card .prc-icon { font-size: 32px; }
+  .process-card .prc-name { font-size: 16px; font-weight: 800; }
+  .process-card .prc-eq {
+    background: #fff; border-radius: 8px;
+    padding: 10px 14px;
+    font-size: 14px; font-weight: 700;
+    color: #0369a1;
+    margin-bottom: 10px;
+    border: 1px solid var(--border);
+    font-style: italic;
+  }
+  .process-card .prc-desc { font-size: 14px; color: var(--muted); line-height: 1.6; }
+
+  /* Правила безопасности */
+  .safety-list { display: flex; flex-direction: column; gap: 12px; margin-top: 16px; }
+  .safety-item {
+    display: flex; align-items: flex-start; gap: 14px;
+    padding: 16px 20px; background: var(--panel-2);
+    border-radius: 12px; border: 2px solid var(--border);
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .safety-item:hover { border-color: var(--h-deep); transform: translateX(4px); }
+  .safety-item .si-icon { font-size: 30px; line-height: 1; flex-shrink: 0; }
+  .safety-item .si-check {
+    width: 26px; height: 26px; border-radius: 6px;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 15px; color: transparent; font-weight: 900;
+    transition: all .25s; background: #fff;
+    margin-top: 2px;
+  }
+  .safety-item.checked { border-color: var(--green); background: #ecfdf5; }
+  .safety-item.checked .si-check {
+    background: var(--green); border-color: var(--green); color: #fff;
+  }
+  .safety-item .si-text { font-size: 15.5px; line-height: 1.6; flex: 1; }
+  .safety-item .si-text b { color: var(--red); }
+
+  /* Оборудование */
+  .equip-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .equip-card {
+    background: var(--panel-2); border: 2px solid var(--border);
+    border-radius: 14px; padding: 14px; text-align: center;
+    cursor: pointer; transition: all .25s; user-select: none;
+  }
+  .equip-card:hover { transform: translateY(-4px); border-color: var(--h-deep); }
+  .equip-card.selected { border-color: var(--accent); background: #f5f3ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+  .equip-card .eq-icon { font-size: 44px; line-height: 1; }
+  .equip-card .eq-name { font-size: 14px; font-weight: 800; margin-top: 8px; }
+
+  .equip-detail {
+    margin-top: 16px; padding: 22px;
+    background: linear-gradient(135deg, #1e293b, #0f172a);
+    border-radius: 12px; color: #e2e8f0;
+    min-height: 120px; transition: all .3s;
+  }
+  .equip-detail .ed-title { font-size: 17px; font-weight: 800; color: #fbbf24; margin-bottom: 8px; }
+  .equip-detail .ed-text { font-size: 15.5px; line-height: 1.7; color: #cbd5e1; }
+
+  /* Тест */
+  .test-question {
+    background: var(--panel-2); border-radius: 12px;
+    padding: 20px; margin-bottom: 16px;
+  }
+  .test-question .q-text {
+    font-size: 17px; font-weight: 700; margin-bottom: 14px;
+    display: flex; gap: 12px; align-items: flex-start;
+  }
+  .test-question .q-num {
+    background: var(--h-deep); color: #fff;
+    border-radius: 50%; width: 30px; height: 30px;
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 14px; font-weight: 900; flex-shrink: 0;
+  }
+  .test-options { display: flex; flex-direction: column; gap: 10px; }
+  .test-option {
+    display: flex; align-items: center; gap: 12px;
+    background: #fff; border: 2px solid var(--border);
+    border-radius: 10px; padding: 13px 16px;
+    cursor: pointer; font-size: 15.5px; transition: all .25s;
+  }
+  .test-option:hover { border-color: var(--h-deep); }
+  .test-option .opt-marker {
+    width: 26px; height: 26px; border-radius: 50%;
+    border: 2px solid var(--border); flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    transition: all .25s;
+  }
+  .test-option.correct { border-color: var(--green); background: #ecfdf5; }
+  .test-option.correct .opt-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .test-option.wrong { border-color: var(--red); background: #fef2f2; }
+  .test-option.wrong .opt-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .test-option.disabled { cursor: default; }
+  .test-option.disabled:hover { border-color: var(--border); }
+  .test-option.correct.disabled:hover { border-color: var(--green); }
+  .test-option.wrong.disabled:hover { border-color: var(--red); }
+
+  .explanation {
+    margin-top: 14px; padding: 14px 16px; border-radius: 10px;
+    font-size: 15px; line-height: 1.65; display: none;
+    animation: fadeSlide .35s ease;
+  }
+  .explanation.show { display: block; }
+  .explanation.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .explanation.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+  .explanation b { font-weight: 800; }
+  @keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .test-score {
+    margin-top: 22px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 18px; font-weight: 800;
+    background: var(--panel-2); border: 2px solid var(--border);
+    transition: all .4s;
+  }
+  .test-score.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .test-score.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+  .test-score.bad { background: #fef2f2; border-color: var(--red); color: #dc2626; }
+
+  .retry-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    margin-top: 14px; padding: 12px 26px; border-radius: 50px;
+    background: var(--accent); color: #fff; border: none;
+    cursor: pointer; font-size: 15px; font-weight: 800;
+    transition: all .2s;
+    box-shadow: 0 6px 16px -6px rgba(139,92,246,.5);
+  }
+  .retry-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 24px -8px rgba(139,92,246,.6); }
+
+  /* Branching scenarios */
+  .scenario-card {
+    background: linear-gradient(180deg, #fff, #fef2f2);
+    border: 2px solid var(--border);
+    border-radius: 14px;
+    padding: 22px;
+    margin-bottom: 16px;
+    transition: all .25s;
+  }
+  .scenario-card .sc-header {
+    display: flex; align-items: center; gap: 12px; margin-bottom: 14px;
+  }
+  .scenario-card .sc-num {
+    width: 36px; height: 36px; border-radius: 50%;
+    background: var(--red); color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; font-weight: 900; flex-shrink: 0;
+  }
+  .scenario-card .sc-title { font-size: 16.5px; font-weight: 800; }
+  .scenario-card .sc-situation {
+    background: #fff; border-radius: 10px; padding: 14px 18px;
+    font-size: 15.5px; line-height: 1.65; margin-bottom: 14px;
+    border-left: 4px solid var(--orange);
+  }
+  .scenario-actions { display: flex; flex-direction: column; gap: 8px; }
+  .scenario-action {
+    padding: 12px 16px; background: #fff;
+    border: 2px solid var(--border); border-radius: 10px;
+    cursor: pointer; font-size: 15px; transition: all .2s;
+    display: flex; align-items: flex-start; gap: 10px;
+  }
+  .scenario-action:hover { border-color: var(--h-deep); }
+  .scenario-action .sa-marker {
+    width: 24px; height: 24px; border-radius: 50%;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 900; color: var(--muted);
+    flex-shrink: 0;
+  }
+  .scenario-action.correct { border-color: var(--green); background: #ecfdf5; }
+  .scenario-action.correct .sa-marker { background: var(--green); border-color: var(--green); color: #fff; }
+  .scenario-action.wrong { border-color: var(--red); background: #fef2f2; }
+  .scenario-action.wrong .sa-marker { background: var(--red); border-color: var(--red); color: #fff; }
+  .scenario-action.disabled { cursor: default; }
+  .scenario-action.disabled:hover { border-color: var(--border); }
+  .scenario-action.correct.disabled:hover { border-color: var(--green); }
+  .scenario-action.wrong.disabled:hover { border-color: var(--red); }
+
+  .scenario-feedback {
+    margin-top: 12px; padding: 12px 16px; border-radius: 10px;
+    font-size: 14.5px; line-height: 1.6; display: none;
+  }
+  .scenario-feedback.show { display: block; animation: fadeSlide .3s ease; }
+  .scenario-feedback.ok { background: #ecfdf5; border-left: 4px solid var(--green); color: #065f46; }
+  .scenario-feedback.no { background: #fef2f2; border-left: 4px solid var(--red); color: #991b1b; }
+
+  /* Слот под видео (YouTube/Instagram). Пока видео нет — блок не вставляется, вёрстка не едет.
+     Когда появится: <div class="video-slot"><iframe ...></iframe></div> */
+  .video-slot {
+    position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden;
+    border-radius: 14px; margin-top: 16px; border: 2px solid var(--border);
+  }
+  .video-slot iframe {
+    position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0;
+  }
+
+  .footer {
+    text-align: center; padding: 40px 0 60px;
+    color: var(--muted); font-size: 14px;
+    border-top: 1px solid var(--border); margin-top: 40px;
+  }
+
+  .fade-in { opacity: 0; transform: translateY(20px); transition: opacity .7s ease, transform .7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  .subhead {
+    font-size: 17px; font-weight: 800;
+    margin: 26px 0 8px; display: flex; align-items: center; gap: 8px;
+  }
+  .subhead-sub { font-size: 14.5px; color: var(--muted); margin-bottom: 10px; line-height: 1.6; }
+
+  .legend-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 14px; margin-top: 16px;
+  }
+  .legend-card {
+    padding: 14px 18px;
+    border-radius: 12px;
+    border: 2px solid var(--border);
+    background: #fff;
+  }
+  .legend-card .lc-header { display: flex; align-items: center; gap: 10px; font-size: 15.5px; font-weight: 800; margin-bottom: 6px; }
+  .legend-card .lc-body { font-size: 14.5px; color: var(--muted); line-height: 1.6; }
+  .legend-card .lc-body b { color: var(--text); }
+
+  /* Разогрев (без оценки) */
+  .entry-result {
+    margin-top: 20px; padding: 20px; border-radius: 14px;
+    text-align: center; font-size: 16px; font-weight: 700;
+    background: var(--panel-2); border: 2px solid var(--border);
+    display: none;
+  }
+  .entry-result.show { display: block; animation: fadeSlide .35s ease; }
+  .entry-result.good { background: #ecfdf5; border-color: var(--green); color: #059669; }
+  .entry-result.mid { background: #fffbeb; border-color: var(--orange); color: #d97706; }
+
+  @media (max-width: 900px) {
+    .johnstone-wrap { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 800px) {
+    .dual-basket { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 600px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 20px; }
+    .stage { padding: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    .timeline-item { width: 180px; }
+    body { font-size: 16px; }
+  }
+
+  /* Раскрывающиеся блоки-шпаргалки (легенда, метод Фейнмана) */
+  details.fold {
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); margin-bottom: 22px;
+    box-shadow: var(--shadow); overflow: hidden;
+  }
+  details.fold summary {
+    list-style: none; cursor: pointer;
+    padding: 16px 22px; font-size: 16px; font-weight: 800;
+    display: flex; align-items: center; gap: 10px;
+    background: linear-gradient(180deg, #f8fafc, #fff);
+    user-select: none;
+  }
+  details.fold summary::-webkit-details-marker { display: none; }
+  details.fold summary::before {
+    content: '\25B6'; font-size: 12px; color: var(--h-deep);
+    transition: transform .25s;
+  }
+  details.fold[open] summary::before { transform: rotate(90deg); }
+  details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
+  details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
+
+  /* Навигация: триггер + выезжающий drawer + «наверх» */
+  .nav-trigger {
+    position: fixed; top: 12px; left: 12px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 8px 16px; border-radius: 50px;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font: inherit; font-size: 14px; font-weight: 800; color: var(--text);
+    cursor: pointer; box-shadow: var(--shadow); transition: border-color .2s, color .2s;
+  }
+  .nav-trigger:hover { border-color: #6875F5; color: #6875F5; }
+  .nav-trigger-icon { font-size: 18px; line-height: 1; }
+  .nav-backdrop {
+    position: fixed; inset: 0; z-index: 70; background: rgba(15,23,42,.5);
+    opacity: 0; transition: opacity .3s ease-in-out;
+  }
+  .nav-backdrop.show { opacity: 1; }
+  .nav-drawer {
+    position: fixed; top: 0; left: 0; height: 100%; width: min(85%, 360px);
+    z-index: 80; background: #fafafa; box-shadow: var(--shadow-lg);
+    transform: translateX(-100%); visibility: hidden; overflow-y: auto;
+    transition: transform .3s ease-in-out, visibility .3s;
+    padding: 18px 16px 28px; -webkit-overflow-scrolling: touch;
+  }
+  .nav-drawer.open { transform: translateX(0); visibility: visible; }
+  body.nav-open { overflow: hidden; }
+  .nav-drawer-head { font-size: 16px; font-weight: 800; margin: 6px 8px 14px; line-height: 1.35; }
+  .nav-tree { list-style: none; margin: 0; padding: 0; }
+  .nav-tree a {
+    display: block; padding: 12px; border-radius: 10px; text-decoration: none;
+    color: var(--text); font-size: 15px; font-weight: 700; min-height: 44px;
+  }
+  .nav-tree a:hover { background: #eef2f7; }
+  .nav-lesson.nav-current > a { color: #6875F5; }
+  .nav-subs {
+    list-style: none; margin: 2px 0 8px 12px; padding: 0 0 0 10px;
+    border-left: 2px solid var(--border);
+  }
+  .nav-subs a { font-size: 13.5px; font-weight: 500; color: var(--muted); padding: 9px 10px; min-height: 40px; }
+  .nav-subs a.nav-active {
+    color: #6875F5; font-weight: 700; background: rgba(104,117,245,.10);
+    border-left: 2px solid #6875F5; margin-left: -12px; padding-left: 12px;
+  }
+  .to-top {
+    position: fixed; right: 14px; bottom: 16px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow);
+  }
+  .to-top:hover { border-color: #6875F5; color: #6875F5; }
+  [data-stage], [id^="m-"] { scroll-margin-top: 72px; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-drawer, .nav-backdrop { transition: none; }
+  }
+
+  /* Палитра карточек легенды */
+  .legend-card { border: 2px solid var(--border); }
+  .legend-card.lc-warm { background: #FFF9E6; border-color: #FFE0B2; }
+  .legend-card.lc-warm .lc-header { color: #7A5F00; }
+  .legend-card.lc-danger { background: #FDF2F2; border-color: #FDE8E8; }
+  .legend-card.lc-danger .lc-header { color: #9B1C1C; }
+  .legend-card.lc-info { background: #EBF5FF; border-color: #E1EFFE; }
+  .legend-card.lc-info .lc-header { color: #1E429F; }
+  .legend-card.lc-ok { background: #EDF7ED; border-color: #C8E6C9; }
+  .legend-card.lc-ok .lc-header { color: #1E4620; }
+  .legend-card.lc-act { background: #fff; border-color: #6875F5; }
+  .legend-card.lc-act .lc-header,
+  .legend-card.lc-act .lc-body,
+  .legend-card.lc-act .lc-body b { color: #6875F5; }
+  .legend-card.lc-accent { border-color: #6875F5; }
+  .legend-card.lc-game { background: #F3E8FF; border-color: #E9D5FF; }
+  .legend-card.lc-game .lc-header { color: #6B21A8; }
+  .legend-card.lc-test { background: #F1F5F9; border-color: #E2E8F0; }
+  .legend-card.lc-test .lc-header { color: #475569; }
+  .lc-vi { color: #6875F5; }
+
+  /* Домашнее задание */
+  .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
+  .homework ol { margin: 12px 0 0 22px; line-height: 1.9; font-size: 15.5px; }
+  .homework ol li { margin-bottom: 6px; }
+  .homework .hw-star { color: var(--accent); font-weight: 800; }
+
+
+
+  /* Формулы и химические записи */
+  .formula { font-variant-numeric: lining-nums; white-space: nowrap; }
+  .formula sub { font-size: .7em; vertical-align: -.25em; }
+  .formula sup { font-size: .7em; vertical-align: .5em; }
+  .formula-block {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    flex-wrap: wrap; padding: 16px; margin: 14px 0;
+    background: var(--panel-2); border-radius: var(--radius);
+    font-size: 20px; overflow-x: auto;
+  }
+  .reaction-arrow { position: relative; display: inline-block; padding: 0 10px; }
+  .reaction-arrow > .cond {
+    position: absolute; left: 0; right: 0; font-size: 12px; color: var(--muted);
+  }
+  .reaction-arrow > .cond.top { bottom: 100%; }
+  .reaction-arrow > .cond.bottom { top: 100%; }
+  .state-tag { font-size: .8em; color: var(--muted); }
+  .ox-state { display: inline-block; font-size: .75em; font-weight: 700; }
+  .atom-chip {
+    display: inline-flex; align-items: center; justify-content: center;
+    width: 22px; height: 22px; border-radius: 50%; font-size: 11px; font-weight: 700;
+    color: #111; border: 1.5px solid rgba(0,0,0,.35); vertical-align: middle;
+    cursor: pointer;
+  }
+  .term { border-bottom: 1px dashed var(--accent); cursor: pointer; }
+  .glossary-pop {
+    position: absolute; z-index: 50; max-width: 260px;
+    background: var(--panel); border: 1px solid var(--border);
+    border-radius: 12px; padding: 10px 14px; box-shadow: var(--shadow-lg);
+    font-size: 15px; line-height: 1.5;
+  }
+
+  /* Утилиты раскладки (канон, вместо инлайн-стилей) */
+  .mt-14 { margin-top: 14px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-18 { margin-top: 18px; }
+  .mt-22 { margin-top: 22px; }
+  .center-mt16 { text-align: center; margin-top: 16px; }
+  .prose { font-size: 16.5px; line-height: 1.8; }
+  .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
+  .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
+  .fs-26 { font-size: 26px; }
+  .sci-node { cursor: pointer; }
+  .hero-digest { max-width: 700px; margin: 0 auto; }
+
+  /* Quiz: multi и match */
+  .quiz-errors { margin-top: 10px; }
+  .test-option.picked { border-color: var(--accent); background: rgba(139,92,246,.08); }
+  .match-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .match-left { flex: 1 1 180px; }
+  .match-select {
+    flex: 0 0 auto; min-height: 44px; padding: 8px 12px; font-size: 15px;
+    border: 1.5px solid var(--border); border-radius: 10px; background: var(--panel);
+    color: var(--text);
+  }
+
+  /* Карта курса */
+  .map-card {
+    background: var(--panel); border: 1.5px solid var(--border);
+    border-radius: var(--radius); padding: 18px; display: flex;
+    flex-direction: column; gap: 8px; box-shadow: var(--shadow);
+  }
+  .map-card.ready { border-color: var(--green); }
+  .map-card.wip { border-color: var(--orange); }
+  .map-icon { font-size: 30px; line-height: 1; }
+  .map-title { font-size: 17px; font-weight: 800; letter-spacing: -.3px; }
+  .map-meta { font-size: 13px; color: var(--muted); }
+  .map-badge {
+    align-self: flex-start; font-size: 11px; font-weight: 800; letter-spacing: 1px;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 50px;
+    background: var(--panel-2); border: 1px solid var(--border); color: var(--muted);
+  }
+  .map-card.ready .map-badge { color: #fff; background: var(--green); border-color: var(--green); }
+  .map-topics { font-size: 14.5px; }
+  .map-skills { font-size: 14px; color: var(--muted); }
+  .map-prereq { font-size: 13px; color: var(--orange); font-weight: 700; }
+  .map-grid {
+    display: grid; gap: 14px; margin-top: 14px;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  }
+  .map-level-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
+
+/* module_6 (4б) — элемент, молекулы, язык химии, вещества, аллотропы */
+
+.stage.s5::before{background:linear-gradient(90deg,#06b6d4,#0891b2);}
+
+.stage.s6::before{background:linear-gradient(90deg,#10b981,#059669);}
+
+.canvas-wrap{position:relative;background:linear-gradient(180deg,#f0f9ff 0%,#e0f2fe 100%);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+
+.canvas-wrap canvas{display:block;width:100%;height:auto;}
+
+.canvas-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+
+.btn{padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;border:none;color:#fff;background:var(--accent);box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+
+.btn:hover{transform:translateY(-2px);}
+
+.btn.ghost{background:var(--panel-2);color:var(--text);border:1.5px solid var(--border);box-shadow:none;}
+
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+.btn.cyan{background:#06b6d4;box-shadow:0 6px 16px -6px rgba(6,182,212,.5);}
+
+.btn.violet{background:#8b5cf6;box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+
+.btn.red{background:#ef4444;box-shadow:0 6px 16px -6px rgba(239,68,68,.5);}
+
+.btn.green{background:#10b981;box-shadow:0 6px 16px -6px rgba(16,185,129,.5);}
+
+.btn.orange{background:#f59e0b;box-shadow:0 6px 16px -6px rgba(245,158,11,.5);}
+
+.tl-year{flex-shrink:0;scroll-snap-align:start;min-width:160px;background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .25s;text-align:center;}
+
+.tl-year:hover{border-color:var(--accent);transform:translateY(-3px);}
+
+.tl-year.active{background:linear-gradient(180deg,#f5f3ff,#fff);border-color:var(--accent);box-shadow:0 8px 20px -8px rgba(139,92,246,.4);}
+
+.tl-year .tl-num{font-size:22px;font-weight:900;color:var(--accent);}
+
+.tl-year .tl-who{font-size:13px;font-weight:700;margin:6px 0 4px;color:var(--text);}
+
+.tl-year .tl-what{font-size:12px;color:var(--muted);line-height:1.4;}
+
+.tl-detail{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;animation:fadeSlide .35s ease;}
+
+.tl-detail.show{display:block;}
+
+.tl-detail .tl-d-title{font-size:18px;font-weight:800;margin-bottom:8px;}
+
+.tl-detail .tl-d-text{font-size:15.5px;line-height:1.75;color:var(--text);}
+
+.formula-card{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;margin-top:16px;}
+
+.formula-display{font-size:38px;font-weight:900;text-align:center;color:var(--accent);letter-spacing:2px;margin:10px 0;font-family:'Courier New',monospace;}
+
+.formula-parts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;}
+
+.formula-part{padding:14px;border-radius:12px;text-align:center;font-size:14.5px;line-height:1.6;}
+
+.formula-part .fp-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
+
+.formula-part .fp-value{font-weight:800;color:var(--text);}
+
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+.practical-step{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;}
+
+.practical-step .ps-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+
+.practical-step .ps-num{width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;}
+
+.practical-step .ps-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);}
+
+.practical-step .ps-situation{font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;}
+
+.isotope-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px;}
+
+.isotope-table th,.isotope-table td{padding:12px 14px;border:1.5px solid var(--border);text-align:left;}
+
+.isotope-table th{background:var(--panel-2);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
+
+.isotope-table tr:hover{background:#f8fafc;}
+
+.isotope-table .iso-name{font-weight:800;}
+
+.isotope-table .iso-symbol{font-family:'Courier New',monospace;font-weight:800;font-size:16px;color:var(--accent);}
+
+.slider-wrap{display:flex;align-items:center;gap:14px;margin:16px 0;flex-wrap:wrap;}
+
+.slider-wrap input[type=range]{flex:1;min-width:200px;accent-color:var(--accent);height:8px;cursor:pointer;}
+
+.slider-label{font-size:14px;font-weight:700;color:var(--muted);min-width:90px;}
+
+.energy-badge{display:inline-block;padding:4px 14px;border-radius:50px;font-size:13px;font-weight:800;transition:all .3s;}
+
+.energy-badge.high{background:#fef2f2;color:#dc2626;}
+
+.energy-badge.low{background:#ecfdf5;color:#059669;}
+
+.reaction-canvas{background:linear-gradient(180deg,#0f172a,#1e293b);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+
+.reaction-canvas canvas{display:block;width:100%;height:auto;}
+
+@media (max-width:800px){.dual-basket{grid-template-columns:1fr;}.formula-parts{grid-template-columns:1fr;}}
+
+@media (max-width:600px){.container{padding:0 14px;}.hero{padding:40px 0 20px;}.stage{padding:20px;}.card-grid{grid-template-columns:1fr;}body{font-size:16px;}}
+
+/* утилиты (вынесено из инлайн-стилей) */
+.cw-dark { background: linear-gradient(180deg, #0f172a, #1e293b); }
+.note-sm { font-size: 14px; color: var(--muted); margin-top: 10px; }
+.card-blue { border-color: #3b82f6; }
+.card-violet { border-color: #8b5cf6; }
+.card-green { border-color: #10b981; }
+.card-cyan { border-color: #06b6d4; }
+.card-orange { border-color: #f59e0b; }
+.card-slate { border-color: #94a3b8; }
+.card-dark { border-color: #475569; }
+.fc-warm { background: linear-gradient(180deg, #fffbeb, #fff); border-color: #f59e0b; }
+.tcenter { text-align: center; }
+.fbig { font-size: 52px; font-weight: 900; }
+.fsub { font-size: 32px; font-weight: 900; vertical-align: sub; }
+.c-orange { color: #f59e0b; }
+.c-blue { color: #1e40af; }
+.c-violet { color: #3730a3; }
+.c-red { color: #991b1b; }
+.c-brown { color: #92400e; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.legend-box { padding: 12px; border-radius: 10px; }
+.lb-warm { background: #fffbeb; border-left: 4px solid #f59e0b; }
+.lb-info { background: #f0f9ff; border-left: 4px solid #3b82f6; }
+.fs-14 { font-size: 14px; }
+</style>
+</head>
+<body>
+<!-- built by src/build.py v1 · 2026-09-29 · module_6/u4 · manifest-driven -->
+<header class="hero">
+  <div class="badge">Модуль 6 · Элементы и язык химии · ~25 минут</div>
+  <h1>Простые и сложные вещества</h1>
+</header>
+<div class="container">
+<button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
+<div class="nav-backdrop" id="navBackdrop" hidden></div>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 6. Элементы и язык химии</div><ul class="nav-tree"><li class="nav-lesson"><a href="entry.html">Начало</a></li><li class="nav-lesson"><a href="u1.html">Урок 1</a></li><li class="nav-lesson"><a href="u2.html">Урок 2</a></li><li class="nav-lesson"><a href="u3.html">Урок 3</a></li><li class="nav-lesson nav-current"><a href="#" aria-current="true">Урок 4</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u4-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u4-2">Простые и сложные вещества</a></li><li><a class="nav-sub" href="#s-u4-3">Практикум: Простое или сложное?</a></li><li><a class="nav-sub" href="#s-u4-4">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="u5.html">Урок 5</a></li><li class="nav-lesson"><a href="final.html">Тест</a></li></ul></nav>
+<button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
+<section class="section">
+  <div id="s-u4-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📌</div>
+      <div>
+        <div class="stage-title">О чём этот урок</div>
+      </div>
+    </div>
+    <p class="prose">Все вещества делятся на простые и сложные. Научимся разбирать формулу на состав.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">⚪ Простые вещества</div>
+        <div class="c-desc">Чем простое вещество отличается от сложного?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🔗 Сложные вещества</div>
+        <div class="c-desc">Что такое коэффициент и индекс?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">📊 Состав вещества</div>
+        <div class="c-desc">Как разобрать формулу по частям?</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div id="s-u4-2" data-stage class="stage s4 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">4</div>
+      <div>
+        <div class="stage-title">Простые и сложные вещества</div>
+        <div class="stage-subtitle">Как различать и что показывает формула</div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Все вещества можно разделить на две группы: <b>простые</b> (из атомов одного
+      элемента) и <b>сложные</b> (из атомов разных элементов).
+    </p>
+
+    <div class="card-grid">
+      <div class="card card-blue">
+        <div class="c-title">⚪ Простое вещество</div>
+        <div class="c-desc">
+          Состоит из атомов <b>одного химического элемента</b>.
+          <br><br>
+          <b>Примеры:</b> кислород O₂, железо Fe, золото Au, азот N₂, озон O₃, алмаз C.
+          <br><br>
+          <b>В формуле — только один символ элемента.</b>
+        </div>
+      </div>
+      <div class="card card-violet">
+        <div class="c-title">🔗 Сложное вещество</div>
+        <div class="c-desc">
+          Состоит из атомов <b>разных химических элементов</b>.
+          <br><br>
+          <b>Примеры:</b> вода H₂O, углекислый газ CO₂, поваренная соль NaCl,
+          сахар C₁₂H₂₂O₁₁, аммиак NH₃.
+          <br><br>
+          <b>В формуле — два или более разных символа.</b>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="subhead">📝 Как записывать формулы простых и сложных веществ</h3>
+
+    <p class="prose">
+      Формулы записываются по единым правилам, которые мы разобрали в Уроке 3.
+      Но есть важные особенности для простых и сложных веществ.
+    </p>
+
+    <div class="callout callout-note">
+      <b>Формула простого вещества:</b> один символ элемента. Если вещество
+      состоит из молекул, например O₂, N₂, H₂ — индекс показывает число атомов
+      в молекуле. Если вещество имеет немолекулярное строение (например, железо Fe,
+      алмаз C) — формула записывается просто как символ элемента.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Формула сложного вещества:</b> несколько разных символов. Порядок записи
+      обычно такой: сначала элемент с меньшей электроотрицательностью (чаще металл
+      или водород), затем — с большей (чаще неметалл). Например: NaCl, H₂O, CO₂.
+      Индексы показывают, сколько атомов каждого элемента в молекуле.
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Как быстро определить:</b> посмотри на формулу. Если все символы одинаковые
+      — это <b>простое</b> вещество. Если символы разные — <b>сложное</b>.
+    </div>
+
+    <!-- ИГРА: ПРОСТОЕ ИЛИ СЛОЖНОЕ (РУССКИЕ НАЗВАНИЯ) -->
+    <div class="game-area">
+      <h4>🎮 Игра: простое или сложное?</h4>
+      <p class="game-hint">
+        <span class="cta">Перетащи карточку</span> в нужную корзину.
+        На карточках — <b>русские названия веществ</b>.
+      </p>
+
+      <div class="game-pool" id="structPool"></div>
+
+      <div class="dual-basket">
+        <div class="basket" data-cat="simple">
+          <div class="basket-title">⚪ Простое вещество</div>
+          <div class="basket-items"></div>
+        </div>
+        <div class="basket" data-cat="complex">
+          <div class="basket-title">🔗 Сложное вещество</div>
+          <div class="basket-items"></div>
+        </div>
+      </div>
+
+      <div class="center-mt16">
+        <button class="reset-btn" id="resetStruct">↺ Сбросить игру</button>
+      </div>
+
+      <div class="game-feedback" id="fbStruct"></div>
+    </div>
+
+    <!-- КАЧЕСТВЕННЫЙ И КОЛИЧЕСТВЕННЫЙ СОСТАВ -->
+    <h3 class="subhead">🔍 Качественный и количественный состав</h3>
+
+    <p class="prose">
+      Химическая формула сообщает нам <b>два типа информации</b> о веществе.
+      Это не просто «запись ради записи» — это <b>рабочий инструмент</b> химика.
+    </p>
+
+    <div class="card-grid">
+      <div class="card card-blue">
+        <div class="c-title">🔵 Качественный состав</div>
+        <div class="c-desc">
+          Отвечает на вопрос: <b>из каких элементов</b> состоит вещество?
+          <br><br>
+          <b>Пример:</b> вода H₂O состоит из водорода H и кислорода O.
+          <br><br>
+          Достаточно посмотреть на <b>буквы</b> в формуле.
+        </div>
+      </div>
+      <div class="card card-violet">
+        <div class="c-title">🟣 Количественный состав</div>
+        <div class="c-desc">
+          Отвечает на вопрос: <b>сколько атомов</b> каждого элемента входит в состав?
+          <br><br>
+          <b>Пример:</b> в молекуле воды H₂O — 2 атома водорода и 1 атом кислорода.
+          <br><br>
+          Смотрим на <b>индексы</b> (цифры справа внизу).
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Зачем это нужно на практике?</b>
+      <br><br>
+      <b>1. Определение неизвестного вещества.</b> Если учёный получил новое
+      соединение, он сначала выясняет <b>качественный состав</b> (какие элементы
+      входят), а затем — <b>количественный</b> (в каком соотношении). Только после
+      этого можно записать формулу.
+      <br><br>
+      <b>2. Контроль качества.</b> На производстве лекарств или продуктов питания
+      важно точно знать состав. Например, если в сахаре C₁₂H₂₂O₁₁ не хватает
+      кислорода — это уже не сахар, а другое вещество.
+      <br><br>
+      <b>3. Расчёт количества вещества для реакций.</b> Чтобы получить нужное
+      количество продукта, химик должен знать, сколько атомов каждого элемента
+      вступает в реакцию. Это напрямую следует из количественного состава.
+      <br><br>
+      <b>4. Экология и медицина.</b> Анализ состава воды, воздуха или крови —
+      это тоже определение качественного и количественного состава.
+    </div>
+
+    <!-- ИНТЕРАКТИВНЫЙ РАЗБОР ФОРМУЛ -->
+    <h3 class="subhead">🎮 Интерактив: разбери формулу</h3>
+    <p class="subhead-sub">
+      <span class="cta">👆 Нажми на формулу</span> — и увидишь её качественный и количественный состав.
+    </p>
+
+    <div id="formulaExplorer"></div>
+
+    <!-- АТОМНОЕ И МОЛЕКУЛЯРНОЕ СТРОЕНИЕ (РАСШИРЕННЫЙ) -->
+    <h3 class="subhead">🏗 Атомное и молекулярное строение</h3>
+
+    <p class="prose">
+      Не все вещества состоят из молекул! Это важно понимать, чтобы не путать
+      формулу вещества с его реальной структурой.
+    </p>
+
+    <div class="card-grid">
+      <div class="card card-cyan">
+        <div class="c-title">🧊 Молекулярное строение</div>
+        <div class="c-desc">
+          Вещество состоит из <b>отдельных молекул</b>. Между молекулами —
+          слабые силы притяжения.
+          <br><br>
+          <b>Примеры:</b> вода H₂O, углекислый газ CO₂, кислород O₂, сахар.
+          <br><br>
+          <b>Свойства:</b> обычно легкоплавкие, легкокипящие, часто газы или жидкости.
+        </div>
+      </div>
+      <div class="card card-orange">
+        <div class="c-title">💎 Немолекулярное (атомное) строение</div>
+        <div class="c-desc">
+          Вещество состоит из <b>атомов, связанных в бесконечные сети, слои
+          или каркасы</b>. Отдельных молекул выделить нельзя.
+          <br><br>
+          <b>Примеры:</b> алмаз C, графит C, железо Fe, поваренная соль NaCl
+          (ионное строение).
+          <br><br>
+          <b>Свойства:</b> обычно тугоплавкие, твёрдые, нелетучие.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-idea">
+      <b>Почему у одних веществ молекулярное строение, а у других — атомное?</b>
+      <br><br>
+      Это зависит от <b>прочности химических связей</b> и <b>энергии, которую
+      нужно затратить, чтобы оторвать частицу от кристалла</b>.
+      <br><br>
+      <b>Молекулярное строение</b> — если связи между атомами внутри молекулы
+      <b>сильные</b> (ковалентные), но между самими молекулами — <b>слабые</b>.
+      Поэтому такие вещества легко плавятся и кипят: достаточно разорвать слабые
+      межмолекулярные связи.
+      <br><br>
+      <b>Атомное (немолекулярное) строение</b> — если все атомы связаны друг с
+      другом <b>одинаково прочными</b> связями в единую сетку. Чтобы расплавить
+      такое вещество, нужно разорвать <b>все</b> эти прочные связи. Это требует
+      очень высокой температуры.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Другие типы строения</b> (ионное, металлическое) мы будем подробно
+      изучать <b>позже</b> — в модулях о кристаллических решётках и химической
+      связи. Сейчас важно запомнить: <b>формула не всегда означает, что вещество
+      состоит из молекул</b>. Например, формула NaCl показывает соотношение
+      ионов натрия и хлора, но в кристалле нет отдельных «молекул NaCl».
+    </div>
+
+    <h4 class="subhead">🔎 Как определить строение по формуле или свойствам</h4>
+
+    <div class="card-grid">
+      <div class="card card-violet">
+        <div class="c-title">По формуле</div>
+        <div class="c-desc">
+          <b>Скорее всего, молекулярное:</b> если формула состоит из символов
+          неметаллов и имеет <b>небольшие индексы</b> (H₂O, CO₂, NH₃, CH₄).
+          <br><br>
+          <b>Скорее всего, немолекулярное:</b> если в формуле есть <b>металл</b>
+          (NaCl, Fe, Cu) или вещество имеет <b>простое соотношение</b> атомов
+          (SiO₂, C).
+        </div>
+      </div>
+      <div class="card card-green">
+        <div class="c-title">По свойствам</div>
+        <div class="c-desc">
+          <b>Молекулярное:</b> низкая температура плавления/кипения, летучесть,
+          часто запах, растворимость в органических растворителях.
+          <br><br>
+          <b>Немолекулярное:</b> высокая твёрдость, тугоплавкость, нелетучесть,
+          часто нерастворимость в воде.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важное исключение:</b> некоторые вещества с атомным строением могут
+      выглядеть как «молекулярные» по формуле. Например, SiO₂ (песок, кварц)
+      имеет формулу, похожую на CO₂, но это <b>атомный кристалл</b> с очень
+      высокой температурой плавления (1710 °C). А CO₂ — молекулярное вещество,
+      которое при обычных условиях газ. <b>Формула не всегда говорит о строении!</b>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 5: АЛЛОТРОПНЫЕ МОДИФИКАЦИИ ==================== --><section class="section">
+  <div id="s-u4-3" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Простое или сложное?</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">Разбери несколько формул на простые и сложные вещества.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>бумага</li><li>ручка</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Выпиши формулы: O₂, H₂O, Fe, CO₂, NaCl.</li><li>Определи, где один символ элемента, а где несколько.</li><li>Раздели на простые и сложные.</li><li>Проверь по таблице элементов.</li></ol>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> две колонки: простые вещества и сложные.</div>
+  </div>
+</section>
+<section class="section">
+  <div id="s-u4-4" data-stage class="stage s-hw fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🏠</div>
+      <div>
+        <div class="stage-title">Домашнее задание</div>
+        <div class="stage-subtitle">Письменно в тетрадь · проверяет учитель</div>
+      </div>
+    </div>
+    <div class="homework">
+      <ol>
+        <li>Дай определения простого и сложного вещества.</li>
+        <li>Раздели формулы на простые и сложные: O₂, H₂O, Fe, CO₂, NaCl.</li>
+        <li>Объясни, что такое качественный и количественный состав.</li>
+        <li>Разбери формулу CO₂ по составу.</li>
+        <li><span class="hw-star">★ Может ли простое вещество состоять из молекул? Приведи пример.</span></li>
+        <li>Объясни простыми словами, чем простое вещество отличается от сложного.</li>
+      </ol>
+    </div>
+  </div>
+</section>
+
+</div>
+<script type="application/json" id="glossary">{
+  "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },
+  "физическое тело": { "definition": "отдельный предмет, имеющий форму и объём", "module": "module_1" },
+  "свойство вещества": { "definition": "признак, по которому вещества различают и описывают", "module": "module_1" },
+  "наблюдение": { "definition": "внимательное изучение явления без вмешательства в процесс", "module": "module_1" },
+  "эксперимент": { "definition": "изучение явления через активное воздействие на вещество", "module": "module_1" },
+  "измерение": { "definition": "сравнение величины с эталоном", "module": "module_1" },
+  "моделирование": { "definition": "замена объекта упрощённой схемой для изучения", "module": "module_1" },
+  "гипотеза": { "definition": "разумное предположение, которое ещё нужно проверить", "module": "module_1" },
+  "лаборатория": { "definition": "помещение со специальным оборудованием для опытов", "module": "module_1" },
+  "агрегатное состояние": { "definition": "состояние вещества (твёрдое, жидкое, газообразное) при данных условиях", "module": "module_2" },
+  "плавление": { "definition": "переход вещества из твёрдого состояния в жидкое при нагревании", "module": "module_2" },
+  "кипение": { "definition": "переход жидкости в газ по всему объёму при температуре кипения", "module": "module_2" },
+  "конденсация": { "definition": "переход вещества из газообразного состояния в жидкое при охлаждении", "module": "module_2" },
+  "замерзание": { "definition": "переход жидкости в твёрдое состояние при охлаждении", "module": "module_2" },
+  "сублимация": { "definition": "переход вещества из твёрдого состояния сразу в газообразное, минуя жидкость", "module": "module_2" },
+  "чистое вещество": { "definition": "вещество, состоящее из одинаковых частиц", "module": "module_2" },
+  "смесь": { "definition": "система из разных веществ, сохраняющих свои свойства", "module": "module_2" },
+  "гомогенная смесь": { "definition": "однородная смесь, составные части неразличимы глазом", "module": "module_2" },
+  "гетерогенная смесь": { "definition": "неоднородная смесь, части различимы", "module": "module_2" },
+  "отстаивание": { "definition": "разделение смеси по разной плотности: тяжёлое оседает", "module": "module_2" }
+}
+</script><script type="application/json" id="messages">{
+  "entryFail": [
+    "Не страшно — сейчас всё узнаешь. Повтори предыдущий урок и пройди входной снова.",
+    "Это входной тест, а не оценка. Загляни в прошлый урок и попробуй ещё раз."
+  ],
+  "finalPass": [
+    "🎉 Модуль пройден!",
+    "🎉 Отлично, ты справился с итоговым тестом!"
+  ],
+  "finalFail": [
+    "Есть над чем поработать. Вернись к текущему уроку и попробуй ещё раз.",
+    "Пока не хватает до порога. Перечитай урок и пройди снова."
+  ],
+  "warmupDone": [
+    "Разминка пройдена.",
+    "Разминка готова — двигаемся дальше."
+  ],
+  "practiceDone": [
+    "Хорошо! Двигаемся дальше.",
+    "Верно! Закрепим это в тетради."
+  ]
+}
+</script>
+
+<footer class="footer">
+  <div>Интерактивный модуль · Химия · 2026</div>
+  <div style="margin-top:8px;font-size:13px;opacity:.6;">
+    Простое объяснение · пример из жизни · наглядный опыт · запись в тетрадь
+  </div>
+</footer>
+
+<script>
+// ============================================================
+//  module_6 (4б) — compounds
+// ============================================================
+/* ============================================================
+   УТИЛИТЫ
+   ============================================================ */
+if (!CanvasRenderingContext2D.prototype.roundRect) {
+  CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
+    this.beginPath();this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);
+    this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath();return this;
+  };
+}
+var rand = (a,b)=>a+Math.random()*(b-a);
+
+/* ============================================================
+   ИЗОТОПЫ ВОДОРОДА — С ЭЛЕКТРОНАМИ И ОРБИТАМИ
+   ============================================================ */
+
+(function(){
+  const pool = document.getElementById('structPool');
+  const baskets = document.querySelectorAll('.dual-basket .basket');
+  const fb = document.getElementById('fbStruct');
+  const resetBtn = document.getElementById('resetStruct');
+  if (!pool) return;
+
+  const ITEMS = [
+    { label:'Кислород', cat:'simple' },
+    { label:'Вода', cat:'complex' },
+    { label:'Железо', cat:'simple' },
+    { label:'Углекислый газ', cat:'complex' },
+    { label:'Азот', cat:'simple' },
+    { label:'Метан', cat:'complex' },
+    { label:'Золото', cat:'simple' },
+    { label:'Аммиак', cat:'complex' },
+    { label:'Озон', cat:'simple' },
+    { label:'Поваренная соль', cat:'complex' }
+  ];
+
+  let selected = null;
+
+  function buildPool(){
+    pool.innerHTML = '';
+    ITEMS.forEach(it=>{
+      const el = document.createElement('div');
+      el.className = 'pool-item';
+      el.textContent = it.label;
+      el.dataset.cat = it.cat;
+      el.draggable = true;
+      el.addEventListener('dragstart',(e)=>{ e.dataTransfer.setData('text/plain', it.label); selected = el; el.classList.add('dragging'); });
+      el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+      el.addEventListener('click',()=>{
+        if (el.classList.contains('placed')) return;
+        pool.querySelectorAll('.pool-item').forEach(i=>i.classList.remove('selected'));
+        if (selected === el){ selected = null; fb.textContent = ''; return; }
+        selected = el; el.classList.add('selected');
+        fb.style.color = 'var(--muted)';
+        fb.textContent = 'Выбрано: ' + it.label + '. Теперь нажми на нужную корзину.';
+      });
+      pool.appendChild(el);
+    });
+  }
+
+  function resetBaskets(){
+    baskets.forEach(b=>{
+      const items = b.querySelector('.basket-items');
+      if (items) items.innerHTML = '';
+      b.classList.remove('good','bad');
+    });
+  }
+
+  function checkComplete(){
+    if (pool.querySelectorAll('.pool-item').length === 0){
+      fb.style.color = 'var(--green)';
+      fb.textContent = '🎉 Отлично! Все вещества разложены правильно!';
+    }
+  }
+
+  function tryPlace(item, basket){
+    if (!item || !basket || item.classList.contains('placed')) return;
+    const correct = item.dataset.cat === basket.dataset.cat;
+    if (correct){
+      const container = basket.querySelector('.basket-items');
+      const chip = document.createElement('div');
+      chip.className = 'basket-chip';
+      chip.textContent = item.textContent;
+      container.appendChild(chip);
+      item.remove();
+      selected = null;
+      basket.classList.add('good');
+      setTimeout(()=>basket.classList.remove('good'), 500);
+      fb.style.color = 'var(--green)';
+      const msgs = ['✅ Верно!','👍 Точно!','🎯 Правильно!','🌟 В точку!'];
+      fb.textContent = msgs[Math.floor(Math.random()*msgs.length)];
+      checkComplete();
+    } else {
+      basket.classList.add('bad');
+      setTimeout(()=>basket.classList.remove('bad'), 500);
+      item.classList.add('wrong-flash');
+      setTimeout(()=>item.classList.remove('wrong-flash'), 600);
+      fb.style.color = 'var(--red)';
+      const bad = ['❌ Подумай ещё.','❌ Это не сюда.','❌ Почти! Попробуй снова.'];
+      fb.textContent = bad[Math.floor(Math.random()*bad.length)];
+    }
+  }
+
+  baskets.forEach(basket=>{
+    basket.addEventListener('dragover',(e)=>{ e.preventDefault(); basket.classList.add('hover'); });
+    basket.addEventListener('dragleave',()=>basket.classList.remove('hover'));
+    basket.addEventListener('drop',(e)=>{ e.preventDefault(); basket.classList.remove('hover'); if (selected) tryPlace(selected, basket); });
+    basket.addEventListener('click',()=>{ if (selected) tryPlace(selected, basket); });
+  });
+
+  resetBtn.addEventListener('click',()=>{
+    resetBaskets(); buildPool(); selected = null; fb.textContent = '';
+  });
+
+  buildPool();
+})();
+
+/* ============================================================
+   ИНТЕРАКТИВ: ОБРАЗОВАНИЕ H2 С ЭЛЕКТРОНАМИ И ОРБИТАМИ
+   ============================================================ */
+
+(function(){
+  const container = document.getElementById('formulaExplorer');
+  if (!container) return;
+
+  const FORMULAS = [
+    { formula:'H₂O', name:'Вода', quality:'Водород H + Кислород O', quantity:'2 атома H + 1 атом O' },
+    { formula:'CO₂', name:'Углекислый газ', quality:'Углерод C + Кислород O', quantity:'1 атом C + 2 атома O' },
+    { formula:'CH₄', name:'Метан', quality:'Углерод C + Водород H', quantity:'1 атом C + 4 атома H' },
+    { formula:'NH₃', name:'Аммиак', quality:'Азот N + Водород H', quantity:'1 атом N + 3 атома H' },
+    { formula:'H₂SO₄', name:'Серная кислота', quality:'Водород H + Сера S + Кислород O', quantity:'2 H + 1 S + 4 O' },
+    { formula:'C₆H₁₂O₆', name:'Глюкоза', quality:'Углерод C + Водород H + Кислород O', quantity:'6 C + 12 H + 6 O' }
+  ];
+
+  let activeIdx = null;
+
+  function render(){
+    container.innerHTML = '';
+    FORMULAS.forEach((f,i)=>{
+      const card = document.createElement('div');
+      card.style.cssText = 'background:#fff;border:2px solid ' + (activeIdx===i?'var(--accent)':'var(--border)') + ';border-radius:12px;padding:14px;margin-bottom:10px;cursor:pointer;transition:all .25s;';
+      card.innerHTML = `
+        <div style="display:flex;align-items:center;gap:14px;">
+          <span style="font-size:26px;font-weight:900;color:var(--accent);font-family:'Courier New',monospace;">${f.formula}</span>
+          <span style="font-weight:700;color:var(--text);">${f.name}</span>
+        </div>
+      `;
+      card.addEventListener('click',()=>{
+        activeIdx = activeIdx === i ? null : i;
+        render();
+      });
+      container.appendChild(card);
+
+      if (activeIdx === i){
+        const detail = document.createElement('div');
+        detail.className = 'callout callout-ok';
+        detail.style.marginTop = '8px';
+        detail.innerHTML = `
+          <b>Формула:</b> ${f.formula} — ${f.name}<br><br>
+          <b>🔵 Качественный состав:</b> ${f.quality}<br>
+          <b>🟣 Количественный состав:</b> ${f.quantity}
+        `;
+        container.appendChild(detail);
+      }
+    });
+  }
+
+  render();
+})();
+
+/* ============================================================
+   ИТОГОВЫЙ ТЕСТ
+   ============================================================ */
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+// ============================================================
+//  Навигация: триггер + выезжающий drawer + scroll-spy + «наверх»
+//  Разметку (navTrigger/navDrawer/navBackdrop/toTop) рендерит билдер.
+// ============================================================
+(function () {
+  const trigger = document.getElementById('navTrigger');
+  const drawer = document.getElementById('navDrawer');
+  const backdrop = document.getElementById('navBackdrop');
+  const toTop = document.getElementById('toTop');
+  if (!trigger || !drawer) return;
+
+  const reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastFocus = null;
+
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    drawer.classList.add('open');
+    requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    drawer.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+    const first = drawer.querySelector('a, button');
+    if (first) first.focus();
+    document.addEventListener('keydown', onKey);
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('show');
+    window.setTimeout(function () { backdrop.hidden = true; }, reduce ? 0 : 300);
+    drawer.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+    document.removeEventListener('keydown', onKey);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') { closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    const f = drawer.querySelectorAll('a, button');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  trigger.addEventListener('click', function () {
+    if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  backdrop.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) closeDrawer();
+  });
+
+  // Scroll-spy: подсвечиваем активный подраздел
+  const subs = Array.prototype.slice.call(drawer.querySelectorAll('a.nav-sub'));
+  if (subs.length && 'IntersectionObserver' in window) {
+    const byId = {};
+    subs.forEach(function (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') byId[href.slice(1)] = a;
+    });
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        subs.forEach(function (a) { a.classList.remove('nav-active'); });
+        const a = byId[en.target.id];
+        if (a) a.classList.add('nav-active');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  // Кнопка «Наверх»
+  if (toTop) {
+    const onScroll = function () { toTop.hidden = window.scrollY < 600; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
+})();
+
+</script>
+</body>
+</html>

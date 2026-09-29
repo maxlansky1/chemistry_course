@@ -1,0 +1,129 @@
+/* module_3 (3а) — карточки признаков, термо-карточки, Лавуазье */
+
+.tri-symbol { color: var(--accent); font-weight: 900; font-size: 1.05em; }
+
+@keyframes shake {
+    0%,100% { transform: translateX(0); }
+    25% { transform: translateX(-6px); }
+    75% { transform: translateX(6px); }
+  }
+
+/* Признаки реакций — карточки с canvas */
+  .sign-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 16px; margin-top: 16px;
+  }
+
+.sign-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border); border-radius: 14px;
+    padding: 16px; cursor: pointer;
+    transition: all .3s; position: relative; overflow: hidden;
+  }
+
+.sign-card:hover { transform: translateY(-4px); border-color: var(--h-deep); box-shadow: var(--shadow-lg); }
+
+.sign-card.active { border-color: var(--accent); background: #faf5ff; box-shadow: 0 0 0 3px rgba(139,92,246,.15); }
+
+.sign-card .sc-head {
+    display: flex; align-items: center; gap: 12px;
+  }
+
+.sign-card .sc-icon {
+    width: 56px; height: 56px;
+    display: flex; align-items: center; justify-content: center;
+    background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+    border-radius: 12px; flex-shrink: 0;
+    transition: all .25s;
+  }
+
+.sign-card.active .sc-icon { background: linear-gradient(135deg, #ede9fe, #ddd6fe); }
+
+.sign-card .sc-icon svg { width: 40px; height: 40px; }
+
+.sign-card .sc-title { font-size: 16px; font-weight: 800; }
+
+.sign-card .sc-desc { font-size: 13.5px; color: var(--muted); margin-top: 2px; }
+
+.sign-card .sign-canvas-wrap {
+    max-height: 0; overflow: hidden;
+    transition: max-height .5s ease, margin .3s ease;
+  }
+
+.sign-card.active .sign-canvas-wrap {
+    max-height: 320px; margin-top: 14px;
+  }
+
+.sign-card canvas {
+    width: 100%; height: auto; display: block;
+    border-radius: 10px; background: #f0f9ff;
+  }
+
+/* Экзо- и эндо- */
+  .thermo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 18px; margin-top: 16px;
+  }
+
+.thermo-card {
+    background: linear-gradient(180deg, #fff, #f8fafc);
+    border: 2px solid var(--border); border-radius: 14px;
+    padding: 20px; text-align: center;
+    transition: all .25s;
+  }
+
+.thermo-card:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+
+.thermo-card.exo { border-color: #f97316; background: linear-gradient(180deg, #fff7ed, #ffedd5); }
+
+.thermo-card.endo { border-color: #3b82f6; background: linear-gradient(180deg, #eff6ff, #dbeafe); }
+
+.thermo-card .tc-icon { font-size: 48px; line-height: 1; margin-bottom: 10px; }
+
+.thermo-card .tc-title { font-size: 18px; font-weight: 800; }
+
+.thermo-card .tc-desc { font-size: 14.5px; color: var(--muted); line-height: 1.6; margin-top: 8px; }
+
+.thermo-card .tc-examples { font-size: 13.5px; color: var(--text); margin-top: 10px; }
+
+.thermo-card .tc-examples span { display: inline-block; background: #fff; padding: 3px 10px; border-radius: 6px; margin: 3px 3px 0 0; border: 1px solid var(--border); font-weight: 600; }
+
+@keyframes fadeSlide {
+    from { opacity: 0; transform: translateY(-6px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+/* Карточки Лавуазье */
+  .lavoisier-story {
+    background: linear-gradient(135deg, #fef3c7, #fffbeb);
+    border: 2px solid #f59e0b;
+    border-radius: 14px;
+    padding: 22px;
+    margin-top: 16px;
+  }
+
+.lavoisier-story .ls-title {
+    font-size: 17px; font-weight: 800; color: #92400e;
+    display: flex; align-items: center; gap: 10px;
+    margin-bottom: 12px;
+  }
+
+.lavoisier-story .ls-text {
+    font-size: 15.5px; line-height: 1.75; color: #78350f;
+  }
+
+.lavoisier-story .ls-text b { color: #b45309; }
+
+@media (max-width: 800px) {
+    .dual-basket, .thermo-grid { grid-template-columns: 1fr; }
+  }
+
+@media (max-width: 600px) {
+    .container { padding: 0 14px; }
+    .hero { padding: 40px 0 20px; }
+    .stage { padding: 20px; }
+    .card-grid { grid-template-columns: 1fr; }
+    body { font-size: 16px; }
+  }

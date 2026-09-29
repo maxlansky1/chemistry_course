@@ -1,0 +1,128 @@
+<header class="hero">
+  <div class="badge">Модуль 5 · Атомы: доказательства и модели · ~20 минут</div>
+  <h1>Модели атома: как менялись представления</h1>
+</header>
+<section class="section">
+  <div class="stage s2 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">2</div>
+      <div>
+        <div class="stage-title">Модели атома: как менялись представления</div>
+        <div class="stage-subtitle">От «пудинга» до квантовой модели — путь длиной в 30 лет</div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Когда учёные убедились, что атомы существуют, возник новый вопрос: <b>как устроен атом внутри?</b>
+      Если атом неделим, почему при электрических разрядах из него вылетают какие-то частицы?
+      Оказалось, атом <b>делим</b> — но не в химических реакциях, а при физических воздействиях.
+    </p>
+
+    <h3 class="subhead">📅 Интерактивный таймлайн открытий</h3>
+    <p class="subhead-sub"><span class="cta">👆 Нажми на любую карточку</span>, чтобы узнать подробности.</p>
+    <div class="timeline">
+      <div class="timeline-track" id="timelineTrack"></div>
+      <div class="tl-detail" id="tlDetail"></div>
+    </div>
+
+    <h3 class="subhead">🧪 Четыре модели атома</h3>
+    <p class="subhead-sub"><span class="cta">👆 Переключай</span> модели и смотри анимации.</p>
+    <div class="model-tabs">
+      <button class="model-tab active" data-model="thomson">🍮 Модель Томсона (1904)</button>
+      <button class="model-tab" data-model="rutherford">☀️ Модель Резерфорда (1911)</button>
+      <button class="model-tab" data-model="bohr">🪐 Модель Бора (1913)</button>
+      <button class="model-tab" data-model="quantum">☁️ Квантовая модель (1920-е)</button>
+    </div>
+
+    <!-- Модель Томсона -->
+    <div class="model-view active" id="model-thomson">
+      <div class="mv-title">🍮 «Пудинг с изюмом» — Джозеф Джон Томсон, 1904</div>
+      <div class="mv-text">
+        Томсон открыл <b>электрон</b> — отрицательно заряженную частицу. Но атом в целом нейтрален,
+        значит, должна быть и положительная часть. Томсон предположил, что атом — это <b>шар</b>
+        из положительно заряженного вещества, в который <b>вкраплены электроны</b>, как изюм в пудинг.
+      </div>
+      <div class="canvas-wrap cw-plain">
+        <canvas id="thomsonCanvas" width="900" height="340"></canvas>
+      </div>
+      <div class="canvas-toolbar">
+        <button class="btn red" id="thomsonBtn">🎯 Обстрелять альфа-частицами</button>
+      </div>
+      <div class="mv-problem">
+        <b>Проблема модели:</b> если атом — большой положительный шар, то положительные альфа-частицы
+        должны пролетать почти <b>без отклонений</b>. А эксперимент показал другое!
+      </div>
+    </div>
+
+    <!-- Модель Резерфорда -->
+    <div class="model-view" id="model-rutherford">
+      <div class="mv-title">☀️ Планетарная модель — Эрнест Резерфорд, 1911</div>
+      <div class="mv-text">
+        Резерфорд провёл знаменитый <b>опыт с золотой фольгой</b>. Он «обстреливал» тончайшую
+        золотую плёнку альфа-частицами и смотрел, как они рассеиваются. Результат был ошеломляющим:
+        большинство частиц пролетало насквозь, но некоторые <b>отскакивали назад</b>!
+        <br><br>
+        Резерфорд воскликнул: «Это так же невероятно, как если бы вы выстрелили из пушки в лист бумаги,
+        а ядро отскочило бы обратно в вас». Он сделал вывод: атом — это <b>пустота</b>, в центре которой
+        крошечное, но очень тяжёлое <b>ядро</b>, а вокруг движутся электроны — как <b>Солнечная система</b> в миниатюре.
+      </div>
+      <div class="canvas-wrap cw-dark">
+        <canvas id="rutherfordCanvas" width="900" height="420"></canvas>
+      </div>
+      <div class="canvas-toolbar">
+        <button class="btn red" id="rutherfordBtn">▶ Запустить опыт</button>
+        <button class="btn ghost" id="rutherfordReset">↺ Сброс</button>
+      </div>
+      <div class="mv-problem">
+        <b>Проблема модели:</b> по законам физики электрон, движущийся вокруг ядра, должен излучать
+        энергию и в итоге упасть на ядро. Но атомы стабильны!
+      </div>
+    </div>
+
+    <!-- Модель Бора -->
+    <div class="model-view" id="model-bohr">
+      <div class="mv-title">🪐 Модель Бора — Нильс Бор, 1913</div>
+      <div class="mv-text">
+        Бор предположил, что электроны могут двигаться только по <b>определённым орбитам</b> —
+        «разрешённым» уровням энергии. Пока электрон на орбите, он <b>не излучает</b> энергию.
+        А когда перескакивает с одной орбиты на другую — <b>поглощает или выделяет</b> энергию
+        порцией (квантом).
+      </div>
+      <div class="canvas-wrap cw-dark">
+        <canvas id="bohrCanvas" width="900" height="380"></canvas>
+      </div>
+      <div class="bohr-controls">
+        <button class="btn cyan" id="bohrUp">⚡ Возбудить атом</button>
+        <button class="btn green" id="bohrDown">💫 Вернуть электрон</button>
+        <button class="btn ghost" id="bohrReset">↺ Сброс</button>
+      </div>
+      <div class="mv-problem">
+        <b>Проблема модели:</b> модель хорошо работала для водорода, но не объясняла строение
+        более сложных атомов.
+      </div>
+    </div>
+
+    <!-- Квантовая модель -->
+    <div class="model-view" id="model-quantum">
+      <div class="mv-title">☁️ Квантовая модель — Шрёдингер, Гейзенберг, 1920-е</div>
+      <div class="mv-text">
+        Современная модель говорит: электрон — это <b>не шарик</b>, который движется по орбите,
+        а <b>«облако вероятности»</b>. Мы не можем точно сказать, где находится электрон в данный момент,
+        но можем указать, где он бывает <b>чаще всего</b>. Это облако называется <b>электронной орбиталью</b>.
+      </div>
+      <div class="canvas-wrap cw-dark">
+        <canvas id="quantumCanvas" width="900" height="380"></canvas>
+      </div>
+      <div class="canvas-toolbar ct-col">
+        <label class="lbl-muted">Энергия / форма орбитали:</label>
+        <input type="range" id="quantumSlider" min="0" max="2" value="0" class="range-wide">
+        <div id="quantumLabel" class="dark-strong">s-орбиталь (сфера)</div>
+      </div>
+      <div class="mv-problem ok">
+        <b>Это — современная модель.</b> Она лучше всего объясняет все эксперименты.
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ==================== УРОК 3: СТРОЕНИЕ АТОМА ==================== -->

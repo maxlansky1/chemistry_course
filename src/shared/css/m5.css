@@ -1,0 +1,156 @@
+/* module_5 (4а) — атомы, модели, строение атома */
+
+.canvas-wrap{position:relative;background:linear-gradient(180deg,#f0f9ff 0%,#e0f2fe 100%);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+
+.canvas-wrap canvas{display:block;width:100%;height:auto;}
+
+.canvas-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+
+.btn{padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;border:none;color:#fff;background:var(--accent);box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+
+.btn:hover{transform:translateY(-2px);}
+
+.btn.ghost{background:var(--panel-2);color:var(--text);border:1.5px solid var(--border);box-shadow:none;}
+
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+.btn.cyan{background:#06b6d4;box-shadow:0 6px 16px -6px rgba(6,182,212,.5);}
+
+.btn.violet{background:#8b5cf6;box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+
+.btn.red{background:#ef4444;box-shadow:0 6px 16px -6px rgba(239,68,68,.5);}
+
+.btn.green{background:#10b981;box-shadow:0 6px 16px -6px rgba(16,185,129,.5);}
+
+.tl-year{flex-shrink:0;scroll-snap-align:start;min-width:160px;background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .25s;text-align:center;}
+
+.tl-year:hover{border-color:var(--accent);transform:translateY(-3px);}
+
+.tl-year.active{background:linear-gradient(180deg,#f5f3ff,#fff);border-color:var(--accent);box-shadow:0 8px 20px -8px rgba(139,92,246,.4);}
+
+.tl-year .tl-num{font-size:22px;font-weight:900;color:var(--accent);}
+
+.tl-year .tl-who{font-size:13px;font-weight:700;margin:6px 0 4px;color:var(--text);}
+
+.tl-year .tl-what{font-size:12px;color:var(--muted);line-height:1.4;}
+
+.tl-detail{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;animation:fadeSlide .35s ease;}
+
+.tl-detail.show{display:block;}
+
+.tl-detail .tl-d-title{font-size:18px;font-weight:800;margin-bottom:8px;}
+
+.tl-detail .tl-d-text{font-size:15.5px;line-height:1.75;color:var(--text);}
+
+.model-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+
+.model-tab{padding:10px 20px;border-radius:50px;background:var(--panel-2);border:2px solid var(--border);cursor:pointer;font-size:14px;font-weight:700;transition:all .25s;color:var(--text);}
+
+.model-tab:hover{border-color:var(--accent);}
+
+.model-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px -4px rgba(139,92,246,.5);}
+
+.model-view{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;}
+
+.model-view.active{display:block;}
+
+.model-view .mv-title{font-size:18px;font-weight:800;margin-bottom:12px;}
+
+.model-view .mv-text{font-size:15.5px;line-height:1.75;}
+
+.model-view .mv-text b{color:var(--accent);}
+
+.model-view .mv-problem{margin-top:14px;padding:12px 16px;background:#fef2f2;border-radius:10px;border-left:4px solid var(--red);font-size:14.5px;color:#991b1b;}
+
+.model-view .mv-problem b{color:#b91c1c;}
+
+.model-view .mv-problem.ok{background:#ecfdf5;border-left-color:var(--green);color:#065f46;}
+
+.atom-3d-wrap{margin-top:16px;background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:14px;padding:30px;text-align:center;position:relative;overflow:hidden;min-height:400px;display:flex;align-items:center;justify-content:center;}
+
+.atom-3d-wrap .atom-svg{width:100%;max-width:520px;height:auto;}
+
+.atom-3d-wrap .atom-label{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:14px;font-weight:700;color:#94a3b8;}
+
+@keyframes electronOrbit1{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
+
+@keyframes electronOrbit2{0%{transform:rotate(60deg)}100%{transform:rotate(420deg)}}
+
+@keyframes electronOrbit3{0%{transform:rotate(120deg)}100%{transform:rotate(480deg)}}
+
+@keyframes nucleusPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+
+.electron-orbit-1{animation:electronOrbit1 4s linear infinite;transform-origin:260px 200px;}
+
+.electron-orbit-2{animation:electronOrbit2 5s linear infinite;transform-origin:260px 200px;}
+
+.electron-orbit-3{animation:electronOrbit3 6s linear infinite;transform-origin:260px 200px;}
+
+.nucleus-pulse{animation:nucleusPulse 2s ease-in-out infinite;transform-origin:260px 200px;}
+
+.particles-table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;border-radius:12px;overflow:hidden;border:2px solid var(--border);}
+
+.particles-table th{background:var(--panel-2);padding:12px;font-size:14px;text-align:left;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border);}
+
+.particles-table td{padding:12px;font-size:15px;border-bottom:1px solid var(--border);}
+
+.particles-table tr:last-child td{border-bottom:none;}
+
+.particles-table .pt-pro{background:#fef2f2;font-weight:900;color:#b91c1c;}
+
+.particles-table .pt-neu{background:#f1f5f9;font-weight:900;color:#475569;}
+
+.particles-table .pt-ele{background:#eff6ff;font-weight:900;color:#1d4ed8;}
+
+.johnstone-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px;}
+
+.bohr-controls{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+
+.quark-wrap{margin-top:16px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:14px;padding:24px;text-align:center;color:#e0e7ff;position:relative;overflow:hidden;min-height:320px;}
+
+.quark-wrap canvas{display:block;width:100%;height:auto;}
+
+.scale-wrap{margin-top:16px;background:linear-gradient(180deg,#0f172a,#1e293b);border-radius:14px;padding:24px;color:#e2e8f0;position:relative;overflow:hidden;min-height:420px;}
+
+.scale-wrap canvas{display:block;width:100%;height:auto;}
+
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+.practical-step{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;}
+
+.practical-step .ps-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+
+.practical-step .ps-num{width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;}
+
+.practical-step .ps-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);}
+
+.practical-step .ps-situation{font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;}
+
+@media (max-width:800px){.dual-basket{grid-template-columns:1fr;}.johnstone-trio{grid-template-columns:1fr;}}
+
+@media (max-width:600px){.container{padding:0 14px;}.hero{padding:40px 0 20px;}.stage{padding:20px;}.card-grid{grid-template-columns:1fr;}body{font-size:16px;}}
+
+/* утилиты (вынесено из инлайн-стилей) */
+.cw-light { background: linear-gradient(180deg, #f0f9ff, #e0f2fe); }
+.cw-plain { background: #f0f9ff; }
+.cw-dark { background: linear-gradient(180deg, #0f172a, #1e293b); }
+.ct-col { flex-direction: column; align-items: center; gap: 8px; }
+.lbl-muted { color: #94a3b8; font-size: 14px; font-weight: 700; }
+.range-wide { width: 300px; accent-color: #8b5cf6; }
+.dark-strong { color: #e0e7ff; font-weight: 800; }
+.note-sm { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
+.center-note { text-align: center; margin-top: 10px; color: #94a3b8; font-size: 14px; }
+.link-strong { color: var(--h-deep); font-weight: 700; }
+.btn-ghost-dark { background: rgba(255,255,255,.1); color: #e0e7ff; border-color: rgba(255,255,255,.3); }
+.stat-card { padding: 20px; border-radius: 14px; text-align: center; }
+.stat-green { border: 2px solid var(--green); background: linear-gradient(180deg, #ecfdf5, #fff); }
+.stat-accent { border: 2px solid var(--accent); background: linear-gradient(180deg, #f5f3ff, #fff); }
+.stat-cyan { border: 2px solid var(--h-color); background: linear-gradient(180deg, #ecfeff, #fff); }
+.stat-emoji { font-size: 40px; line-height: 1; margin-bottom: 10px; }
+.stat-label { font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+.stat-green .stat-label { color: #065f46; }
+.stat-accent .stat-label { color: #5b21b6; }
+.stat-cyan .stat-label { color: #0e7490; }
+.stat-text { font-size: 14.5px; line-height: 1.6; }

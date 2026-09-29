@@ -1,0 +1,132 @@
+/* module_6 (4б) — элемент, молекулы, язык химии, вещества, аллотропы */
+
+.stage.s5::before{background:linear-gradient(90deg,#06b6d4,#0891b2);}
+
+.stage.s6::before{background:linear-gradient(90deg,#10b981,#059669);}
+
+.canvas-wrap{position:relative;background:linear-gradient(180deg,#f0f9ff 0%,#e0f2fe 100%);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+
+.canvas-wrap canvas{display:block;width:100%;height:auto;}
+
+.canvas-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
+
+.btn{padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;border:none;color:#fff;background:var(--accent);box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+
+.btn:hover{transform:translateY(-2px);}
+
+.btn.ghost{background:var(--panel-2);color:var(--text);border:1.5px solid var(--border);box-shadow:none;}
+
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent);}
+
+.btn.cyan{background:#06b6d4;box-shadow:0 6px 16px -6px rgba(6,182,212,.5);}
+
+.btn.violet{background:#8b5cf6;box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
+
+.btn.red{background:#ef4444;box-shadow:0 6px 16px -6px rgba(239,68,68,.5);}
+
+.btn.green{background:#10b981;box-shadow:0 6px 16px -6px rgba(16,185,129,.5);}
+
+.btn.orange{background:#f59e0b;box-shadow:0 6px 16px -6px rgba(245,158,11,.5);}
+
+.tl-year{flex-shrink:0;scroll-snap-align:start;min-width:160px;background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .25s;text-align:center;}
+
+.tl-year:hover{border-color:var(--accent);transform:translateY(-3px);}
+
+.tl-year.active{background:linear-gradient(180deg,#f5f3ff,#fff);border-color:var(--accent);box-shadow:0 8px 20px -8px rgba(139,92,246,.4);}
+
+.tl-year .tl-num{font-size:22px;font-weight:900;color:var(--accent);}
+
+.tl-year .tl-who{font-size:13px;font-weight:700;margin:6px 0 4px;color:var(--text);}
+
+.tl-year .tl-what{font-size:12px;color:var(--muted);line-height:1.4;}
+
+.tl-detail{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;animation:fadeSlide .35s ease;}
+
+.tl-detail.show{display:block;}
+
+.tl-detail .tl-d-title{font-size:18px;font-weight:800;margin-bottom:8px;}
+
+.tl-detail .tl-d-text{font-size:15.5px;line-height:1.75;color:var(--text);}
+
+.formula-card{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;margin-top:16px;}
+
+.formula-display{font-size:38px;font-weight:900;text-align:center;color:var(--accent);letter-spacing:2px;margin:10px 0;font-family:'Courier New',monospace;}
+
+.formula-parts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;}
+
+.formula-part{padding:14px;border-radius:12px;text-align:center;font-size:14.5px;line-height:1.6;}
+
+.formula-part .fp-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
+
+.formula-part .fp-value{font-weight:800;color:var(--text);}
+
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
+
+.practical-step{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;}
+
+.practical-step .ps-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
+
+.practical-step .ps-num{width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;}
+
+.practical-step .ps-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);}
+
+.practical-step .ps-situation{font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;}
+
+.isotope-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px;}
+
+.isotope-table th,.isotope-table td{padding:12px 14px;border:1.5px solid var(--border);text-align:left;}
+
+.isotope-table th{background:var(--panel-2);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
+
+.isotope-table tr:hover{background:#f8fafc;}
+
+.isotope-table .iso-name{font-weight:800;}
+
+.isotope-table .iso-symbol{font-family:'Courier New',monospace;font-weight:800;font-size:16px;color:var(--accent);}
+
+.slider-wrap{display:flex;align-items:center;gap:14px;margin:16px 0;flex-wrap:wrap;}
+
+.slider-wrap input[type=range]{flex:1;min-width:200px;accent-color:var(--accent);height:8px;cursor:pointer;}
+
+.slider-label{font-size:14px;font-weight:700;color:var(--muted);min-width:90px;}
+
+.energy-badge{display:inline-block;padding:4px 14px;border-radius:50px;font-size:13px;font-weight:800;transition:all .3s;}
+
+.energy-badge.high{background:#fef2f2;color:#dc2626;}
+
+.energy-badge.low{background:#ecfdf5;color:#059669;}
+
+.reaction-canvas{background:linear-gradient(180deg,#0f172a,#1e293b);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+
+.reaction-canvas canvas{display:block;width:100%;height:auto;}
+
+@media (max-width:800px){.dual-basket{grid-template-columns:1fr;}.formula-parts{grid-template-columns:1fr;}}
+
+@media (max-width:600px){.container{padding:0 14px;}.hero{padding:40px 0 20px;}.stage{padding:20px;}.card-grid{grid-template-columns:1fr;}body{font-size:16px;}}
+
+/* утилиты (вынесено из инлайн-стилей) */
+.cw-dark { background: linear-gradient(180deg, #0f172a, #1e293b); }
+.note-sm { font-size: 14px; color: var(--muted); margin-top: 10px; }
+.card-blue { border-color: #3b82f6; }
+.card-violet { border-color: #8b5cf6; }
+.card-green { border-color: #10b981; }
+.card-cyan { border-color: #06b6d4; }
+.card-orange { border-color: #f59e0b; }
+.card-slate { border-color: #94a3b8; }
+.card-dark { border-color: #475569; }
+.fc-warm { background: linear-gradient(180deg, #fffbeb, #fff); border-color: #f59e0b; }
+.tcenter { text-align: center; }
+.fbig { font-size: 52px; font-weight: 900; }
+.fsub { font-size: 32px; font-weight: 900; vertical-align: sub; }
+.c-orange { color: #f59e0b; }
+.c-blue { color: #1e40af; }
+.c-violet { color: #3730a3; }
+.c-red { color: #991b1b; }
+.c-brown { color: #92400e; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.legend-box { padding: 12px; border-radius: 10px; }
+.lb-warm { background: #fffbeb; border-left: 4px solid #f59e0b; }
+.lb-info { background: #f0f9ff; border-left: 4px solid #3b82f6; }
+.fs-14 { font-size: 14px; }
