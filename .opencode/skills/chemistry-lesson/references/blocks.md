@@ -19,7 +19,7 @@ genuinely missing, add it to the registry and `core.css` first.
 | timeline | `timeline` | `.timeline`, `.timeline-item`, `.t-*` | `timeline` |
 | click → detail panel | `sciences`/`methods`/`equip` | `.sci-node`, `.method-step`, `.equip-card` | js per id |
 | branch scenario | `scenarios` | `.scenario-card`, `#scenariosContainer` | `scenarios` |
-| Feynman prompts | (prose + `.notebook-task`) | — | core |
+| practical / homework | `module.json` → builder (`stage s-prac` / `stage s-hw`) | `.homework`, `.hw-star`, `.list-note` | core |
 | starred task | `thinker` | `.thinker` | core |
 | recap | `recap-card` | `.recap-card` | core |
 | "write in notebook" memo | `notebook-task` | `.notebook-task` | core |
@@ -46,4 +46,4 @@ and `core.css` — never inline.
 - Do not wrap the body in `<div class="container">`; the builder adds it.
 - Keep `<div>`/`<section>` balanced. The builder strips a legacy container open/close.
 - `${legend_fold}` and `${feynman_fold}` snippets are injected at module start only.
-- QA cards are rendered from `module.json` into `<!--QA-->`.
+- The intro block (`stage s-intro` + `card-grid` + `callout-idea`) is rendered from `module.json` (`intro`) by the builder — never author it in `body.html`.

@@ -39,19 +39,20 @@ Do not invent new meanings; the legend is fixed (DESIGN.md §1.2).
 ## No answers in the file
 
 `body.html` must never contain ready answers to:
-- QA cards (the answer is born during the lesson);
-- Feynman prompts;
+- the intro block (rhetorical questions only, no answers);
+- the practical and homework (open tasks, no answers in file);
 - the starred task (`.thinker`);
 - tests (answers live in the quiz JSON island and `answers.md`).
 
-## Feynman prompts
+## Explain-simply tasks (Feynman method)
 
-- 2–4 open questions "explain in your own words".
-- Address a younger listener: «объясни брату/сестре/сыну».
-- Instruction: "explain aloud → write it in the notebook".
-- Self-check criterion: "would a younger student understand? where you stumbled —
-  go back to the topic".
-- The author writes the model answers in `answers.md`.
+There is no separate Feynman-reflection block. "Explain in your own words"
+prompts are homework items (`homework.feynman` in `module.json`):
+
+- 1–2 open prompts, addressed to a younger listener («объясни брату/бабушке»);
+- instruction "explain aloud → write it in the notebook";
+- self-check: "would a younger student understand? where you stumbled — go back";
+- the author may note model answers in `answers.md`.
 
 ## Common mistakes
 

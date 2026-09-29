@@ -5,7 +5,7 @@ canonical blocks implement it. Plan before writing prose.
 
 ## 1. Extract learning objectives
 
-From `lesson.md`, `module.json` (`questions`, `title`) and `course.json`
+From `lesson.md`, `module.json` (`intro`, `practical`, `homework`, `title`) and `course.json`
 (`themes`, `skills`), write **2–4 objectives** in the form
 "The student can <verb> <what>" (understand / distinguish / describe / apply).
 Avoid vague verbs ("know about", "get familiar").
@@ -39,7 +39,10 @@ Write the plan top-to-bottom in skeleton order (`SKILL.md`). Mark each block
 type and its purpose. Example:
 
 ```
-hero           — badge, title, QA placeholders
+hero           — badge, title
+intro          — О чём этот модуль/урок        (from module.json)
+practical      — experiment by topic           (from module.json, builder)
+homework       — 4 tasks + ★ + explain-simply  (from module.json, builder)
 warmup         — 5 questions, no grade        (chemistry-interactive)
 theory §1      — what properties are; callout-idea
 interactive    — property simulator           (chemistry-interactive)

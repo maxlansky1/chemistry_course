@@ -6,7 +6,7 @@
 открывает файл на телефоне из Telegram (или встраивает в доску tldraw) и проходит
 шаг за шагом.
 
-Репозиторий — это **движок + контент-пайплайн**: JSON-данные и Markdown-черновики
+Репозиторий — это **движок + контент-пайплайн**: Markdown-источник (`lesson.md`) и JSON-данные
 превращаются билдером в автономные офлайн-HTML без единой внешней зависимости.
 
 ---
@@ -67,23 +67,26 @@ hover дублируется тапом; мобильный-first.
 
 | Слой | Что | Инструмент |
 |---|---|---|
-| **Человек** | Черновик урока — свободные заметки автора | `lesson.md` |
-| **Агент** | Превращает заметки в канонический HTML + ответы | ИИ-агент + скиллы + `components.json` |
-| **Сборка** | `body.html` + данные → автономный HTML, отчёт, Telegram | `src/build.py` |
+| **Человек** | **Источник урока** — правит автор (и агент) | `lesson.md` |
+| **Агент** | Компилирует `lesson.md` в канонический HTML + данные + ответы | ИИ-агент + скиллы + `components.json` |
+| **Сборка** | `body.html` + `module.json` → автономный HTML, отчёт, Telegram | `src/build.py` |
 | **Ворота** | Проверка канона, данных, тегов, id | `src/lint.py` |
 
 ```
-lesson.md  ──(агент)──▶  body.html + answers.md
-                              │
-                        src/build.py  ──▶  dist/module_N.html
-                              │                  │
-                        src/lint.py          Telegram
-                              │
-                       course.json / module.json / shared/data/*.json
+lesson.md  ──(агент, скилл chemistry-lesson)──▶  body.html + module.json + answers.md
+                                                          │
+                                                    src/build.py  ──▶  dist/module_N.html
+                                                          │                  │
+                                                    src/lint.py          Telegram
+                                                          │
+                                                 course.json / shared/data/*.json
 ```
 
-**Ключевое правило:** Markdown (`lesson.md`) билдер **не читает** — это черновик
-для агента. Канон собирает агент, опираясь на реестр компонентов и дизайн-доки.
+**Ключевое правило:** `lesson.md` — **источник истины**; его правит человек/агент и
+**никогда не перезаписывают** инструменты. Билдер `lesson.md` не читает: агент
+компилирует черновик в канон (`body.html` + `module.json` + `answers.md`), опираясь
+на реестр компонентов и дизайн-доки. `src/lesson_md.py` — только **экспорт** канона в md
+(по умолчанию не перезаписывает; флаги `--missing`/`--force`/`--check`).
 
 ---
 
@@ -118,12 +121,13 @@ chemistry_course/
 │   │   ├── snippets/          # legend_fold.html, feynman_fold.html
 │   │   └── data/              # машинные данные (см. §5)
 │   └── lessons/
-│       ├── module_1/          # ЭТАЛОН: приведён к канону
-│       │   ├── module.json    # единый манифест модуля
-│       │   └── u1/{lesson.md, body.html, answers.md}  (u2, u3, final — так же)
-│       └── module_2/          # ещё на старых manifest.json (миграция — бэклог)
-│
-├── modules/legacy/        # старые монолитные HTML (М1–М4б), только чтение
+ │       ├── module_1/          # ЭТАЛОН: приведён к канону
+ │       │   ├── module.json    # единый манифест модуля
+ │       │   └── u1/{lesson.md, body.html, answers.md}  (u2, u3, final — так же)
+ │       ├── module_2/          # собран по канону (статус lint_ok)
+ │       └── module_3/ … module_6/  # из legacy 3а/3б/4а/4б (статус lint_ok)
+ │
+ ├── modules/legacy/        # старые монолитные HTML (из них мигрированы 3–6), только чтение
 └── dist/                  # собранные файлы для рассылки (коммитятся)
     ├── module_1.html
     ├── module_1.message.txt
@@ -136,8 +140,8 @@ chemistry_course/
 
 | Файл | Назначение |
 |---|---|
-| `course.json` | Уровни A–F и 14 модулей: `id`, `title`, `themes[]`, `skills[]`, `prereq[]`, `lessons_count`, `time`, `status`, `icon`. Источник карты курса и статусов. |
-| `src/lessons/module_N/module.json` | Мета модуля: `title`, `badge`, `digest`, `questions[]` (QA), `order[]`, `lessons[]` (title/chip/pill/time/questions + `css`/`js` в переходный период). |
+| `course.json` | Уровни A–F и 16 модулей: `id`, `title`, `themes[]`, `skills[]`, `prereq[]`, `lessons_count`, `time`, `status`, `icon`. Источник карты курса и статусов. |
+| `src/lessons/module_N/module.json` | Мета модуля: `title`, `badge`, `digest`, `intro` (вводный блок «О чём этот модуль»: `subtitle`/`lead`/`cards[]`/`callout`), `order[]`, `lessons[]` (title/chip/pill/time + `css`/`js`, а для каждого `uN` — `intro` (блок «О чём этот урок»), `practical` (описание опыта) и `homework` (4 задачи + ★ + 1–2 «объясни простыми словами»)). Билдер рендерит блоки: модульный `intro` — на `entry` (или первом уроке), урочный `intro`/`practical`/`homework` — на каждом `uN`. |
 | `src/shared/data/components.json` | **Реестр канонических блоков**: id, назначение, классы, обязательные атрибуты, что подключает (`produces.css/js`), пример. Его читают билдер и линт. |
 | `src/shared/data/glossary.json` | Термин → определение. Питает автоподсветку `.term` (клик → окно). |
 | `src/shared/data/elements.json` | CPK-цвета и ковалентные радиусы. Задел под ядро `ChemDraw`. |
@@ -247,8 +251,9 @@ python3 src/build.py module_1 --send # собрать и отправить в T
 python3 src/lint.py module_1   # LINT OK / FAIL
 ```
 
-> `module_1` — эталон, линт зелёный. `module_2` ещё не мигрирован: его линт
-> намеренно падает — это первый пункт следующих работ.
+> `module_1` — эталон, линт зелёный. `module_2`–`module_6` собраны по канону
+> (статус `lint_ok`), ждут проверки на телефоне. В `modules/legacy/` остались
+> только исходники (М1–М4б), из которых уже мигрированы М1–М6.
 
 ---
 
@@ -331,20 +336,22 @@ python3 src/build.py module_1 --send
 - машинный каркас: `course.json`, `components.json`, `glossary/messages/sims.json`;
 - единый `module.json`, сквозная нумерация `module_N`;
 - `shell.html`, авто-подбор ресурсов, отчёт;
-- `quiz.js` (3 типа вопросов), `lint.py`, `glossary.js`, компоненты формул;
-- **Модуль 1 приведён к канону** (эталон, тег `module-1-v1`);
+- `quiz.js` (3 типа + выборка из банка), `lint.py`, `glossary.js`, компоненты формул;
+- **Модули 1–6 приведены к канону** (М1 — тег `module-1-v1`, М2–М6 — `lint_ok`);
+- **курс перенумерован на 16 модулей**: legacy 3а→3, 3б→4, 4а→5, 4б→6;
+- **карта курса** `src/course_map.py` → `dist/course_map.html`;
+- **проектные скиллы** `.opencode/skills/` (lesson/interactive/review);
 - доставка в Telegram.
 
 **Следующие подпроекты (из спеки §7):**
-- **P2** — ядро `ChemDraw` + `makeSim` + LOD; миграция симов М2.
+- **P2** — ядро `ChemDraw` + `makeSim` + LOD; перенос симов М2 на стандарт.
 - **P3** — формулы: скилл и полное внедрение.
-- **P4** — скиллы агента (`lesson-builder` и др.).
-- **P5** — карта курса из `course.json`.
+- **P4** — хим. скилл `chemistry-sim`.
 - **P6** — `build.py new module_N`, статусы, пометка версии канона.
 - **P7** — бэклог: медиа, lazy-load, разбиение CSS, таблица элементов,
   spaced repetition, аналитика, приём домашек ботом, сайт/роутер.
 
-**Технический долг:** миграция `module_2` (её линт падает), удаление движков
-`m2_entry.js`/`m2_final.js`/`property.js` после миграции, уборка `legacy/`.
+**Технический долг:** удаление `property.js` после миграции М1-содержимого,
+перенос данных игр/сценариев из движков в JSON-островки, миграция `legacy/` (М7+).
 
 Актуальный список идей — в `BACKLOG.md`.
