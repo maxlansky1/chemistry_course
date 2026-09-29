@@ -93,32 +93,33 @@
     font-size: 16px;
     line-height: 1.7;
   }
+  /* Единая палитра: коллауты совпадают с «Условными обозначениями» */
   .callout-idea {
-    background: linear-gradient(135deg, #fffbeb, #fef3c7);
-    border-left: 5px solid var(--orange);
-    color: #78350f;
+    background: #FFF9E6; border-left: 5px solid #FFE0B2; color: #7A5F00;
   }
-  .callout-idea b { color: #92400e; }
+  .callout-idea b { color: #7A5F00; }
   .callout-warn {
-    background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    border-left: 5px solid var(--red);
-    color: #7f1d1d;
+    background: #FDF2F2; border-left: 5px solid #FDE8E8; color: #9B1C1C;
   }
-  .callout-warn b { color: #b91c1c; }
+  .callout-warn b { color: #9B1C1C; }
   .callout-note {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border-left: 5px solid #3b82f6;
-    color: #1e3a8a;
+    background: #EBF5FF; border-left: 5px solid #E1EFFE; color: #1E429F;
   }
-  .callout-note b { color: #1d4ed8; }
+  .callout-note b { color: #1E429F; }
   .callout-ok {
-    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    border-left: 5px solid var(--green);
-    color: #065f46;
+    background: #EDF7ED; border-left: 5px solid #C8E6C9; color: #1E4620;
   }
-  .callout-ok b { color: #047857; }
+  .callout-ok b { color: #1E4620; }
+  .callout-game {
+    background: #F3E8FF; border-left: 5px solid #E9D5FF; color: #6B21A8;
+  }
+  .callout-game b { color: #6B21A8; }
+  .callout-test {
+    background: #F1F5F9; border-left: 5px solid #E2E8F0; color: #475569;
+  }
+  .callout-test b { color: #475569; }
 
-  .cta { color: var(--accent); font-weight: 800; }
+  .cta { color: #6875F5; font-weight: 800; }
 
   .card-grid {
     display: grid;
@@ -694,62 +695,81 @@
   details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
   details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
 
-  /* Навигация по урокам: карточки + пилюли */
-  .lesson-nav {
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    gap: 12px; align-items: stretch; margin: 26px 0 8px;
+  /* Навигация: триггер + выезжающий drawer + «наверх» */
+  .nav-trigger {
+    position: fixed; top: 12px; left: 12px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 8px 16px; border-radius: 50px;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font: inherit; font-size: 14px; font-weight: 800; color: var(--text);
+    cursor: pointer; box-shadow: var(--shadow); transition: border-color .2s, color .2s;
   }
-  .ln-card {
-    background: var(--panel); border: 1.5px solid var(--border);
-    border-radius: 14px; padding: 14px 18px;
-    text-decoration: none; color: var(--text);
-    display: flex; flex-direction: column; gap: 4px; transition: all .2s;
+  .nav-trigger:hover { border-color: #6875F5; color: #6875F5; }
+  .nav-trigger-icon { font-size: 18px; line-height: 1; }
+  .nav-backdrop {
+    position: fixed; inset: 0; z-index: 70; background: rgba(15,23,42,.5);
+    opacity: 0; transition: opacity .3s ease-in-out;
   }
-  a.ln-card:hover {
-    border-color: var(--h-deep); transform: translateY(-2px);
-    box-shadow: var(--shadow);
+  .nav-backdrop.show { opacity: 1; }
+  .nav-drawer {
+    position: fixed; top: 0; left: 0; height: 100%; width: min(85%, 360px);
+    z-index: 80; background: #fafafa; box-shadow: var(--shadow-lg);
+    transform: translateX(-100%); visibility: hidden; overflow-y: auto;
+    transition: transform .3s ease-in-out, visibility .3s;
+    padding: 18px 16px 28px; -webkit-overflow-scrolling: touch;
   }
-  .ln-card.ln-next { text-align: right; }
-  .ln-dir {
-    font-size: 12px; font-weight: 800; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--h-deep);
+  .nav-drawer.open { transform: translateX(0); visibility: visible; }
+  body.nav-open { overflow: hidden; }
+  .nav-drawer-head { font-size: 16px; font-weight: 800; margin: 6px 8px 14px; line-height: 1.35; }
+  .nav-tree { list-style: none; margin: 0; padding: 0; }
+  .nav-tree a {
+    display: block; padding: 12px; border-radius: 10px; text-decoration: none;
+    color: var(--text); font-size: 15px; font-weight: 700; min-height: 44px;
   }
-  .ln-title { font-size: 15px; font-weight: 700; }
-  .ln-card.done { border-style: dashed; color: var(--muted); cursor: default; }
-  .ln-map { display: flex; gap: 8px; align-items: center; justify-content: center; }
-  .ln-pill {
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 2px solid var(--border); display: inline-flex;
-    align-items: center; justify-content: center;
-    font-weight: 800; font-size: 14px; color: var(--muted);
-    text-decoration: none; background: #fff;
+  .nav-tree a:hover { background: #eef2f7; }
+  .nav-lesson.nav-current > a { color: #6875F5; }
+  .nav-subs {
+    list-style: none; margin: 2px 0 8px 12px; padding: 0 0 0 10px;
+    border-left: 2px solid var(--border);
   }
-  a.ln-pill:hover { border-color: var(--h-deep); }
-  .ln-pill.now { background: var(--h-deep); border-color: var(--h-deep); color: #fff; }
-  @media (max-width: 600px) {
-    .lesson-nav { grid-template-columns: 1fr; }
-    .ln-card.ln-next { text-align: left; }
-    .ln-map { order: -1; }
+  .nav-subs a { font-size: 13.5px; font-weight: 500; color: var(--muted); padding: 9px 10px; min-height: 40px; }
+  .nav-subs a.nav-active {
+    color: #6875F5; font-weight: 700; background: rgba(104,117,245,.10);
+    border-left: 2px solid #6875F5; margin-left: -12px; padding-left: 12px;
+  }
+  .to-top {
+    position: fixed; right: 14px; bottom: 16px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow);
+  }
+  .to-top:hover { border-color: #6875F5; color: #6875F5; }
+  [data-stage], [id^="m-"] { scroll-margin-top: 72px; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-drawer, .nav-backdrop { transition: none; }
   }
 
-  /* Вопросы hero: 3 риторических вопроса модуля/урока */
-  .hero-questions {
-    display: flex; flex-direction: column; gap: 8px;
-    max-width: 640px; margin: 14px auto 0; text-align: left;
-  }
-  .hero-questions div {
-    background: rgba(255,255,255,.75);
-    border: 1px solid var(--border); border-radius: 10px;
-    padding: 8px 14px; font-size: 15.5px; font-weight: 600;
-  }
-
-  /* Цвета карточек легенды по смыслу */
+  /* Палитра карточек легенды */
   .legend-card { border: 2px solid var(--border); }
-  .legend-card.lc-warm { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #f59e0b; }
-  .legend-card.lc-danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-color: #ef4444; }
-  .legend-card.lc-info { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6; }
-  .legend-card.lc-ok { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #10b981; }
-  .legend-card.lc-act { background: #fff; border-style: dashed; }
+  .legend-card.lc-warm { background: #FFF9E6; border-color: #FFE0B2; }
+  .legend-card.lc-warm .lc-header { color: #7A5F00; }
+  .legend-card.lc-danger { background: #FDF2F2; border-color: #FDE8E8; }
+  .legend-card.lc-danger .lc-header { color: #9B1C1C; }
+  .legend-card.lc-info { background: #EBF5FF; border-color: #E1EFFE; }
+  .legend-card.lc-info .lc-header { color: #1E429F; }
+  .legend-card.lc-ok { background: #EDF7ED; border-color: #C8E6C9; }
+  .legend-card.lc-ok .lc-header { color: #1E4620; }
+  .legend-card.lc-act { background: #fff; border-color: #6875F5; }
+  .legend-card.lc-act .lc-header,
+  .legend-card.lc-act .lc-body,
+  .legend-card.lc-act .lc-body b { color: #6875F5; }
+  .legend-card.lc-accent { border-color: #6875F5; }
+  .legend-card.lc-game { background: #F3E8FF; border-color: #E9D5FF; }
+  .legend-card.lc-game .lc-header { color: #6B21A8; }
+  .legend-card.lc-test { background: #F1F5F9; border-color: #E2E8F0; }
+  .legend-card.lc-test .lc-header { color: #475569; }
+  .lc-vi { color: #6875F5; }
 
   /* Домашнее задание */
   .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
@@ -757,31 +777,7 @@
   .homework ol li { margin-bottom: 6px; }
   .homework .hw-star { color: var(--accent); font-weight: 800; }
 
-  /* Карточки вопросов: нумерованный вопрос-промпт, без эмодзи и ответов.
-     Вопрос задаётся ученику по ходу урока — ответ рождается в уроке. */
-  .qa-list { display: flex; flex-direction: column; gap: 10px;
-    max-width: 680px; margin: 14px auto 0; text-align: left; }
-  .qa-card {
-    background: rgba(255,255,255,.85);
-    border: 1.5px solid var(--border); border-radius: 12px;
-    padding: 12px 16px; border-left: 5px solid var(--accent);
-  }
-  .qa-q { font-size: 15.5px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
-  .qa-num {
-    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
-    background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 900; transform: translateY(3px);
-  }
 
-  /* Чипсы навигации модуля */
-  .mod-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
-  .mod-chip {
-    padding: 9px 20px; border-radius: 50px; text-decoration: none;
-    background: rgba(255,255,255,.8); border: 1.5px solid var(--border);
-    font-size: 14.5px; font-weight: 800; color: var(--text); transition: all .2s;
-  }
-  a.mod-chip:hover { border-color: var(--h-deep); color: var(--h-deep); transform: translateY(-2px); }
 
   /* Формулы и химические записи */
   .formula { font-variant-numeric: lining-nums; white-space: nowrap; }
@@ -823,25 +819,10 @@
   .center-mt16 { text-align: center; margin-top: 16px; }
   .prose { font-size: 16.5px; line-height: 1.8; }
   .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
-  .hero-nav { margin-top: 8px; font-size: 15px; }
   .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
   .fs-26 { font-size: 26px; }
   .sci-node { cursor: pointer; }
   .hero-digest { max-width: 700px; margin: 0 auto; }
-  .lesson-nav.toc {
-    position: sticky; top: 0; z-index: 20;
-    background: rgba(248,250,252,.92); backdrop-filter: blur(8px);
-    border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 10px 14px; margin: 0 0 18px;
-  }
-  .toc-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 8px; }
-  .toc-items { display: flex; gap: 8px; flex-wrap: wrap; }
-  .toc-item { text-decoration: none; font-size: 14px; font-weight: 700;
-    color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
-  .toc-pill { display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px; border-radius: 50%; font-size: 12px;
-    background: var(--panel-2); border: 1px solid var(--border); }
 
   /* Quiz: multi и match */
   .quiz-errors { margin-top: 10px; }
@@ -1111,84 +1092,68 @@
     .container { padding: 0 14px; }</style>
 </head>
 <body>
-<!-- built by src/build.py v1 · 2026-09-28 · module_2 WHOLE-MODULE · manifest-driven -->
+<!-- built by src/build.py v1 · 2026-09-29 · module_2 WHOLE-MODULE · manifest-driven -->
 <header class="hero">
   <div class="badge">Модуль 2 · Агрегатные состояния и смеси · ~1,5 часа</div>
   <h1>Модуль 2. Агрегатные состояния и смеси</h1>
   <p class="hero-digest">Одно и то же вещество бывает твёрдым, жидким и газообразным. В этом модуле разберёмся, чем чистые вещества отличаются от смесей и как разделять смеси на части.</p>
-<div class="qa-list">
-</div>
-  <div class="mod-chips"><a class="mod-chip" href="#m-entry">Вход</a> <a class="mod-chip" href="#m-u1">Урок 1</a> <a class="mod-chip" href="#m-u2">Урок 2</a> <a class="mod-chip" href="#m-u3">Урок 3</a> <a class="mod-chip" href="#m-final">Тест</a></div>
 </header>
-<details class="fold fade-in">
-<summary>📚 Обозначения (открой, если забыл)</summary>
-<div class="fold-body">
-<div class="legend-grid">
-<div class="legend-card lc-warm"><div class="lc-header">💡 <span>Жёлтый блок</span></div><div class="lc-body">Ключевая мысль, сравнение или аналогия простыми словами.</div></div>
-<div class="legend-card lc-danger"><div class="lc-header">⚠️ <span>Красный блок</span></div><div class="lc-body">Предупреждение или правило безопасности. <b>Обязательно к запоминанию.</b></div></div>
-<div class="legend-card lc-info"><div class="lc-header">📌 <span>Синий блок</span></div><div class="lc-body">Заметка, пояснение или интересный факт.</div></div>
-<div class="legend-card lc-ok"><div class="lc-header">✅ <span>Зелёный блок</span></div><div class="lc-body">Правильный ответ, успех или итоговый вывод.</div></div>
-<div class="legend-card lc-act"><div class="lc-header">🔷 <span>Фиолетовый текст</span></div><div class="lc-body"><b>Призыв к действию:</b> нажми, подвигай, перетащи.</div></div>
-<div class="legend-card lc-info"><div class="lc-header">🎮 <span>Игра</span></div><div class="lc-body">Сортировка, выбор, классификация — без скучной зубрёжки.</div></div>
-<div class="legend-card lc-info"><div class="lc-header">📝 <span>Тест</span></div><div class="lc-body">Проверка с объяснением, почему ответ такой.</div></div>
+<section class="section">
+<div class="container">
+<div class="stage s-legend fade-in">
+  <div class="stage-header">
+    <div class="stage-number">📚</div>
+    <div>
+      <div class="stage-title">Условные обозначения</div>
+      <div class="stage-subtitle">Как читать блоки на странице</div>
+    </div>
+  </div>
+  <div class="legend-grid">
+    <div class="legend-card lc-warm"><div class="lc-header">💡 <span>Жёлтый (Мысль)</span></div><div class="lc-body">Ключевая мысль, сравнение или аналогия простыми словами.</div></div>
+    <div class="legend-card lc-danger"><div class="lc-header">⚠️ <span>Красный (Опасно)</span></div><div class="lc-body">Предупреждение или правило. <b>Обязательно к запоминанию.</b></div></div>
+    <div class="legend-card lc-info"><div class="lc-header">📌 <span>Синий (Заметка)</span></div><div class="lc-body">Заметка, пояснение или интересный факт.</div></div>
+    <div class="legend-card lc-ok"><div class="lc-header">✅ <span>Зелёный (Успех)</span></div><div class="lc-body">Правильный ответ, успех или итоговый вывод.</div></div>
+    <div class="legend-card lc-act"><div class="lc-header"><span class="lc-vi">◆</span> <span>Фиолетовый (CTA)</span></div><div class="lc-body"><b>Призыв к действию:</b> нажми, подвигай, перетащи.</div></div>
+    <div class="legend-card lc-game"><div class="lc-header">🎮 <span>Игра</span></div><div class="lc-body">Сыграй в игру, чтобы закрепить свои знания</div></div>
+    <div class="legend-card lc-test"><div class="lc-header">📝 <span>Тест</span></div><div class="lc-body">Проверь свои знания</div></div>
+  </div>
 </div>
 </div>
-</details>
-<details class="fold fade-in" open>
-<summary>🧠 Как мы будем изучать химию: метод Фейнмана</summary>
-<div class="fold-body">
-<p style="font-size:15.5px;line-height:1.8;">Знаменитый физик <b>Ричард Фейнман</b> говорил: <b>«Если не можешь объяснить просто — значит, не понял»</b>. Поэтому учимся так:</p>
-<div class="card-grid">
-<div class="card"><div class="c-title">1️⃣ Объясняй просто</div><div class="c-desc">Как младшему брату или бабушке: никаких сложных терминов — только понятные слова.</div></div>
-<div class="card"><div class="c-title">2️⃣ Приводи примеры из жизни</div><div class="c-desc">Всё, что изучаем, есть дома, на кухне, на улице. Химия — вокруг нас.</div></div>
-<div class="card"><div class="c-title">3️⃣ Смотри и пробуй</div><div class="c-desc">Схемы, анимации и мини-игры: увидеть, как работает, а не зазубрить.</div></div>
-<div class="card"><div class="c-title">4️⃣ Проверяй себя</div><div class="c-desc">Тесты с объяснениями — сразу. В конце модуля — итоговая проверка.</div></div>
+</section>
+<section class="section">
+<div class="container">
+<div class="stage s-feyn fade-in">
+  <div class="stage-header">
+    <div class="stage-number">🧠</div>
+    <div>
+      <div class="stage-title">Как мы будем изучать химию: метод Фейнмана</div>
+      <div class="stage-subtitle">Простое объяснение — лучший способ проверить, что ты понял</div>
+    </div>
+  </div>
+  <p class="prose">Нобелевский лауреат <b>Ричард Фейнман</b> обожал повторять: «Если вы не можете объяснить сложную вещь простыми словами — вы сами её не понимаете». Попробуйте изучать новые темы при помощи метода Фейнмана:</p>
+  <ul class="list-note">
+    <li><b>Включаем режим «Объясни бабушке».</b> Самый крутой способ проверить себя — рассказать тему младшему брату, маме или коту. Попробуйте обойтись без заумных терминов. Получилось? Значит, вы разобрались в теме.</li>
+    <li><b>Ищем простые и понятные примеры из реальной жизни.</b> Химия происходит прямо сейчас — на вашей кухне, в ванной, за окном и даже внутри вас.</li>
+    <li><b>Разрешаем себе ошибаться.</b> Допускать ошибки — это нормально. Проверяйте себя тестами, читайте разборы ошибок и двигайтесь дальше.</li>
+  </ul>
+  <div class="callout callout-idea"><b>Финальный челлендж модуля:</b> перескажите изученную тему своими словами кому-то из близких, запишите свои рассуждения в тетрадь и обсудите с учителем на следующем занятии.</div>
 </div>
-<p style="font-size:15px;margin-top:10px;">Главное правило модуля: <b>объясни вслух сыну, дочке, брату или сестре — и запиши в тетрадь</b>. Проверяет учитель.</p>
 </div>
-</details>
+</section>
 
 <div class="container">
-<nav class="lesson-nav toc"><div class="toc-title">Содержание модуля</div><div class="toc-items"><a class="ln-pill toc-item" href="#m-entry"><span class="toc-pill">•</span>Вход</a><a class="ln-pill toc-item" href="#m-u1"><span class="toc-pill">1</span>Урок 1</a><a class="ln-pill toc-item" href="#m-u2"><span class="toc-pill">2</span>Урок 2</a><a class="ln-pill toc-item" href="#m-u3"><span class="toc-pill">3</span>Урок 3</a><a class="ln-pill toc-item" href="#m-final"><span class="toc-pill">✓</span>Тест</a></div></nav>
+<button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
+<div class="nav-backdrop" id="navBackdrop" hidden></div>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 2. Агрегатные состояния и смеси</div><ul class="nav-tree"><li class="nav-lesson"><a href="#m-entry">Начало</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-entry-1">О чём этот модуль</a></li><li><a class="nav-sub" href="#s-entry-2">Входной тест</a></li></ul></li><li class="nav-lesson"><a href="#m-u1">Урок 1</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u1-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u1-2">Агрегатные состояния вещества</a></li><li><a class="nav-sub" href="#s-u1-3">Практикум: Три состояния воды</a></li><li><a class="nav-sub" href="#s-u1-4">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="#m-u2">Урок 2</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u2-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u2-2">Переходы между состояниями</a></li><li><a class="nav-sub" href="#s-u2-3">Чистые вещества и смеси</a></li><li><a class="nav-sub" href="#s-u2-4">Практикум: Растворение и фильтрование</a></li><li><a class="nav-sub" href="#s-u2-5">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="#m-u3">Урок 3</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u3-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u3-2">Способы разделения смесей</a></li><li><a class="nav-sub" href="#s-u3-3">Задачка на подумать</a></li><li><a class="nav-sub" href="#s-u3-4">Выжимка модуля: самое главное</a></li><li><a class="nav-sub" href="#s-u3-5">Практикум: Очистка загрязнённой соли</a></li><li><a class="nav-sub" href="#s-u3-6">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="#m-final">Тест</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-final-1">Итоговый тест по Модулю 2</a></li></ul></li></ul></nav>
+<button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
+
 <div id="m-entry">
 <header class="hero">
   <div class="badge">Модуль 2 · Входной тест · ~15 минут</div>
   <h1>Проверь готовность</h1>
-  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="#m-entry">Вход</a> · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Тест</a></p>
-</header></header>
-
+</header>
 <section class="section">
-  <div class="stage s-entry fade-in">
-    <div class="stage-header">
-      <div class="stage-number">🚪</div>
-      <div>
-        <div class="stage-title">Входной тест</div>
-        <div class="stage-subtitle">10 вопросов по Модулю 1 · порог 80% (8 правильных)</div>
-      </div>
-    </div>
-    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
-      Модуль 2 опирается на Модуль 1: тела и вещества, свойства, методы познания,
-      безопасность. Наберёшь 8+ — иди дальше. Нет — повтори первый модуль, он короткий.
-    </p>
-    <div id="entryTestContainer"></div>
-    <div class="entry-result" id="entryResult"></div>
-  </div>
-</section>
-</div>
-<div id="m-u1">
-<header class="hero">
-  <div class="badge">Модуль 2 · Урок 1 из 3 · ~20 минут</div>
-  <h1>Агрегатные состояния вещества</h1>
-  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="#m-entry">Вход</a> · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Тест</a></p>
-<div class="qa-list">
-<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Что общего у льда, воды и пара?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Как ведут себя частицы в твёрдом, жидком и газообразном?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Почему нагревание меняет состояние?</span></div></div>
-</div>
-</header></header>
-<!-- ==================== ВВЕДЕНИЕ ==================== -->
-<section class="section">
-  <div class="stage s-intro fade-in">
+  <div id="s-entry-1" data-stage class="stage s-intro fade-in">
     <div class="stage-header">
       <div class="stage-number">🎯</div>
       <div>
@@ -1196,15 +1161,11 @@
         <div class="stage-subtitle">Три большие темы, которые станут фундаментом всего курса химии</div>
       </div>
     </div>
-
-    <p style="font-size:16.5px;line-height:1.8;">
-      В первом модуле мы выяснили, что химия — наука о веществах и их превращениях.
+    <p class="prose">В первом модуле мы выяснили, что химия — наука о веществах и их превращениях.
       Но вещества вокруг нас находятся в разных состояниях: твёрдом, жидком и газообразном.
       Одно и то же вещество может быть и льдом, и водой, и паром — и это не превращение,
       а изменение состояния. Как это происходит? И как разделить смесь на чистые компоненты?
-      Об этом — наш второй модуль.
-    </p>
-
+      Об этом — наш второй модуль.</p>
     <div class="card-grid">
       <div class="card">
         <div class="c-title">🧊 Агрегатные состояния</div>
@@ -1219,16 +1180,65 @@
         <div class="c-desc">Что такое <b>чистое вещество</b> и <b>смесь</b>? Какие смеси бывают и как их разделить на компоненты.</div>
       </div>
     </div>
-
-    <div class="callout callout-idea">
-      Представь, что ты повар. Ты можешь <b>сварить суп</b> — это смесь. Ты можешь <b>заморозить</b> его — состояние изменится,
+    <div class="callout callout-idea">Представь, что ты повар. Ты можешь <b>сварить суп</b> — это смесь. Ты можешь <b>заморозить</b> его — состояние изменится,
       но суп останется супом. А можешь <b>процедить</b> его — это разделение смеси на части.
-      Всё это — не химические превращения, а физические. Мы узнаем, чем они отличаются и как работают.
+      Всё это — не химические превращения, а физические. Мы узнаем, чем они отличаются и как работают.</div>
+  </div>
+</section>
+
+<section class="section">
+  <div id="s-entry-2" data-stage class="stage s-entry fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🚪</div>
+      <div>
+        <div class="stage-title">Входной тест</div>
+        <div class="stage-subtitle">10 вопросов по Модулю 1 · порог 80% (8 правильных)</div>
+      </div>
+    </div>
+    <p class="lead">
+      Модуль 2 опирается на Модуль 1: тела и вещества, свойства, методы познания,
+      безопасность. Наберёшь 8+ — иди дальше. Нет — повтори первый модуль, он короткий.
+    </p>
+    <div id="quiz-entry" data-config="entry"></div>
+<script type="application/json" id="quiz-entry-data">
+{"config": "entry", "target": "quiz-entry", "questions": [{"type": "single", "q": "Что изучает химия?", "options": ["Только живые организмы", "Вещества, их свойства и превращения", "Только звёзды", "Только числа"], "correct": 1, "why": "Химия — наука о веществах, их свойствах и превращениях."}, {"type": "single", "q": "Что из перечисленного — физическое тело?", "options": ["Вода", "Кислород", "Колба", "Алюминий"], "correct": 2, "why": "Колба — тело (форма и объём). Остальное — вещества."}, {"type": "single", "q": "Что такое вещество?", "options": ["То, что имеет форму", "То, из чего состоят тела", "То, что светится", "То, что движется"], "correct": 1, "why": "Вещество — то, из чего состоят тела."}, {"type": "single", "q": "Что из перечисленного — свойство вещества?", "options": ["Ложка", "Прозрачность", "Стакан", "Пробирка"], "correct": 1, "why": "Прозрачность — свойство. Остальное — тела."}, {"type": "single", "q": "Что такое наблюдение?", "options": ["Воздействие на вещество", "Изучение явления без вмешательства", "Измерение температуры", "Выдвижение гипотезы"], "correct": 1, "why": "Наблюдение — смотрим и замечаем, не вмешиваясь."}, {"type": "single", "q": "Что такое эксперимент?", "options": ["Пассивное созерцание", "Активное воздействие на вещество", "Запись в тетрадь", "Чтение учебника"], "correct": 1, "why": "Эксперимент — воздействуем и смотрим, что будет."}, {"type": "single", "q": "Что НЕЛЬЗЯ делать в лаборатории?", "options": ["Носить халат", "Пробовать вещества на вкус", "Мыть руки", "Слушать учителя"], "correct": 1, "why": "Пробовать на вкус запрещено всегда."}, {"type": "single", "q": "Разбил пробирку. Первое действие?", "options": ["Собрать осколки руками", "Сообщить учителю, убрать щёткой и совком", "Продолжить работу", "Спрятать осколки"], "correct": 1, "why": "Руками — нельзя. Учителю сообщить, убрать инструментами."}, {"type": "single", "q": "Как правильно понюхать вещество?", "options": ["Вдохнуть прямо из сосуда", "Направить пары ладонью к носу", "Наклониться над колбой", "Нюхать с закрытыми глазами"], "correct": 1, "why": "Только ладонью, осторожно. Наклоняться над сосудом опасно."}, {"type": "single", "q": "Что такое гипотеза?", "options": ["Доказанное знание", "Догадка, которую нужно проверить", "Результат опыта", "Прибор"], "correct": 1, "why": "Гипотеза — предположение, требующее проверки."}]}
+</script>
+  </div>
+</section>
+</div>
+<div id="m-u1">
+<header class="hero">
+  <div class="badge">Модуль 2 · Урок 1 из 3 · ~20 минут</div>
+  <h1>Агрегатные состояния вещества</h1>
+</header>
+<section class="section">
+  <div id="s-u1-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📌</div>
+      <div>
+        <div class="stage-title">О чём этот урок</div>
+      </div>
+    </div>
+    <p class="prose">Одно и то же вещество бывает твёрдым, жидким и газообразным. Разберёмся, чем состояния отличаются на уровне частиц.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧊 Три состояния</div>
+        <div class="c-desc">Что общего у льда, воды и пара?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">⚛️ Поведение частиц</div>
+        <div class="c-desc">Как ведут себя частицы в твёрдом, жидком и газообразном?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🌡 Роль температуры</div>
+        <div class="c-desc">Почему нагревание меняет состояние?</div>
+      </div>
     </div>
   </div>
-</section><!-- ==================== УРОК 1: АГРЕГАТНЫЕ СОСТОЯНИЯ ==================== -->
+</section>
+<!-- ==================== УРОК 1: АГРЕГАТНЫЕ СОСТОЯНИЯ ==================== -->
 <section class="section">
-  <div class="stage s1 fade-in">
+  <div id="s-u1-2" data-stage class="stage s1 fade-in">
     <div class="stage-header">
       <div class="stage-number">1</div>
       <div>
@@ -1237,7 +1247,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Возьми стакан воды. Заморозь его — получится лёд. Вскипяти — получится пар.
       Это <b>одно и то же вещество</b> — вода — но в трёх разных состояниях.
       Эти состояния называют <b>агрегатными</b> (от латинского «aggregatio» — соединение, скопление).
@@ -1291,7 +1301,7 @@
       </div>
     </div>
 
-    <div class="callout callout-idea" style="margin-top:18px;">
+    <div class="callout callout-idea" class="mt-18">
       <b>Простая аналогия.</b> Представь толпу людей на танцполе.
       <br>• <b>Твёрдое тело</b> — все стоят плечом к плечу и только слегка покачиваются.
       <br>• <b>Жидкость</b> — люди ходят, но не расходятся далеко.
@@ -1316,15 +1326,32 @@
       <div class="state-desc" id="stateDesc">частицы двигаются, но держатся вместе</div>
     </div>
 
-    <div class="callout callout-note" style="margin-top:16px;">
+    <div class="callout callout-note" class="mt-16">
       <b>А что делают частицы?</b> При низкой температуре частицы почти не двигаются и держатся вместе
       (твёрдое). При средней — двигаются свободнее, но не разлетаются (жидкое).
       При высокой — разлетаются по всему сосуду (газообразное).
     </div>
   </div>
-</section><!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+</section><section class="section">
+  <div id="s-u1-3" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Три состояния воды</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">Понаблюдай одно и то же вещество в разных состояниях.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>лёд</li><li>стакан</li><li>тёплая вода</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Положи лёд в стакан и наблюдай плавление.</li><li>Отметь, что меняется (форма, состояние), а что нет (вещество).</li><li>Подогрей воду и пронаблюдай пар над стаканом.</li><li>Сделай вывод, чем состояния отличаются на уровне частиц.</li></ol>
+    <div class="callout callout-warn"><b>⚠️ Техника безопасности:</b> горячую воду бери осторожно, под присмотром взрослых.</div>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> три состояния воды и что у них общего.</div>
+  </div>
+</section>
 <section class="section">
-  <div class="stage s-hw fade-in">
+  <div id="s-u1-4" data-stage class="stage s-hw fade-in">
     <div class="stage-header">
       <div class="stage-number">🏠</div>
       <div>
@@ -1334,30 +1361,51 @@
     </div>
     <div class="homework">
       <ol>
-<li>Составь таблицу: 5 веществ дома и агрегатное состояние каждого при комнатной температуре.</li>
-<li>Опиши лёд, воду и пар дважды: что видят глаза и что делают частицы.</li>
-<li>Почему сливочное масло в холодильнике твёрдое, а на столе — мягкое? Объясни через частицы.</li>
-<li>Придумай свой пример «одно вещество — три состояния», кроме воды.</li>
-<li><span class="hw-star">★ Может ли вещество перейти из твёрдого в газ, минуя жидкость? Поищи примеры вокруг (нафталин, сухой лёд).</span></li>
+        <li>Составь таблицу: 5 веществ дома и агрегатное состояние каждого при комнатной температуре.</li>
+        <li>Опиши лёд, воду и пар дважды: что видят глаза и что делают частицы.</li>
+        <li>Почему сливочное масло в холодильнике твёрдое, а на столе — мягкое? Объясни через частицы.</li>
+        <li>Придумай свой пример «одно вещество — три состояния», кроме воды.</li>
+        <li><span class="hw-star">★ Может ли вещество перейти из твёрдого в газ, минуя жидкость? Поищи примеры вокруг (нафталин, сухой лёд).</span></li>
+        <li>Объясни простыми словами, почему лёд, вода и пар — одно и то же вещество, но в разных состояниях.</li>
       </ol>
     </div>
   </div>
 </section>
+
 </div>
 <div id="m-u2">
 <header class="hero">
   <div class="badge">Модуль 2 · Урок 2 из 3 · ~20 минут</div>
   <h1>Переходы и смеси: плавление, кипение и чистые вещества</h1>
-  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="#m-entry">Вход</a> · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Тест</a></p>
-<div class="qa-list">
-<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Что такое плавление и кипение?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Почему на графике нагрева есть плато?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как отличить смесь от чистого вещества?</span></div></div>
-</div>
-</header></header>
+</header>
+<section class="section">
+  <div id="s-u2-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📌</div>
+      <div>
+        <div class="stage-title">О чём этот урок</div>
+      </div>
+    </div>
+    <p class="prose">Как вещество переходит из одного состояния в другое и чем смесь отличается от чистого вещества?</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🔄 Переходы</div>
+        <div class="c-desc">Что такое плавление и кипение?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">📈 График нагрева</div>
+        <div class="c-desc">Почему на графике нагрева есть плато?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧪 Смеси</div>
+        <div class="c-desc">Как отличить смесь от чистого вещества?</div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ==================== УРОК 2: ПЕРЕХОДЫ МЕЖДУ СОСТОЯНИЯМИ ==================== -->
 <section class="section">
-  <div class="stage s2 fade-in">
+  <div id="s-u2-2" data-stage class="stage s2 fade-in">
     <div class="stage-header">
       <div class="stage-number">2</div>
       <div>
@@ -1366,7 +1414,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Когда вещество меняет своё агрегатное состояние, это <b>не химическая реакция</b>, а <b>физическое явление</b>.
       Вещество остаётся тем же — меняется только его состояние. У каждого перехода есть своё название.
     </p>
@@ -1492,7 +1540,7 @@
       </svg>
     </div>
 
-    <div class="slider-control" style="margin-top:14px;">
+    <div class="slider-control" class="mt-14">
       <label>⏱ Время:</label>
       <input type="range" id="timeSlider" min="0" max="100" value="0" step="1">
       <span class="slider-value" id="timeValue">0 %</span>
@@ -1509,7 +1557,7 @@
       </div>
     </div>
 
-    <div class="callout callout-note" style="margin-top:16px;">
+    <div class="callout callout-note" class="mt-16">
       <b>Что показывают плато на графике?</b> Пока лёд тает (или вода кипит), температура
       <b>не меняется</b> — вся энергия уходит на разрушение связей между частицами, а не на нагрев.
       Поэтому на графике появляются <b>горизонтальные участки</b> — плато.
@@ -1517,7 +1565,7 @@
   </div>
 </section><!-- ==================== УРОК 3: ЧИСТЫЕ ВЕЩЕСТВА И СМЕСИ ==================== -->
 <section class="section">
-  <div class="stage s3 fade-in">
+  <div id="s-u2-3" data-stage class="stage s3 fade-in">
     <div class="stage-header">
       <div class="stage-number">3</div>
       <div>
@@ -1526,7 +1574,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Если ты возьмёшь в руки кусок гранита, стакан морской воды или воздух из комнаты —
       это всё <b>смеси</b>. А вот дистиллированная вода, чистое золото или алмаз — <b>чистые вещества</b>.
       Разница между ними — в том, из скольких компонентов они состоят.
@@ -1791,16 +1839,33 @@
         </div>
       </div>
 
-      <div style="text-align:center; margin-top:16px;">
+      <div class="center-mt16">
         <button class="reset-btn" id="resetMixtures">↺ Сбросить игру</button>
       </div>
 
       <div class="game-feedback" id="fbMixtures"></div>
     </div>
   </div>
-</section><!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
+</section><section class="section">
+  <div id="s-u2-4" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Растворение и фильтрование</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">Убедись, что при растворении вещество не исчезает, а при фильтровании смесь разделяется.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>стакан воды</li><li>соль</li><li>песок</li><li>бумажный фильтр или салфетка</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Раствори соль в воде — отметь, что раствор прозрачный.</li><li>Добавь песок и размешай — смесь мутная.</li><li>Профильтруй смесь: песок остаётся на фильтре.</li><li>Выпари (или оставь) раствор — соль вернётся кристаллами.</li></ol>
+    <div class="callout callout-warn"><b>⚠️ Техника безопасности:</b> работай с раствором аккуратно, не пробуй на вкус без разрешения.</div>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> что произошло с солью, а что — с песком.</div>
+  </div>
+</section>
 <section class="section">
-  <div class="stage s-hw fade-in">
+  <div id="s-u2-5" data-stage class="stage s-hw fade-in">
     <div class="stage-header">
       <div class="stage-number">🏠</div>
       <div>
@@ -1810,30 +1875,51 @@
     </div>
     <div class="homework">
       <ol>
-<li>Выпиши все 6 переходов между состояниями (плавление, кипение, конденсация, замерзание, сублимация, десублимация) и по примеру на каждый.</li>
-<li>Почему кипящая вода не горячее 100 °C, сколько ни грей? Объясни через плато на графике.</li>
-<li>Воздух — смесь или чистое вещество? Докажи двумя аргументами.</li>
-<li>Приведи по 2 примера гомогенных и гетерогенных смесей из дома.</li>
-<li><span class="hw-star">★ Куда девается соль, когда морская вода высыхает на коже? Объясни, что произошло.</span></li>
+        <li>Выпиши все 6 переходов между состояниями (плавление, кипение, конденсация, замерзание, сублимация, десублимация) и по примеру на каждый.</li>
+        <li>Почему кипящая вода не горячее 100 °C, сколько ни грей? Объясни через плато на графике.</li>
+        <li>Воздух — смесь или чистое вещество? Докажи двумя аргументами.</li>
+        <li>Приведи по 2 примера гомогенных и гетерогенных смесей из дома.</li>
+        <li><span class="hw-star">★ Куда девается соль, когда морская вода высыхает на коже? Объясни, что произошло.</span></li>
+        <li>Объясни, чем смесь отличается от чистого вещества, простыми словами и на бытовом примере.</li>
       </ol>
     </div>
   </div>
 </section>
+
 </div>
 <div id="m-u3">
 <header class="hero">
   <div class="badge">Модуль 2 · Урок 3 из 3 · ~20 минут</div>
   <h1>Разделение смесей: лаборатория чистоты</h1>
-  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="#m-entry">Вход</a> · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Тест</a></p>
-<div class="qa-list">
-<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Как выбрать способ разделения смеси?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Как очистить загрязнённую соль?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Что остаётся после выпаривания морской воды?</span></div></div>
-</div>
-</header></header>
+</header>
+<section class="section">
+  <div id="s-u3-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📌</div>
+      <div>
+        <div class="stage-title">О чём этот урок</div>
+      </div>
+    </div>
+    <p class="prose">Смеси можно разделять разными способами. Научимся выбирать подходящий.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧭 Способы разделения</div>
+        <div class="c-desc">Как выбрать способ разделения смеси?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧂 Очистка соли</div>
+        <div class="c-desc">Как очистить загрязнённую соль?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🌊 Выпаривание</div>
+        <div class="c-desc">Что остаётся после выпаривания морской воды?</div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ==================== УРОК 4: РАЗДЕЛЕНИЕ СМЕСЕЙ ==================== -->
 <section class="section">
-  <div class="stage s4 fade-in">
+  <div id="s-u3-2" data-stage class="stage s4 fade-in">
     <div class="stage-header">
       <div class="stage-number">4</div>
       <div>
@@ -1842,7 +1928,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Если смесь состоит из нескольких компонентов, её можно <b>разделить</b>. При этом каждое
       вещество остаётся <b>самим собой</b> — оно не превращается в новое. Способ разделения зависит
       от того, из чего состоит смесь: твёрдое + жидкость, жидкость + жидкость, два твёрдых и т.д.
@@ -2144,7 +2230,7 @@
 
     </div>
 
-    <div class="callout callout-note" style="margin-top:18px;">
+    <div class="callout callout-note" class="mt-18">
       <b>Как выбрать способ?</b> Посмотри на состав смеси и свойства компонентов:
       если твёрдое нерастворимо — фильтрование или отстаивание;
       если растворимо — выпаривание;
@@ -2189,71 +2275,24 @@
         </div>
       </div>
 
-      <div style="text-align:center; margin-top:16px;">
+      <div class="center-mt16">
         <button class="reset-btn" id="resetSeparation">↺ Сбросить игру</button>
       </div>
 
       <div class="game-feedback" id="fbSeparation"></div>
     </div>
 
-    <div class="callout callout-idea" style="margin-top:18px;">
+    <div class="callout callout-idea" class="mt-18">
       <b>Важно понять:</b> при разделении смеси <b>не происходит химических реакций</b>.
       Мы просто разделяем уже существующие вещества, используя их <b>физические различия</b>:
       размер частиц, растворимость, температуру кипения, магнитные свойства, скорость движения в растворителе.
     </div>
   </div>
 </section><!-- ==================== ПРАКТИКУМ ==================== -->
-<section class="section">
-  <div class="stage s-prac fade-in">
-    <div class="stage-header">
-      <div class="stage-number">🔬</div>
-      <div>
-        <div class="stage-title">Практикум: очистка загрязнённой соли</div>
-        <div class="stage-subtitle">Реальная задача из лаборатории — пройди её шаг за шагом</div>
-      </div>
-    </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
-      В лаборатории выдали <b>загрязнённую соль</b> — она смешана с песком. Нужно её очистить.
-      Это классическая задача из курса химии. Пройди 4 шага, выбирая правильные действия.
-    </p>
-
-    <div id="practicalTask"></div>
-    <div class="callout callout-note" style="margin-top:16px;">
-      <b>📝 В тетрадь:</b> запиши 4 шага очистки соли своими словами. Это задание проверит учитель.
-    </div>
-  </div>
-</section><!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
-<section class="section">
-  <div class="stage s-feyn fade-in">
-    <div class="stage-header">
-      <div class="stage-number">🧠</div>
-      <div>
-        <div class="stage-title">Рефлексия по Фейнману</div>
-        <div class="stage-subtitle">Объясни своими словами и запиши в тетрадь — проверит учитель</div>
-      </div>
-    </div>
-    <p style="font-size:16.5px;line-height:1.8;">
-      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
-      Объясни вслух — сыну, дочке, брату или сестре, а затем <b>запиши в тетрадь</b>.
-    </p>
-    <div class="callout callout-note">
-      <b>📝 Задание в тетрадь — ответь письменно на три вопроса:</b>
-      <ol style="margin:8px 0 0 20px; line-height:1.8;">
-        <li>Почему масло не смешивается с водой, а соль — растворяется? Объясни через свойства.</li>
-        <li>Почему пар занимает весь сосуд, а вода — только часть? Что делают частицы?</li>
-        <li>Как из морской воды получить соль? Опиши шаги по порядку.</li>
-      </ol>
-    </div>
-    <div class="callout callout-idea">
-      <b>Как понять, что получилось:</b> перечитай написанное и спроси себя —
-      поймёт ли это младший школьник? Где запнулся — вернись к теме.
-    </div>
-  </div>
-</section>
 <!-- ==================== ЗАДАЧКА НА ПОДУМАТЬ ==================== -->
 <section class="section">
-  <div class="stage s-feyn fade-in">
+  <div id="s-u3-3" data-stage class="stage s-feyn fade-in">
     <div class="stage-header">
       <div class="stage-number">★</div>
       <div>
@@ -2261,7 +2300,7 @@
         <div class="stage-subtitle">Без ответа в файле — разбираем на уроке</div>
       </div>
     </div>
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Стакан с мутной водой: глина никак не оседает. Предложи <b>два способа</b> сделать
       воду прозрачной и объясни, на каком свойстве смеси основан каждый способ.
       Подсказка: один способ — из этого урока, второй — придумай сам.
@@ -2270,7 +2309,7 @@
 </section>
 <!-- ==================== КАРТОЧКА-ВЫЖИМКА ==================== -->
 <section class="section">
-  <div class="stage s-prac fade-in">
+  <div id="s-u3-4" data-stage class="stage s-prac fade-in">
     <div class="stage-header">
       <div class="stage-number">📇</div>
       <div>
@@ -2280,7 +2319,7 @@
     </div>
     <div class="callout callout-ok">
       <b>5 тезисов модуля:</b>
-      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+      <ol class="list-note">
         <li>Одно и то же вещество бывает твёрдым, жидким и газообразным — состояние зависит от условий.</li>
         <li>Переходы: плавление, кипение, конденсация, замерзание, сублимация. Плато на графике — энергия идёт на разрыв связей между частицами.</li>
         <li>Чистое вещество состоит из одинаковых частиц; смесь — из разных. Смеси бывают гомогенные и гетерогенные.</li>
@@ -2294,10 +2333,25 @@
       фильтрование · выпаривание · дистилляция.
     </div>
   </div>
+</section><section class="section">
+  <div id="s-u3-5" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Очистка загрязнённой соли</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">В лаборатории выдали соль, смешанную с песком. Нужно её очистить.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>соль с песком</li><li>вода</li><li>фильтр (бумага/салфетка)</li><li>чашка, ложка</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Раствори смесь в воде: соль растворится, песок — нет.</li><li>Отфильтруй раствор: песок остаётся на фильтре.</li><li>Выпарь прозрачный раствор: вода испаряется, соль остаётся кристаллами.</li><li>Убери рабочее место и вымой руки.</li></ol>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> 4 шага очистки соли своими словами.</div>
+  </div>
 </section>
-<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
 <section class="section">
-  <div class="stage s-hw fade-in">
+  <div id="s-u3-6" data-stage class="stage s-hw fade-in">
     <div class="stage-header">
       <div class="stage-number">🏠</div>
       <div>
@@ -2307,26 +2361,27 @@
     </div>
     <div class="homework">
       <ol>
-<li>Подбери способ разделения для каждой смеси: рис + вода; железные опилки + песок; сахар + вода; спирт + вода.</li>
-<li>Опиши 4 шага очистки загрязнённой соли от песка своими словами.</li>
-<li>Почему магнит вытащит железо из песка, но не вытащит песок из соли? Объясни.</li>
-<li>Что будет, если раствор соли кипятить досуха? Где окажется соль?</li>
-<li><span class="hw-star">★ Предложи, как разделить смесь масла и воды без нагревания. На каком свойстве основан твой способ?</span></li>
+        <li>Подбери способ разделения для каждой смеси: рис + вода; железные опилки + песок; сахар + вода; спирт + вода.</li>
+        <li>Опиши 4 шага очистки загрязнённой соли от песка своими словами.</li>
+        <li>Почему магнит вытащит железо из песка, но не вытащит песок из соли? Объясни.</li>
+        <li>Что будет, если раствор соли кипятить досуха? Где окажется соль?</li>
+        <li><span class="hw-star">★ Предложи, как разделить смесь масла и воды без нагревания. На каком свойстве основан твой способ?</span></li>
+        <li>Объясни бабушке, как очистить загрязнённую соль, не используя сложных терминов.</li>
       </ol>
     </div>
   </div>
 </section>
+
 </div>
 <div id="m-final">
 <header class="hero">
   <div class="badge">Модуль 2 · Итоговый тест · ~10 минут</div>
   <h1>Итоговый тест по Модулю 2</h1>
-  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="#m-entry">Вход</a> · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Тест</a></p>
-</header></header>
+</header>
 
 <!-- ==================== ИТОГОВЫЙ ТЕСТ ==================== -->
 <section class="section">
-  <div class="stage s-test fade-in">
+  <div id="s-final-1" data-stage class="stage s-test fade-in">
     <div class="stage-header">
       <div class="stage-number">📝</div>
       <div>
@@ -2335,18 +2390,15 @@
       </div>
     </div>
 
-    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+    <p class="lead">
       <span class="cta">👆 Нажми на вариант ответа</span> — он сразу подсветится, а под вопросом появится объяснение.
       В конце ты увидишь свой результат и кнопку «Пройти заново», если порог не достигнут.
     </p>
 
-    <div id="testContainer"></div>
-
-    <div class="test-score" id="testScore">
-      Правильных ответов: <span id="scoreNum">0</span> из 15
-    </div>
-
-    <div id="retryBox" style="text-align:center;"></div>
+    <div id="quiz-final" data-config="final"></div>
+<script type="application/json" id="quiz-final-data">
+{"config": "final", "target": "quiz-final", "questions": [{"q": "Какие три агрегатных состояния вещества мы изучаем в базовом курсе?", "options": ["Твёрдое, жидкое, газообразное", "Твёрдое, плазма, жидкое", "Жидкое, газообразное, конденсат", "Только твёрдое и жидкое"], "correct": 0, "why": "В базовом курсе мы изучаем три основных агрегатных состояния: твёрдое, жидкое и газообразное.", "type": "single"}, {"q": "Что происходит с частицами вещества при переходе из твёрдого состояния в жидкое?", "options": ["Частицы исчезают", "Частицы начинают двигаться свободнее и разрушают часть связей", "Частицы превращаются в другие частицы", "Ничего не меняется"], "correct": 1, "why": "При плавлении частицы начинают двигаться свободнее: связи между ними частично разрушаются. Вещество остаётся тем же — меняется только его состояние.", "type": "single"}, {"q": "Что такое плавление?", "options": ["Переход из жидкого в газообразное", "Переход из твёрдого в жидкое", "Переход из газообразного в твёрдое", "Переход из жидкого в твёрдое"], "correct": 1, "why": "Плавление — переход из твёрдого состояния в жидкое. Пример: таяние льда при 0 °C.", "type": "single"}, {"q": "Как называется переход вещества из газообразного состояния в жидкое?", "options": ["Испарение", "Конденсация", "Сублимация", "Кристаллизация"], "correct": 1, "why": "Конденсация — переход из газа в жидкость. Пример: пар оседает каплями на холодном стекле.", "type": "single"}, {"q": "Что такое сублимация?", "options": ["Переход из твёрдого в газ, минуя жидкое", "Переход из газа в твёрдое", "Переход из жидкого в твёрдое", "Переход из твёрдого в жидкое"], "correct": 0, "why": "Сублимация (возгонка) — переход из твёрдого состояния сразу в газообразное, минуя жидкое. Пример: сухой лёд, нафталин.", "type": "single"}, {"q": "Почему на графике нагрева воды есть горизонтальные участки (плато)?", "options": ["Потому что вода остывает", "Потому что температура не меняется: энергия уходит на разрушение связей между частицами", "Потому что вода испаряется", "Это ошибка графика"], "correct": 1, "why": "На плато температура не меняется: вся подводимая энергия уходит на разрушение связей между частицами (при плавлении или кипении), а не на нагрев.", "type": "single"}, {"q": "Что такое чистое вещество?", "options": ["Любое вещество, которое выглядит однородным", "Вещество, состоящее из частиц одного вида", "Вещество, которое не встречается в природе", "Вещество без цвета и запаха"], "correct": 1, "why": "Чистое вещество состоит из частиц одного вида и имеет постоянные свойства. Внешний вид обманчив: прозрачная вода из крана — это смесь.", "type": "single"}, {"q": "Что такое смесь?", "options": ["То же самое, что чистое вещество", "Вещество, состоящее из двух или более разных компонентов", "Только жидкость с твёрдыми частицами", "Вещество, полученное в лаборатории"], "correct": 1, "why": "Смесь состоит из двух или более разных веществ, которые можно разделить физическими способами. Примеры: воздух, морская вода, молоко, гранит.", "type": "single"}, {"q": "Воздух — это…", "options": ["Чистое вещество", "Гомогенная смесь газов", "Гетерогенная смесь газов", "Химическое соединение"], "correct": 1, "why": "Воздух — это однородная (гомогенная) смесь газов: азота, кислорода, аргона, углекислого газа и других. Компоненты невозможно различить глазом.", "type": "single"}, {"q": "Что такое гетерогенная смесь?", "options": ["Смесь, компоненты которой не видны глазом", "Смесь, в которой видны границы между компонентами", "Смесь двух газов", "Смесь двух жидкостей, полностью растворённых друг в друге"], "correct": 1, "why": "В гетерогенной (неоднородной) смеси компоненты видны и имеют границы раздела. Примеры: песок в воде, молоко, гранит, дым.", "type": "single"}, {"q": "Каким способом можно разделить смесь песка и воды?", "options": ["Выпариванием", "Фильтрованием", "Дистилляцией", "Магнитом"], "correct": 1, "why": "Песок не растворяется в воде, поэтому его можно отделить фильтрованием: вода проходит через фильтр, а песок остаётся на нём.", "type": "single"}, {"q": "Каким способом можно получить соль из морской воды?", "options": ["Фильтрованием", "Отстаиванием", "Выпариванием", "Магнитом"], "correct": 2, "why": "Соль растворена в воде. Если воду выпарить, соль останется на дне в виде кристаллов. Именно так добывают соль из морской воды.", "type": "single"}, {"q": "Что используют для разделения смеси железных опилок и серы?", "options": ["Воду", "Магнит", "Фильтр", "Огонь"], "correct": 1, "why": "Железо обладает магнитными свойствами, а сера — нет. Магнит притянет железные опилки, а сера останется.", "type": "single"}, {"q": "Каким способом разделяют смесь спирта и воды?", "options": ["Отстаиванием", "Выпариванием", "Дистилляцией", "Фильтрованием"], "correct": 2, "why": "Спирт кипит при 78 °C, а вода — при 100 °C. Если нагреть смесь, спирт испарится первым. Такой способ разделения жидкостей называется дистилляцией (перегонкой).", "type": "single"}, {"q": "При разделении смеси физическими способами…", "options": ["Образуются новые вещества", "Вещества остаются теми же, что и были", "Одно вещество обязательно исчезает", "Происходит химическая реакция"], "correct": 1, "why": "При физическом разделении смеси никаких новых веществ не образуется. Мы просто используем различия в свойствах компонентов: растворимость, температуру кипения, магнитные свойства и т.д.", "type": "single"}]}
+</script>
   </div>
 </section>
 </div>
@@ -2405,179 +2457,209 @@
 </footer>
 
 <script>
-// ============================================================
-//  ВХОДНОЙ ТЕСТ МОДУЛЯ 2 (10 вопросов по Модулю 1, порог 80%)
-// ============================================================
-(function initEntryTest() {
-  const container = document.getElementById('entryTestContainer');
-  const resultBox = document.getElementById('entryResult');
-  if (!container || !resultBox) return;
+(function initQuizzes() {
+  const islands = document.querySelectorAll('script[type="application/json"][id^="quiz-"]');
+  if (!islands.length) return;
 
-  const QUESTIONS = [
-    {
-      q: 'Что изучает химия?',
-      options: [
-        'Только живые организмы',
-        'Вещества, их свойства и превращения',
-        'Только звёзды',
-        'Только числа'
-      ],
-      correct: 1,
-      why: 'Химия — наука о веществах, их свойствах и превращениях.'
-    },
-    {
-      q: 'Что из перечисленного — физическое тело?',
-      options: [
-        'Вода',
-        'Кислород',
-        'Колба',
-        'Алюминий'
-      ],
-      correct: 2,
-      why: 'Колба — тело (форма и объём). Остальное — вещества.'
-    },
-    {
-      q: 'Что такое вещество?',
-      options: [
-        'То, что имеет форму',
-        'То, из чего состоят тела',
-        'То, что светится',
-        'То, что движется'
-      ],
-      correct: 1,
-      why: 'Вещество — то, из чего состоят тела.'
-    },
-    {
-      q: 'Что из перечисленного — свойство вещества?',
-      options: [
-        'Ложка',
-        'Прозрачность',
-        'Стакан',
-        'Пробирка'
-      ],
-      correct: 1,
-      why: 'Прозрачность — свойство. Остальное — тела.'
-    },
-    {
-      q: 'Что такое наблюдение?',
-      options: [
-        'Воздействие на вещество',
-        'Изучение явления без вмешательства',
-        'Измерение температуры',
-        'Выдвижение гипотезы'
-      ],
-      correct: 1,
-      why: 'Наблюдение — смотрим и замечаем, не вмешиваясь.'
-    },
-    {
-      q: 'Что такое эксперимент?',
-      options: [
-        'Пассивное созерцание',
-        'Активное воздействие на вещество',
-        'Запись в тетрадь',
-        'Чтение учебника'
-      ],
-      correct: 1,
-      why: 'Эксперимент — воздействуем и смотрим, что будет.'
-    },
-    {
-      q: 'Что НЕЛЬЗЯ делать в лаборатории?',
-      options: [
-        'Носить халат',
-        'Пробовать вещества на вкус',
-        'Мыть руки',
-        'Слушать учителя'
-      ],
-      correct: 1,
-      why: 'Пробовать на вкус запрещено всегда.'
-    },
-    {
-      q: 'Разбил пробирку. Первое действие?',
-      options: [
-        'Собрать осколки руками',
-        'Сообщить учителю, убрать щёткой и совком',
-        'Продолжить работу',
-        'Спрятать осколки'
-      ],
-      correct: 1,
-      why: 'Руками — нельзя. Учителю сообщить, убрать инструментами.'
-    },
-    {
-      q: 'Как правильно понюхать вещество?',
-      options: [
-        'Вдохнуть прямо из сосуда',
-        'Направить пары ладонью к носу',
-        'Наклониться над колбой',
-        'Нюхать с закрытыми глазами'
-      ],
-      correct: 1,
-      why: 'Только ладонью, осторожно. Наклоняться над сосудом опасно.'
-    },
-    {
-      q: 'Что такое гипотеза?',
-      options: [
-        'Доказанное знание',
-        'Догадка, которую нужно проверить',
-        'Результат опыта',
-        'Прибор'
-      ],
-      correct: 1,
-      why: 'Гипотеза — предположение, требующее проверки.'
+  const msgIsland = document.getElementById('messages');
+  let MSG = {};
+  try { MSG = msgIsland ? JSON.parse(msgIsland.textContent) : {}; } catch (e) { MSG = {}; }
+
+  function pick(kind) {
+    const arr = MSG[kind] || [];
+    return arr.length ? arr[Math.floor(Math.random() * arr.length)] : '';
+  }
+
+  function shuffle(a) {
+    const r = a.slice();
+    for (let i = r.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [r[i], r[j]] = [r[j], r[i]];
     }
-  ];
-  const THRESHOLD = 8;
+    return r;
+  }
 
-  let correctCount = 0;
-  let answered = 0;
+  const PASS_RATIO = 0.8;
+  const LETTERS = 'ABCDEFGH';
 
-  container.innerHTML = QUESTIONS.map((q, i) => `
-    <div class="test-question">
-      <div class="q-text"><span class="q-num">${i + 1}</span><span>${q.q}</span></div>
-      <div class="test-options">
-        ${q.options.map((o, j) => `
-          <div class="test-option" data-q="${i}" data-o="${j}">
-            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
-            <span>${o}</span>
-          </div>
-        `).join('')}
-      </div>
-      <div class="explanation" id="entryExp-${i}"></div>
-    </div>
-  `).join('');
+  islands.forEach((island) => {
+    let data;
+    try { data = JSON.parse(island.textContent); } catch (e) { return; }
+    const targetId = data.target || island.id.replace(/-data$/, '');
+    const host = document.getElementById(targetId);
+    if (!host) return;
+    let questions = data.questions || [];
+    const config = data.config || host.dataset.config || 'practice';
+    if (data.bank && questions.length > data.bank) {
+      questions = shuffle(questions).slice(0, data.bank);
+    }
+    const threshold = data.threshold != null
+      ? data.threshold
+      : Math.ceil(questions.length * PASS_RATIO);
 
-  container.querySelectorAll('.test-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      const qIdx = parseInt(opt.dataset.q);
-      const oIdx = parseInt(opt.dataset.o);
-      const q = QUESTIONS[qIdx];
-      const exp = document.getElementById(`entryExp-${qIdx}`);
-      if (exp.classList.contains('show')) return;
+    const state = { answered: 0, correct: 0, wrong: [] };
 
-      const isCorrect = oIdx === q.correct;
-      container.querySelectorAll(`[data-q="${qIdx}"]`).forEach(o => {
-        o.classList.add('disabled');
-        const idx = parseInt(o.dataset.o);
-        if (idx === q.correct) o.classList.add('correct');
-        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
-      });
-      exp.classList.add('show', isCorrect ? 'ok' : 'no');
-      exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+    function render() {
+      host.innerHTML = '';
+      state.answered = 0;
+      state.correct = 0;
+      state.wrong = [];
 
-      if (isCorrect) correctCount++;
-      answered++;
+      const score = document.createElement('div');
+      score.className = 'test-score';
+      score.textContent = 'Правильных ответов: 0 из ' + questions.length;
+      host.appendChild(score);
 
-      if (answered === QUESTIONS.length) {
-        resultBox.classList.add('show');
-        if (correctCount >= THRESHOLD) {
-          resultBox.classList.add('good');
-          resultBox.innerHTML = `🎉 <b>Готов!</b> ${correctCount} из ${QUESTIONS.length} — база Модуля 1 есть. Можно идти в Модуль 2.`;
+      const ordered = data.shuffle === false
+        ? questions.map((q, i) => ({ q: q, idx: i }))
+        : shuffle(questions.map((q, i) => ({ q: q, idx: i })));
+
+      ordered.forEach(({ q, idx }, displayIndex) => {
+        const block = document.createElement('div');
+        block.className = 'test-question';
+        block.dataset.q = String(idx);
+        block.innerHTML = '<div class="q-text"><span class="q-num">' +
+          (displayIndex + 1) + '</span><span>' + q.q + '</span></div>' +
+          '<div class="test-options"></div>' +
+          '<div class="explanation" id="exp-' + island.id + '-' + idx + '"></div>';
+
+        const optBox = block.querySelector('.test-options');
+        if (q.type === 'match') {
+          q.left.forEach((leftText, li) => {
+            const row = document.createElement('div');
+            row.className = 'test-option match-row';
+            const opts = q.right.map((rt, ri) =>
+              '<option value="' + ri + '">' + rt + '</option>').join('');
+            row.innerHTML = '<span class="match-left">' + leftText + '</span>' +
+              '<select class="match-select" data-left="' + li + '">' +
+              '<option value="">—</option>' + opts + '</select>';
+            optBox.appendChild(row);
+          });
+          const btn = document.createElement('button');
+          btn.className = 'retry-btn';
+          btn.type = 'button';
+          btn.textContent = 'Проверить';
+          btn.addEventListener('click', () => checkMatch(block, q, idx));
+          optBox.appendChild(btn);
         } else {
-          resultBox.classList.add('mid');
-          resultBox.innerHTML = `👍 ${correctCount} из ${QUESTIONS.length}. Стоит повторить Модуль 1 — без базы дальше будет трудно.`;
+          q.options.forEach((optText, oi) => {
+            const opt = document.createElement('div');
+            opt.className = 'test-option';
+            opt.dataset.opt = String(oi);
+            opt.innerHTML = '<span class="opt-marker">' +
+              (q.type === 'multi' ? '☐' : LETTERS[oi]) +
+              '</span><span>' + optText + '</span>';
+            opt.addEventListener('click', () => {
+              if (q.type === 'multi') {
+                opt.classList.toggle('picked');
+                return;
+              }
+              answerSingle(block, q, idx, oi);
+            });
+            optBox.appendChild(opt);
+          });
+          if (q.type === 'multi') {
+            const btn = document.createElement('button');
+            btn.className = 'retry-btn';
+            btn.type = 'button';
+            btn.textContent = 'Проверить';
+            btn.addEventListener('click', () => checkMulti(block, q, idx));
+            optBox.appendChild(btn);
+          }
         }
+        host.appendChild(block);
+      });
+    }
+
+    function finish(block, exp, isCorrect, q) {
+      block.querySelectorAll('.test-option').forEach((o) => o.classList.add('disabled'));
+      block.querySelectorAll('button').forEach((b) => (b.disabled = true));
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = '<b>' + (isCorrect ? '✅ Правильно!' : '❌ Не совсем.') +
+        '</b> ' + (q.why || '');
+      if (isCorrect) state.correct++; else state.wrong.push(q.q);
+      state.answered++;
+      const score = host.querySelector('.test-score');
+      if (score) score.textContent = 'Правильных ответов: ' +
+        state.correct + ' из ' + questions.length;
+      if (state.answered === questions.length) summarize();
+    }
+
+    function answerSingle(block, q, idx, oi) {
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (i === q.correct) o.classList.add('correct');
+        if (i === oi && oi !== q.correct) o.classList.add('wrong');
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx),
+        oi === q.correct, q);
+    }
+
+    function checkMulti(block, q, idx) {
+      const picked = Array.from(block.querySelectorAll('.test-option.picked'))
+        .map((o) => parseInt(o.dataset.opt, 10)).sort();
+      const correct = q.correct.slice().sort();
+      const ok = picked.length === correct.length &&
+        picked.every((v, i) => v === correct[i]);
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (q.correct.indexOf(i) !== -1) o.classList.add('correct');
+        else if (o.classList.contains('picked')) o.classList.add('wrong');
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function checkMatch(block, q, idx) {
+      let ok = true;
+      block.querySelectorAll('.match-select').forEach((sel) => {
+        const li = parseInt(sel.dataset.left, 10);
+        const val = parseInt(sel.value, 10);
+        if (val !== q.correct[li]) ok = false;
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function summarize() {
+      const box = document.createElement('div');
+      const passed = state.correct >= threshold;
+      let text;
+      if (config === 'final') {
+        text = passed ? pick('finalPass') : pick('finalFail');
+      } else if (config === 'entry') {
+        text = passed ? pick('practiceDone') : pick('entryFail');
+      } else if (config === 'warmup') {
+        text = pick('warmupDone');
+      } else {
+        text = pick('practiceDone');
       }
-    });
+      box.className = 'callout ' + (passed ? 'callout-ok' : 'callout-warn');
+      let html = text + ' <b>' + state.correct + ' из ' + questions.length + '</b>';
+      if (state.wrong.length) {
+        html += '<div class="recap-card quiz-errors"><b>Разбор ошибок:</b><ul>' +
+          state.wrong.map((w) => '<li>' + w + '</li>').join('') + '</ul></div>';
+      }
+      box.innerHTML = html;
+      const retry = document.createElement('button');
+      retry.className = 'retry-btn';
+      retry.type = 'button';
+      retry.textContent = 'Пройти заново';
+      retry.addEventListener('click', render);
+      box.appendChild(retry);
+      host.appendChild(box);
+    }
+
+    render();
   });
+})();
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 })();
 
 // ============================================================
@@ -3022,371 +3104,96 @@ makeDropGame({
 })();
 
 // ============================================================
-//  ПРАКТИКУМ «ОЧИСТКА СОЛИ»
+//  Навигация: триггер + выезжающий drawer + scroll-spy + «наверх»
+//  Разметку (navTrigger/navDrawer/navBackdrop/toTop) рендерит билдер.
 // ============================================================
-(function initPracticalTask() {
-  const container = document.getElementById('practicalTask');
-  if (!container) return;
+(function () {
+  const trigger = document.getElementById('navTrigger');
+  const drawer = document.getElementById('navDrawer');
+  const backdrop = document.getElementById('navBackdrop');
+  const toTop = document.getElementById('toTop');
+  if (!trigger || !drawer) return;
 
-  const STEPS = [
-    {
-      situation: 'Тебе выдали загрязнённую соль (смесь соли и песка). С чего начать?',
-      options: [
-        'Нагреть смесь на огне',
-        'Растворить смесь в воде',
-        'Поднести магнит',
-        'Оставить смесь отстаиваться'
-      ],
-      correct: 1,
-      why: 'Правильно! Сначала нужно растворить смесь в воде: соль растворится, а песок — нет. Так мы разделим растворимый и нерастворимый компоненты.'
-    },
-    {
-      situation: 'Соль растворилась, песок осел на дно. Что делать дальше?',
-      options: [
-        'Выпарить всю воду',
-        'Отфильтровать смесь через фильтр',
-        'Поднести магнит',
-        'Долить ещё воды'
-      ],
-      correct: 1,
-      why: 'Правильно! Нужно отфильтровать: песок останется на фильтре, а раствор соли пройдёт через него в стакан.'
-    },
-    {
-      situation: 'Песок остался на фильтре. Что делать с чистым раствором соли?',
-      options: [
-        'Выбросить',
-        'Выпарить воду',
-        'Оставить отстаиваться',
-        'Подвергнуть хроматографии'
-      ],
-      correct: 1,
-      why: 'Правильно! Нужно выпарить воду. При нагревании вода испаряется, а соль остаётся на дне в виде кристаллов.'
-    },
-    {
-      situation: 'Ты получил чистую соль. Что нужно сделать в конце?',
-      options: [
-        'Уйти сразу — урок закончился',
-        'Убрать рабочее место, вымыть руки, записать наблюдения',
-        'Оставить всё как есть',
-        'Выбросить всё в мусор'
-      ],
-      correct: 1,
-      why: 'Правильно! Настоящий химик записывает наблюдения и убирает рабочее место. Это правило безопасности и хорошая привычка учёного.'
+  const reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastFocus = null;
+
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    drawer.classList.add('open');
+    requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    drawer.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+    const first = drawer.querySelector('a, button');
+    if (first) first.focus();
+    document.addEventListener('keydown', onKey);
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('show');
+    window.setTimeout(function () { backdrop.hidden = true; }, reduce ? 0 : 300);
+    drawer.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+    document.removeEventListener('keydown', onKey);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') { closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    const f = drawer.querySelectorAll('a, button');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
     }
-  ];
+  }
 
-  let step = 0;
-  let correctCount = 0;
+  trigger.addEventListener('click', function () {
+    if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  backdrop.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) closeDrawer();
+  });
 
-  function render() {
-    if (step >= STEPS.length) {
-      const msg = correctCount === STEPS.length
-        ? '🎉 Отлично! Ты настоящий юный химик!'
-        : '👍 Хорошо! Ты прошёл практикум. Обрати внимание на объяснения — они помогут понять детали.';
-      container.innerHTML = `
-        <div class="callout callout-ok" style="margin-top:0;">
-          <b>Практикум завершён!</b> ${msg} Правильных ответов: ${correctCount} из ${STEPS.length}.
-        </div>
-        <div style="text-align:center;margin-top:14px;">
-          <button class="retry-btn" id="retryLab">↺ Пройти заново</button>
-        </div>
-      `;
-      document.getElementById('retryLab').addEventListener('click', () => {
-        step = 0; correctCount = 0; render();
+  // Scroll-spy: подсвечиваем активный подраздел
+  const subs = Array.prototype.slice.call(drawer.querySelectorAll('a.nav-sub'));
+  if (subs.length && 'IntersectionObserver' in window) {
+    const byId = {};
+    subs.forEach(function (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') byId[href.slice(1)] = a;
+    });
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        subs.forEach(function (a) { a.classList.remove('nav-active'); });
+        const a = byId[en.target.id];
+        if (a) a.classList.add('nav-active');
       });
-      return;
-    }
-
-    const s = STEPS[step];
-    container.innerHTML = `
-      <div style="background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-          <div style="width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;">${step + 1}</div>
-          <div style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);">Шаг ${step + 1} из ${STEPS.length}</div>
-        </div>
-        <div style="font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;">${s.situation}</div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          ${s.options.map((o, i) => `
-            <div class="test-option" data-i="${i}">
-              <span class="opt-marker">${String.fromCharCode(65 + i)}</span>
-              <span>${o}</span>
-            </div>
-          `).join('')}
-        </div>
-        <div class="explanation" id="labExp"></div>
-      </div>
-    `;
-
-    container.querySelectorAll('.test-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        const i = parseInt(opt.dataset.i);
-        if (opt.classList.contains('disabled')) return;
-        const isCorrect = i === s.correct;
-        container.querySelectorAll('.test-option').forEach(o => {
-          o.classList.add('disabled');
-          const idx = parseInt(o.dataset.i);
-          if (idx === s.correct) o.classList.add('correct');
-          if (idx === i && !isCorrect) o.classList.add('wrong');
-        });
-        const exp = document.getElementById('labExp');
-        exp.classList.add('show', isCorrect ? 'ok' : 'no');
-        exp.innerHTML = `<b>${isCorrect ? '✅ Верно!' : '❌ Не совсем.'}</b> ${s.why}`;
-        if (isCorrect) correctCount++;
-        setTimeout(() => { step++; render(); }, 2200);
-      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
     });
   }
 
-  render();
-})();
-
-// ============================================================
-//  ИТОГОВЫЙ ТЕСТ (15 вопросов, порог 80%)
-// ============================================================
-const TEST_QUESTIONS = [
-  {
-    q: 'Какие три агрегатных состояния вещества мы изучаем в базовом курсе?',
-    options: [
-      'Твёрдое, жидкое, газообразное',
-      'Твёрдое, плазма, жидкое',
-      'Жидкое, газообразное, конденсат',
-      'Только твёрдое и жидкое'
-    ],
-    correct: 0,
-    why: 'В базовом курсе мы изучаем три основных агрегатных состояния: твёрдое, жидкое и газообразное.'
-  },
-  {
-    q: 'Что происходит с частицами вещества при переходе из твёрдого состояния в жидкое?',
-    options: [
-      'Частицы исчезают',
-      'Частицы начинают двигаться свободнее и разрушают часть связей',
-      'Частицы превращаются в другие частицы',
-      'Ничего не меняется'
-    ],
-    correct: 1,
-    why: 'При плавлении частицы начинают двигаться свободнее: связи между ними частично разрушаются. Вещество остаётся тем же — меняется только его состояние.'
-  },
-  {
-    q: 'Что такое плавление?',
-    options: [
-      'Переход из жидкого в газообразное',
-      'Переход из твёрдого в жидкое',
-      'Переход из газообразного в твёрдое',
-      'Переход из жидкого в твёрдое'
-    ],
-    correct: 1,
-    why: 'Плавление — переход из твёрдого состояния в жидкое. Пример: таяние льда при 0 °C.'
-  },
-  {
-    q: 'Как называется переход вещества из газообразного состояния в жидкое?',
-    options: ['Испарение', 'Конденсация', 'Сублимация', 'Кристаллизация'],
-    correct: 1,
-    why: 'Конденсация — переход из газа в жидкость. Пример: пар оседает каплями на холодном стекле.'
-  },
-  {
-    q: 'Что такое сублимация?',
-    options: [
-      'Переход из твёрдого в газ, минуя жидкое',
-      'Переход из газа в твёрдое',
-      'Переход из жидкого в твёрдое',
-      'Переход из твёрдого в жидкое'
-    ],
-    correct: 0,
-    why: 'Сублимация (возгонка) — переход из твёрдого состояния сразу в газообразное, минуя жидкое. Пример: сухой лёд, нафталин.'
-  },
-  {
-    q: 'Почему на графике нагрева воды есть горизонтальные участки (плато)?',
-    options: [
-      'Потому что вода остывает',
-      'Потому что температура не меняется: энергия уходит на разрушение связей между частицами',
-      'Потому что вода испаряется',
-      'Это ошибка графика'
-    ],
-    correct: 1,
-    why: 'На плато температура не меняется: вся подводимая энергия уходит на разрушение связей между частицами (при плавлении или кипении), а не на нагрев.'
-  },
-  {
-    q: 'Что такое чистое вещество?',
-    options: [
-      'Любое вещество, которое выглядит однородным',
-      'Вещество, состоящее из частиц одного вида',
-      'Вещество, которое не встречается в природе',
-      'Вещество без цвета и запаха'
-    ],
-    correct: 1,
-    why: 'Чистое вещество состоит из частиц одного вида и имеет постоянные свойства. Внешний вид обманчив: прозрачная вода из крана — это смесь.'
-  },
-  {
-    q: 'Что такое смесь?',
-    options: [
-      'То же самое, что чистое вещество',
-      'Вещество, состоящее из двух или более разных компонентов',
-      'Только жидкость с твёрдыми частицами',
-      'Вещество, полученное в лаборатории'
-    ],
-    correct: 1,
-    why: 'Смесь состоит из двух или более разных веществ, которые можно разделить физическими способами. Примеры: воздух, морская вода, молоко, гранит.'
-  },
-  {
-    q: 'Воздух — это…',
-    options: [
-      'Чистое вещество',
-      'Гомогенная смесь газов',
-      'Гетерогенная смесь газов',
-      'Химическое соединение'
-    ],
-    correct: 1,
-    why: 'Воздух — это однородная (гомогенная) смесь газов: азота, кислорода, аргона, углекислого газа и других. Компоненты невозможно различить глазом.'
-  },
-  {
-    q: 'Что такое гетерогенная смесь?',
-    options: [
-      'Смесь, компоненты которой не видны глазом',
-      'Смесь, в которой видны границы между компонентами',
-      'Смесь двух газов',
-      'Смесь двух жидкостей, полностью растворённых друг в друге'
-    ],
-    correct: 1,
-    why: 'В гетерогенной (неоднородной) смеси компоненты видны и имеют границы раздела. Примеры: песок в воде, молоко, гранит, дым.'
-  },
-  {
-    q: 'Каким способом можно разделить смесь песка и воды?',
-    options: ['Выпариванием', 'Фильтрованием', 'Дистилляцией', 'Магнитом'],
-    correct: 1,
-    why: 'Песок не растворяется в воде, поэтому его можно отделить фильтрованием: вода проходит через фильтр, а песок остаётся на нём.'
-  },
-  {
-    q: 'Каким способом можно получить соль из морской воды?',
-    options: ['Фильтрованием', 'Отстаиванием', 'Выпариванием', 'Магнитом'],
-    correct: 2,
-    why: 'Соль растворена в воде. Если воду выпарить, соль останется на дне в виде кристаллов. Именно так добывают соль из морской воды.'
-  },
-  {
-    q: 'Что используют для разделения смеси железных опилок и серы?',
-    options: ['Воду', 'Магнит', 'Фильтр', 'Огонь'],
-    correct: 1,
-    why: 'Железо обладает магнитными свойствами, а сера — нет. Магнит притянет железные опилки, а сера останется.'
-  },
-  {
-    q: 'Каким способом разделяют смесь спирта и воды?',
-    options: ['Отстаиванием', 'Выпариванием', 'Дистилляцией', 'Фильтрованием'],
-    correct: 2,
-    why: 'Спирт кипит при 78 °C, а вода — при 100 °C. Если нагреть смесь, спирт испарится первым. Такой способ разделения жидкостей называется дистилляцией (перегонкой).'
-  },
-  {
-    q: 'При разделении смеси физическими способами…',
-    options: [
-      'Образуются новые вещества',
-      'Вещества остаются теми же, что и были',
-      'Одно вещество обязательно исчезает',
-      'Происходит химическая реакция'
-    ],
-    correct: 1,
-    why: 'При физическом разделении смеси никаких новых веществ не образуется. Мы просто используем различия в свойствах компонентов: растворимость, температуру кипения, магнитные свойства и т.д.'
-  }
-];
-
-(function renderTest() {
-  const container = document.getElementById('testContainer');
-  const scoreBox = document.getElementById('testScore');
-  const retryBox = document.getElementById('retryBox');
-  if (!container) return;
-
-  const TOTAL = TEST_QUESTIONS.length;
-  const THRESHOLD = Math.ceil(TOTAL * 0.8);
-
-  function renderAll() {
-    let answered = 0;
-    let correctCount = 0;
-    container.innerHTML = '';
-    retryBox.innerHTML = '';
-    scoreBox.classList.remove('good', 'mid', 'bad');
-    scoreBox.innerHTML = `Правильных ответов: <span id="scoreNum">0</span> из ${TOTAL}`;
-
-    const WRONG_HEADERS = [
-      '❌ Подумай ещё раз.', '❌ Будь внимательнее.', '❌ Давай разберёмся.',
-      '❌ Почти! Но не совсем так.', '❌ Есть над чем подумать.',
-      '❌ Не спеши, посмотри ещё раз.', '❌ Хм, не то. Попробуй снова.'
-    ];
-
-    TEST_QUESTIONS.forEach((q, i) => {
-      const block = document.createElement('div');
-      block.className = 'test-question';
-      block.innerHTML = `
-        <div class="q-text"><span class="q-num">${i+1}</span><span>${q.q}</span></div>
-        <div class="test-options">
-          ${q.options.map((opt, j) => `
-            <div class="test-option" data-q="${i}" data-opt="${j}">
-              <span class="opt-marker">${String.fromCharCode(65+j)}</span>
-              <span>${opt}</span>
-            </div>
-          `).join('')}
-        </div>
-        <div class="explanation" id="exp-${i}"></div>
-      `;
-      container.appendChild(block);
-    });
-
-    container.querySelectorAll('.test-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        const qIdx = parseInt(opt.dataset.q);
-        const oIdx = parseInt(opt.dataset.opt);
-        const question = TEST_QUESTIONS[qIdx];
-        const options = container.querySelectorAll(`[data-q="${qIdx}"]`);
-        const exp = document.getElementById(`exp-${qIdx}`);
-        if (exp.classList.contains('show')) return;
-
-        const isCorrect = (oIdx === question.correct);
-
-        options.forEach(o => {
-          o.classList.add('disabled');
-          const idx = parseInt(o.dataset.opt);
-          if (idx === question.correct) o.classList.add('correct');
-          if (idx === oIdx && !isCorrect) o.classList.add('wrong');
-        });
-
-        exp.classList.add('show');
-        exp.classList.add(isCorrect ? 'ok' : 'no');
-
-        if (isCorrect) {
-          correctCount++;
-          exp.innerHTML = `<b>✅ Правильно!</b> ${question.why}`;
-        } else {
-          const header = WRONG_HEADERS[Math.floor(Math.random() * WRONG_HEADERS.length)];
-          exp.innerHTML = `<b>${header}</b> Правильный ответ выделен зелёным. ${question.why}`;
-        }
-
-        answered++;
-        const scoreNum = document.getElementById('scoreNum');
-        if (scoreNum) scoreNum.textContent = correctCount;
-
-        if (answered === TOTAL) {
-          scoreBox.classList.remove('good', 'mid', 'bad');
-          if (correctCount >= THRESHOLD) {
-            scoreBox.classList.add('good');
-            scoreBox.innerHTML = `🎉 <b>Модуль пройден!</b> ${correctCount} из ${TOTAL} (порог: ${THRESHOLD}).`;
-          } else if (correctCount >= Math.ceil(TOTAL * 0.6)) {
-            scoreBox.classList.add('mid');
-            scoreBox.innerHTML = `👍 <b>Почти получилось!</b> ${correctCount} из ${TOTAL}. Порог — ${THRESHOLD}. Перечитай объяснения и попробуй снова.`;
-          } else {
-            scoreBox.classList.add('bad');
-            scoreBox.innerHTML = `💪 <b>Есть над чем поработать:</b> ${correctCount} из ${TOTAL}. Перечитай модуль и попробуй снова.`;
-          }
-
-          retryBox.innerHTML = `<button class="retry-btn" id="retryTest">↺ Пройти тест заново</button>`;
-          document.getElementById('retryTest').addEventListener('click', () => {
-            renderAll();
-            window.scrollTo({ top: container.offsetTop - 100, behavior: 'smooth' });
-          });
-        } else {
-          scoreBox.classList.remove('good', 'mid', 'bad');
-          scoreBox.innerHTML = `Правильных ответов: <span id="scoreNum">${correctCount}</span> из ${TOTAL}`;
-        }
-      });
+  // Кнопка «Наверх»
+  if (toTop) {
+    const onScroll = function () { toTop.hidden = window.scrollY < 600; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
     });
   }
-
-  renderAll();
 })();
 
 </script>

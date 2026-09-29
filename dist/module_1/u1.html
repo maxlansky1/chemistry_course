@@ -93,32 +93,33 @@
     font-size: 16px;
     line-height: 1.7;
   }
+  /* Единая палитра: коллауты совпадают с «Условными обозначениями» */
   .callout-idea {
-    background: linear-gradient(135deg, #fffbeb, #fef3c7);
-    border-left: 5px solid var(--orange);
-    color: #78350f;
+    background: #FFF9E6; border-left: 5px solid #FFE0B2; color: #7A5F00;
   }
-  .callout-idea b { color: #92400e; }
+  .callout-idea b { color: #7A5F00; }
   .callout-warn {
-    background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    border-left: 5px solid var(--red);
-    color: #7f1d1d;
+    background: #FDF2F2; border-left: 5px solid #FDE8E8; color: #9B1C1C;
   }
-  .callout-warn b { color: #b91c1c; }
+  .callout-warn b { color: #9B1C1C; }
   .callout-note {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border-left: 5px solid #3b82f6;
-    color: #1e3a8a;
+    background: #EBF5FF; border-left: 5px solid #E1EFFE; color: #1E429F;
   }
-  .callout-note b { color: #1d4ed8; }
+  .callout-note b { color: #1E429F; }
   .callout-ok {
-    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    border-left: 5px solid var(--green);
-    color: #065f46;
+    background: #EDF7ED; border-left: 5px solid #C8E6C9; color: #1E4620;
   }
-  .callout-ok b { color: #047857; }
+  .callout-ok b { color: #1E4620; }
+  .callout-game {
+    background: #F3E8FF; border-left: 5px solid #E9D5FF; color: #6B21A8;
+  }
+  .callout-game b { color: #6B21A8; }
+  .callout-test {
+    background: #F1F5F9; border-left: 5px solid #E2E8F0; color: #475569;
+  }
+  .callout-test b { color: #475569; }
 
-  .cta { color: var(--accent); font-weight: 800; }
+  .cta { color: #6875F5; font-weight: 800; }
 
   .card-grid {
     display: grid;
@@ -694,62 +695,81 @@
   details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
   details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
 
-  /* Навигация по урокам: карточки + пилюли */
-  .lesson-nav {
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    gap: 12px; align-items: stretch; margin: 26px 0 8px;
+  /* Навигация: триггер + выезжающий drawer + «наверх» */
+  .nav-trigger {
+    position: fixed; top: 12px; left: 12px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 8px 16px; border-radius: 50px;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font: inherit; font-size: 14px; font-weight: 800; color: var(--text);
+    cursor: pointer; box-shadow: var(--shadow); transition: border-color .2s, color .2s;
   }
-  .ln-card {
-    background: var(--panel); border: 1.5px solid var(--border);
-    border-radius: 14px; padding: 14px 18px;
-    text-decoration: none; color: var(--text);
-    display: flex; flex-direction: column; gap: 4px; transition: all .2s;
+  .nav-trigger:hover { border-color: #6875F5; color: #6875F5; }
+  .nav-trigger-icon { font-size: 18px; line-height: 1; }
+  .nav-backdrop {
+    position: fixed; inset: 0; z-index: 70; background: rgba(15,23,42,.5);
+    opacity: 0; transition: opacity .3s ease-in-out;
   }
-  a.ln-card:hover {
-    border-color: var(--h-deep); transform: translateY(-2px);
-    box-shadow: var(--shadow);
+  .nav-backdrop.show { opacity: 1; }
+  .nav-drawer {
+    position: fixed; top: 0; left: 0; height: 100%; width: min(85%, 360px);
+    z-index: 80; background: #fafafa; box-shadow: var(--shadow-lg);
+    transform: translateX(-100%); visibility: hidden; overflow-y: auto;
+    transition: transform .3s ease-in-out, visibility .3s;
+    padding: 18px 16px 28px; -webkit-overflow-scrolling: touch;
   }
-  .ln-card.ln-next { text-align: right; }
-  .ln-dir {
-    font-size: 12px; font-weight: 800; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--h-deep);
+  .nav-drawer.open { transform: translateX(0); visibility: visible; }
+  body.nav-open { overflow: hidden; }
+  .nav-drawer-head { font-size: 16px; font-weight: 800; margin: 6px 8px 14px; line-height: 1.35; }
+  .nav-tree { list-style: none; margin: 0; padding: 0; }
+  .nav-tree a {
+    display: block; padding: 12px; border-radius: 10px; text-decoration: none;
+    color: var(--text); font-size: 15px; font-weight: 700; min-height: 44px;
   }
-  .ln-title { font-size: 15px; font-weight: 700; }
-  .ln-card.done { border-style: dashed; color: var(--muted); cursor: default; }
-  .ln-map { display: flex; gap: 8px; align-items: center; justify-content: center; }
-  .ln-pill {
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 2px solid var(--border); display: inline-flex;
-    align-items: center; justify-content: center;
-    font-weight: 800; font-size: 14px; color: var(--muted);
-    text-decoration: none; background: #fff;
+  .nav-tree a:hover { background: #eef2f7; }
+  .nav-lesson.nav-current > a { color: #6875F5; }
+  .nav-subs {
+    list-style: none; margin: 2px 0 8px 12px; padding: 0 0 0 10px;
+    border-left: 2px solid var(--border);
   }
-  a.ln-pill:hover { border-color: var(--h-deep); }
-  .ln-pill.now { background: var(--h-deep); border-color: var(--h-deep); color: #fff; }
-  @media (max-width: 600px) {
-    .lesson-nav { grid-template-columns: 1fr; }
-    .ln-card.ln-next { text-align: left; }
-    .ln-map { order: -1; }
+  .nav-subs a { font-size: 13.5px; font-weight: 500; color: var(--muted); padding: 9px 10px; min-height: 40px; }
+  .nav-subs a.nav-active {
+    color: #6875F5; font-weight: 700; background: rgba(104,117,245,.10);
+    border-left: 2px solid #6875F5; margin-left: -12px; padding-left: 12px;
+  }
+  .to-top {
+    position: fixed; right: 14px; bottom: 16px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow);
+  }
+  .to-top:hover { border-color: #6875F5; color: #6875F5; }
+  [data-stage], [id^="m-"] { scroll-margin-top: 72px; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-drawer, .nav-backdrop { transition: none; }
   }
 
-  /* Вопросы hero: 3 риторических вопроса модуля/урока */
-  .hero-questions {
-    display: flex; flex-direction: column; gap: 8px;
-    max-width: 640px; margin: 14px auto 0; text-align: left;
-  }
-  .hero-questions div {
-    background: rgba(255,255,255,.75);
-    border: 1px solid var(--border); border-radius: 10px;
-    padding: 8px 14px; font-size: 15.5px; font-weight: 600;
-  }
-
-  /* Цвета карточек легенды по смыслу */
+  /* Палитра карточек легенды */
   .legend-card { border: 2px solid var(--border); }
-  .legend-card.lc-warm { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #f59e0b; }
-  .legend-card.lc-danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-color: #ef4444; }
-  .legend-card.lc-info { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6; }
-  .legend-card.lc-ok { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #10b981; }
-  .legend-card.lc-act { background: #fff; border-style: dashed; }
+  .legend-card.lc-warm { background: #FFF9E6; border-color: #FFE0B2; }
+  .legend-card.lc-warm .lc-header { color: #7A5F00; }
+  .legend-card.lc-danger { background: #FDF2F2; border-color: #FDE8E8; }
+  .legend-card.lc-danger .lc-header { color: #9B1C1C; }
+  .legend-card.lc-info { background: #EBF5FF; border-color: #E1EFFE; }
+  .legend-card.lc-info .lc-header { color: #1E429F; }
+  .legend-card.lc-ok { background: #EDF7ED; border-color: #C8E6C9; }
+  .legend-card.lc-ok .lc-header { color: #1E4620; }
+  .legend-card.lc-act { background: #fff; border-color: #6875F5; }
+  .legend-card.lc-act .lc-header,
+  .legend-card.lc-act .lc-body,
+  .legend-card.lc-act .lc-body b { color: #6875F5; }
+  .legend-card.lc-accent { border-color: #6875F5; }
+  .legend-card.lc-game { background: #F3E8FF; border-color: #E9D5FF; }
+  .legend-card.lc-game .lc-header { color: #6B21A8; }
+  .legend-card.lc-test { background: #F1F5F9; border-color: #E2E8F0; }
+  .legend-card.lc-test .lc-header { color: #475569; }
+  .lc-vi { color: #6875F5; }
 
   /* Домашнее задание */
   .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
@@ -757,31 +777,7 @@
   .homework ol li { margin-bottom: 6px; }
   .homework .hw-star { color: var(--accent); font-weight: 800; }
 
-  /* Карточки вопросов: нумерованный вопрос-промпт, без эмодзи и ответов.
-     Вопрос задаётся ученику по ходу урока — ответ рождается в уроке. */
-  .qa-list { display: flex; flex-direction: column; gap: 10px;
-    max-width: 680px; margin: 14px auto 0; text-align: left; }
-  .qa-card {
-    background: rgba(255,255,255,.85);
-    border: 1.5px solid var(--border); border-radius: 12px;
-    padding: 12px 16px; border-left: 5px solid var(--accent);
-  }
-  .qa-q { font-size: 15.5px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
-  .qa-num {
-    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
-    background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 900; transform: translateY(3px);
-  }
 
-  /* Чипсы навигации модуля */
-  .mod-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
-  .mod-chip {
-    padding: 9px 20px; border-radius: 50px; text-decoration: none;
-    background: rgba(255,255,255,.8); border: 1.5px solid var(--border);
-    font-size: 14.5px; font-weight: 800; color: var(--text); transition: all .2s;
-  }
-  a.mod-chip:hover { border-color: var(--h-deep); color: var(--h-deep); transform: translateY(-2px); }
 
   /* Формулы и химические записи */
   .formula { font-variant-numeric: lining-nums; white-space: nowrap; }
@@ -823,25 +819,10 @@
   .center-mt16 { text-align: center; margin-top: 16px; }
   .prose { font-size: 16.5px; line-height: 1.8; }
   .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
-  .hero-nav { margin-top: 8px; font-size: 15px; }
   .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
   .fs-26 { font-size: 26px; }
   .sci-node { cursor: pointer; }
   .hero-digest { max-width: 700px; margin: 0 auto; }
-  .lesson-nav.toc {
-    position: sticky; top: 0; z-index: 20;
-    background: rgba(248,250,252,.92); backdrop-filter: blur(8px);
-    border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 10px 14px; margin: 0 0 18px;
-  }
-  .toc-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 8px; }
-  .toc-items { display: flex; gap: 8px; flex-wrap: wrap; }
-  .toc-item { text-decoration: none; font-size: 14px; font-weight: 700;
-    color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
-  .toc-pill { display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px; border-radius: 50%; font-size: 12px;
-    background: var(--panel-2); border: 1px solid var(--border); }
 
   /* Quiz: multi и match */
   .quiz-errors { margin-top: 10px; }
@@ -882,25 +863,49 @@
 </style>
 </head>
 <body>
-<!-- built by src/build.py v1 · 2026-09-28 · module_1/u1 · manifest-driven -->
+<!-- built by src/build.py v1 · 2026-09-29 · module_1/u1 · manifest-driven -->
 <header class="hero">
   <div class="badge">Модуль 1 · Урок 1 из 3 · ~20 минут</div>
   <h1>Как учимся и что изучает химия</h1>
-  <div class="qa-list">
-<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Что изучает химия?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Чем тело отличается от вещества?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как учёные познают мир?</span></div></div>
-</div>
-  <p class="hero-nav">Уровень A → Модуль 1. Химия как наука · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Итоговый тест</a></p>
 </header>
 <div class="container">
+<button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
+<div class="nav-backdrop" id="navBackdrop" hidden></div>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 1. Химия как наука</div><ul class="nav-tree"><li class="nav-lesson nav-current"><a href="#" aria-current="true">Урок 1</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u1-1">О чём этот модуль</a></li><li><a class="nav-sub" href="#s-u1-2">Разогрев: проверь себя</a></li><li><a class="nav-sub" href="#s-u1-3">Зачем человечеству химия</a></li><li><a class="nav-sub" href="#s-u1-4">Что изучает химия</a></li><li><a class="nav-sub" href="#s-u1-5">Практикум: Тело или вещество?</a></li><li><a class="nav-sub" href="#s-u1-6">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="u2.html">Урок 2</a></li><li class="nav-lesson"><a href="u3.html">Урок 3</a></li><li class="nav-lesson"><a href="final.html">Тест</a></li></ul></nav>
+<button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
+<section class="section">
+  <div id="s-u1-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🎯</div>
+      <div>
+        <div class="stage-title">О чём этот модуль</div>
+        <div class="stage-subtitle">Три урока о том, как устроена химия как наука</div>
+      </div>
+    </div>
+    <p class="prose">Химия — наука о веществах и их превращениях. Но с чего начать? Сначала разберёмся, из чего состоит всё вокруг и как учёные изучают вещества, а потом научимся безопасно работать в лаборатории.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧪 Что изучает химия</div>
+        <div class="c-desc">Что такое химия и зачем она нужна? Чем она отличается от других наук?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧱 Тела и вещества</div>
+        <div class="c-desc">Чем тело отличается от вещества и из чего состоят окружающие нас предметы?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🛡 Безопасность</div>
+        <div class="c-desc">Как изучать вещества и при этом не навредить себе?</div>
+      </div>
+    </div>
+    <div class="callout callout-idea">Представь, что ты исследователь: вокруг всё состоит из веществ, но их не видно. Наша задача — научиться их замечать, различать и безопасно изучать. С этого начинается весь курс.</div>
+  </div>
+</section>
 
 <!-- ============ ЛЕГЕНДА (fold) ============ -->
 
-
 <!-- ==================== РАЗОГРЕВ (без оценки) ==================== -->
 <section class="section">
-  <div class="stage s-entry fade-in">
+  <div id="s-u1-2" data-stage class="stage s-entry fade-in">
     <div class="stage-header">
       <div class="stage-number">🚪</div>
       <div>
@@ -923,10 +928,9 @@
 
 <!-- s-intro удалён: метод Фейнмана живёт в fold-блоке в начале каждого урока -->
 
-
 <!-- ==================== ЗАЧЕМ НУЖНА ХИМИЯ ==================== -->
 <section class="section">
-  <div class="stage s-why fade-in">
+  <div id="s-u1-3" data-stage class="stage s-why fade-in">
     <div class="stage-header">
       <div class="stage-number">🌍</div>
       <div>
@@ -1056,7 +1060,7 @@
 
 <!-- ==================== УРОК 1: ЧТО ИЗУЧАЕТ ХИМИЯ ==================== -->
 <section class="section">
-  <div class="stage s1 fade-in">
+  <div id="s-u1-4" data-stage class="stage s1 fade-in">
     <div class="stage-header">
       <div class="stage-number">1</div>
       <div>
@@ -1266,10 +1270,25 @@
 
     <div id="labScenario"></div>
   </div>
+</section><section class="section">
+  <div id="s-u1-5" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Тело или вещество?</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">Посмотри вокруг и потренируйся отличать физические тела от веществ.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>любой предмет под рукой (ложка, стакан, карандаш)</li><li>лист бумаги и ручка</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Выбери 5 предметов в комнате.</li><li>Для каждого определи: это тело или вещество.</li><li>Назови вещество, из которого состоит каждое тело.</li><li>Запиши вывод: чем тело отличается от вещества.</li></ol>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> таблица из двух колонок: «тело» → «вещество».</div>
+  </div>
 </section>
-<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
 <section class="section">
-  <div class="stage s-hw fade-in">
+  <div id="s-u1-6" data-stage class="stage s-hw fade-in">
     <div class="stage-header">
       <div class="stage-number">🏠</div>
       <div>
@@ -1279,15 +1298,17 @@
     </div>
     <div class="homework">
       <ol>
-<li>Составь таблицу: 5 физических тел дома и вещества, из которых они состоят.</li>
-<li>Опиши стакан воды дважды: что изучала бы в нём физика, а что — химия? По 3 предложения.</li>
-<li>Возьми любое наблюдение из жизни и разбери его по шагам познания: наблюдение → предположение → проверка → вывод.</li>
-<li>Найди дома 3 вещества с необычными свойствами. Запиши вещество и его свойство.</li>
-<li><span class="hw-star">★ Почему вещество нельзя узнать только по цвету? Приведи 2 примера разных веществ одного цвета.</span></li>
+        <li>Составь таблицу: 5 физических тел дома и вещества, из которых они состоят.</li>
+        <li>Опиши стакан воды дважды: что изучала бы в нём физика, а что — химия? По 3 предложения.</li>
+        <li>Возьми любое наблюдение из жизни и разбери его по шагам познания: наблюдение → предположение → проверка → вывод.</li>
+        <li>Найди дома 3 вещества с необычными свойствами. Запиши вещество и его свойство.</li>
+        <li><span class="hw-star">★ Почему вещество нельзя узнать только по цвету? Приведи 2 примера разных веществ одного цвета.</span></li>
+        <li>Объясни простыми словами (метод Фейнмана), чем химия отличается от физики, и приведи пример со стаканом воды.</li>
       </ol>
     </div>
   </div>
 </section>
+
 </div>
 <script type="application/json" id="glossary">{
   "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },
@@ -1870,6 +1891,99 @@
 
   document.addEventListener('click', hide);
   window.addEventListener('scroll', hide, { passive: true });
+})();
+
+// ============================================================
+//  Навигация: триггер + выезжающий drawer + scroll-spy + «наверх»
+//  Разметку (navTrigger/navDrawer/navBackdrop/toTop) рендерит билдер.
+// ============================================================
+(function () {
+  const trigger = document.getElementById('navTrigger');
+  const drawer = document.getElementById('navDrawer');
+  const backdrop = document.getElementById('navBackdrop');
+  const toTop = document.getElementById('toTop');
+  if (!trigger || !drawer) return;
+
+  const reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastFocus = null;
+
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    drawer.classList.add('open');
+    requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    drawer.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+    const first = drawer.querySelector('a, button');
+    if (first) first.focus();
+    document.addEventListener('keydown', onKey);
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('show');
+    window.setTimeout(function () { backdrop.hidden = true; }, reduce ? 0 : 300);
+    drawer.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+    document.removeEventListener('keydown', onKey);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') { closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    const f = drawer.querySelectorAll('a, button');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  trigger.addEventListener('click', function () {
+    if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  backdrop.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) closeDrawer();
+  });
+
+  // Scroll-spy: подсвечиваем активный подраздел
+  const subs = Array.prototype.slice.call(drawer.querySelectorAll('a.nav-sub'));
+  if (subs.length && 'IntersectionObserver' in window) {
+    const byId = {};
+    subs.forEach(function (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') byId[href.slice(1)] = a;
+    });
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        subs.forEach(function (a) { a.classList.remove('nav-active'); });
+        const a = byId[en.target.id];
+        if (a) a.classList.add('nav-active');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  // Кнопка «Наверх»
+  if (toTop) {
+    const onScroll = function () { toTop.hidden = window.scrollY < 600; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
 })();
 
 </script>

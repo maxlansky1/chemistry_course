@@ -43,16 +43,116 @@ def detect_assets(body, mod):
     return css or ['core'], js
 
 
-def qa_cards(questions):
-    """Universal question cards: numbered prompt, no emoji, no answers.
-    The question is asked during the lesson — the answer is born in it."""
-    out = ['<div class="qa-list">']
-    for i, q in enumerate(questions, 1):
-        out.append(
-            f'<div class="qa-card"><div class="qa-q">'
-            f'<span class="qa-num">{i}</span><span>{q}</span></div></div>')
-    out.append('</div>')
-    return '\n'.join(out)
+def intro_block(title, intro, callout=False):
+    """Универсальный вводный блок «О чём этот модуль/урок»:
+    stage s-intro + prose-lead + карточки + (для модуля) callout-idea."""
+    if not intro:
+        return ''
+    emoji = '🎯' if callout else '📌'
+    p = ['<section class="section">',
+         '  <div class="stage s-intro fade-in">',
+         '    <div class="stage-header">',
+         f'      <div class="stage-number">{emoji}</div>',
+         '      <div>',
+         f'        <div class="stage-title">{title}</div>']
+    if intro.get('subtitle'):
+        p.append(f'        <div class="stage-subtitle">{intro["subtitle"]}</div>')
+    p += ['      </div>', '    </div>']
+    if intro.get('lead'):
+        p.append(f'    <p class="prose">{intro["lead"]}</p>')
+    if intro.get('cards'):
+        p.append('    <div class="card-grid">')
+        for c in intro['cards']:
+            icon = c.get('icon', '').strip()
+            name = ('%s %s' % (icon, c.get('title', ''))).strip()
+            p.append('      <div class="card">')
+            p.append(f'        <div class="c-title">{name}</div>')
+            p.append(f'        <div class="c-desc">{c.get("desc", "")}</div>')
+            p.append('      </div>')
+        p.append('    </div>')
+    if callout and intro.get('callout'):
+        p.append(f'    <div class="callout callout-idea">{intro["callout"]}</div>')
+    p += ['  </div>', '</section>']
+    return '\n'.join(p) + '\n'
+
+
+def render_intro(lesson, lmeta, meta, order):
+    """Модульный блок — на entry (или на первом уроке, если entry нет);
+    урочный — на каждом содержательном uN. На final и entry урочного нет."""
+    has_entry = 'entry' in order
+    if lesson == 'entry' or (not has_entry and lesson == order[0]):
+        return intro_block('О чём этот модуль', meta.get('intro'), callout=True)
+    if lesson.startswith('u') and lmeta.get('intro'):
+        return intro_block('О чём этот урок', lmeta['intro'])
+    return ''
+
+
+def practical_block(lmeta):
+    """Универсальный блок «Практикум» из module.json (описание опыта)."""
+    P = lmeta.get('practical')
+    if not P:
+        return ''
+    p = ['<section class="section">',
+         '  <div class="stage s-prac fade-in">',
+         '    <div class="stage-header">',
+         '      <div class="stage-number">🔬</div>',
+         '      <div>',
+         f'        <div class="stage-title">Практикум: {P.get("title", "")}</div>',
+         f'        <div class="stage-subtitle">{P.get("subtitle", "Опыт по теме урока · соблюдай технику безопасности")}</div>',
+         '      </div>',
+         '    </div>']
+    if P.get('lead'):
+        p.append(f'    <p class="prose">{P["lead"]}</p>')
+    if P.get('materials'):
+        p.append('    <p class="subhead-sub">Что понадобится</p>')
+        p.append('    <ul class="list-note">'
+                 + ''.join(f'<li>{m}</li>' for m in P['materials']) + '</ul>')
+    if P.get('steps'):
+        p.append('    <p class="subhead-sub">Ход работы</p>')
+        p.append('    <ol class="list-note">'
+                 + ''.join(f'<li>{s}</li>' for s in P['steps']) + '</ol>')
+    if P.get('safety'):
+        p.append('    <div class="callout callout-warn"><b>⚠️ Техника безопасности:</b> '
+                 f'{P["safety"]}</div>')
+    if P.get('record'):
+        p.append('    <div class="callout callout-note"><b>📝 В тетрадь:</b> '
+                 f'{P["record"]}</div>')
+    p += ['  </div>', '</section>']
+    return '\n'.join(p) + '\n'
+
+
+def homework_block(lmeta):
+    """Универсальный блок «Домашнее задание» из module.json."""
+    H = lmeta.get('homework')
+    if not H:
+        return ''
+    p = ['<section class="section">',
+         '  <div class="stage s-hw fade-in">',
+         '    <div class="stage-header">',
+         '      <div class="stage-number">🏠</div>',
+         '      <div>',
+         f'        <div class="stage-title">{H.get("title", "Домашнее задание")}</div>',
+         f'        <div class="stage-subtitle">{H.get("subtitle", "Письменно в тетрадь · проверяет учитель")}</div>',
+         '      </div>',
+         '    </div>',
+         '    <div class="homework">',
+         '      <ol>']
+    for t in H.get('tasks', []):
+        if t.strip().startswith('★'):
+            p.append(f'        <li><span class="hw-star">{t}</span></li>')
+        else:
+            p.append(f'        <li>{t}</li>')
+    for f in H.get('feynman', []):
+        p.append(f'        <li>{f}</li>')
+    p += ['      </ol>', '    </div>', '  </div>', '</section>']
+    return '\n'.join(p) + '\n'
+
+
+def render_extra(lesson, lmeta):
+    """Практикум и ДЗ — только на содержательных уроках uN."""
+    if not lesson.startswith('u'):
+        return ''
+    return practical_block(lmeta) + homework_block(lmeta)
 
 
 def snippet(name):
@@ -101,9 +201,21 @@ def build(mod, lesson):
     # strip legacy container close only if content stays section-complete
     if tail.endswith(('</section>', '</details>')):
         rest = tail
-    if 'questions' in lmeta:
-        hero = hero.replace('<!--QA-->', qa_cards(lmeta['questions']))
-    content = (hero + '</header>\n<div class="container">\n' + rest
+    lesson_html, stages = annotate_stages(
+        render_intro(lesson, lmeta, mod_meta, mod_meta['order'])
+        + rest + render_extra(lesson, lmeta), lesson)
+    lessons_nav = []
+    for L in mod_meta['lessons']:
+        cur = (L['file'] == lesson)
+        lessons_nav.append({
+            'label': L.get('chip', L['file']),
+            'href': '' if cur else L['file'] + '.html',
+            'current': cur,
+            'subs': stages if cur else []})
+    if 'nav' not in js_names:
+        js_names.append('nav')
+    nav = nav_markup(mod_meta, lessons_nav)
+    content = (hero + '</header>\n<div class="container">\n' + nav + lesson_html
                + '\n</div>\n' + glossary_island() + messages_island())
     html = shell(lmeta.get('title', mod_meta['title']), load_css(css_names),
                  content, load_js(js_names), stamp)
@@ -114,15 +226,51 @@ def build(mod, lesson):
     return out, html
 
 
-def module_toc(meta, href):
-    """Оглавление модуля вместо prev/next навигации."""
-    items = []
-    for L in meta['lessons']:
-        label = L.get('chip') or L.get('title', L['file'])
-        items.append(f'<a class="ln-pill toc-item" href="{href(L["file"])}">'
-                     f'<span class="toc-pill">{L.get("pill", "•")}</span>{label}</a>')
-    return ('<nav class="lesson-nav toc"><div class="toc-title">Содержание модуля</div>'
-            '<div class="toc-items">' + ''.join(items) + '</div></nav>')
+STAGE_RE = re.compile(r'<div class="(stage(?: [^"]*)?)">')
+
+
+def annotate_stages(html, lesson):
+    """Проставляет каждому stage id `s-<lesson>-<n>` и data-stage,
+    возвращает HTML и список {id, title} для дерева навигации."""
+    stages = []
+
+    def repl(m):
+        idx = len(stages) + 1
+        sid = f's-{lesson}-{idx}'
+        tail = html[m.end():m.end() + 2000]
+        t = re.search(r'<div class="stage-title">(.*?)</div>', tail, re.S)
+        title = re.sub(r'<[^>]+>', '', t.group(1)).strip() if t else ''
+        stages.append({'id': sid, 'title': title})
+        return f'<div id="{sid}" data-stage class="{m.group(1)}">'
+
+    return STAGE_RE.sub(repl, html), stages
+
+
+def nav_markup(meta, lessons_nav):
+    """Триггер + backdrop + drawer + «наверх».
+    lessons_nav: [{label, href, current, subs:[{id,title}]}]."""
+    items = ['<ul class="nav-tree">']
+    for L in lessons_nav:
+        cls = 'nav-lesson' + (' nav-current' if L.get('current') else '')
+        if L.get('href'):
+            a = f'<a href="{L["href"]}">{L["label"]}</a>'
+        else:
+            a = f'<a href="#" aria-current="true">{L["label"]}</a>'
+        subs = ''.join(
+            f'<li><a class="nav-sub" href="#{s["id"]}">{s["title"]}</a></li>'
+            for s in L.get('subs', []) if s.get('title'))
+        inner = a + (f'<ul class="nav-subs">{subs}</ul>' if subs else '')
+        items.append(f'<li class="{cls}">{inner}</li>')
+    items.append('</ul>')
+    return (
+        '<button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" '
+        'aria-expanded="false"><span class="nav-trigger-icon">☰</span>'
+        '<span class="nav-trigger-text">Содержание</span></button>\n'
+        '<div class="nav-backdrop" id="navBackdrop" hidden></div>\n'
+        '<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true">'
+        f'<div class="nav-drawer-head">{meta.get("title", "")}</div>'
+        + ''.join(items) + '</nav>\n'
+        '<button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>\n')
 
 
 def build_module(mod):
@@ -148,37 +296,31 @@ def build_module(mod):
         tail = rest[:rest.rfind('</div>')].rstrip()
         if tail.endswith(('</section>', '</details>')):
             rest = tail
-        bodies.append((lesson, hero + '</header>', rest))
-    parts = []
-    qas = {L['file']: L.get('questions') for L in meta['lessons']}
-    for i, (lesson, hero, rest) in enumerate(bodies):
-        if qas.get(lesson):
-            hero = hero.replace('<!--QA-->', qa_cards(qas[lesson]))
-        chunk = hero + '</header>\n' + rest
+        lesson_html, stages = annotate_stages(
+            render_intro(lesson, lmetas.get(lesson, {}), meta, order)
+            + rest + render_extra(lesson, lmetas.get(lesson, {})), lesson)
+        bodies.append((lesson, hero + '</header>', lesson_html, stages))
+    parts, nav_lessons = [], []
+    for (lesson, hero, lesson_html, stages) in bodies:
+        chunk = hero + '\n' + lesson_html
         # lesson-file links -> in-module anchors
         for other in order:
             chunk = chunk.replace(f'href="{other}.html"', f'href="#m-{other}"')
             chunk = chunk.replace(f'{mod}/{other}.html', f'#{other}')
         parts.append(f'<div id="m-{lesson}">\n{chunk}\n</div>')
-    def short_title(L, idx):
-        if L['file'] == 'final':
-            return 'Тест'
-        if L['file'] == 'entry':
-            return 'Вход'
-        return f'Урок {idx + 1}'
-    chips = ' '.join(
-        f'<a class="mod-chip" href="#m-{L["file"]}">{L.get("chip", short_title(L, k))}</a>'
-        for k, L in enumerate(meta['lessons']))
+        L = lmetas.get(lesson, {})
+        nav_lessons.append({'label': L.get('chip', lesson), 'href': '#m-' + lesson,
+                            'current': False, 'subs': stages})
     mod_hero = (
         '<header class="hero">\n'
         f'  <div class="badge">{meta["badge"]}</div>\n'
         f'  <h1>{meta["title"]}</h1>\n'
         f'  <p class="hero-digest">{meta.get("digest", "")}</p>\n'
-        + qa_cards(meta.get('questions', [])) +
-        f'\n  <div class="mod-chips">{chips}</div>\n'
         '</header>\n' + snippet('legend_fold.html') + snippet('feynman_fold.html'))
+    if 'nav' not in js_names:
+        js_names.append('nav')
     content = (mod_hero + '\n<div class="container">\n'
-               + module_toc(meta, lambda f: '#m-' + f) + '\n'
+               + nav_markup(meta, nav_lessons) + '\n'
                + '\n'.join(parts)
                + '\n</div>\n' + glossary_island() + messages_island())
 
@@ -219,9 +361,10 @@ def tg_message(meta):
              f'<i>{meta.get("digest", "")}</i>', '']
     for n, L in enumerate(meta['lessons'], 1):
         lines.append(f'<b>{n}. {L["title"]}</b> ({L["time"]})')
-        if 'questions' in L:
-            lines += [f'❓ {q}' for q in L['questions']]
-        else:
+        if L.get('intro'):
+            lines += [f'❓ {c.get("desc", c.get("title", ""))}'
+                      for c in L['intro'].get('cards', [])]
+        elif L.get('topics'):
             lines += [f'▸ {t.strip()}' for t in L['topics'].split('·')]
         lines.append('')
     return '\n'.join(lines).rstrip() + '\n'

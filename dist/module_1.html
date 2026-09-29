@@ -93,32 +93,33 @@
     font-size: 16px;
     line-height: 1.7;
   }
+  /* Единая палитра: коллауты совпадают с «Условными обозначениями» */
   .callout-idea {
-    background: linear-gradient(135deg, #fffbeb, #fef3c7);
-    border-left: 5px solid var(--orange);
-    color: #78350f;
+    background: #FFF9E6; border-left: 5px solid #FFE0B2; color: #7A5F00;
   }
-  .callout-idea b { color: #92400e; }
+  .callout-idea b { color: #7A5F00; }
   .callout-warn {
-    background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    border-left: 5px solid var(--red);
-    color: #7f1d1d;
+    background: #FDF2F2; border-left: 5px solid #FDE8E8; color: #9B1C1C;
   }
-  .callout-warn b { color: #b91c1c; }
+  .callout-warn b { color: #9B1C1C; }
   .callout-note {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border-left: 5px solid #3b82f6;
-    color: #1e3a8a;
+    background: #EBF5FF; border-left: 5px solid #E1EFFE; color: #1E429F;
   }
-  .callout-note b { color: #1d4ed8; }
+  .callout-note b { color: #1E429F; }
   .callout-ok {
-    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    border-left: 5px solid var(--green);
-    color: #065f46;
+    background: #EDF7ED; border-left: 5px solid #C8E6C9; color: #1E4620;
   }
-  .callout-ok b { color: #047857; }
+  .callout-ok b { color: #1E4620; }
+  .callout-game {
+    background: #F3E8FF; border-left: 5px solid #E9D5FF; color: #6B21A8;
+  }
+  .callout-game b { color: #6B21A8; }
+  .callout-test {
+    background: #F1F5F9; border-left: 5px solid #E2E8F0; color: #475569;
+  }
+  .callout-test b { color: #475569; }
 
-  .cta { color: var(--accent); font-weight: 800; }
+  .cta { color: #6875F5; font-weight: 800; }
 
   .card-grid {
     display: grid;
@@ -694,62 +695,81 @@
   details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
   details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
 
-  /* Навигация по урокам: карточки + пилюли */
-  .lesson-nav {
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    gap: 12px; align-items: stretch; margin: 26px 0 8px;
+  /* Навигация: триггер + выезжающий drawer + «наверх» */
+  .nav-trigger {
+    position: fixed; top: 12px; left: 12px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 8px 16px; border-radius: 50px;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font: inherit; font-size: 14px; font-weight: 800; color: var(--text);
+    cursor: pointer; box-shadow: var(--shadow); transition: border-color .2s, color .2s;
   }
-  .ln-card {
-    background: var(--panel); border: 1.5px solid var(--border);
-    border-radius: 14px; padding: 14px 18px;
-    text-decoration: none; color: var(--text);
-    display: flex; flex-direction: column; gap: 4px; transition: all .2s;
+  .nav-trigger:hover { border-color: #6875F5; color: #6875F5; }
+  .nav-trigger-icon { font-size: 18px; line-height: 1; }
+  .nav-backdrop {
+    position: fixed; inset: 0; z-index: 70; background: rgba(15,23,42,.5);
+    opacity: 0; transition: opacity .3s ease-in-out;
   }
-  a.ln-card:hover {
-    border-color: var(--h-deep); transform: translateY(-2px);
-    box-shadow: var(--shadow);
+  .nav-backdrop.show { opacity: 1; }
+  .nav-drawer {
+    position: fixed; top: 0; left: 0; height: 100%; width: min(85%, 360px);
+    z-index: 80; background: #fafafa; box-shadow: var(--shadow-lg);
+    transform: translateX(-100%); visibility: hidden; overflow-y: auto;
+    transition: transform .3s ease-in-out, visibility .3s;
+    padding: 18px 16px 28px; -webkit-overflow-scrolling: touch;
   }
-  .ln-card.ln-next { text-align: right; }
-  .ln-dir {
-    font-size: 12px; font-weight: 800; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--h-deep);
+  .nav-drawer.open { transform: translateX(0); visibility: visible; }
+  body.nav-open { overflow: hidden; }
+  .nav-drawer-head { font-size: 16px; font-weight: 800; margin: 6px 8px 14px; line-height: 1.35; }
+  .nav-tree { list-style: none; margin: 0; padding: 0; }
+  .nav-tree a {
+    display: block; padding: 12px; border-radius: 10px; text-decoration: none;
+    color: var(--text); font-size: 15px; font-weight: 700; min-height: 44px;
   }
-  .ln-title { font-size: 15px; font-weight: 700; }
-  .ln-card.done { border-style: dashed; color: var(--muted); cursor: default; }
-  .ln-map { display: flex; gap: 8px; align-items: center; justify-content: center; }
-  .ln-pill {
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 2px solid var(--border); display: inline-flex;
-    align-items: center; justify-content: center;
-    font-weight: 800; font-size: 14px; color: var(--muted);
-    text-decoration: none; background: #fff;
+  .nav-tree a:hover { background: #eef2f7; }
+  .nav-lesson.nav-current > a { color: #6875F5; }
+  .nav-subs {
+    list-style: none; margin: 2px 0 8px 12px; padding: 0 0 0 10px;
+    border-left: 2px solid var(--border);
   }
-  a.ln-pill:hover { border-color: var(--h-deep); }
-  .ln-pill.now { background: var(--h-deep); border-color: var(--h-deep); color: #fff; }
-  @media (max-width: 600px) {
-    .lesson-nav { grid-template-columns: 1fr; }
-    .ln-card.ln-next { text-align: left; }
-    .ln-map { order: -1; }
+  .nav-subs a { font-size: 13.5px; font-weight: 500; color: var(--muted); padding: 9px 10px; min-height: 40px; }
+  .nav-subs a.nav-active {
+    color: #6875F5; font-weight: 700; background: rgba(104,117,245,.10);
+    border-left: 2px solid #6875F5; margin-left: -12px; padding-left: 12px;
+  }
+  .to-top {
+    position: fixed; right: 14px; bottom: 16px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow);
+  }
+  .to-top:hover { border-color: #6875F5; color: #6875F5; }
+  [data-stage], [id^="m-"] { scroll-margin-top: 72px; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-drawer, .nav-backdrop { transition: none; }
   }
 
-  /* Вопросы hero: 3 риторических вопроса модуля/урока */
-  .hero-questions {
-    display: flex; flex-direction: column; gap: 8px;
-    max-width: 640px; margin: 14px auto 0; text-align: left;
-  }
-  .hero-questions div {
-    background: rgba(255,255,255,.75);
-    border: 1px solid var(--border); border-radius: 10px;
-    padding: 8px 14px; font-size: 15.5px; font-weight: 600;
-  }
-
-  /* Цвета карточек легенды по смыслу */
+  /* Палитра карточек легенды */
   .legend-card { border: 2px solid var(--border); }
-  .legend-card.lc-warm { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #f59e0b; }
-  .legend-card.lc-danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-color: #ef4444; }
-  .legend-card.lc-info { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6; }
-  .legend-card.lc-ok { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #10b981; }
-  .legend-card.lc-act { background: #fff; border-style: dashed; }
+  .legend-card.lc-warm { background: #FFF9E6; border-color: #FFE0B2; }
+  .legend-card.lc-warm .lc-header { color: #7A5F00; }
+  .legend-card.lc-danger { background: #FDF2F2; border-color: #FDE8E8; }
+  .legend-card.lc-danger .lc-header { color: #9B1C1C; }
+  .legend-card.lc-info { background: #EBF5FF; border-color: #E1EFFE; }
+  .legend-card.lc-info .lc-header { color: #1E429F; }
+  .legend-card.lc-ok { background: #EDF7ED; border-color: #C8E6C9; }
+  .legend-card.lc-ok .lc-header { color: #1E4620; }
+  .legend-card.lc-act { background: #fff; border-color: #6875F5; }
+  .legend-card.lc-act .lc-header,
+  .legend-card.lc-act .lc-body,
+  .legend-card.lc-act .lc-body b { color: #6875F5; }
+  .legend-card.lc-accent { border-color: #6875F5; }
+  .legend-card.lc-game { background: #F3E8FF; border-color: #E9D5FF; }
+  .legend-card.lc-game .lc-header { color: #6B21A8; }
+  .legend-card.lc-test { background: #F1F5F9; border-color: #E2E8F0; }
+  .legend-card.lc-test .lc-header { color: #475569; }
+  .lc-vi { color: #6875F5; }
 
   /* Домашнее задание */
   .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
@@ -757,31 +777,7 @@
   .homework ol li { margin-bottom: 6px; }
   .homework .hw-star { color: var(--accent); font-weight: 800; }
 
-  /* Карточки вопросов: нумерованный вопрос-промпт, без эмодзи и ответов.
-     Вопрос задаётся ученику по ходу урока — ответ рождается в уроке. */
-  .qa-list { display: flex; flex-direction: column; gap: 10px;
-    max-width: 680px; margin: 14px auto 0; text-align: left; }
-  .qa-card {
-    background: rgba(255,255,255,.85);
-    border: 1.5px solid var(--border); border-radius: 12px;
-    padding: 12px 16px; border-left: 5px solid var(--accent);
-  }
-  .qa-q { font-size: 15.5px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
-  .qa-num {
-    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
-    background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 900; transform: translateY(3px);
-  }
 
-  /* Чипсы навигации модуля */
-  .mod-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
-  .mod-chip {
-    padding: 9px 20px; border-radius: 50px; text-decoration: none;
-    background: rgba(255,255,255,.8); border: 1.5px solid var(--border);
-    font-size: 14.5px; font-weight: 800; color: var(--text); transition: all .2s;
-  }
-  a.mod-chip:hover { border-color: var(--h-deep); color: var(--h-deep); transform: translateY(-2px); }
 
   /* Формулы и химические записи */
   .formula { font-variant-numeric: lining-nums; white-space: nowrap; }
@@ -823,25 +819,10 @@
   .center-mt16 { text-align: center; margin-top: 16px; }
   .prose { font-size: 16.5px; line-height: 1.8; }
   .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
-  .hero-nav { margin-top: 8px; font-size: 15px; }
   .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
   .fs-26 { font-size: 26px; }
   .sci-node { cursor: pointer; }
   .hero-digest { max-width: 700px; margin: 0 auto; }
-  .lesson-nav.toc {
-    position: sticky; top: 0; z-index: 20;
-    background: rgba(248,250,252,.92); backdrop-filter: blur(8px);
-    border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 10px 14px; margin: 0 0 18px;
-  }
-  .toc-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 8px; }
-  .toc-items { display: flex; gap: 8px; flex-wrap: wrap; }
-  .toc-item { text-decoration: none; font-size: 14px; font-weight: 700;
-    color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
-  .toc-pill { display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px; border-radius: 50%; font-size: 12px;
-    background: var(--panel-2); border: 1px solid var(--border); }
 
   /* Quiz: multi и match */
   .quiz-errors { margin-top: 10px; }
@@ -882,66 +863,99 @@
 </style>
 </head>
 <body>
-<!-- built by src/build.py v1 · 2026-09-28 · module_1 WHOLE-MODULE · manifest-driven -->
+<!-- built by src/build.py v1 · 2026-09-29 · module_1 WHOLE-MODULE · manifest-driven -->
 <header class="hero">
   <div class="badge">Модуль 1 · Химия как наука · ~1 час</div>
   <h1>Модуль 1. Химия как наука</h1>
   <p class="hero-digest">Химия — наука о веществах и их превращениях. В этом модуле разберёмся, чем тело отличается от вещества, как учёные познают мир и как работать в лаборатории безопасно.</p>
-<div class="qa-list">
-<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Из чего состоит всё вокруг нас?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Почему одни вещества горят, а другие растворяются?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как изучать вещества и не навредить себе?</span></div></div>
-</div>
-  <div class="mod-chips"><a class="mod-chip" href="#m-u1">Урок 1</a> <a class="mod-chip" href="#m-u2">Урок 2</a> <a class="mod-chip" href="#m-u3">Урок 3</a> <a class="mod-chip" href="#m-final">Тест</a></div>
 </header>
-<details class="fold fade-in">
-<summary>📚 Обозначения (открой, если забыл)</summary>
-<div class="fold-body">
-<div class="legend-grid">
-<div class="legend-card lc-warm"><div class="lc-header">💡 <span>Жёлтый блок</span></div><div class="lc-body">Ключевая мысль, сравнение или аналогия простыми словами.</div></div>
-<div class="legend-card lc-danger"><div class="lc-header">⚠️ <span>Красный блок</span></div><div class="lc-body">Предупреждение или правило безопасности. <b>Обязательно к запоминанию.</b></div></div>
-<div class="legend-card lc-info"><div class="lc-header">📌 <span>Синий блок</span></div><div class="lc-body">Заметка, пояснение или интересный факт.</div></div>
-<div class="legend-card lc-ok"><div class="lc-header">✅ <span>Зелёный блок</span></div><div class="lc-body">Правильный ответ, успех или итоговый вывод.</div></div>
-<div class="legend-card lc-act"><div class="lc-header">🔷 <span>Фиолетовый текст</span></div><div class="lc-body"><b>Призыв к действию:</b> нажми, подвигай, перетащи.</div></div>
-<div class="legend-card lc-info"><div class="lc-header">🎮 <span>Игра</span></div><div class="lc-body">Сортировка, выбор, классификация — без скучной зубрёжки.</div></div>
-<div class="legend-card lc-info"><div class="lc-header">📝 <span>Тест</span></div><div class="lc-body">Проверка с объяснением, почему ответ такой.</div></div>
+<section class="section">
+<div class="container">
+<div class="stage s-legend fade-in">
+  <div class="stage-header">
+    <div class="stage-number">📚</div>
+    <div>
+      <div class="stage-title">Условные обозначения</div>
+      <div class="stage-subtitle">Как читать блоки на странице</div>
+    </div>
+  </div>
+  <div class="legend-grid">
+    <div class="legend-card lc-warm"><div class="lc-header">💡 <span>Жёлтый (Мысль)</span></div><div class="lc-body">Ключевая мысль, сравнение или аналогия простыми словами.</div></div>
+    <div class="legend-card lc-danger"><div class="lc-header">⚠️ <span>Красный (Опасно)</span></div><div class="lc-body">Предупреждение или правило. <b>Обязательно к запоминанию.</b></div></div>
+    <div class="legend-card lc-info"><div class="lc-header">📌 <span>Синий (Заметка)</span></div><div class="lc-body">Заметка, пояснение или интересный факт.</div></div>
+    <div class="legend-card lc-ok"><div class="lc-header">✅ <span>Зелёный (Успех)</span></div><div class="lc-body">Правильный ответ, успех или итоговый вывод.</div></div>
+    <div class="legend-card lc-act"><div class="lc-header"><span class="lc-vi">◆</span> <span>Фиолетовый (CTA)</span></div><div class="lc-body"><b>Призыв к действию:</b> нажми, подвигай, перетащи.</div></div>
+    <div class="legend-card lc-game"><div class="lc-header">🎮 <span>Игра</span></div><div class="lc-body">Сыграй в игру, чтобы закрепить свои знания</div></div>
+    <div class="legend-card lc-test"><div class="lc-header">📝 <span>Тест</span></div><div class="lc-body">Проверь свои знания</div></div>
+  </div>
 </div>
 </div>
-</details>
-<details class="fold fade-in" open>
-<summary>🧠 Как мы будем изучать химию: метод Фейнмана</summary>
-<div class="fold-body">
-<p style="font-size:15.5px;line-height:1.8;">Знаменитый физик <b>Ричард Фейнман</b> говорил: <b>«Если не можешь объяснить просто — значит, не понял»</b>. Поэтому учимся так:</p>
-<div class="card-grid">
-<div class="card"><div class="c-title">1️⃣ Объясняй просто</div><div class="c-desc">Как младшему брату или бабушке: никаких сложных терминов — только понятные слова.</div></div>
-<div class="card"><div class="c-title">2️⃣ Приводи примеры из жизни</div><div class="c-desc">Всё, что изучаем, есть дома, на кухне, на улице. Химия — вокруг нас.</div></div>
-<div class="card"><div class="c-title">3️⃣ Смотри и пробуй</div><div class="c-desc">Схемы, анимации и мини-игры: увидеть, как работает, а не зазубрить.</div></div>
-<div class="card"><div class="c-title">4️⃣ Проверяй себя</div><div class="c-desc">Тесты с объяснениями — сразу. В конце модуля — итоговая проверка.</div></div>
+</section>
+<section class="section">
+<div class="container">
+<div class="stage s-feyn fade-in">
+  <div class="stage-header">
+    <div class="stage-number">🧠</div>
+    <div>
+      <div class="stage-title">Как мы будем изучать химию: метод Фейнмана</div>
+      <div class="stage-subtitle">Простое объяснение — лучший способ проверить, что ты понял</div>
+    </div>
+  </div>
+  <p class="prose">Нобелевский лауреат <b>Ричард Фейнман</b> обожал повторять: «Если вы не можете объяснить сложную вещь простыми словами — вы сами её не понимаете». Попробуйте изучать новые темы при помощи метода Фейнмана:</p>
+  <ul class="list-note">
+    <li><b>Включаем режим «Объясни бабушке».</b> Самый крутой способ проверить себя — рассказать тему младшему брату, маме или коту. Попробуйте обойтись без заумных терминов. Получилось? Значит, вы разобрались в теме.</li>
+    <li><b>Ищем простые и понятные примеры из реальной жизни.</b> Химия происходит прямо сейчас — на вашей кухне, в ванной, за окном и даже внутри вас.</li>
+    <li><b>Разрешаем себе ошибаться.</b> Допускать ошибки — это нормально. Проверяйте себя тестами, читайте разборы ошибок и двигайтесь дальше.</li>
+  </ul>
+  <div class="callout callout-idea"><b>Финальный челлендж модуля:</b> перескажите изученную тему своими словами кому-то из близких, запишите свои рассуждения в тетрадь и обсудите с учителем на следующем занятии.</div>
 </div>
-<p style="font-size:15px;margin-top:10px;">Главное правило модуля: <b>объясни вслух сыну, дочке, брату или сестре — и запиши в тетрадь</b>. Проверяет учитель.</p>
 </div>
-</details>
+</section>
 
 <div class="container">
-<nav class="lesson-nav toc"><div class="toc-title">Содержание модуля</div><div class="toc-items"><a class="ln-pill toc-item" href="#m-u1"><span class="toc-pill">1</span>Урок 1</a><a class="ln-pill toc-item" href="#m-u2"><span class="toc-pill">2</span>Урок 2</a><a class="ln-pill toc-item" href="#m-u3"><span class="toc-pill">3</span>Урок 3</a><a class="ln-pill toc-item" href="#m-final"><span class="toc-pill">✓</span>Тест</a></div></nav>
+<button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
+<div class="nav-backdrop" id="navBackdrop" hidden></div>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 1. Химия как наука</div><ul class="nav-tree"><li class="nav-lesson"><a href="#m-u1">Урок 1</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u1-1">О чём этот модуль</a></li><li><a class="nav-sub" href="#s-u1-2">Разогрев: проверь себя</a></li><li><a class="nav-sub" href="#s-u1-3">Зачем человечеству химия</a></li><li><a class="nav-sub" href="#s-u1-4">Что изучает химия</a></li><li><a class="nav-sub" href="#s-u1-5">Практикум: Тело или вещество?</a></li><li><a class="nav-sub" href="#s-u1-6">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="#m-u2">Урок 2</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u2-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u2-2">Свойства веществ</a></li><li><a class="nav-sub" href="#s-u2-3">Химия и жизнь</a></li><li><a class="nav-sub" href="#s-u2-4">Практикум: Определяем свойства</a></li><li><a class="nav-sub" href="#s-u2-5">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="#m-u3">Урок 3</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u3-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u3-2">Химическая лаборатория</a></li><li><a class="nav-sub" href="#s-u3-3">Задачка на подумать</a></li><li><a class="nav-sub" href="#s-u3-4">Выжимка модуля: самое главное</a></li><li><a class="nav-sub" href="#s-u3-5">Практикум: Описание вещества по плану</a></li><li><a class="nav-sub" href="#s-u3-6">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="#m-final">Тест</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-final-1">Итоговый тест по Модулю 1</a></li></ul></li></ul></nav>
+<button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
+
 <div id="m-u1">
 <header class="hero">
   <div class="badge">Модуль 1 · Урок 1 из 3 · ~20 минут</div>
   <h1>Как учимся и что изучает химия</h1>
-  <div class="qa-list">
-<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Что изучает химия?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Чем тело отличается от вещества?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как учёные познают мир?</span></div></div>
-</div>
-  <p class="hero-nav">Уровень A → Модуль 1. Химия как наука · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Итоговый тест</a></p>
-</header></header>
+</header>
+<section class="section">
+  <div id="s-u1-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🎯</div>
+      <div>
+        <div class="stage-title">О чём этот модуль</div>
+        <div class="stage-subtitle">Три урока о том, как устроена химия как наука</div>
+      </div>
+    </div>
+    <p class="prose">Химия — наука о веществах и их превращениях. Но с чего начать? Сначала разберёмся, из чего состоит всё вокруг и как учёные изучают вещества, а потом научимся безопасно работать в лаборатории.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧪 Что изучает химия</div>
+        <div class="c-desc">Что такое химия и зачем она нужна? Чем она отличается от других наук?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧱 Тела и вещества</div>
+        <div class="c-desc">Чем тело отличается от вещества и из чего состоят окружающие нас предметы?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🛡 Безопасность</div>
+        <div class="c-desc">Как изучать вещества и при этом не навредить себе?</div>
+      </div>
+    </div>
+    <div class="callout callout-idea">Представь, что ты исследователь: вокруг всё состоит из веществ, но их не видно. Наша задача — научиться их замечать, различать и безопасно изучать. С этого начинается весь курс.</div>
+  </div>
+</section>
 
 <!-- ============ ЛЕГЕНДА (fold) ============ -->
 
-
 <!-- ==================== РАЗОГРЕВ (без оценки) ==================== -->
 <section class="section">
-  <div class="stage s-entry fade-in">
+  <div id="s-u1-2" data-stage class="stage s-entry fade-in">
     <div class="stage-header">
       <div class="stage-number">🚪</div>
       <div>
@@ -964,10 +978,9 @@
 
 <!-- s-intro удалён: метод Фейнмана живёт в fold-блоке в начале каждого урока -->
 
-
 <!-- ==================== ЗАЧЕМ НУЖНА ХИМИЯ ==================== -->
 <section class="section">
-  <div class="stage s-why fade-in">
+  <div id="s-u1-3" data-stage class="stage s-why fade-in">
     <div class="stage-header">
       <div class="stage-number">🌍</div>
       <div>
@@ -1097,7 +1110,7 @@
 
 <!-- ==================== УРОК 1: ЧТО ИЗУЧАЕТ ХИМИЯ ==================== -->
 <section class="section">
-  <div class="stage s1 fade-in">
+  <div id="s-u1-4" data-stage class="stage s1 fade-in">
     <div class="stage-header">
       <div class="stage-number">1</div>
       <div>
@@ -1307,10 +1320,25 @@
 
     <div id="labScenario"></div>
   </div>
+</section><section class="section">
+  <div id="s-u1-5" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Тело или вещество?</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">Посмотри вокруг и потренируйся отличать физические тела от веществ.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>любой предмет под рукой (ложка, стакан, карандаш)</li><li>лист бумаги и ручка</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Выбери 5 предметов в комнате.</li><li>Для каждого определи: это тело или вещество.</li><li>Назови вещество, из которого состоит каждое тело.</li><li>Запиши вывод: чем тело отличается от вещества.</li></ol>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> таблица из двух колонок: «тело» → «вещество».</div>
+  </div>
 </section>
-<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
 <section class="section">
-  <div class="stage s-hw fade-in">
+  <div id="s-u1-6" data-stage class="stage s-hw fade-in">
     <div class="stage-header">
       <div class="stage-number">🏠</div>
       <div>
@@ -1320,30 +1348,51 @@
     </div>
     <div class="homework">
       <ol>
-<li>Составь таблицу: 5 физических тел дома и вещества, из которых они состоят.</li>
-<li>Опиши стакан воды дважды: что изучала бы в нём физика, а что — химия? По 3 предложения.</li>
-<li>Возьми любое наблюдение из жизни и разбери его по шагам познания: наблюдение → предположение → проверка → вывод.</li>
-<li>Найди дома 3 вещества с необычными свойствами. Запиши вещество и его свойство.</li>
-<li><span class="hw-star">★ Почему вещество нельзя узнать только по цвету? Приведи 2 примера разных веществ одного цвета.</span></li>
+        <li>Составь таблицу: 5 физических тел дома и вещества, из которых они состоят.</li>
+        <li>Опиши стакан воды дважды: что изучала бы в нём физика, а что — химия? По 3 предложения.</li>
+        <li>Возьми любое наблюдение из жизни и разбери его по шагам познания: наблюдение → предположение → проверка → вывод.</li>
+        <li>Найди дома 3 вещества с необычными свойствами. Запиши вещество и его свойство.</li>
+        <li><span class="hw-star">★ Почему вещество нельзя узнать только по цвету? Приведи 2 примера разных веществ одного цвета.</span></li>
+        <li>Объясни простыми словами (метод Фейнмана), чем химия отличается от физики, и приведи пример со стаканом воды.</li>
       </ol>
     </div>
   </div>
 </section>
+
 </div>
 <div id="m-u2">
 <header class="hero">
   <div class="badge">Модуль 1 · Урок 2 из 3 · ~20 минут</div>
   <h1>Свойства веществ и химия вокруг нас</h1>
-  <div class="qa-list">
-<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Как различить вещества вокруг нас?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Из чего состоим мы сами?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Где химия в твоём доме?</span></div></div>
-</div>
-  <p class="hero-nav">Уровень A → Модуль 1. Химия как наука · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Итоговый тест</a></p>
-</header></header>
+</header>
+<section class="section">
+  <div id="s-u2-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📌</div>
+      <div>
+        <div class="stage-title">О чём этот урок</div>
+      </div>
+    </div>
+    <p class="prose">Вещества вокруг нас разные — но как их различить и где химия встречается каждый день?</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🎨 Свойства веществ</div>
+        <div class="c-desc">Как различить вещества вокруг нас?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🏠 Химия дома</div>
+        <div class="c-desc">Из чего состоим мы сами?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧬 Химия в нас</div>
+        <div class="c-desc">Где химия в твоём доме?</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="sess2">
-  <div class="stage s2 fade-in">
+  <div id="s-u2-2" data-stage class="stage s2 fade-in">
     <div class="stage-header">
       <div class="stage-number">2</div>
       <div>
@@ -1420,7 +1469,7 @@
   </div>
 </section><!-- ==================== УРОК 3: ХИМИЯ И ЖИЗНЬ ==================== -->
 <section class="section">
-  <div class="stage s3 fade-in">
+  <div id="s-u2-3" data-stage class="stage s3 fade-in">
     <div class="stage-header">
       <div class="stage-number">3</div>
       <div>
@@ -1658,10 +1707,26 @@
       и всё, что сделано руками человека. Поняв её, ты начнёшь видеть мир по-другому.
     </div>
   </div>
+</section><section class="section">
+  <div id="s-u2-4" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Определяем свойства</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">Свойства помогают различить вещества, которые выглядят одинаково.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>соль и сахар (по щепотке)</li><li>вода</li><li>ложка</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Рассмотри соль и сахар: цвет, блеск, размер частиц.</li><li>Раствори по щепотке в воде и отметь, как быстро растворяется каждая.</li><li>Сравни вкус (только с разрешения взрослого) или запах.</li><li>Сделай вывод, по каким свойствам ты различил вещества.</li></ol>
+    <div class="callout callout-warn"><b>⚠️ Техника безопасности:</b> пробовать вещества на вкус можно только с разрешения учителя и если это безопасные продукты.</div>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> описание сахара и соли по плану: цвет, блеск, запах, растворимость.</div>
+  </div>
 </section>
-<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
 <section class="section">
-  <div class="stage s-hw fade-in">
+  <div id="s-u2-5" data-stage class="stage s-hw fade-in">
     <div class="stage-header">
       <div class="stage-number">🏠</div>
       <div>
@@ -1671,30 +1736,51 @@
     </div>
     <div class="homework">
       <ol>
-<li>Опиши 3 вещества дома по плану: состояние, цвет, запах, растворимость в воде.</li>
-<li>Опусти в два стакана с водой ложку соли и ложку масла. Что наблюдаешь? Запиши вывод.</li>
-<li>Нарисуй схему «путь хлеба»: какие превращения происходят от зерна до энергии в мышцах?</li>
-<li>Найди на 5 этикетках дома названия веществ (состав продуктов, шампуня). Выпиши их.</li>
-<li><span class="hw-star">★ Железный гвоздь тонет, а деревянная ложка плавает. Какое свойство за это отвечает? Объясни.</span></li>
+        <li>Опиши 3 вещества дома по плану: состояние, цвет, запах, растворимость в воде.</li>
+        <li>Опусти в два стакана с водой ложку соли и ложку масла. Что наблюдаешь? Запиши вывод.</li>
+        <li>Нарисуй схему «путь хлеба»: какие превращения происходят от зерна до энергии в мышцах?</li>
+        <li>Найди на 5 этикетках дома названия веществ (состав продуктов, шампуня). Выпиши их.</li>
+        <li><span class="hw-star">★ Железный гвоздь тонет, а деревянная ложка плавает. Какое свойство за это отвечает? Объясни.</span></li>
+        <li>Объясни младшему брату или бабушке, как различить два похожих вещества (например, соль и сахар), используя их свойства.</li>
       </ol>
     </div>
   </div>
 </section>
+
 </div>
 <div id="m-u3">
 <header class="hero">
   <div class="badge">Модуль 1 · Урок 3 из 3 · ~20 минут</div>
   <h1>Лаборатория: безопасность и оборудование</h1>
-  <div class="qa-list">
-<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Как работать в лаборатории безопасно?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Как называется оборудование и зачем оно?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Как описать вещество по плану?</span></div></div>
-</div>
-  <p class="hero-nav">Уровень A → Модуль 1. Химия как наука · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Итоговый тест</a></p>
-</header></header>
+</header>
+<section class="section">
+  <div id="s-u3-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📌</div>
+      <div>
+        <div class="stage-title">О чём этот урок</div>
+      </div>
+    </div>
+    <p class="prose">Лаборатория — место, где вещество изучают вживую. Но сначала — безопасность и оборудование.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">⚠️ Безопасность</div>
+        <div class="c-desc">Как работать в лаборатории безопасно?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧰 Оборудование</div>
+        <div class="c-desc">Как называется оборудование и зачем оно?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">📝 План описания</div>
+        <div class="c-desc">Как описать вещество по плану?</div>
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="section" id="sess3">
-  <div class="stage s4 fade-in">
+  <div id="s-u3-2" data-stage class="stage s4 fade-in">
     <div class="stage-header">
       <div class="stage-number">4</div>
       <div>
@@ -1831,71 +1917,11 @@
   </div>
 </section>
 
-<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
-<section class="section">
-  <div class="stage s-feyn fade-in">
-    <div class="stage-header">
-      <div class="stage-number">🧠</div>
-      <div>
-        <div class="stage-title">Рефлексия по Фейнману</div>
-        <div class="stage-subtitle">Объясни своими словами и запиши в тетрадь — проверит учитель</div>
-      </div>
-    </div>
-
-    <p class="prose">
-      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
-      Это не тест: готовых вариантов нет. Объясни вслух — сыну, дочке, брату или сестре
-      (или представь, что объясняешь им), а затем <b>запиши объяснения в тетрадь</b>.
-    </p>
-
-    <div class="callout callout-note">
-      <b>📝 Задание в тетрадь — ответь письменно на три вопроса:</b>
-      <ol class="list-note">
-        <li>Чем химия отличается от физики? Объясни на примере стакана воды.</li>
-        <li>Чем физическое тело отличается от вещества? Приведи по два примера из дома и из лаборатории.</li>
-        <li>Почему в лаборатории нельзя пробовать вещества на вкус и нюхать их напрямую? Что делать вместо этого?</li>
-      </ol>
-    </div>
-
-    <div class="callout callout-idea">
-      <b>Как понять, что получилось:</b> перечитай написанное и спроси себя —
-      поймёт ли это младший школьник? Если где-то запнулся или ушёл в умные слова —
-      вернись к этому месту модуля и разберись заново. Именно «застревание» и есть обучение.
-    </div>
-  </div>
-</section>
-
 <!-- ==================== ПРАКТИЧЕСКОЕ ЗАДАНИЕ ==================== -->
-<section class="section">
-  <div class="stage s-prac fade-in">
-    <div class="stage-header">
-      <div class="stage-number">🔬</div>
-      <div>
-        <div class="stage-title">Практическое задание: опиши вещество по плану</div>
-        <div class="stage-subtitle">Проверь, умеешь ли ты применять знания о свойствах веществ</div>
-      </div>
-    </div>
-
-    <p class="prose">
-      Настоящий химик умеет <b>описывать вещество по плану</b>: цвет, блеск, запах, твёрдость,
-      растворимость, горючесть. Сейчас мы потренируемся.
-    </p>
-
-    <div id="quiz-u3-practice" data-config="practice"></div>
-<script type="application/json" id="quiz-u3-practice-data">
-{"config": "practice", "questions": [{"type": "single", "q": "Цвет и блеск. Какого цвета медь и есть ли у неё блеск?", "options": ["Белая, без блеска", "Рыжая (красноватая), есть металлический блеск", "Чёрная, без блеска", "Прозрачная, без блеска"], "correct": 1, "why": "Медь — рыжий металл с характерным металлическим блеском."}, {"type": "single", "q": "Запах. Есть ли запах у чистой воды?", "options": ["Резкий запах", "Сладкий запах", "Нет запаха", "Запах гари"], "correct": 2, "why": "Чистая вода не имеет запаха. Это одно из её свойств."}, {"type": "single", "q": "Твёрдость. Какое из этих веществ самое твёрдое?", "options": ["Воск", "Алмаз", "Стекло", "Дерево"], "correct": 1, "why": "Алмаз — самое твёрдое природное вещество. Он царапает стекло, а воск и дерево — нет."}, {"type": "single", "q": "Растворимость. Какое вещество растворяется в воде?", "options": ["Песок", "Мел", "Сахар", "Стекло"], "correct": 2, "why": "Сахар хорошо растворяется в воде. Песок, мел и стекло — не растворяются."}, {"type": "single", "q": "Горючесть. Какое вещество горит?", "options": ["Вода", "Песок", "Спирт", "Соль"], "correct": 2, "why": "Спирт — горючее вещество. Вода, песок и соль не горят."}]}
-</script>
-
-    <div class="callout callout-note" class="mt-16">
-      <b>📝 В тетрадь:</b> выбери одно вещество дома (например, сахар, соль, монету)
-      и опиши его письменно по плану выше. Это задание проверит учитель.
-    </div>
-  </div>
-</section>
 
 <!-- ==================== ЗАДАЧКА НА ПОДУМАТЬ ==================== -->
 <section class="section">
-  <div class="stage s-feyn fade-in">
+  <div id="s-u3-3" data-stage class="stage s-feyn fade-in">
     <div class="stage-header">
       <div class="stage-number">★</div>
       <div>
@@ -1915,7 +1941,7 @@
 
 <!-- ==================== КАРТОЧКА-ВЫЖИМКА ==================== -->
 <section class="section">
-  <div class="stage s-prac fade-in">
+  <div id="s-u3-4" data-stage class="stage s-prac fade-in">
     <div class="stage-header">
       <div class="stage-number">📇</div>
       <div>
@@ -1940,10 +1966,25 @@
       наблюдение · эксперимент · измерение · моделирование · гипотеза · лаборатория.
     </div>
   </div>
+</section><section class="section">
+  <div id="s-u3-5" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Описание вещества по плану</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">Настоящий химик умеет описывать вещество по плану: цвет, блеск, запах, твёрдость, растворимость, горючесть.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>одно вещество дома (сахар, соль, монета, свеча)</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Выбери одно вещество.</li><li>Опиши его по каждому пункту плана.</li><li>Отметь, какие свойства опасны, а какие безопасны.</li><li>Сформулируй, где это вещество применяют.</li></ol>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> описание вещества по плану из 5–6 пунктов.</div>
+  </div>
 </section>
-<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
 <section class="section">
-  <div class="stage s-hw fade-in">
+  <div id="s-u3-6" data-stage class="stage s-hw fade-in">
     <div class="stage-header">
       <div class="stage-number">🏠</div>
       <div>
@@ -1953,27 +1994,28 @@
     </div>
     <div class="homework">
       <ol>
-<li>Перепиши 5 главных правил безопасности своими словами — как запомнил, а не дословно.</li>
-<li>Нарисуй и подпиши 6 лабораторных приборов. Рядом с каждым — для чего он нужен.</li>
-<li>Опиши по шагам свои действия, если разбил пробирку с раствором.</li>
-<li>Объясни: почему пары нюхают ладонью, а не из сосуда? Назови 2 причины.</li>
-<li><span class="hw-star">★ Придумай ситуацию №6 для этого урока: опиши происшествие, дай правильный и два неправильных действия.</span></li>
+        <li>Перепиши 5 главных правил безопасности своими словами — как запомнил, а не дословно.</li>
+        <li>Нарисуй и подпиши 6 лабораторных приборов. Рядом с каждым — для чего он нужен.</li>
+        <li>Опиши по шагам свои действия, если разбил пробирку с раствором.</li>
+        <li>Объясни: почему пары нюхают ладонью, а не из сосуда? Назови 2 причины.</li>
+        <li><span class="hw-star">★ Придумай ситуацию №6 для этого урока: опиши происшествие, дай правильный и два неправильных действия.</span></li>
+        <li>Объясни простыми словами, почему в лаборатории важны правила безопасности. Приведи 2 примера.</li>
       </ol>
     </div>
   </div>
 </section>
+
 </div>
 <div id="m-final">
 <header class="hero">
   <div class="badge">Модуль 1 · Итоговый тест · ~10 минут</div>
   <h1>Итоговый тест по Модулю 1</h1>
   <p>15 вопросов · порог 80% (12 правильных). Покажи результат учителю.</p>
-  <p class="hero-nav">Уровень A → Модуль 1. Химия как наука · <a href="#m-u1">Урок 1</a> · <a href="#m-u2">Урок 2</a> · <a href="#m-u3">Урок 3</a> · <a href="#m-final">Итоговый тест</a></p>
-</header></header>
+</header>
 
 <!-- ==================== ИТОГОВЫЙ ТЕСТ ==================== -->
 <section class="section">
-  <div class="stage s-test fade-in">
+  <div id="s-final-1" data-stage class="stage s-test fade-in">
     <div class="stage-header">
       <div class="stage-number">📝</div>
       <div>
@@ -3091,6 +3133,99 @@ makeDropGame({
   });
 
   cards[0].click();
+})();
+
+// ============================================================
+//  Навигация: триггер + выезжающий drawer + scroll-spy + «наверх»
+//  Разметку (navTrigger/navDrawer/navBackdrop/toTop) рендерит билдер.
+// ============================================================
+(function () {
+  const trigger = document.getElementById('navTrigger');
+  const drawer = document.getElementById('navDrawer');
+  const backdrop = document.getElementById('navBackdrop');
+  const toTop = document.getElementById('toTop');
+  if (!trigger || !drawer) return;
+
+  const reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastFocus = null;
+
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    drawer.classList.add('open');
+    requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    drawer.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+    const first = drawer.querySelector('a, button');
+    if (first) first.focus();
+    document.addEventListener('keydown', onKey);
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('show');
+    window.setTimeout(function () { backdrop.hidden = true; }, reduce ? 0 : 300);
+    drawer.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+    document.removeEventListener('keydown', onKey);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') { closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    const f = drawer.querySelectorAll('a, button');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  trigger.addEventListener('click', function () {
+    if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  backdrop.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) closeDrawer();
+  });
+
+  // Scroll-spy: подсвечиваем активный подраздел
+  const subs = Array.prototype.slice.call(drawer.querySelectorAll('a.nav-sub'));
+  if (subs.length && 'IntersectionObserver' in window) {
+    const byId = {};
+    subs.forEach(function (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') byId[href.slice(1)] = a;
+    });
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        subs.forEach(function (a) { a.classList.remove('nav-active'); });
+        const a = byId[en.target.id];
+        if (a) a.classList.add('nav-active');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  // Кнопка «Наверх»
+  if (toTop) {
+    const onScroll = function () { toTop.hidden = window.scrollY < 600; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
 })();
 
 </script>

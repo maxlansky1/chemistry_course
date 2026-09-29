@@ -93,32 +93,33 @@
     font-size: 16px;
     line-height: 1.7;
   }
+  /* Единая палитра: коллауты совпадают с «Условными обозначениями» */
   .callout-idea {
-    background: linear-gradient(135deg, #fffbeb, #fef3c7);
-    border-left: 5px solid var(--orange);
-    color: #78350f;
+    background: #FFF9E6; border-left: 5px solid #FFE0B2; color: #7A5F00;
   }
-  .callout-idea b { color: #92400e; }
+  .callout-idea b { color: #7A5F00; }
   .callout-warn {
-    background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    border-left: 5px solid var(--red);
-    color: #7f1d1d;
+    background: #FDF2F2; border-left: 5px solid #FDE8E8; color: #9B1C1C;
   }
-  .callout-warn b { color: #b91c1c; }
+  .callout-warn b { color: #9B1C1C; }
   .callout-note {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border-left: 5px solid #3b82f6;
-    color: #1e3a8a;
+    background: #EBF5FF; border-left: 5px solid #E1EFFE; color: #1E429F;
   }
-  .callout-note b { color: #1d4ed8; }
+  .callout-note b { color: #1E429F; }
   .callout-ok {
-    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    border-left: 5px solid var(--green);
-    color: #065f46;
+    background: #EDF7ED; border-left: 5px solid #C8E6C9; color: #1E4620;
   }
-  .callout-ok b { color: #047857; }
+  .callout-ok b { color: #1E4620; }
+  .callout-game {
+    background: #F3E8FF; border-left: 5px solid #E9D5FF; color: #6B21A8;
+  }
+  .callout-game b { color: #6B21A8; }
+  .callout-test {
+    background: #F1F5F9; border-left: 5px solid #E2E8F0; color: #475569;
+  }
+  .callout-test b { color: #475569; }
 
-  .cta { color: var(--accent); font-weight: 800; }
+  .cta { color: #6875F5; font-weight: 800; }
 
   .card-grid {
     display: grid;
@@ -694,62 +695,81 @@
   details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
   details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
 
-  /* Навигация по урокам: карточки + пилюли */
-  .lesson-nav {
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    gap: 12px; align-items: stretch; margin: 26px 0 8px;
+  /* Навигация: триггер + выезжающий drawer + «наверх» */
+  .nav-trigger {
+    position: fixed; top: 12px; left: 12px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 8px 16px; border-radius: 50px;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font: inherit; font-size: 14px; font-weight: 800; color: var(--text);
+    cursor: pointer; box-shadow: var(--shadow); transition: border-color .2s, color .2s;
   }
-  .ln-card {
-    background: var(--panel); border: 1.5px solid var(--border);
-    border-radius: 14px; padding: 14px 18px;
-    text-decoration: none; color: var(--text);
-    display: flex; flex-direction: column; gap: 4px; transition: all .2s;
+  .nav-trigger:hover { border-color: #6875F5; color: #6875F5; }
+  .nav-trigger-icon { font-size: 18px; line-height: 1; }
+  .nav-backdrop {
+    position: fixed; inset: 0; z-index: 70; background: rgba(15,23,42,.5);
+    opacity: 0; transition: opacity .3s ease-in-out;
   }
-  a.ln-card:hover {
-    border-color: var(--h-deep); transform: translateY(-2px);
-    box-shadow: var(--shadow);
+  .nav-backdrop.show { opacity: 1; }
+  .nav-drawer {
+    position: fixed; top: 0; left: 0; height: 100%; width: min(85%, 360px);
+    z-index: 80; background: #fafafa; box-shadow: var(--shadow-lg);
+    transform: translateX(-100%); visibility: hidden; overflow-y: auto;
+    transition: transform .3s ease-in-out, visibility .3s;
+    padding: 18px 16px 28px; -webkit-overflow-scrolling: touch;
   }
-  .ln-card.ln-next { text-align: right; }
-  .ln-dir {
-    font-size: 12px; font-weight: 800; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--h-deep);
+  .nav-drawer.open { transform: translateX(0); visibility: visible; }
+  body.nav-open { overflow: hidden; }
+  .nav-drawer-head { font-size: 16px; font-weight: 800; margin: 6px 8px 14px; line-height: 1.35; }
+  .nav-tree { list-style: none; margin: 0; padding: 0; }
+  .nav-tree a {
+    display: block; padding: 12px; border-radius: 10px; text-decoration: none;
+    color: var(--text); font-size: 15px; font-weight: 700; min-height: 44px;
   }
-  .ln-title { font-size: 15px; font-weight: 700; }
-  .ln-card.done { border-style: dashed; color: var(--muted); cursor: default; }
-  .ln-map { display: flex; gap: 8px; align-items: center; justify-content: center; }
-  .ln-pill {
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 2px solid var(--border); display: inline-flex;
-    align-items: center; justify-content: center;
-    font-weight: 800; font-size: 14px; color: var(--muted);
-    text-decoration: none; background: #fff;
+  .nav-tree a:hover { background: #eef2f7; }
+  .nav-lesson.nav-current > a { color: #6875F5; }
+  .nav-subs {
+    list-style: none; margin: 2px 0 8px 12px; padding: 0 0 0 10px;
+    border-left: 2px solid var(--border);
   }
-  a.ln-pill:hover { border-color: var(--h-deep); }
-  .ln-pill.now { background: var(--h-deep); border-color: var(--h-deep); color: #fff; }
-  @media (max-width: 600px) {
-    .lesson-nav { grid-template-columns: 1fr; }
-    .ln-card.ln-next { text-align: left; }
-    .ln-map { order: -1; }
+  .nav-subs a { font-size: 13.5px; font-weight: 500; color: var(--muted); padding: 9px 10px; min-height: 40px; }
+  .nav-subs a.nav-active {
+    color: #6875F5; font-weight: 700; background: rgba(104,117,245,.10);
+    border-left: 2px solid #6875F5; margin-left: -12px; padding-left: 12px;
+  }
+  .to-top {
+    position: fixed; right: 14px; bottom: 16px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow);
+  }
+  .to-top:hover { border-color: #6875F5; color: #6875F5; }
+  [data-stage], [id^="m-"] { scroll-margin-top: 72px; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-drawer, .nav-backdrop { transition: none; }
   }
 
-  /* Вопросы hero: 3 риторических вопроса модуля/урока */
-  .hero-questions {
-    display: flex; flex-direction: column; gap: 8px;
-    max-width: 640px; margin: 14px auto 0; text-align: left;
-  }
-  .hero-questions div {
-    background: rgba(255,255,255,.75);
-    border: 1px solid var(--border); border-radius: 10px;
-    padding: 8px 14px; font-size: 15.5px; font-weight: 600;
-  }
-
-  /* Цвета карточек легенды по смыслу */
+  /* Палитра карточек легенды */
   .legend-card { border: 2px solid var(--border); }
-  .legend-card.lc-warm { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #f59e0b; }
-  .legend-card.lc-danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-color: #ef4444; }
-  .legend-card.lc-info { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6; }
-  .legend-card.lc-ok { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #10b981; }
-  .legend-card.lc-act { background: #fff; border-style: dashed; }
+  .legend-card.lc-warm { background: #FFF9E6; border-color: #FFE0B2; }
+  .legend-card.lc-warm .lc-header { color: #7A5F00; }
+  .legend-card.lc-danger { background: #FDF2F2; border-color: #FDE8E8; }
+  .legend-card.lc-danger .lc-header { color: #9B1C1C; }
+  .legend-card.lc-info { background: #EBF5FF; border-color: #E1EFFE; }
+  .legend-card.lc-info .lc-header { color: #1E429F; }
+  .legend-card.lc-ok { background: #EDF7ED; border-color: #C8E6C9; }
+  .legend-card.lc-ok .lc-header { color: #1E4620; }
+  .legend-card.lc-act { background: #fff; border-color: #6875F5; }
+  .legend-card.lc-act .lc-header,
+  .legend-card.lc-act .lc-body,
+  .legend-card.lc-act .lc-body b { color: #6875F5; }
+  .legend-card.lc-accent { border-color: #6875F5; }
+  .legend-card.lc-game { background: #F3E8FF; border-color: #E9D5FF; }
+  .legend-card.lc-game .lc-header { color: #6B21A8; }
+  .legend-card.lc-test { background: #F1F5F9; border-color: #E2E8F0; }
+  .legend-card.lc-test .lc-header { color: #475569; }
+  .lc-vi { color: #6875F5; }
 
   /* Домашнее задание */
   .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
@@ -757,31 +777,7 @@
   .homework ol li { margin-bottom: 6px; }
   .homework .hw-star { color: var(--accent); font-weight: 800; }
 
-  /* Карточки вопросов: нумерованный вопрос-промпт, без эмодзи и ответов.
-     Вопрос задаётся ученику по ходу урока — ответ рождается в уроке. */
-  .qa-list { display: flex; flex-direction: column; gap: 10px;
-    max-width: 680px; margin: 14px auto 0; text-align: left; }
-  .qa-card {
-    background: rgba(255,255,255,.85);
-    border: 1.5px solid var(--border); border-radius: 12px;
-    padding: 12px 16px; border-left: 5px solid var(--accent);
-  }
-  .qa-q { font-size: 15.5px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
-  .qa-num {
-    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
-    background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 900; transform: translateY(3px);
-  }
 
-  /* Чипсы навигации модуля */
-  .mod-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
-  .mod-chip {
-    padding: 9px 20px; border-radius: 50px; text-decoration: none;
-    background: rgba(255,255,255,.8); border: 1.5px solid var(--border);
-    font-size: 14.5px; font-weight: 800; color: var(--text); transition: all .2s;
-  }
-  a.mod-chip:hover { border-color: var(--h-deep); color: var(--h-deep); transform: translateY(-2px); }
 
   /* Формулы и химические записи */
   .formula { font-variant-numeric: lining-nums; white-space: nowrap; }
@@ -823,25 +819,10 @@
   .center-mt16 { text-align: center; margin-top: 16px; }
   .prose { font-size: 16.5px; line-height: 1.8; }
   .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
-  .hero-nav { margin-top: 8px; font-size: 15px; }
   .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
   .fs-26 { font-size: 26px; }
   .sci-node { cursor: pointer; }
   .hero-digest { max-width: 700px; margin: 0 auto; }
-  .lesson-nav.toc {
-    position: sticky; top: 0; z-index: 20;
-    background: rgba(248,250,252,.92); backdrop-filter: blur(8px);
-    border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 10px 14px; margin: 0 0 18px;
-  }
-  .toc-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 8px; }
-  .toc-items { display: flex; gap: 8px; flex-wrap: wrap; }
-  .toc-item { text-decoration: none; font-size: 14px; font-weight: 700;
-    color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
-  .toc-pill { display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px; border-radius: 50%; font-size: 12px;
-    background: var(--panel-2); border: 1px solid var(--border); }
 
   /* Quiz: multi и match */
   .quiz-errors { margin-top: 10px; }
@@ -882,16 +863,52 @@
 </style>
 </head>
 <body>
-<!-- built by src/build.py v1 · 2026-09-28 · module_2/entry · manifest-driven -->
+<!-- built by src/build.py v1 · 2026-09-29 · module_2/entry · manifest-driven -->
 <header class="hero">
   <div class="badge">Модуль 2 · Входной тест · ~15 минут</div>
   <h1>Проверь готовность</h1>
-  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="entry.html">Вход</a> · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Тест</a></p>
 </header>
 <div class="container">
+<button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
+<div class="nav-backdrop" id="navBackdrop" hidden></div>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 2. Агрегатные состояния и смеси</div><ul class="nav-tree"><li class="nav-lesson nav-current"><a href="#" aria-current="true">Начало</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-entry-1">О чём этот модуль</a></li><li><a class="nav-sub" href="#s-entry-2">Входной тест</a></li></ul></li><li class="nav-lesson"><a href="u1.html">Урок 1</a></li><li class="nav-lesson"><a href="u2.html">Урок 2</a></li><li class="nav-lesson"><a href="u3.html">Урок 3</a></li><li class="nav-lesson"><a href="final.html">Тест</a></li></ul></nav>
+<button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
+<section class="section">
+  <div id="s-entry-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🎯</div>
+      <div>
+        <div class="stage-title">О чём этот модуль</div>
+        <div class="stage-subtitle">Три большие темы, которые станут фундаментом всего курса химии</div>
+      </div>
+    </div>
+    <p class="prose">В первом модуле мы выяснили, что химия — наука о веществах и их превращениях.
+      Но вещества вокруг нас находятся в разных состояниях: твёрдом, жидком и газообразном.
+      Одно и то же вещество может быть и льдом, и водой, и паром — и это не превращение,
+      а изменение состояния. Как это происходит? И как разделить смесь на чистые компоненты?
+      Об этом — наш второй модуль.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧊 Агрегатные состояния</div>
+        <div class="c-desc">Что такое <b>твёрдое</b>, <b>жидкое</b> и <b>газообразное</b> состояние? Чем они отличаются на уровне частиц?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🔄 Переходы</div>
+        <div class="c-desc">Как одно и то же вещество переходит из одного состояния в другое: плавление, кипение, испарение, конденсация, сублимация.</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧪 Смеси и разделение</div>
+        <div class="c-desc">Что такое <b>чистое вещество</b> и <b>смесь</b>? Какие смеси бывают и как их разделить на компоненты.</div>
+      </div>
+    </div>
+    <div class="callout callout-idea">Представь, что ты повар. Ты можешь <b>сварить суп</b> — это смесь. Ты можешь <b>заморозить</b> его — состояние изменится,
+      но суп останется супом. А можешь <b>процедить</b> его — это разделение смеси на части.
+      Всё это — не химические превращения, а физические. Мы узнаем, чем они отличаются и как работают.</div>
+  </div>
+</section>
 
 <section class="section">
-  <div class="stage s-entry fade-in">
+  <div id="s-entry-2" data-stage class="stage s-entry fade-in">
     <div class="stage-header">
       <div class="stage-number">🚪</div>
       <div>
@@ -899,12 +916,14 @@
         <div class="stage-subtitle">10 вопросов по Модулю 1 · порог 80% (8 правильных)</div>
       </div>
     </div>
-    <p style="font-size:15.5px;color:var(--muted);margin-bottom:16px;">
+    <p class="lead">
       Модуль 2 опирается на Модуль 1: тела и вещества, свойства, методы познания,
       безопасность. Наберёшь 8+ — иди дальше. Нет — повтори первый модуль, он короткий.
     </p>
-    <div id="entryTestContainer"></div>
-    <div class="entry-result" id="entryResult"></div>
+    <div id="quiz-entry" data-config="entry"></div>
+<script type="application/json" id="quiz-entry-data">
+{"config": "entry", "target": "quiz-entry", "questions": [{"type": "single", "q": "Что изучает химия?", "options": ["Только живые организмы", "Вещества, их свойства и превращения", "Только звёзды", "Только числа"], "correct": 1, "why": "Химия — наука о веществах, их свойствах и превращениях."}, {"type": "single", "q": "Что из перечисленного — физическое тело?", "options": ["Вода", "Кислород", "Колба", "Алюминий"], "correct": 2, "why": "Колба — тело (форма и объём). Остальное — вещества."}, {"type": "single", "q": "Что такое вещество?", "options": ["То, что имеет форму", "То, из чего состоят тела", "То, что светится", "То, что движется"], "correct": 1, "why": "Вещество — то, из чего состоят тела."}, {"type": "single", "q": "Что из перечисленного — свойство вещества?", "options": ["Ложка", "Прозрачность", "Стакан", "Пробирка"], "correct": 1, "why": "Прозрачность — свойство. Остальное — тела."}, {"type": "single", "q": "Что такое наблюдение?", "options": ["Воздействие на вещество", "Изучение явления без вмешательства", "Измерение температуры", "Выдвижение гипотезы"], "correct": 1, "why": "Наблюдение — смотрим и замечаем, не вмешиваясь."}, {"type": "single", "q": "Что такое эксперимент?", "options": ["Пассивное созерцание", "Активное воздействие на вещество", "Запись в тетрадь", "Чтение учебника"], "correct": 1, "why": "Эксперимент — воздействуем и смотрим, что будет."}, {"type": "single", "q": "Что НЕЛЬЗЯ делать в лаборатории?", "options": ["Носить халат", "Пробовать вещества на вкус", "Мыть руки", "Слушать учителя"], "correct": 1, "why": "Пробовать на вкус запрещено всегда."}, {"type": "single", "q": "Разбил пробирку. Первое действие?", "options": ["Собрать осколки руками", "Сообщить учителю, убрать щёткой и совком", "Продолжить работу", "Спрятать осколки"], "correct": 1, "why": "Руками — нельзя. Учителю сообщить, убрать инструментами."}, {"type": "single", "q": "Как правильно понюхать вещество?", "options": ["Вдохнуть прямо из сосуда", "Направить пары ладонью к носу", "Наклониться над колбой", "Нюхать с закрытыми глазами"], "correct": 1, "why": "Только ладонью, осторожно. Наклоняться над сосудом опасно."}, {"type": "single", "q": "Что такое гипотеза?", "options": ["Доказанное знание", "Догадка, которую нужно проверить", "Результат опыта", "Прибор"], "correct": 1, "why": "Гипотеза — предположение, требующее проверки."}]}
+</script>
   </div>
 </section>
 </div>
@@ -962,179 +981,302 @@
 </footer>
 
 <script>
-// ============================================================
-//  ВХОДНОЙ ТЕСТ МОДУЛЯ 2 (10 вопросов по Модулю 1, порог 80%)
-// ============================================================
-(function initEntryTest() {
-  const container = document.getElementById('entryTestContainer');
-  const resultBox = document.getElementById('entryResult');
-  if (!container || !resultBox) return;
+(function initQuizzes() {
+  const islands = document.querySelectorAll('script[type="application/json"][id^="quiz-"]');
+  if (!islands.length) return;
 
-  const QUESTIONS = [
-    {
-      q: 'Что изучает химия?',
-      options: [
-        'Только живые организмы',
-        'Вещества, их свойства и превращения',
-        'Только звёзды',
-        'Только числа'
-      ],
-      correct: 1,
-      why: 'Химия — наука о веществах, их свойствах и превращениях.'
-    },
-    {
-      q: 'Что из перечисленного — физическое тело?',
-      options: [
-        'Вода',
-        'Кислород',
-        'Колба',
-        'Алюминий'
-      ],
-      correct: 2,
-      why: 'Колба — тело (форма и объём). Остальное — вещества.'
-    },
-    {
-      q: 'Что такое вещество?',
-      options: [
-        'То, что имеет форму',
-        'То, из чего состоят тела',
-        'То, что светится',
-        'То, что движется'
-      ],
-      correct: 1,
-      why: 'Вещество — то, из чего состоят тела.'
-    },
-    {
-      q: 'Что из перечисленного — свойство вещества?',
-      options: [
-        'Ложка',
-        'Прозрачность',
-        'Стакан',
-        'Пробирка'
-      ],
-      correct: 1,
-      why: 'Прозрачность — свойство. Остальное — тела.'
-    },
-    {
-      q: 'Что такое наблюдение?',
-      options: [
-        'Воздействие на вещество',
-        'Изучение явления без вмешательства',
-        'Измерение температуры',
-        'Выдвижение гипотезы'
-      ],
-      correct: 1,
-      why: 'Наблюдение — смотрим и замечаем, не вмешиваясь.'
-    },
-    {
-      q: 'Что такое эксперимент?',
-      options: [
-        'Пассивное созерцание',
-        'Активное воздействие на вещество',
-        'Запись в тетрадь',
-        'Чтение учебника'
-      ],
-      correct: 1,
-      why: 'Эксперимент — воздействуем и смотрим, что будет.'
-    },
-    {
-      q: 'Что НЕЛЬЗЯ делать в лаборатории?',
-      options: [
-        'Носить халат',
-        'Пробовать вещества на вкус',
-        'Мыть руки',
-        'Слушать учителя'
-      ],
-      correct: 1,
-      why: 'Пробовать на вкус запрещено всегда.'
-    },
-    {
-      q: 'Разбил пробирку. Первое действие?',
-      options: [
-        'Собрать осколки руками',
-        'Сообщить учителю, убрать щёткой и совком',
-        'Продолжить работу',
-        'Спрятать осколки'
-      ],
-      correct: 1,
-      why: 'Руками — нельзя. Учителю сообщить, убрать инструментами.'
-    },
-    {
-      q: 'Как правильно понюхать вещество?',
-      options: [
-        'Вдохнуть прямо из сосуда',
-        'Направить пары ладонью к носу',
-        'Наклониться над колбой',
-        'Нюхать с закрытыми глазами'
-      ],
-      correct: 1,
-      why: 'Только ладонью, осторожно. Наклоняться над сосудом опасно.'
-    },
-    {
-      q: 'Что такое гипотеза?',
-      options: [
-        'Доказанное знание',
-        'Догадка, которую нужно проверить',
-        'Результат опыта',
-        'Прибор'
-      ],
-      correct: 1,
-      why: 'Гипотеза — предположение, требующее проверки.'
+  const msgIsland = document.getElementById('messages');
+  let MSG = {};
+  try { MSG = msgIsland ? JSON.parse(msgIsland.textContent) : {}; } catch (e) { MSG = {}; }
+
+  function pick(kind) {
+    const arr = MSG[kind] || [];
+    return arr.length ? arr[Math.floor(Math.random() * arr.length)] : '';
+  }
+
+  function shuffle(a) {
+    const r = a.slice();
+    for (let i = r.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [r[i], r[j]] = [r[j], r[i]];
     }
-  ];
-  const THRESHOLD = 8;
+    return r;
+  }
 
-  let correctCount = 0;
-  let answered = 0;
+  const PASS_RATIO = 0.8;
+  const LETTERS = 'ABCDEFGH';
 
-  container.innerHTML = QUESTIONS.map((q, i) => `
-    <div class="test-question">
-      <div class="q-text"><span class="q-num">${i + 1}</span><span>${q.q}</span></div>
-      <div class="test-options">
-        ${q.options.map((o, j) => `
-          <div class="test-option" data-q="${i}" data-o="${j}">
-            <span class="opt-marker">${String.fromCharCode(65 + j)}</span>
-            <span>${o}</span>
-          </div>
-        `).join('')}
-      </div>
-      <div class="explanation" id="entryExp-${i}"></div>
-    </div>
-  `).join('');
+  islands.forEach((island) => {
+    let data;
+    try { data = JSON.parse(island.textContent); } catch (e) { return; }
+    const targetId = data.target || island.id.replace(/-data$/, '');
+    const host = document.getElementById(targetId);
+    if (!host) return;
+    let questions = data.questions || [];
+    const config = data.config || host.dataset.config || 'practice';
+    if (data.bank && questions.length > data.bank) {
+      questions = shuffle(questions).slice(0, data.bank);
+    }
+    const threshold = data.threshold != null
+      ? data.threshold
+      : Math.ceil(questions.length * PASS_RATIO);
 
-  container.querySelectorAll('.test-option').forEach(opt => {
-    opt.addEventListener('click', () => {
-      const qIdx = parseInt(opt.dataset.q);
-      const oIdx = parseInt(opt.dataset.o);
-      const q = QUESTIONS[qIdx];
-      const exp = document.getElementById(`entryExp-${qIdx}`);
-      if (exp.classList.contains('show')) return;
+    const state = { answered: 0, correct: 0, wrong: [] };
 
-      const isCorrect = oIdx === q.correct;
-      container.querySelectorAll(`[data-q="${qIdx}"]`).forEach(o => {
-        o.classList.add('disabled');
-        const idx = parseInt(o.dataset.o);
-        if (idx === q.correct) o.classList.add('correct');
-        if (idx === oIdx && !isCorrect) o.classList.add('wrong');
-      });
-      exp.classList.add('show', isCorrect ? 'ok' : 'no');
-      exp.innerHTML = `<b>${isCorrect ? '✅ Правильно!' : '❌ Не совсем.'}</b> ${q.why}`;
+    function render() {
+      host.innerHTML = '';
+      state.answered = 0;
+      state.correct = 0;
+      state.wrong = [];
 
-      if (isCorrect) correctCount++;
-      answered++;
+      const score = document.createElement('div');
+      score.className = 'test-score';
+      score.textContent = 'Правильных ответов: 0 из ' + questions.length;
+      host.appendChild(score);
 
-      if (answered === QUESTIONS.length) {
-        resultBox.classList.add('show');
-        if (correctCount >= THRESHOLD) {
-          resultBox.classList.add('good');
-          resultBox.innerHTML = `🎉 <b>Готов!</b> ${correctCount} из ${QUESTIONS.length} — база Модуля 1 есть. Можно идти в Модуль 2.`;
+      const ordered = data.shuffle === false
+        ? questions.map((q, i) => ({ q: q, idx: i }))
+        : shuffle(questions.map((q, i) => ({ q: q, idx: i })));
+
+      ordered.forEach(({ q, idx }, displayIndex) => {
+        const block = document.createElement('div');
+        block.className = 'test-question';
+        block.dataset.q = String(idx);
+        block.innerHTML = '<div class="q-text"><span class="q-num">' +
+          (displayIndex + 1) + '</span><span>' + q.q + '</span></div>' +
+          '<div class="test-options"></div>' +
+          '<div class="explanation" id="exp-' + island.id + '-' + idx + '"></div>';
+
+        const optBox = block.querySelector('.test-options');
+        if (q.type === 'match') {
+          q.left.forEach((leftText, li) => {
+            const row = document.createElement('div');
+            row.className = 'test-option match-row';
+            const opts = q.right.map((rt, ri) =>
+              '<option value="' + ri + '">' + rt + '</option>').join('');
+            row.innerHTML = '<span class="match-left">' + leftText + '</span>' +
+              '<select class="match-select" data-left="' + li + '">' +
+              '<option value="">—</option>' + opts + '</select>';
+            optBox.appendChild(row);
+          });
+          const btn = document.createElement('button');
+          btn.className = 'retry-btn';
+          btn.type = 'button';
+          btn.textContent = 'Проверить';
+          btn.addEventListener('click', () => checkMatch(block, q, idx));
+          optBox.appendChild(btn);
         } else {
-          resultBox.classList.add('mid');
-          resultBox.innerHTML = `👍 ${correctCount} из ${QUESTIONS.length}. Стоит повторить Модуль 1 — без базы дальше будет трудно.`;
+          q.options.forEach((optText, oi) => {
+            const opt = document.createElement('div');
+            opt.className = 'test-option';
+            opt.dataset.opt = String(oi);
+            opt.innerHTML = '<span class="opt-marker">' +
+              (q.type === 'multi' ? '☐' : LETTERS[oi]) +
+              '</span><span>' + optText + '</span>';
+            opt.addEventListener('click', () => {
+              if (q.type === 'multi') {
+                opt.classList.toggle('picked');
+                return;
+              }
+              answerSingle(block, q, idx, oi);
+            });
+            optBox.appendChild(opt);
+          });
+          if (q.type === 'multi') {
+            const btn = document.createElement('button');
+            btn.className = 'retry-btn';
+            btn.type = 'button';
+            btn.textContent = 'Проверить';
+            btn.addEventListener('click', () => checkMulti(block, q, idx));
+            optBox.appendChild(btn);
+          }
         }
+        host.appendChild(block);
+      });
+    }
+
+    function finish(block, exp, isCorrect, q) {
+      block.querySelectorAll('.test-option').forEach((o) => o.classList.add('disabled'));
+      block.querySelectorAll('button').forEach((b) => (b.disabled = true));
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = '<b>' + (isCorrect ? '✅ Правильно!' : '❌ Не совсем.') +
+        '</b> ' + (q.why || '');
+      if (isCorrect) state.correct++; else state.wrong.push(q.q);
+      state.answered++;
+      const score = host.querySelector('.test-score');
+      if (score) score.textContent = 'Правильных ответов: ' +
+        state.correct + ' из ' + questions.length;
+      if (state.answered === questions.length) summarize();
+    }
+
+    function answerSingle(block, q, idx, oi) {
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (i === q.correct) o.classList.add('correct');
+        if (i === oi && oi !== q.correct) o.classList.add('wrong');
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx),
+        oi === q.correct, q);
+    }
+
+    function checkMulti(block, q, idx) {
+      const picked = Array.from(block.querySelectorAll('.test-option.picked'))
+        .map((o) => parseInt(o.dataset.opt, 10)).sort();
+      const correct = q.correct.slice().sort();
+      const ok = picked.length === correct.length &&
+        picked.every((v, i) => v === correct[i]);
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (q.correct.indexOf(i) !== -1) o.classList.add('correct');
+        else if (o.classList.contains('picked')) o.classList.add('wrong');
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function checkMatch(block, q, idx) {
+      let ok = true;
+      block.querySelectorAll('.match-select').forEach((sel) => {
+        const li = parseInt(sel.dataset.left, 10);
+        const val = parseInt(sel.value, 10);
+        if (val !== q.correct[li]) ok = false;
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function summarize() {
+      const box = document.createElement('div');
+      const passed = state.correct >= threshold;
+      let text;
+      if (config === 'final') {
+        text = passed ? pick('finalPass') : pick('finalFail');
+      } else if (config === 'entry') {
+        text = passed ? pick('practiceDone') : pick('entryFail');
+      } else if (config === 'warmup') {
+        text = pick('warmupDone');
+      } else {
+        text = pick('practiceDone');
       }
-    });
+      box.className = 'callout ' + (passed ? 'callout-ok' : 'callout-warn');
+      let html = text + ' <b>' + state.correct + ' из ' + questions.length + '</b>';
+      if (state.wrong.length) {
+        html += '<div class="recap-card quiz-errors"><b>Разбор ошибок:</b><ul>' +
+          state.wrong.map((w) => '<li>' + w + '</li>').join('') + '</ul></div>';
+      }
+      box.innerHTML = html;
+      const retry = document.createElement('button');
+      retry.className = 'retry-btn';
+      retry.type = 'button';
+      retry.textContent = 'Пройти заново';
+      retry.addEventListener('click', render);
+      box.appendChild(retry);
+      host.appendChild(box);
+    }
+
+    render();
   });
+})();
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+// ============================================================
+//  Навигация: триггер + выезжающий drawer + scroll-spy + «наверх»
+//  Разметку (navTrigger/navDrawer/navBackdrop/toTop) рендерит билдер.
+// ============================================================
+(function () {
+  const trigger = document.getElementById('navTrigger');
+  const drawer = document.getElementById('navDrawer');
+  const backdrop = document.getElementById('navBackdrop');
+  const toTop = document.getElementById('toTop');
+  if (!trigger || !drawer) return;
+
+  const reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastFocus = null;
+
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    drawer.classList.add('open');
+    requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    drawer.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+    const first = drawer.querySelector('a, button');
+    if (first) first.focus();
+    document.addEventListener('keydown', onKey);
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('show');
+    window.setTimeout(function () { backdrop.hidden = true; }, reduce ? 0 : 300);
+    drawer.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+    document.removeEventListener('keydown', onKey);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') { closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    const f = drawer.querySelectorAll('a, button');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  trigger.addEventListener('click', function () {
+    if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  backdrop.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) closeDrawer();
+  });
+
+  // Scroll-spy: подсвечиваем активный подраздел
+  const subs = Array.prototype.slice.call(drawer.querySelectorAll('a.nav-sub'));
+  if (subs.length && 'IntersectionObserver' in window) {
+    const byId = {};
+    subs.forEach(function (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') byId[href.slice(1)] = a;
+    });
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        subs.forEach(function (a) { a.classList.remove('nav-active'); });
+        const a = byId[en.target.id];
+        if (a) a.classList.add('nav-active');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
+    });
+  }
+
+  // Кнопка «Наверх»
+  if (toTop) {
+    const onScroll = function () { toTop.hidden = window.scrollY < 600; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
 })();
 
 </script>

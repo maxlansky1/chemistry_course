@@ -25,7 +25,8 @@ def plural_lessons(n):
 def build_map():
     c = json.load(open(COURSE, encoding='utf-8'))
     modules = {m['id']: m for lvl in c['levels'] for m in lvl['modules']}
-    status = {'ready': ('ready', 'готов'), 'draft': ('wip', 'в работе')}
+    status = {'ready': ('ready', 'готов'), 'lint_ok': ('wip', 'собран'),
+              'lessons_done': ('wip', 'уроки готовы'), 'draft': ('wip', 'в работе')}
 
     parts = []
     for lvl in c['levels']:

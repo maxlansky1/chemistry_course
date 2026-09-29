@@ -93,32 +93,33 @@
     font-size: 16px;
     line-height: 1.7;
   }
+  /* Единая палитра: коллауты совпадают с «Условными обозначениями» */
   .callout-idea {
-    background: linear-gradient(135deg, #fffbeb, #fef3c7);
-    border-left: 5px solid var(--orange);
-    color: #78350f;
+    background: #FFF9E6; border-left: 5px solid #FFE0B2; color: #7A5F00;
   }
-  .callout-idea b { color: #92400e; }
+  .callout-idea b { color: #7A5F00; }
   .callout-warn {
-    background: linear-gradient(135deg, #fef2f2, #fee2e2);
-    border-left: 5px solid var(--red);
-    color: #7f1d1d;
+    background: #FDF2F2; border-left: 5px solid #FDE8E8; color: #9B1C1C;
   }
-  .callout-warn b { color: #b91c1c; }
+  .callout-warn b { color: #9B1C1C; }
   .callout-note {
-    background: linear-gradient(135deg, #eff6ff, #dbeafe);
-    border-left: 5px solid #3b82f6;
-    color: #1e3a8a;
+    background: #EBF5FF; border-left: 5px solid #E1EFFE; color: #1E429F;
   }
-  .callout-note b { color: #1d4ed8; }
+  .callout-note b { color: #1E429F; }
   .callout-ok {
-    background: linear-gradient(135deg, #ecfdf5, #d1fae5);
-    border-left: 5px solid var(--green);
-    color: #065f46;
+    background: #EDF7ED; border-left: 5px solid #C8E6C9; color: #1E4620;
   }
-  .callout-ok b { color: #047857; }
+  .callout-ok b { color: #1E4620; }
+  .callout-game {
+    background: #F3E8FF; border-left: 5px solid #E9D5FF; color: #6B21A8;
+  }
+  .callout-game b { color: #6B21A8; }
+  .callout-test {
+    background: #F1F5F9; border-left: 5px solid #E2E8F0; color: #475569;
+  }
+  .callout-test b { color: #475569; }
 
-  .cta { color: var(--accent); font-weight: 800; }
+  .cta { color: #6875F5; font-weight: 800; }
 
   .card-grid {
     display: grid;
@@ -694,62 +695,81 @@
   details.fold .fold-body { padding: 4px 22px 22px; animation: fadeSlide .3s ease; }
   details.fold .legend-grid, details.fold .card-grid { margin-top: 12px; }
 
-  /* Навигация по урокам: карточки + пилюли */
-  .lesson-nav {
-    display: grid; grid-template-columns: 1fr auto 1fr;
-    gap: 12px; align-items: stretch; margin: 26px 0 8px;
+  /* Навигация: триггер + выезжающий drawer + «наверх» */
+  .nav-trigger {
+    position: fixed; top: 12px; left: 12px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    min-height: 44px; padding: 8px 16px; border-radius: 50px;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font: inherit; font-size: 14px; font-weight: 800; color: var(--text);
+    cursor: pointer; box-shadow: var(--shadow); transition: border-color .2s, color .2s;
   }
-  .ln-card {
-    background: var(--panel); border: 1.5px solid var(--border);
-    border-radius: 14px; padding: 14px 18px;
-    text-decoration: none; color: var(--text);
-    display: flex; flex-direction: column; gap: 4px; transition: all .2s;
+  .nav-trigger:hover { border-color: #6875F5; color: #6875F5; }
+  .nav-trigger-icon { font-size: 18px; line-height: 1; }
+  .nav-backdrop {
+    position: fixed; inset: 0; z-index: 70; background: rgba(15,23,42,.5);
+    opacity: 0; transition: opacity .3s ease-in-out;
   }
-  a.ln-card:hover {
-    border-color: var(--h-deep); transform: translateY(-2px);
-    box-shadow: var(--shadow);
+  .nav-backdrop.show { opacity: 1; }
+  .nav-drawer {
+    position: fixed; top: 0; left: 0; height: 100%; width: min(85%, 360px);
+    z-index: 80; background: #fafafa; box-shadow: var(--shadow-lg);
+    transform: translateX(-100%); visibility: hidden; overflow-y: auto;
+    transition: transform .3s ease-in-out, visibility .3s;
+    padding: 18px 16px 28px; -webkit-overflow-scrolling: touch;
   }
-  .ln-card.ln-next { text-align: right; }
-  .ln-dir {
-    font-size: 12px; font-weight: 800; letter-spacing: 1px;
-    text-transform: uppercase; color: var(--h-deep);
+  .nav-drawer.open { transform: translateX(0); visibility: visible; }
+  body.nav-open { overflow: hidden; }
+  .nav-drawer-head { font-size: 16px; font-weight: 800; margin: 6px 8px 14px; line-height: 1.35; }
+  .nav-tree { list-style: none; margin: 0; padding: 0; }
+  .nav-tree a {
+    display: block; padding: 12px; border-radius: 10px; text-decoration: none;
+    color: var(--text); font-size: 15px; font-weight: 700; min-height: 44px;
   }
-  .ln-title { font-size: 15px; font-weight: 700; }
-  .ln-card.done { border-style: dashed; color: var(--muted); cursor: default; }
-  .ln-map { display: flex; gap: 8px; align-items: center; justify-content: center; }
-  .ln-pill {
-    width: 34px; height: 34px; border-radius: 50%;
-    border: 2px solid var(--border); display: inline-flex;
-    align-items: center; justify-content: center;
-    font-weight: 800; font-size: 14px; color: var(--muted);
-    text-decoration: none; background: #fff;
+  .nav-tree a:hover { background: #eef2f7; }
+  .nav-lesson.nav-current > a { color: #6875F5; }
+  .nav-subs {
+    list-style: none; margin: 2px 0 8px 12px; padding: 0 0 0 10px;
+    border-left: 2px solid var(--border);
   }
-  a.ln-pill:hover { border-color: var(--h-deep); }
-  .ln-pill.now { background: var(--h-deep); border-color: var(--h-deep); color: #fff; }
-  @media (max-width: 600px) {
-    .lesson-nav { grid-template-columns: 1fr; }
-    .ln-card.ln-next { text-align: left; }
-    .ln-map { order: -1; }
+  .nav-subs a { font-size: 13.5px; font-weight: 500; color: var(--muted); padding: 9px 10px; min-height: 40px; }
+  .nav-subs a.nav-active {
+    color: #6875F5; font-weight: 700; background: rgba(104,117,245,.10);
+    border-left: 2px solid #6875F5; margin-left: -12px; padding-left: 12px;
+  }
+  .to-top {
+    position: fixed; right: 14px; bottom: 16px; z-index: 60;
+    width: 44px; height: 44px; border-radius: 50%; cursor: pointer;
+    border: 1.5px solid var(--border); background: rgba(255,255,255,.95);
+    color: var(--text); font-size: 20px; line-height: 1; box-shadow: var(--shadow);
+  }
+  .to-top:hover { border-color: #6875F5; color: #6875F5; }
+  [data-stage], [id^="m-"] { scroll-margin-top: 72px; }
+  @media (prefers-reduced-motion: reduce) {
+    .nav-drawer, .nav-backdrop { transition: none; }
   }
 
-  /* Вопросы hero: 3 риторических вопроса модуля/урока */
-  .hero-questions {
-    display: flex; flex-direction: column; gap: 8px;
-    max-width: 640px; margin: 14px auto 0; text-align: left;
-  }
-  .hero-questions div {
-    background: rgba(255,255,255,.75);
-    border: 1px solid var(--border); border-radius: 10px;
-    padding: 8px 14px; font-size: 15.5px; font-weight: 600;
-  }
-
-  /* Цвета карточек легенды по смыслу */
+  /* Палитра карточек легенды */
   .legend-card { border: 2px solid var(--border); }
-  .legend-card.lc-warm { background: linear-gradient(135deg, #fffbeb, #fef3c7); border-color: #f59e0b; }
-  .legend-card.lc-danger { background: linear-gradient(135deg, #fef2f2, #fee2e2); border-color: #ef4444; }
-  .legend-card.lc-info { background: linear-gradient(135deg, #eff6ff, #dbeafe); border-color: #3b82f6; }
-  .legend-card.lc-ok { background: linear-gradient(135deg, #ecfdf5, #d1fae5); border-color: #10b981; }
-  .legend-card.lc-act { background: #fff; border-style: dashed; }
+  .legend-card.lc-warm { background: #FFF9E6; border-color: #FFE0B2; }
+  .legend-card.lc-warm .lc-header { color: #7A5F00; }
+  .legend-card.lc-danger { background: #FDF2F2; border-color: #FDE8E8; }
+  .legend-card.lc-danger .lc-header { color: #9B1C1C; }
+  .legend-card.lc-info { background: #EBF5FF; border-color: #E1EFFE; }
+  .legend-card.lc-info .lc-header { color: #1E429F; }
+  .legend-card.lc-ok { background: #EDF7ED; border-color: #C8E6C9; }
+  .legend-card.lc-ok .lc-header { color: #1E4620; }
+  .legend-card.lc-act { background: #fff; border-color: #6875F5; }
+  .legend-card.lc-act .lc-header,
+  .legend-card.lc-act .lc-body,
+  .legend-card.lc-act .lc-body b { color: #6875F5; }
+  .legend-card.lc-accent { border-color: #6875F5; }
+  .legend-card.lc-game { background: #F3E8FF; border-color: #E9D5FF; }
+  .legend-card.lc-game .lc-header { color: #6B21A8; }
+  .legend-card.lc-test { background: #F1F5F9; border-color: #E2E8F0; }
+  .legend-card.lc-test .lc-header { color: #475569; }
+  .lc-vi { color: #6875F5; }
 
   /* Домашнее задание */
   .stage.s-hw::before { background: linear-gradient(90deg, #10b981, #06b6d4); }
@@ -757,31 +777,7 @@
   .homework ol li { margin-bottom: 6px; }
   .homework .hw-star { color: var(--accent); font-weight: 800; }
 
-  /* Карточки вопросов: нумерованный вопрос-промпт, без эмодзи и ответов.
-     Вопрос задаётся ученику по ходу урока — ответ рождается в уроке. */
-  .qa-list { display: flex; flex-direction: column; gap: 10px;
-    max-width: 680px; margin: 14px auto 0; text-align: left; }
-  .qa-card {
-    background: rgba(255,255,255,.85);
-    border: 1.5px solid var(--border); border-radius: 12px;
-    padding: 12px 16px; border-left: 5px solid var(--accent);
-  }
-  .qa-q { font-size: 15.5px; font-weight: 700; display: flex; gap: 10px; align-items: baseline; }
-  .qa-num {
-    flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%;
-    background: linear-gradient(135deg, #06b6d4, #8b5cf6); color: #fff;
-    display: inline-flex; align-items: center; justify-content: center;
-    font-size: 13px; font-weight: 900; transform: translateY(3px);
-  }
 
-  /* Чипсы навигации модуля */
-  .mod-chips { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 14px; }
-  .mod-chip {
-    padding: 9px 20px; border-radius: 50px; text-decoration: none;
-    background: rgba(255,255,255,.8); border: 1.5px solid var(--border);
-    font-size: 14.5px; font-weight: 800; color: var(--text); transition: all .2s;
-  }
-  a.mod-chip:hover { border-color: var(--h-deep); color: var(--h-deep); transform: translateY(-2px); }
 
   /* Формулы и химические записи */
   .formula { font-variant-numeric: lining-nums; white-space: nowrap; }
@@ -823,25 +819,10 @@
   .center-mt16 { text-align: center; margin-top: 16px; }
   .prose { font-size: 16.5px; line-height: 1.8; }
   .lead { font-size: 15.5px; color: var(--muted); margin-bottom: 16px; }
-  .hero-nav { margin-top: 8px; font-size: 15px; }
   .list-note { margin: 8px 0 0 20px; line-height: 1.8; }
   .fs-26 { font-size: 26px; }
   .sci-node { cursor: pointer; }
   .hero-digest { max-width: 700px; margin: 0 auto; }
-  .lesson-nav.toc {
-    position: sticky; top: 0; z-index: 20;
-    background: rgba(248,250,252,.92); backdrop-filter: blur(8px);
-    border: 1px solid var(--border); border-radius: var(--radius);
-    padding: 10px 14px; margin: 0 0 18px;
-  }
-  .toc-title { font-size: 12px; letter-spacing: 2px; text-transform: uppercase;
-    color: var(--muted); margin-bottom: 8px; }
-  .toc-items { display: flex; gap: 8px; flex-wrap: wrap; }
-  .toc-item { text-decoration: none; font-size: 14px; font-weight: 700;
-    color: var(--text); display: inline-flex; align-items: center; gap: 6px; }
-  .toc-pill { display: inline-flex; align-items: center; justify-content: center;
-    width: 22px; height: 22px; border-radius: 50%; font-size: 12px;
-    background: var(--panel-2); border: 1px solid var(--border); }
 
   /* Quiz: multi и match */
   .quiz-errors { margin-top: 10px; }
@@ -1111,21 +1092,44 @@
     .container { padding: 0 14px; }</style>
 </head>
 <body>
-<!-- built by src/build.py v1 · 2026-09-28 · module_2/u3 · manifest-driven -->
+<!-- built by src/build.py v1 · 2026-09-29 · module_2/u3 · manifest-driven -->
 <header class="hero">
   <div class="badge">Модуль 2 · Урок 3 из 3 · ~20 минут</div>
   <h1>Разделение смесей: лаборатория чистоты</h1>
-  <p>Уровень A → Модуль 2. Агрегатные состояния и смеси · <a href="entry.html">Вход</a> · <a href="u1.html">Урок 1</a> · <a href="u2.html">Урок 2</a> · <a href="u3.html">Урок 3</a> · <a href="final.html">Тест</a></p>
-<div class="qa-list">
-<div class="qa-card"><div class="qa-q"><span class="qa-num">1</span><span>Как выбрать способ разделения смеси?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">2</span><span>Как очистить загрязнённую соль?</span></div></div>
-<div class="qa-card"><div class="qa-q"><span class="qa-num">3</span><span>Что остаётся после выпаривания морской воды?</span></div></div>
-</div>
 </header>
 <div class="container">
+<button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
+<div class="nav-backdrop" id="navBackdrop" hidden></div>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 2. Агрегатные состояния и смеси</div><ul class="nav-tree"><li class="nav-lesson"><a href="entry.html">Начало</a></li><li class="nav-lesson"><a href="u1.html">Урок 1</a></li><li class="nav-lesson"><a href="u2.html">Урок 2</a></li><li class="nav-lesson nav-current"><a href="#" aria-current="true">Урок 3</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u3-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u3-2">Способы разделения смесей</a></li><li><a class="nav-sub" href="#s-u3-3">Задачка на подумать</a></li><li><a class="nav-sub" href="#s-u3-4">Выжимка модуля: самое главное</a></li><li><a class="nav-sub" href="#s-u3-5">Практикум: Очистка загрязнённой соли</a></li><li><a class="nav-sub" href="#s-u3-6">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="final.html">Тест</a></li></ul></nav>
+<button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
+<section class="section">
+  <div id="s-u3-1" data-stage class="stage s-intro fade-in">
+    <div class="stage-header">
+      <div class="stage-number">📌</div>
+      <div>
+        <div class="stage-title">О чём этот урок</div>
+      </div>
+    </div>
+    <p class="prose">Смеси можно разделять разными способами. Научимся выбирать подходящий.</p>
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧭 Способы разделения</div>
+        <div class="c-desc">Как выбрать способ разделения смеси?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🧂 Очистка соли</div>
+        <div class="c-desc">Как очистить загрязнённую соль?</div>
+      </div>
+      <div class="card">
+        <div class="c-title">🌊 Выпаривание</div>
+        <div class="c-desc">Что остаётся после выпаривания морской воды?</div>
+      </div>
+    </div>
+  </div>
+</section>
 <!-- ==================== УРОК 4: РАЗДЕЛЕНИЕ СМЕСЕЙ ==================== -->
 <section class="section">
-  <div class="stage s4 fade-in">
+  <div id="s-u3-2" data-stage class="stage s4 fade-in">
     <div class="stage-header">
       <div class="stage-number">4</div>
       <div>
@@ -1134,7 +1138,7 @@
       </div>
     </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Если смесь состоит из нескольких компонентов, её можно <b>разделить</b>. При этом каждое
       вещество остаётся <b>самим собой</b> — оно не превращается в новое. Способ разделения зависит
       от того, из чего состоит смесь: твёрдое + жидкость, жидкость + жидкость, два твёрдых и т.д.
@@ -1436,7 +1440,7 @@
 
     </div>
 
-    <div class="callout callout-note" style="margin-top:18px;">
+    <div class="callout callout-note" class="mt-18">
       <b>Как выбрать способ?</b> Посмотри на состав смеси и свойства компонентов:
       если твёрдое нерастворимо — фильтрование или отстаивание;
       если растворимо — выпаривание;
@@ -1481,71 +1485,24 @@
         </div>
       </div>
 
-      <div style="text-align:center; margin-top:16px;">
+      <div class="center-mt16">
         <button class="reset-btn" id="resetSeparation">↺ Сбросить игру</button>
       </div>
 
       <div class="game-feedback" id="fbSeparation"></div>
     </div>
 
-    <div class="callout callout-idea" style="margin-top:18px;">
+    <div class="callout callout-idea" class="mt-18">
       <b>Важно понять:</b> при разделении смеси <b>не происходит химических реакций</b>.
       Мы просто разделяем уже существующие вещества, используя их <b>физические различия</b>:
       размер частиц, растворимость, температуру кипения, магнитные свойства, скорость движения в растворителе.
     </div>
   </div>
 </section><!-- ==================== ПРАКТИКУМ ==================== -->
-<section class="section">
-  <div class="stage s-prac fade-in">
-    <div class="stage-header">
-      <div class="stage-number">🔬</div>
-      <div>
-        <div class="stage-title">Практикум: очистка загрязнённой соли</div>
-        <div class="stage-subtitle">Реальная задача из лаборатории — пройди её шаг за шагом</div>
-      </div>
-    </div>
 
-    <p style="font-size:16.5px;line-height:1.8;">
-      В лаборатории выдали <b>загрязнённую соль</b> — она смешана с песком. Нужно её очистить.
-      Это классическая задача из курса химии. Пройди 4 шага, выбирая правильные действия.
-    </p>
-
-    <div id="practicalTask"></div>
-    <div class="callout callout-note" style="margin-top:16px;">
-      <b>📝 В тетрадь:</b> запиши 4 шага очистки соли своими словами. Это задание проверит учитель.
-    </div>
-  </div>
-</section><!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
-<section class="section">
-  <div class="stage s-feyn fade-in">
-    <div class="stage-header">
-      <div class="stage-number">🧠</div>
-      <div>
-        <div class="stage-title">Рефлексия по Фейнману</div>
-        <div class="stage-subtitle">Объясни своими словами и запиши в тетрадь — проверит учитель</div>
-      </div>
-    </div>
-    <p style="font-size:16.5px;line-height:1.8;">
-      Вспомни метод Фейнмана: <b>«Если не можешь объяснить просто — значит, не понял»</b>.
-      Объясни вслух — сыну, дочке, брату или сестре, а затем <b>запиши в тетрадь</b>.
-    </p>
-    <div class="callout callout-note">
-      <b>📝 Задание в тетрадь — ответь письменно на три вопроса:</b>
-      <ol style="margin:8px 0 0 20px; line-height:1.8;">
-        <li>Почему масло не смешивается с водой, а соль — растворяется? Объясни через свойства.</li>
-        <li>Почему пар занимает весь сосуд, а вода — только часть? Что делают частицы?</li>
-        <li>Как из морской воды получить соль? Опиши шаги по порядку.</li>
-      </ol>
-    </div>
-    <div class="callout callout-idea">
-      <b>Как понять, что получилось:</b> перечитай написанное и спроси себя —
-      поймёт ли это младший школьник? Где запнулся — вернись к теме.
-    </div>
-  </div>
-</section>
 <!-- ==================== ЗАДАЧКА НА ПОДУМАТЬ ==================== -->
 <section class="section">
-  <div class="stage s-feyn fade-in">
+  <div id="s-u3-3" data-stage class="stage s-feyn fade-in">
     <div class="stage-header">
       <div class="stage-number">★</div>
       <div>
@@ -1553,7 +1510,7 @@
         <div class="stage-subtitle">Без ответа в файле — разбираем на уроке</div>
       </div>
     </div>
-    <p style="font-size:16.5px;line-height:1.8;">
+    <p class="prose">
       Стакан с мутной водой: глина никак не оседает. Предложи <b>два способа</b> сделать
       воду прозрачной и объясни, на каком свойстве смеси основан каждый способ.
       Подсказка: один способ — из этого урока, второй — придумай сам.
@@ -1562,7 +1519,7 @@
 </section>
 <!-- ==================== КАРТОЧКА-ВЫЖИМКА ==================== -->
 <section class="section">
-  <div class="stage s-prac fade-in">
+  <div id="s-u3-4" data-stage class="stage s-prac fade-in">
     <div class="stage-header">
       <div class="stage-number">📇</div>
       <div>
@@ -1572,7 +1529,7 @@
     </div>
     <div class="callout callout-ok">
       <b>5 тезисов модуля:</b>
-      <ol style="margin:8px 0 0 20px; line-height:1.8;">
+      <ol class="list-note">
         <li>Одно и то же вещество бывает твёрдым, жидким и газообразным — состояние зависит от условий.</li>
         <li>Переходы: плавление, кипение, конденсация, замерзание, сублимация. Плато на графике — энергия идёт на разрыв связей между частицами.</li>
         <li>Чистое вещество состоит из одинаковых частиц; смесь — из разных. Смеси бывают гомогенные и гетерогенные.</li>
@@ -1586,10 +1543,25 @@
       фильтрование · выпаривание · дистилляция.
     </div>
   </div>
+</section><section class="section">
+  <div id="s-u3-5" data-stage class="stage s-prac fade-in">
+    <div class="stage-header">
+      <div class="stage-number">🔬</div>
+      <div>
+        <div class="stage-title">Практикум: Очистка загрязнённой соли</div>
+        <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
+      </div>
+    </div>
+    <p class="prose">В лаборатории выдали соль, смешанную с песком. Нужно её очистить.</p>
+    <p class="subhead-sub">Что понадобится</p>
+    <ul class="list-note"><li>соль с песком</li><li>вода</li><li>фильтр (бумага/салфетка)</li><li>чашка, ложка</li></ul>
+    <p class="subhead-sub">Ход работы</p>
+    <ol class="list-note"><li>Раствори смесь в воде: соль растворится, песок — нет.</li><li>Отфильтруй раствор: песок остаётся на фильтре.</li><li>Выпарь прозрачный раствор: вода испаряется, соль остаётся кристаллами.</li><li>Убери рабочее место и вымой руки.</li></ol>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> 4 шага очистки соли своими словами.</div>
+  </div>
 </section>
-<!-- ==================== ДОМАШНЕЕ ЗАДАНИЕ ==================== -->
 <section class="section">
-  <div class="stage s-hw fade-in">
+  <div id="s-u3-6" data-stage class="stage s-hw fade-in">
     <div class="stage-header">
       <div class="stage-number">🏠</div>
       <div>
@@ -1599,15 +1571,17 @@
     </div>
     <div class="homework">
       <ol>
-<li>Подбери способ разделения для каждой смеси: рис + вода; железные опилки + песок; сахар + вода; спирт + вода.</li>
-<li>Опиши 4 шага очистки загрязнённой соли от песка своими словами.</li>
-<li>Почему магнит вытащит железо из песка, но не вытащит песок из соли? Объясни.</li>
-<li>Что будет, если раствор соли кипятить досуха? Где окажется соль?</li>
-<li><span class="hw-star">★ Предложи, как разделить смесь масла и воды без нагревания. На каком свойстве основан твой способ?</span></li>
+        <li>Подбери способ разделения для каждой смеси: рис + вода; железные опилки + песок; сахар + вода; спирт + вода.</li>
+        <li>Опиши 4 шага очистки загрязнённой соли от песка своими словами.</li>
+        <li>Почему магнит вытащит железо из песка, но не вытащит песок из соли? Объясни.</li>
+        <li>Что будет, если раствор соли кипятить досуха? Где окажется соль?</li>
+        <li><span class="hw-star">★ Предложи, как разделить смесь масла и воды без нагревания. На каком свойстве основан твой способ?</span></li>
+        <li>Объясни бабушке, как очистить загрязнённую соль, не используя сложных терминов.</li>
       </ol>
     </div>
   </div>
 </section>
+
 </div>
 <script type="application/json" id="glossary">{
   "вещество": { "definition": "то, из чего состоят физические тела", "module": "module_1" },
@@ -1847,123 +1821,302 @@ makeDropGame({
   ]
 });
 
-// ============================================================
-//  ПРАКТИКУМ «ОЧИСТКА СОЛИ»
-// ============================================================
-(function initPracticalTask() {
-  const container = document.getElementById('practicalTask');
-  if (!container) return;
+(function initQuizzes() {
+  const islands = document.querySelectorAll('script[type="application/json"][id^="quiz-"]');
+  if (!islands.length) return;
 
-  const STEPS = [
-    {
-      situation: 'Тебе выдали загрязнённую соль (смесь соли и песка). С чего начать?',
-      options: [
-        'Нагреть смесь на огне',
-        'Растворить смесь в воде',
-        'Поднести магнит',
-        'Оставить смесь отстаиваться'
-      ],
-      correct: 1,
-      why: 'Правильно! Сначала нужно растворить смесь в воде: соль растворится, а песок — нет. Так мы разделим растворимый и нерастворимый компоненты.'
-    },
-    {
-      situation: 'Соль растворилась, песок осел на дно. Что делать дальше?',
-      options: [
-        'Выпарить всю воду',
-        'Отфильтровать смесь через фильтр',
-        'Поднести магнит',
-        'Долить ещё воды'
-      ],
-      correct: 1,
-      why: 'Правильно! Нужно отфильтровать: песок останется на фильтре, а раствор соли пройдёт через него в стакан.'
-    },
-    {
-      situation: 'Песок остался на фильтре. Что делать с чистым раствором соли?',
-      options: [
-        'Выбросить',
-        'Выпарить воду',
-        'Оставить отстаиваться',
-        'Подвергнуть хроматографии'
-      ],
-      correct: 1,
-      why: 'Правильно! Нужно выпарить воду. При нагревании вода испаряется, а соль остаётся на дне в виде кристаллов.'
-    },
-    {
-      situation: 'Ты получил чистую соль. Что нужно сделать в конце?',
-      options: [
-        'Уйти сразу — урок закончился',
-        'Убрать рабочее место, вымыть руки, записать наблюдения',
-        'Оставить всё как есть',
-        'Выбросить всё в мусор'
-      ],
-      correct: 1,
-      why: 'Правильно! Настоящий химик записывает наблюдения и убирает рабочее место. Это правило безопасности и хорошая привычка учёного.'
+  const msgIsland = document.getElementById('messages');
+  let MSG = {};
+  try { MSG = msgIsland ? JSON.parse(msgIsland.textContent) : {}; } catch (e) { MSG = {}; }
+
+  function pick(kind) {
+    const arr = MSG[kind] || [];
+    return arr.length ? arr[Math.floor(Math.random() * arr.length)] : '';
+  }
+
+  function shuffle(a) {
+    const r = a.slice();
+    for (let i = r.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [r[i], r[j]] = [r[j], r[i]];
     }
-  ];
+    return r;
+  }
 
-  let step = 0;
-  let correctCount = 0;
+  const PASS_RATIO = 0.8;
+  const LETTERS = 'ABCDEFGH';
 
-  function render() {
-    if (step >= STEPS.length) {
-      const msg = correctCount === STEPS.length
-        ? '🎉 Отлично! Ты настоящий юный химик!'
-        : '👍 Хорошо! Ты прошёл практикум. Обрати внимание на объяснения — они помогут понять детали.';
-      container.innerHTML = `
-        <div class="callout callout-ok" style="margin-top:0;">
-          <b>Практикум завершён!</b> ${msg} Правильных ответов: ${correctCount} из ${STEPS.length}.
-        </div>
-        <div style="text-align:center;margin-top:14px;">
-          <button class="retry-btn" id="retryLab">↺ Пройти заново</button>
-        </div>
-      `;
-      document.getElementById('retryLab').addEventListener('click', () => {
-        step = 0; correctCount = 0; render();
+  islands.forEach((island) => {
+    let data;
+    try { data = JSON.parse(island.textContent); } catch (e) { return; }
+    const targetId = data.target || island.id.replace(/-data$/, '');
+    const host = document.getElementById(targetId);
+    if (!host) return;
+    let questions = data.questions || [];
+    const config = data.config || host.dataset.config || 'practice';
+    if (data.bank && questions.length > data.bank) {
+      questions = shuffle(questions).slice(0, data.bank);
+    }
+    const threshold = data.threshold != null
+      ? data.threshold
+      : Math.ceil(questions.length * PASS_RATIO);
+
+    const state = { answered: 0, correct: 0, wrong: [] };
+
+    function render() {
+      host.innerHTML = '';
+      state.answered = 0;
+      state.correct = 0;
+      state.wrong = [];
+
+      const score = document.createElement('div');
+      score.className = 'test-score';
+      score.textContent = 'Правильных ответов: 0 из ' + questions.length;
+      host.appendChild(score);
+
+      const ordered = data.shuffle === false
+        ? questions.map((q, i) => ({ q: q, idx: i }))
+        : shuffle(questions.map((q, i) => ({ q: q, idx: i })));
+
+      ordered.forEach(({ q, idx }, displayIndex) => {
+        const block = document.createElement('div');
+        block.className = 'test-question';
+        block.dataset.q = String(idx);
+        block.innerHTML = '<div class="q-text"><span class="q-num">' +
+          (displayIndex + 1) + '</span><span>' + q.q + '</span></div>' +
+          '<div class="test-options"></div>' +
+          '<div class="explanation" id="exp-' + island.id + '-' + idx + '"></div>';
+
+        const optBox = block.querySelector('.test-options');
+        if (q.type === 'match') {
+          q.left.forEach((leftText, li) => {
+            const row = document.createElement('div');
+            row.className = 'test-option match-row';
+            const opts = q.right.map((rt, ri) =>
+              '<option value="' + ri + '">' + rt + '</option>').join('');
+            row.innerHTML = '<span class="match-left">' + leftText + '</span>' +
+              '<select class="match-select" data-left="' + li + '">' +
+              '<option value="">—</option>' + opts + '</select>';
+            optBox.appendChild(row);
+          });
+          const btn = document.createElement('button');
+          btn.className = 'retry-btn';
+          btn.type = 'button';
+          btn.textContent = 'Проверить';
+          btn.addEventListener('click', () => checkMatch(block, q, idx));
+          optBox.appendChild(btn);
+        } else {
+          q.options.forEach((optText, oi) => {
+            const opt = document.createElement('div');
+            opt.className = 'test-option';
+            opt.dataset.opt = String(oi);
+            opt.innerHTML = '<span class="opt-marker">' +
+              (q.type === 'multi' ? '☐' : LETTERS[oi]) +
+              '</span><span>' + optText + '</span>';
+            opt.addEventListener('click', () => {
+              if (q.type === 'multi') {
+                opt.classList.toggle('picked');
+                return;
+              }
+              answerSingle(block, q, idx, oi);
+            });
+            optBox.appendChild(opt);
+          });
+          if (q.type === 'multi') {
+            const btn = document.createElement('button');
+            btn.className = 'retry-btn';
+            btn.type = 'button';
+            btn.textContent = 'Проверить';
+            btn.addEventListener('click', () => checkMulti(block, q, idx));
+            optBox.appendChild(btn);
+          }
+        }
+        host.appendChild(block);
       });
-      return;
     }
 
-    const s = STEPS[step];
-    container.innerHTML = `
-      <div style="background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
-          <div style="width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;">${step + 1}</div>
-          <div style="font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);">Шаг ${step + 1} из ${STEPS.length}</div>
-        </div>
-        <div style="font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;">${s.situation}</div>
-        <div style="display:flex;flex-direction:column;gap:10px;">
-          ${s.options.map((o, i) => `
-            <div class="test-option" data-i="${i}">
-              <span class="opt-marker">${String.fromCharCode(65 + i)}</span>
-              <span>${o}</span>
-            </div>
-          `).join('')}
-        </div>
-        <div class="explanation" id="labExp"></div>
-      </div>
-    `;
+    function finish(block, exp, isCorrect, q) {
+      block.querySelectorAll('.test-option').forEach((o) => o.classList.add('disabled'));
+      block.querySelectorAll('button').forEach((b) => (b.disabled = true));
+      exp.classList.add('show', isCorrect ? 'ok' : 'no');
+      exp.innerHTML = '<b>' + (isCorrect ? '✅ Правильно!' : '❌ Не совсем.') +
+        '</b> ' + (q.why || '');
+      if (isCorrect) state.correct++; else state.wrong.push(q.q);
+      state.answered++;
+      const score = host.querySelector('.test-score');
+      if (score) score.textContent = 'Правильных ответов: ' +
+        state.correct + ' из ' + questions.length;
+      if (state.answered === questions.length) summarize();
+    }
 
-    container.querySelectorAll('.test-option').forEach(opt => {
-      opt.addEventListener('click', () => {
-        const i = parseInt(opt.dataset.i);
-        if (opt.classList.contains('disabled')) return;
-        const isCorrect = i === s.correct;
-        container.querySelectorAll('.test-option').forEach(o => {
-          o.classList.add('disabled');
-          const idx = parseInt(o.dataset.i);
-          if (idx === s.correct) o.classList.add('correct');
-          if (idx === i && !isCorrect) o.classList.add('wrong');
-        });
-        const exp = document.getElementById('labExp');
-        exp.classList.add('show', isCorrect ? 'ok' : 'no');
-        exp.innerHTML = `<b>${isCorrect ? '✅ Верно!' : '❌ Не совсем.'}</b> ${s.why}`;
-        if (isCorrect) correctCount++;
-        setTimeout(() => { step++; render(); }, 2200);
+    function answerSingle(block, q, idx, oi) {
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (i === q.correct) o.classList.add('correct');
+        if (i === oi && oi !== q.correct) o.classList.add('wrong');
       });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx),
+        oi === q.correct, q);
+    }
+
+    function checkMulti(block, q, idx) {
+      const picked = Array.from(block.querySelectorAll('.test-option.picked'))
+        .map((o) => parseInt(o.dataset.opt, 10)).sort();
+      const correct = q.correct.slice().sort();
+      const ok = picked.length === correct.length &&
+        picked.every((v, i) => v === correct[i]);
+      block.querySelectorAll('.test-option').forEach((o) => {
+        const i = parseInt(o.dataset.opt, 10);
+        if (q.correct.indexOf(i) !== -1) o.classList.add('correct');
+        else if (o.classList.contains('picked')) o.classList.add('wrong');
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function checkMatch(block, q, idx) {
+      let ok = true;
+      block.querySelectorAll('.match-select').forEach((sel) => {
+        const li = parseInt(sel.dataset.left, 10);
+        const val = parseInt(sel.value, 10);
+        if (val !== q.correct[li]) ok = false;
+      });
+      finish(block, document.getElementById('exp-' + island.id + '-' + idx), ok, q);
+    }
+
+    function summarize() {
+      const box = document.createElement('div');
+      const passed = state.correct >= threshold;
+      let text;
+      if (config === 'final') {
+        text = passed ? pick('finalPass') : pick('finalFail');
+      } else if (config === 'entry') {
+        text = passed ? pick('practiceDone') : pick('entryFail');
+      } else if (config === 'warmup') {
+        text = pick('warmupDone');
+      } else {
+        text = pick('practiceDone');
+      }
+      box.className = 'callout ' + (passed ? 'callout-ok' : 'callout-warn');
+      let html = text + ' <b>' + state.correct + ' из ' + questions.length + '</b>';
+      if (state.wrong.length) {
+        html += '<div class="recap-card quiz-errors"><b>Разбор ошибок:</b><ul>' +
+          state.wrong.map((w) => '<li>' + w + '</li>').join('') + '</ul></div>';
+      }
+      box.innerHTML = html;
+      const retry = document.createElement('button');
+      retry.className = 'retry-btn';
+      retry.type = 'button';
+      retry.textContent = 'Пройти заново';
+      retry.addEventListener('click', render);
+      box.appendChild(retry);
+      host.appendChild(box);
+    }
+
+    render();
+  });
+})();
+
+// ============================================================
+//  FADE-IN
+// ============================================================
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+})();
+
+// ============================================================
+//  Навигация: триггер + выезжающий drawer + scroll-spy + «наверх»
+//  Разметку (navTrigger/navDrawer/navBackdrop/toTop) рендерит билдер.
+// ============================================================
+(function () {
+  const trigger = document.getElementById('navTrigger');
+  const drawer = document.getElementById('navDrawer');
+  const backdrop = document.getElementById('navBackdrop');
+  const toTop = document.getElementById('toTop');
+  if (!trigger || !drawer) return;
+
+  const reduce = window.matchMedia &&
+    window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let lastFocus = null;
+
+  function openDrawer() {
+    lastFocus = document.activeElement;
+    backdrop.hidden = false;
+    drawer.classList.add('open');
+    requestAnimationFrame(function () { backdrop.classList.add('show'); });
+    drawer.setAttribute('aria-hidden', 'false');
+    trigger.setAttribute('aria-expanded', 'true');
+    document.body.classList.add('nav-open');
+    const first = drawer.querySelector('a, button');
+    if (first) first.focus();
+    document.addEventListener('keydown', onKey);
+  }
+
+  function closeDrawer() {
+    drawer.classList.remove('open');
+    backdrop.classList.remove('show');
+    window.setTimeout(function () { backdrop.hidden = true; }, reduce ? 0 : 300);
+    drawer.setAttribute('aria-hidden', 'true');
+    trigger.setAttribute('aria-expanded', 'false');
+    document.body.classList.remove('nav-open');
+    document.removeEventListener('keydown', onKey);
+    if (lastFocus && lastFocus.focus) lastFocus.focus();
+  }
+
+  function onKey(e) {
+    if (e.key === 'Escape') { closeDrawer(); return; }
+    if (e.key !== 'Tab') return;
+    const f = drawer.querySelectorAll('a, button');
+    if (!f.length) return;
+    const first = f[0], last = f[f.length - 1];
+    if (e.shiftKey && document.activeElement === first) {
+      e.preventDefault(); last.focus();
+    } else if (!e.shiftKey && document.activeElement === last) {
+      e.preventDefault(); first.focus();
+    }
+  }
+
+  trigger.addEventListener('click', function () {
+    if (drawer.classList.contains('open')) closeDrawer(); else openDrawer();
+  });
+  backdrop.addEventListener('click', closeDrawer);
+  drawer.addEventListener('click', function (e) {
+    if (e.target.closest('a')) closeDrawer();
+  });
+
+  // Scroll-spy: подсвечиваем активный подраздел
+  const subs = Array.prototype.slice.call(drawer.querySelectorAll('a.nav-sub'));
+  if (subs.length && 'IntersectionObserver' in window) {
+    const byId = {};
+    subs.forEach(function (a) {
+      const href = a.getAttribute('href') || '';
+      if (href.charAt(0) === '#') byId[href.slice(1)] = a;
+    });
+    const io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (en) {
+        if (!en.isIntersecting) return;
+        subs.forEach(function (a) { a.classList.remove('nav-active'); });
+        const a = byId[en.target.id];
+        if (a) a.classList.add('nav-active');
+      });
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: 0 });
+    Object.keys(byId).forEach(function (id) {
+      const el = document.getElementById(id);
+      if (el) io.observe(el);
     });
   }
 
-  render();
+  // Кнопка «Наверх»
+  if (toTop) {
+    const onScroll = function () { toTop.hidden = window.scrollY < 600; };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+    toTop.addEventListener('click', function () {
+      window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
+    });
+  }
 })();
 
 </script>

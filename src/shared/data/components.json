@@ -1,44 +1,1289 @@
 {
   "version": "1.0",
   "components": [
-    { "id": "hero", "purpose": "Шапка урока: бейдж, заголовок, QA", "classes": ["hero", "badge"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": [] }, "example": "<header class=\"hero\"><div class=\"badge\">…</div><h1>…</h1></header>" },
-    { "id": "container", "purpose": "Контейнер контента", "classes": ["container"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": [] }, "example": "<div class=\"container\">…</div>" },
-    { "id": "stage", "purpose": "Этап/секция урока", "classes": ["section", "stage", "stage-header", "stage-number", "stage-title", "stage-subtitle", "subhead", "subhead-sub", "s1", "s2", "s3", "s4", "s-entry", "s-hw", "s-why", "s-test", "s-prac", "s-feyn"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": [] }, "example": "<section class=\"stage\"><div class=\"stage-header\">…</div></section>" },
-    { "id": "callout", "purpose": "Смысловой блок", "classes": ["callout", "callout-idea", "callout-warn", "callout-note", "callout-ok"], "required_attrs": [], "allowed_variants": ["idea", "warn", "note", "ok"], "children": "inline", "produces": { "css": "core", "js": [] }, "example": "<div class=\"callout callout-warn\">…</div>" },
-    { "id": "cta", "purpose": "Призыв к действию", "classes": ["cta"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": [] }, "example": "<div class=\"cta\">…</div>" },
-    { "id": "card-grid", "purpose": "Сетка карточек", "classes": ["card-grid", "card", "c-title", "c-desc"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": [] }, "example": "<div class=\"card-grid\"><div class=\"card\">…</div></div>" },
-    { "id": "task-grid", "purpose": "Сетка задач", "classes": ["task-grid", "task-card", "tc-title", "tc-desc", "tc-emoji", "tc-examples"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": [] }, "example": "<div class=\"task-grid\"><div class=\"task-card\">…</div></div>" },
-    { "id": "legend", "purpose": "Легенда модуля", "classes": ["legend-grid", "legend-card"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": [] }, "example": "<div class=\"legend-grid\"><div class=\"legend-card\">…</div></div>" },
-    { "id": "dropgame", "purpose": "Drop-игра с click-фолбэком", "classes": ["game-area", "game-pool", "pool-item", "basket", "dual-basket", "triple-basket", "reset-btn", "game-feedback", "game-hint", "basket-title", "basket-items"], "required_attrs": ["data-game-id"], "children": "block", "produces": { "css": "core", "js": ["dropgames"] }, "example": "<div class=\"game-area\" data-game-id=\"g1\"><div class=\"game-pool\" id=\"pool-g1\"></div></div>" },
-    { "id": "quiz", "purpose": "Тест/микровопрос", "classes": ["test-question", "test-options", "test-option", "opt-marker", "explanation", "test-score", "retry-btn"], "required_attrs": ["data-config", "id"], "children": "none", "produces": { "css": "core", "js": ["quiz"] }, "example": "<div id=\"quiz-u1-entry\" data-config=\"entry\"></div>" },
-    { "id": "entry-result", "purpose": "Итог входного/разогрева", "classes": ["entry-result"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": ["quiz"] }, "example": "<div class=\"entry-result\" id=\"entryResult\"></div>" },
-    { "id": "timeline", "purpose": "Таймлайн", "classes": ["timeline", "timeline-track", "timeline-item", "timeline-detail", "t-emoji", "t-era", "t-name"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["timeline"] }, "example": "<div class=\"timeline\"><div class=\"timeline-item\">…</div></div>" },
-    { "id": "fade-in", "purpose": "Появление при скролле", "classes": ["fade-in"], "required_attrs": [], "children": "any", "produces": { "css": "core", "js": ["fade"] }, "example": "<div class=\"fade-in\">…</div>" },
-    { "id": "qa-card", "purpose": "QA-карточка вопроса", "classes": ["qa-list", "qa-card", "qa-q", "qa-num"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": [] }, "example": "<div class=\"qa-list\"><div class=\"qa-card\"><div class=\"qa-q\">…</div></div></div>" },
-    { "id": "lesson-nav", "purpose": "Оглавление модуля", "classes": ["lesson-nav", "ln-card", "ln-map", "ln-pill"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": [] }, "example": "<nav class=\"lesson-nav\">…</nav>" },
-    { "id": "thinker", "purpose": "Задачка★ без ответа", "classes": ["thinker"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": [] }, "example": "<div class=\"thinker\">…</div>" },
-    { "id": "recap-card", "purpose": "Выжимка урока", "classes": ["recap-card"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": [] }, "example": "<div class=\"recap-card\">…</div>" },
-    { "id": "notebook-task", "purpose": "Пометка «в тетрадь»", "classes": ["notebook-task"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": [] }, "example": "<div class=\"notebook-task\">…</div>" },
-    { "id": "gate-box", "purpose": "Гейт безопасности", "classes": ["gate-box"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": ["scenarios"] }, "example": "<div class=\"gate-box\">…</div>" },
-    { "id": "video-slot", "purpose": "Слот видео 16:9", "classes": ["video-slot"], "required_attrs": [], "children": "iframe", "produces": { "css": "core", "js": [] }, "example": "<div class=\"video-slot\">…</div>" },
-    { "id": "formula", "purpose": "Химическая формула", "classes": ["formula"], "required_attrs": [], "children": "inline (sub/sup)", "produces": { "css": "core", "js": [] }, "example": "<span class=\"formula\">H<sub>2</sub>O</span>" },
-    { "id": "formula-block", "purpose": "Уравнение реакции", "classes": ["formula-block", "reaction-arrow", "state-tag", "ox-state"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": [] }, "example": "<div class=\"formula-block\">2H<sub>2</sub> + O<sub>2</sub> <span class=\"reaction-arrow\">→</span> 2H<sub>2</sub>O</div>" },
-    { "id": "atom-chip", "purpose": "Инлайн-чип элемента", "classes": ["atom-chip"], "required_attrs": ["data-el"], "children": "none", "produces": { "css": "core", "js": ["chemdraw"] }, "example": "<span class=\"atom-chip\" data-el=\"H\"></span>" },
-    { "id": "term", "purpose": "Термин с подсказкой", "classes": ["term"], "required_attrs": ["data-term"], "children": "inline", "produces": { "css": "core", "js": ["glossary"] }, "example": "<span class=\"term\" data-term=\"вещество\">вещество</span>" },
-    { "id": "sim", "purpose": "Симуляция (обёртка v2)", "classes": ["sim", "sim-head", "sim-cta", "sim-body", "sim-controls", "sim-status", "sim-meta", "sim-micro"], "required_attrs": ["data-sim", "id"], "children": "block", "produces": { "css": "core", "js": ["makesim"] }, "example": "<div class=\"sim\" id=\"sim-states\" data-sim=\"state_of_matter\"></div>" },
-    { "id": "sciences", "purpose": "Схема наук", "classes": ["sci-node", "sciences-svg-wrap", "mb-title", "mb-text"], "detect_ids": ["sciDetail", "sciencesSvg"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["sciences"] }, "example": "<svg id=\"sciencesSvg\"></svg><div id=\"sciDetail\"></div>" },
-    { "id": "methods", "purpose": "Методы познания", "classes": ["method-step", "method-flow", "method-detail-box", "method-arrow", "ms-icon", "ms-name", "ms-num"], "detect_ids": ["methodDetail"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["methods"] }, "example": "<div class=\"method-step\">…</div><div id=\"methodDetail\"></div>" },
-    { "id": "firstlab", "purpose": "Виртуальная лаборатория «первое наблюдение»", "classes": [], "detect_ids": ["labScenario"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["firstlab"] }, "example": "<div id=\"labScenario\"></div>" },
-    { "id": "property", "purpose": "Симулятор «определи свойство»", "classes": ["property-grid", "property-card", "pc-title", "pc-desc", "pc-svg"], "detect_ids": ["propertySimulator"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["property"] }, "example": "<div id=\"propertySimulator\"></div>" },
-    { "id": "checklist", "purpose": "Чек-лист безопасности", "classes": ["safety-item", "safety-list", "si-icon", "si-check", "si-text"], "required_attrs": [], "children": "inline", "produces": { "css": "core", "js": ["checklist"] }, "example": "<div class=\"safety-item\">…</div>" },
-    { "id": "equip", "purpose": "Лабораторное оборудование", "classes": ["equip-card", "equip-grid", "equip-detail", "ed-title", "ed-text", "eq-icon", "eq-name"], "detect_ids": ["equipDetail"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["equip"] }, "example": "<div class=\"equip-card\">…</div><div id=\"equipDetail\"></div>" },
-    { "id": "scenarios", "purpose": "Branching-сценарии безопасности", "classes": ["scenario-card"], "detect_ids": ["scenariosContainer"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["scenarios"] }, "example": "<div id=\"scenariosContainer\"></div>" },
-    { "id": "entry", "purpose": "Входной тест/разогрев (legacy)", "classes": [], "detect_ids": ["entryTestContainer"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["entry"] }, "example": "<div id=\"entryTestContainer\"></div>" },
-    { "id": "pract", "purpose": "Практикум (legacy)", "classes": [], "detect_ids": ["practicalTask"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["pract"] }, "example": "<div id=\"practicalTask\"></div>" },
-    { "id": "finaltest", "purpose": "Итоговый тест (legacy)", "classes": ["test-score"], "detect_ids": ["testContainer", "retryBox", "scoreNum"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": ["finaltest"] }, "example": "<div id=\"testContainer\"></div>" },
-    { "id": "process", "purpose": "Карточки процессов (физические/химические)", "classes": ["process-grid", "process-card", "prc-header", "prc-icon", "prc-name", "prc-eq", "prc-desc"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": [] }, "example": "<div class=\"process-grid\"><div class=\"process-card\">…</div></div>" },
-    { "id": "homework", "purpose": "Домашка в тетрадь", "classes": ["homework", "hw-star"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": [] }, "example": "<div class=\"homework\">…</div>" },
-    { "id": "util", "purpose": "Утилиты раскладки", "classes": ["mt-14", "mt-16", "mt-18", "mt-22", "center-mt16", "prose", "lead", "hero-nav", "hero-digest", "list-note", "fs-26", "toc-title", "toc-items", "toc-item", "toc-pill"], "required_attrs": [], "children": "any", "produces": { "css": "core", "js": [] }, "example": "<p class=\"lead\">…</p>" },
-    { "id": "course-map", "purpose": "Карта курса (одностраничник из course.json)", "classes": ["map-grid", "map-card", "map-level-title", "map-icon", "map-title", "map-meta", "map-badge", "map-topics", "map-skills", "map-prereq"], "required_attrs": [], "children": "block", "produces": { "css": "core", "js": [] }, "example": "<div class=\"map-grid\"><div class=\"map-card ready\">…</div></div>" }
+    {
+      "id": "hero",
+      "purpose": "Шапка урока: бейдж, заголовок, QA",
+      "classes": [
+        "hero",
+        "badge"
+      ],
+      "required_attrs": [],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<header class=\"hero\"><div class=\"badge\">…</div><h1>…</h1></header>"
+    },
+    {
+      "id": "container",
+      "purpose": "Контейнер контента",
+      "classes": [
+        "container"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"container\">…</div>"
+    },
+    {
+      "id": "stage",
+      "purpose": "Этап/секция урока",
+      "classes": [
+        "section",
+        "stage",
+        "stage-header",
+        "stage-number",
+        "stage-title",
+        "stage-subtitle",
+        "subhead",
+        "subhead-sub",
+        "s1",
+        "s2",
+        "s3",
+        "s4",
+        "s-entry",
+        "s-hw",
+        "s-why",
+        "s-test",
+        "s-prac",
+        "s-feyn",
+        "s-legend",
+        "s-intro",
+        "s5",
+        "s6",
+        "s7",
+        "s8"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<section class=\"stage\"><div class=\"stage-header\">…</div></section>"
+    },
+    {
+      "id": "callout",
+      "purpose": "Смысловой блок",
+      "classes": [
+        "callout",
+        "callout-idea",
+        "callout-warn",
+        "callout-note",
+        "callout-ok",
+        "callout-game",
+        "callout-test"
+      ],
+      "required_attrs": [],
+      "allowed_variants": [
+        "idea",
+        "warn",
+        "note",
+        "ok"
+      ],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"callout callout-warn\">…</div>"
+    },
+    {
+      "id": "cta",
+      "purpose": "Призыв к действию",
+      "classes": [
+        "cta"
+      ],
+      "required_attrs": [],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"cta\">…</div>"
+    },
+    {
+      "id": "card-grid",
+      "purpose": "Сетка карточек",
+      "classes": [
+        "card-grid",
+        "card",
+        "c-title",
+        "c-desc"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"card-grid\"><div class=\"card\">…</div></div>"
+    },
+    {
+      "id": "task-grid",
+      "purpose": "Сетка задач",
+      "classes": [
+        "task-grid",
+        "task-card",
+        "tc-title",
+        "tc-desc",
+        "tc-emoji",
+        "tc-examples"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"task-grid\"><div class=\"task-card\">…</div></div>"
+    },
+    {
+      "id": "legend",
+      "purpose": "Легенда модуля",
+      "classes": [
+        "legend-grid",
+        "legend-card",
+        "lc-header",
+        "lc-body",
+        "lc-warm",
+        "lc-danger",
+        "lc-info",
+        "lc-ok",
+        "lc-accent",
+        "lc-act",
+        "lc-game",
+        "lc-test",
+        "lc-vi"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"legend-grid\"><div class=\"legend-card\">…</div></div>"
+    },
+    {
+      "id": "dropgame",
+      "purpose": "Drop-игра с click-фолбэком",
+      "classes": [
+        "game-area",
+        "game-pool",
+        "pool-item",
+        "basket",
+        "dual-basket",
+        "triple-basket",
+        "reset-btn",
+        "game-feedback",
+        "game-hint",
+        "basket-title",
+        "basket-items"
+      ],
+      "required_attrs": [
+        "data-game-id"
+      ],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "dropgames"
+        ]
+      },
+      "example": "<div class=\"game-area\" data-game-id=\"g1\"><div class=\"game-pool\" id=\"pool-g1\"></div></div>"
+    },
+    {
+      "id": "quiz",
+      "purpose": "Тест/микровопрос",
+      "classes": [
+        "test-question",
+        "test-options",
+        "test-option",
+        "opt-marker",
+        "explanation",
+        "test-score",
+        "retry-btn"
+      ],
+      "required_attrs": [
+        "data-config",
+        "id"
+      ],
+      "children": "none",
+      "produces": {
+        "css": "core",
+        "js": [
+          "quiz"
+        ]
+      },
+      "example": "<div id=\"quiz-u1-entry\" data-config=\"entry\"></div>"
+    },
+    {
+      "id": "entry-result",
+      "purpose": "Итог входного/разогрева",
+      "classes": [
+        "entry-result"
+      ],
+      "required_attrs": [],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": [
+          "quiz"
+        ]
+      },
+      "example": "<div class=\"entry-result\" id=\"entryResult\"></div>"
+    },
+    {
+      "id": "timeline",
+      "purpose": "Таймлайн",
+      "classes": [
+        "timeline",
+        "timeline-track",
+        "timeline-item",
+        "timeline-detail",
+        "t-emoji",
+        "t-era",
+        "t-name"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "timeline"
+        ]
+      },
+      "example": "<div class=\"timeline\"><div class=\"timeline-item\">…</div></div>"
+    },
+    {
+      "id": "fade-in",
+      "purpose": "Появление при скролле",
+      "classes": [
+        "fade-in"
+      ],
+      "required_attrs": [],
+      "children": "any",
+      "produces": {
+        "css": "core",
+        "js": [
+          "fade"
+        ]
+      },
+      "example": "<div class=\"fade-in\">…</div>"
+    },
+    {
+      "id": "thinker",
+      "purpose": "Задачка★ без ответа",
+      "classes": [
+        "thinker"
+      ],
+      "required_attrs": [],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"thinker\">…</div>"
+    },
+    {
+      "id": "recap-card",
+      "purpose": "Выжимка урока",
+      "classes": [
+        "recap-card"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"recap-card\">…</div>"
+    },
+    {
+      "id": "notebook-task",
+      "purpose": "Пометка «в тетрадь»",
+      "classes": [
+        "notebook-task"
+      ],
+      "required_attrs": [],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"notebook-task\">…</div>"
+    },
+    {
+      "id": "gate-box",
+      "purpose": "Гейт безопасности",
+      "classes": [
+        "gate-box"
+      ],
+      "required_attrs": [],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": [
+          "scenarios"
+        ]
+      },
+      "example": "<div class=\"gate-box\">…</div>"
+    },
+    {
+      "id": "video-slot",
+      "purpose": "Слот видео 16:9",
+      "classes": [
+        "video-slot"
+      ],
+      "required_attrs": [],
+      "children": "iframe",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"video-slot\">…</div>"
+    },
+    {
+      "id": "formula",
+      "purpose": "Химическая формула",
+      "classes": [
+        "formula"
+      ],
+      "required_attrs": [],
+      "children": "inline (sub/sup)",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<span class=\"formula\">H<sub>2</sub>O</span>"
+    },
+    {
+      "id": "formula-block",
+      "purpose": "Уравнение реакции",
+      "classes": [
+        "formula-block",
+        "reaction-arrow",
+        "state-tag",
+        "ox-state"
+      ],
+      "required_attrs": [],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"formula-block\">2H<sub>2</sub> + O<sub>2</sub> <span class=\"reaction-arrow\">→</span> 2H<sub>2</sub>O</div>"
+    },
+    {
+      "id": "atom-chip",
+      "purpose": "Инлайн-чип элемента",
+      "classes": [
+        "atom-chip"
+      ],
+      "required_attrs": [
+        "data-el"
+      ],
+      "children": "none",
+      "produces": {
+        "css": "core",
+        "js": [
+          "chemdraw"
+        ]
+      },
+      "example": "<span class=\"atom-chip\" data-el=\"H\"></span>"
+    },
+    {
+      "id": "term",
+      "purpose": "Термин с подсказкой",
+      "classes": [
+        "term"
+      ],
+      "required_attrs": [
+        "data-term"
+      ],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": [
+          "glossary"
+        ]
+      },
+      "example": "<span class=\"term\" data-term=\"вещество\">вещество</span>"
+    },
+    {
+      "id": "sim",
+      "purpose": "Симуляция (обёртка v2)",
+      "classes": [
+        "sim",
+        "sim-head",
+        "sim-cta",
+        "sim-body",
+        "sim-controls",
+        "sim-status",
+        "sim-meta",
+        "sim-micro"
+      ],
+      "required_attrs": [
+        "data-sim",
+        "id"
+      ],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "makesim"
+        ]
+      },
+      "example": "<div class=\"sim\" id=\"sim-states\" data-sim=\"state_of_matter\"></div>"
+    },
+    {
+      "id": "sciences",
+      "purpose": "Схема наук",
+      "classes": [
+        "sci-node",
+        "sciences-svg-wrap",
+        "mb-title",
+        "mb-text"
+      ],
+      "detect_ids": [
+        "sciDetail",
+        "sciencesSvg"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "sciences"
+        ]
+      },
+      "example": "<svg id=\"sciencesSvg\"></svg><div id=\"sciDetail\"></div>"
+    },
+    {
+      "id": "methods",
+      "purpose": "Методы познания",
+      "classes": [
+        "method-step",
+        "method-flow",
+        "method-detail-box",
+        "method-arrow",
+        "ms-icon",
+        "ms-name",
+        "ms-num"
+      ],
+      "detect_ids": [
+        "methodDetail"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "methods"
+        ]
+      },
+      "example": "<div class=\"method-step\">…</div><div id=\"methodDetail\"></div>"
+    },
+    {
+      "id": "firstlab",
+      "purpose": "Виртуальная лаборатория «первое наблюдение»",
+      "classes": [],
+      "detect_ids": [
+        "labScenario"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "firstlab"
+        ]
+      },
+      "example": "<div id=\"labScenario\"></div>"
+    },
+    {
+      "id": "property",
+      "purpose": "Симулятор «определи свойство»",
+      "classes": [
+        "property-grid",
+        "property-card",
+        "pc-title",
+        "pc-desc",
+        "pc-svg"
+      ],
+      "detect_ids": [
+        "propertySimulator"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "property"
+        ]
+      },
+      "example": "<div id=\"propertySimulator\"></div>"
+    },
+    {
+      "id": "checklist",
+      "purpose": "Чек-лист безопасности",
+      "classes": [
+        "safety-item",
+        "safety-list",
+        "si-icon",
+        "si-check",
+        "si-text"
+      ],
+      "required_attrs": [],
+      "children": "inline",
+      "produces": {
+        "css": "core",
+        "js": [
+          "checklist"
+        ]
+      },
+      "example": "<div class=\"safety-item\">…</div>"
+    },
+    {
+      "id": "equip",
+      "purpose": "Лабораторное оборудование",
+      "classes": [
+        "equip-card",
+        "equip-grid",
+        "equip-detail",
+        "ed-title",
+        "ed-text",
+        "eq-icon",
+        "eq-name"
+      ],
+      "detect_ids": [
+        "equipDetail"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "equip"
+        ]
+      },
+      "example": "<div class=\"equip-card\">…</div><div id=\"equipDetail\"></div>"
+    },
+    {
+      "id": "scenarios",
+      "purpose": "Branching-сценарии безопасности",
+      "classes": [
+        "scenario-card"
+      ],
+      "detect_ids": [
+        "scenariosContainer"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "scenarios"
+        ]
+      },
+      "example": "<div id=\"scenariosContainer\"></div>"
+    },
+    {
+      "id": "entry",
+      "purpose": "Входной тест/разогрев (legacy)",
+      "classes": [],
+      "detect_ids": [
+        "entryTestContainer"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "entry"
+        ]
+      },
+      "example": "<div id=\"entryTestContainer\"></div>"
+    },
+    {
+      "id": "pract",
+      "purpose": "Практикум (legacy)",
+      "classes": [],
+      "detect_ids": [
+        "practicalTask"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "pract"
+        ]
+      },
+      "example": "<div id=\"practicalTask\"></div>"
+    },
+    {
+      "id": "finaltest",
+      "purpose": "Итоговый тест (legacy)",
+      "classes": [
+        "test-score"
+      ],
+      "detect_ids": [
+        "testContainer",
+        "retryBox",
+        "scoreNum"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "finaltest"
+        ]
+      },
+      "example": "<div id=\"testContainer\"></div>"
+    },
+    {
+      "id": "process",
+      "purpose": "Карточки процессов (физические/химические)",
+      "classes": [
+        "process-grid",
+        "process-card",
+        "prc-header",
+        "prc-icon",
+        "prc-name",
+        "prc-eq",
+        "prc-desc"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"process-grid\"><div class=\"process-card\">…</div></div>"
+    },
+    {
+      "id": "homework",
+      "purpose": "Домашка в тетрадь",
+      "classes": [
+        "homework",
+        "hw-star"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"homework\">…</div>"
+    },
+    {
+      "id": "util",
+      "purpose": "Утилиты раскладки",
+      "classes": [
+        "mt-14",
+        "mt-16",
+        "mt-18",
+        "mt-22",
+        "center-mt16",
+        "prose",
+        "lead",
+        "hero-digest",
+        "list-note",
+        "fs-26",
+        "s-intro",
+        "slider-control",
+        "slider-value"
+      ],
+      "required_attrs": [],
+      "children": "any",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<p class=\"lead\">…</p>"
+    },
+    {
+      "id": "course-map",
+      "purpose": "Карта курса (одностраничник из course.json)",
+      "classes": [
+        "map-grid",
+        "map-card",
+        "map-level-title",
+        "map-icon",
+        "map-title",
+        "map-meta",
+        "map-badge",
+        "map-topics",
+        "map-skills",
+        "map-prereq"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<div class=\"map-grid\"><div class=\"map-card ready\">…</div></div>"
+    },
+    {
+      "id": "sim-states",
+      "purpose": "Симуляция агрегатных состояний (М2)",
+      "classes": [
+        "state-wrap",
+        "state-label",
+        "state-desc",
+        "state-detail",
+        "state-detail-card",
+        "sd-head",
+        "sd-icon",
+        "sd-title",
+        "sd-list"
+      ],
+      "required_attrs": [
+        "id"
+      ],
+      "detect_ids": [
+        "stateCanvas"
+      ],
+      "children": "block",
+      "produces": {
+        "css": "mod02",
+        "js": [
+          "m2_states"
+        ]
+      },
+      "example": "<div class=\"state-wrap\"><canvas id=\"stateCanvas\"></canvas></div>"
+    },
+    {
+      "id": "sim-heating",
+      "purpose": "График нагрева (М2)",
+      "classes": [
+        "graph-wrap",
+        "graph-info",
+        "graph-info-box",
+        "gi-title",
+        "gi-text"
+      ],
+      "required_attrs": [
+        "id"
+      ],
+      "detect_ids": [
+        "timeSlider"
+      ],
+      "children": "block",
+      "produces": {
+        "css": "mod02",
+        "js": [
+          "m2_heating"
+        ]
+      },
+      "example": "<div class=\"graph-wrap\">…</div>"
+    },
+    {
+      "id": "sim-separation",
+      "purpose": "Способы разделения смесей (М2)",
+      "classes": [
+        "method-grid",
+        "method-card",
+        "mc-detail",
+        "mc-head",
+        "mc-icon",
+        "mc-name",
+        "mc-short",
+        "mc-visual-wrap",
+        "six-basket"
+      ],
+      "required_attrs": [
+        "id"
+      ],
+      "detect_ids": [
+        "separationPool"
+      ],
+      "children": "block",
+      "produces": {
+        "css": "mod02",
+        "js": [
+          "m2_separation"
+        ]
+      },
+      "example": "<div class=\"method-grid\"><div class=\"method-card\">…</div></div>"
+    },
+    {
+      "id": "mixture-cards",
+      "purpose": "Карточки смесей, переходов, визуализаций (М2)",
+      "classes": [
+        "mixture-card",
+        "mixture-visual",
+        "mc-title",
+        "mc-desc",
+        "mc-svg-wrap",
+        "transition-grid",
+        "transition-card",
+        "tr-anim",
+        "tr-name",
+        "tr-desc",
+        "visual-card",
+        "vc-visual",
+        "vc-title",
+        "vc-desc"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "mod02",
+        "js": []
+      },
+      "example": "<div class=\"transition-grid\"><div class=\"transition-card\">…</div></div>"
+    },
+    {
+      "id": "sim-signs",
+      "purpose": "Карточки признаков реакций с canvas-анимацией (М3)",
+      "classes": [
+        "sign-grid",
+        "sign-card",
+        "sign-canvas-wrap",
+        "sign-canvas",
+        "sc-head",
+        "sc-icon",
+        "sc-title",
+        "sc-desc"
+      ],
+      "required_attrs": [
+        "id"
+      ],
+      "detect_ids": [
+        "signGrid"
+      ],
+      "children": "block",
+      "produces": {
+        "css": "m3",
+        "js": [
+          "m3_signs"
+        ]
+      },
+      "example": "<div class=\"sign-grid\" id=\"signGrid\"><div class=\"sign-card\">…</div></div>"
+    },
+    {
+      "id": "thermo-cards",
+      "purpose": "Экзо-/эндотермические карточки (М3)",
+      "classes": [
+        "thermo-grid",
+        "thermo-card",
+        "exo",
+        "endo",
+        "tc-icon"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "m3",
+        "js": []
+      },
+      "example": "<div class=\"thermo-grid\"><div class=\"thermo-card exo\">…</div></div>"
+    },
+    {
+      "id": "lavoisier-story",
+      "purpose": "Сюжетные карточки-истории (М3)",
+      "classes": [
+        "lavoisier-story",
+        "ls-title",
+        "ls-text",
+        "tri-symbol"
+      ],
+      "required_attrs": [],
+      "children": "block",
+      "produces": {
+        "css": "m3",
+        "js": []
+      },
+      "example": "<div class=\"lavoisier-story\"><div class=\"ls-title\">…</div></div>"
+    },
+    {
+      "id": "sim-conservation",
+      "purpose": "Опыт Лавуазье, весы, схемы (М4)",
+      "classes": [
+        "canvas-wrap",
+        "scene-svg",
+        "balance-wrap",
+        "balance-card",
+        "bc-title",
+        "blackbox",
+        "arrow",
+        "energy",
+        "flow",
+        "diagram-wrap"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m4",
+        "js": [
+          "m4_candle"
+        ]
+      },
+      "example": "<!-- module_4 -->"
+    },
+    {
+      "id": "sim-energy-hill",
+      "purpose": "Энтропия, энергетическая горка, баланс сил (М4)",
+      "classes": [
+        "johnstone-trio",
+        "johnstone-cell",
+        "macro",
+        "submicro",
+        "symbolic",
+        "jc-icon",
+        "jc-title",
+        "jc-text",
+        "ec-visual",
+        "ec-title",
+        "ec-desc",
+        "energy-cards",
+        "energy-card",
+        "entropy",
+        "slider-control",
+        "slider-value",
+        "verdict-box",
+        "vb-icon",
+        "vb-sub",
+        "verdict-exo",
+        "verdict-endo"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m4",
+        "js": [
+          "m4_hill"
+        ]
+      },
+      "example": "<!-- module_4 -->"
+    },
+    {
+      "id": "util-m4",
+      "purpose": "Утилиты и анимации М4",
+      "classes": [
+        "anim-flame",
+        "anim-spark-1",
+        "anim-spark-2",
+        "anim-spark-3",
+        "anim-spark-4",
+        "anim-spark-5",
+        "anim-run",
+        "anim-glow",
+        "anim-flow",
+        "anim-steam",
+        "anim-steam-2",
+        "anim-steam-3",
+        "btn-green"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m4",
+        "js": []
+      },
+      "example": "<!-- module_4 -->"
+    },
+    {
+      "id": "sim-atom-evidence",
+      "purpose": "Доказательства атомов: диффузия, броуновское движение, Пруст (М5)",
+      "classes": [
+        "canvas-wrap",
+        "canvas-toolbar",
+        "cw-light",
+        "cw-plain",
+        "cw-dark",
+        "ct-col",
+        "atom-3d-wrap",
+        "atom-label",
+        "atom-svg",
+        "nucleus-pulse",
+        "electron-orbit-1",
+        "electron-orbit-2",
+        "electron-orbit-3",
+        "particles-table",
+        "pt-ele",
+        "pt-neu",
+        "pt-pro",
+        "quark-wrap",
+        "scale-wrap",
+        "stat-card",
+        "stat-green",
+        "stat-accent",
+        "stat-cyan",
+        "stat-emoji",
+        "stat-label",
+        "stat-text"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m5",
+        "js": [
+          "m5_atoms"
+        ]
+      },
+      "example": "<!-- module_5 -->"
+    },
+    {
+      "id": "sim-atom-models",
+      "purpose": "Модели атома: таймлайн, Томсон, Резерфорд, Бор, квантовая (М5)",
+      "classes": [
+        "model-tabs",
+        "model-tab",
+        "model-view",
+        "mv-title",
+        "mv-text",
+        "mv-problem",
+        "tl-detail",
+        "active",
+        "ok",
+        "cyan",
+        "green",
+        "red",
+        "violet",
+        "btn",
+        "ghost",
+        "lbl-muted",
+        "range-wide",
+        "dark-strong",
+        "bohr-controls"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m5",
+        "js": [
+          "m5_models"
+        ]
+      },
+      "example": "<!-- module_5 -->"
+    },
+    {
+      "id": "sim-atom-inside",
+      "purpose": "Строение атома: шкала масштабов, кварки (М5)",
+      "classes": [
+        "scale-wrap",
+        "quark-wrap",
+        "center-note",
+        "link-strong",
+        "note-sm",
+        "btn-ghost-dark"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m5",
+        "js": [
+          "m5_inside"
+        ]
+      },
+      "example": "<!-- module_5 -->"
+    },
+    {
+      "id": "sim-m6-element",
+      "purpose": "Химический элемент: изотопы, таймлайн (М6)",
+      "classes": [
+        "isotope-table",
+        "iso-name",
+        "iso-symbol",
+        "energy-badge",
+        "slider-wrap",
+        "slider-label",
+        "canvas-wrap",
+        "cw-dark",
+        "canvas-toolbar",
+        "btn",
+        "ghost"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m6",
+        "js": [
+          "m6_element"
+        ]
+      },
+      "example": "<!-- module_6 -->"
+    },
+    {
+      "id": "sim-m6-molecules",
+      "purpose": "История молекул: энергия связи H2 (М6)",
+      "classes": [
+        "energy-badge",
+        "slider-wrap",
+        "slider-label",
+        "canvas-wrap",
+        "cw-dark"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m6",
+        "js": [
+          "m6_molecules"
+        ]
+      },
+      "example": "<!-- module_6 -->"
+    },
+    {
+      "id": "sim-m6-lang",
+      "purpose": "Язык химии: таймлайн (М6)",
+      "classes": [],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m6",
+        "js": [
+          "m6_lang"
+        ]
+      },
+      "example": "<!-- module_6 -->"
+    },
+    {
+      "id": "sim-m6-compounds",
+      "purpose": "Простые и сложные вещества, разбор формул (М6)",
+      "classes": [
+        "formula-card",
+        "fc-warm",
+        "formula-display",
+        "formula-part",
+        "formula-parts",
+        "fp-label",
+        "fp-value",
+        "legend-box",
+        "lb-warm",
+        "lb-info",
+        "two-col",
+        "fbig",
+        "fsub",
+        "c-orange",
+        "c-blue",
+        "c-violet",
+        "c-red",
+        "c-brown",
+        "fs-14",
+        "tcenter",
+        "card-blue",
+        "card-violet",
+        "card-green",
+        "card-cyan",
+        "card-orange",
+        "card-slate",
+        "card-dark",
+        "high",
+        "low",
+        "orange",
+        "green",
+        "cyan",
+        "violet",
+        "red"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m6",
+        "js": [
+          "m6_compounds"
+        ]
+      },
+      "example": "<!-- module_6 -->"
+    },
+    {
+      "id": "sim-m6-allotropes",
+      "purpose": "Аллотропные модификации: алмаз, озон (М6)",
+      "classes": [
+        "reaction-canvas",
+        "canvas-wrap",
+        "cw-dark",
+        "canvas-toolbar",
+        "energy-badge",
+        "slider-wrap",
+        "slider-label"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "m6",
+        "js": [
+          "m6_allotropes"
+        ]
+      },
+      "example": "<!-- module_6 -->"
+    },
+    {
+      "id": "intro-cards",
+      "purpose": "Универсальный вводный блок «О чём этот модуль/урок» (все модули)",
+      "classes": [
+        "s-intro",
+        "card-grid",
+        "card",
+        "c-title",
+        "c-desc",
+        "callout-idea"
+      ],
+      "required_attrs": [],
+      "detect_ids": [],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": []
+      },
+      "example": "<section class=\"section\"><div class=\"stage s-intro\">… карточки …</div></section>"
+    },
+    {
+      "id": "site-nav",
+      "purpose": "Навигация: триггер, drawer, scroll-spy, «наверх»",
+      "classes": [
+        "nav-trigger",
+        "nav-trigger-icon",
+        "nav-trigger-text",
+        "nav-backdrop",
+        "nav-drawer",
+        "nav-drawer-head",
+        "nav-tree",
+        "nav-lesson",
+        "nav-current",
+        "nav-subs",
+        "nav-sub",
+        "nav-active",
+        "nav-open",
+        "to-top"
+      ],
+      "required_attrs": [
+        "id"
+      ],
+      "detect_ids": [
+        "navTrigger",
+        "navDrawer"
+      ],
+      "children": "block",
+      "produces": {
+        "css": "core",
+        "js": [
+          "nav"
+        ]
+      },
+      "example": "<button id=\"navTrigger\">☰ Содержание</button><nav id=\"navDrawer\">…</nav>"
+    }
   ]
 }
