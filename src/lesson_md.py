@@ -330,6 +330,7 @@ def main():
     """
     import argparse
     ap = argparse.ArgumentParser(description='Export lesson.md from canon (non-destructive).')
+    ap.add_argument('module', nargs='?', help='только этот модуль, напр. module_4 (иначе все)')
     ap.add_argument('--force', action='store_true', help='перезаписать все lesson.md')
     ap.add_argument('--check', action='store_true', help='показать расхождения, не писать')
     args = ap.parse_args()
@@ -352,8 +353,13 @@ def main():
         else:
             stats['skipped'] += 1
 
-    for m in range(1, 7):
-        convert(f'src/lessons/module_{m}', run)
+    base = os.path.join('src', 'lessons')
+    if args.module:
+        mods = [args.module]
+    else:
+        mods = sorted(d for d in os.listdir(base) if os.path.isdir(os.path.join(base, d)))
+    for m in mods:
+        convert(os.path.join(base, m), run)
 
     if args.check:
         print(f"check: {stats['drift']} расхождений (правки в lesson.md — источник, канон надо догнать)")

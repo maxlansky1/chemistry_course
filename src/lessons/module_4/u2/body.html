@@ -1,228 +1,128 @@
 <header class="hero">
-  <div class="badge">Модуль 4 · Законы сохранения · ~20 минут</div>
-  <h1>Закон сохранения энергии</h1>
+  <div class="badge">Модуль 4 · Атомы и химические элементы · ~20 минут</div>
+  <h1>Модели атома: как менялись представления</h1>
 </header>
 <section class="section">
   <div class="stage s2 fade-in">
     <div class="stage-header">
       <div class="stage-number">2</div>
       <div>
-        <div class="stage-title">Закон сохранения энергии</div>
-        <div class="stage-subtitle">Куда девается тепло, которое выделяется при горении</div>
+        <div class="stage-title">Модели атома: как менялись представления</div>
+        <div class="stage-subtitle">От «пудинга» до квантовой модели — путь длиной в 30 лет</div>
       </div>
     </div>
 
     <p class="prose">
-      Когда дрова горят, они выделяют <b>тепло и свет</b>. Когда мы едим, организм получает
-      <b>энергию</b> для движения. Когда работает батарейка, она даёт <b>электричество</b>.
-      Откуда всё это берётся? И куда девается? Ответ — в законе сохранения энергии.
+      Когда учёные убедились, что атомы существуют, возник новый вопрос: <b>как устроен атом внутри?</b>
+      Если атом неделим, почему при электрических разрядах из него вылетают какие-то частицы?
+      Оказалось, атом <b>делим</b> — но не в химических реакциях, а при физических воздействиях.
     </p>
 
-    <div class="callout callout-ok">
-      <b>Закон сохранения энергии:</b> Энергия не создаётся из ничего и не исчезает бесследно.
-      Она может только <b>переходить из одной формы в другую</b>.
+    <h3 class="subhead">📅 Интерактивный таймлайн открытий</h3>
+    <p class="subhead-sub"><span class="cta">👆 Нажми на любую карточку</span>, чтобы узнать подробности.</p>
+    <div class="timeline">
+      <div class="timeline-track" id="timelineTrack"></div>
+      <div class="tl-detail" id="tlDetail"></div>
     </div>
 
-    <h3 class="subhead">🎨 Пять примеров переходов энергии</h3>
-    <p class="subhead-sub">
-      В каждом примере энергия переходит из одной формы в другую. Посмотри на анимации.
-    </p>
-
-    <div class="energy-cards">
-
-      <!-- Карточка 1. Горение дров -->
-      <div class="energy-card">
-        <div class="ec-visual">
-          <svg class="scene-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-            <!-- Поленница -->
-            <ellipse cx="100" cy="90" rx="60" ry="6" fill="#000" opacity="0.08"/>
-            <rect x="60" y="70" width="80" height="14" rx="4" fill="#92400e"/>
-            <rect x="70" y="60" width="60" height="12" rx="4" fill="#a16207"/>
-            <!-- Пламя -->
-            <g class="anim-flame">
-              <path d="M 100 30 Q 88 55 92 65 Q 95 72 100 75 Q 105 72 108 65 Q 112 55 100 30 Z" fill="#f97316"/>
-              <path d="M 100 42 Q 94 58 96 65 Q 98 70 100 72 Q 102 70 104 65 Q 106 58 100 42 Z" fill="#fbbf24"/>
-            </g>
-            <!-- Искры -->
-            <circle cx="88" cy="40" r="2" fill="#fbbf24" class="anim-spark-1"/>
-            <circle cx="115" cy="45" r="1.5" fill="#fbbf24" class="anim-spark-2"/>
-            <circle cx="105" cy="30" r="1.8" fill="#f97316" class="anim-spark-3"/>
-            <!-- Тепловые волны -->
-            <path d="M 60 50 Q 55 45 60 40" stroke="#f97316" stroke-width="2" fill="none" opacity="0.6" class="anim-spark-4"/>
-            <path d="M 140 50 Q 145 45 140 40" stroke="#f97316" stroke-width="2" fill="none" opacity="0.6" class="anim-spark-5"/>
-          </svg>
-        </div>
-        <div class="ec-title">🔥 Горение дров</div>
-        <div class="ec-desc">
-          <span class="flow">Химическая</span>
-          <span class="arrow">→</span>
-          <span class="flow">Тепловая + Световая</span>
-        </div>
-      </div>
-
-      <!-- Карточка 2. Пища → движение -->
-      <div class="energy-card">
-        <div class="ec-visual">
-          <svg class="scene-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="100" cy="90" rx="60" ry="6" fill="#000" opacity="0.08"/>
-            <!-- Яблоко -->
-            <circle cx="40" cy="55" r="14" fill="#ef4444"/>
-            <circle cx="38" cy="48" r="3" fill="#fff" opacity="0.7"/>
-            <path d="M 40 41 Q 42 35 46 36" stroke="#22c55e" stroke-width="2" fill="none"/>
-            <!-- Человечек бежит -->
-            <g class="anim-run">
-              <circle cx="130" cy="35" r="7" fill="#475569"/>
-              <line x1="130" y1="42" x2="130" y2="62" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
-              <line x1="130" y1="48" x2="118" y2="58" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
-              <line x1="130" y1="48" x2="142" y2="55" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
-              <line x1="130" y1="62" x2="120" y2="78" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
-              <line x1="130" y1="62" x2="142" y2="78" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
-            </g>
-            <!-- Стрелочка -->
-            <path d="M 60 55 L 90 55" stroke="#8b5cf6" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrowE)"/>
-            <defs>
-              <marker id="arrowE" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                <polygon points="0 0, 6 3, 0 6" fill="#8b5cf6"/>
-              </marker>
-            </defs>
-          </svg>
-        </div>
-        <div class="ec-title">🍔 Пища → движение</div>
-        <div class="ec-desc">
-          <span class="flow">Химическая</span>
-          <span class="arrow">→</span>
-          <span class="flow">Механическая</span>
-        </div>
-      </div>
-
-      <!-- Карточка 3. Батарейка → ток -->
-      <div class="energy-card">
-        <div class="ec-visual">
-          <svg class="scene-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="100" cy="90" rx="60" ry="6" fill="#000" opacity="0.08"/>
-            <!-- Батарейка -->
-            <rect x="30" y="45" width="40" height="24" rx="4" fill="#e2e8f0" stroke="#475569" stroke-width="2"/>
-            <rect x="70" y="50" width="6" height="14" fill="#475569"/>
-            <text x="42" y="62" font-size="10" font-weight="800" fill="#475569">БАТ</text>
-            <!-- Провода -->
-            <path d="M 30 50 L 15 50 L 15 30 L 155 30 L 155 50 L 145 50" fill="none" stroke="#8b5cf6" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-            <!-- Лампочка -->
-            <circle cx="150" cy="60" r="14" fill="#fef3c7" stroke="#f59e0b" stroke-width="2"/>
-            <circle cx="150" cy="60" r="8" fill="#fbbf24" class="anim-glow"/>
-            <!-- Электроны бегут по проводу -->
-            <line x1="15" y1="30" x2="155" y2="30" stroke="#8b5cf6" stroke-width="4" stroke-dasharray="4 8" class="anim-flow"/>
-          </svg>
-        </div>
-        <div class="ec-title">🔋 Батарейка → ток</div>
-        <div class="ec-desc">
-          <span class="flow">Химическая</span>
-          <span class="arrow">→</span>
-          <span class="flow">Электрическая</span>
-        </div>
-      </div>
-
-      <!-- Карточка 4. Свеча -->
-      <div class="energy-card">
-        <div class="ec-visual">
-          <svg class="scene-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="100" cy="90" rx="40" ry="6" fill="#000" opacity="0.08"/>
-            <!-- Подсвечник -->
-            <ellipse cx="100" cy="82" rx="24" ry="5" fill="#94a3b8"/>
-            <rect x="98" y="75" width="4" height="8" fill="#64748b"/>
-            <!-- Свеча -->
-            <rect x="90" y="40" width="20" height="38" rx="3" fill="#fef3c7" stroke="#d97706" stroke-width="1"/>
-            <!-- Фитиль -->
-            <line x1="100" y1="40" x2="100" y2="33" stroke="#475569" stroke-width="2"/>
-            <!-- Пламя -->
-            <g class="anim-flame">
-              <path d="M 100 15 Q 91 30 94 36 Q 96 40 100 42 Q 104 40 106 36 Q 109 30 100 15 Z" fill="#f97316"/>
-              <path d="M 100 24 Q 96 33 97 37 Q 98 40 100 41 Q 102 40 103 37 Q 104 33 100 24 Z" fill="#fbbf24"/>
-              <path d="M 100 30 Q 98 35 99 38 Q 99 39 100 40 Q 101 39 101 38 Q 102 35 100 30 Z" fill="#fff"/>
-            </g>
-            <!-- Лучи света -->
-            <circle cx="100" cy="30" r="45" fill="#fbbf24" opacity="0.08" class="anim-spark-4"/>
-          </svg>
-        </div>
-        <div class="ec-title">🕯 Свеча горит</div>
-        <div class="ec-desc">
-          <span class="flow">Химическая</span>
-          <span class="arrow">→</span>
-          <span class="flow">Световая + Тепловая</span>
-        </div>
-      </div>
-
-      <!-- Карточка 5. Чайник -->
-      <div class="energy-card">
-        <div class="ec-visual">
-          <svg class="scene-svg" viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-            <ellipse cx="100" cy="90" rx="50" ry="6" fill="#000" opacity="0.08"/>
-            <!-- Чайник -->
-            <ellipse cx="100" cy="70" rx="35" ry="18" fill="#94a3b8" stroke="#475569" stroke-width="1.5"/>
-            <ellipse cx="100" cy="70" rx="30" ry="14" fill="#cbd5e1"/>
-            <path d="M 65 65 Q 55 60 55 55" stroke="#475569" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <path d="M 135 65 Q 145 60 148 55" stroke="#475569" stroke-width="2.5" fill="none" stroke-linecap="round"/>
-            <!-- Индикатор -->
-            <circle cx="115" cy="70" r="3" fill="#10b981"/>
-            <!-- Пар -->
-            <g class="anim-steam">
-              <ellipse cx="55" cy="45" rx="3" ry="5" fill="#cbd5e1" opacity="0.7"/>
-            </g>
-            <g class="anim-steam-2">
-              <ellipse cx="52" cy="48" rx="2.5" ry="4" fill="#cbd5e1" opacity="0.6"/>
-            </g>
-            <g class="anim-steam-3">
-              <ellipse cx="58" cy="50" rx="3" ry="5" fill="#cbd5e1" opacity="0.5"/>
-            </g>
-            <!-- Розетка/вилка -->
-            <rect x="145" y="78" width="16" height="10" rx="2" fill="#e2e8f0" stroke="#475569" stroke-width="1"/>
-            <rect x="148" y="80" width="2" height="4" fill="#475569"/>
-            <rect x="153" y="80" width="2" height="4" fill="#475569"/>
-          </svg>
-        </div>
-        <div class="ec-title">🫖 Чайник</div>
-        <div class="ec-desc">
-          <span class="flow">Электрическая</span>
-          <span class="arrow">→</span>
-          <span class="flow">Тепловая</span>
-        </div>
-      </div>
-
+    <h3 class="subhead">🧪 Четыре модели атома</h3>
+    <p class="subhead-sub"><span class="cta">👆 Переключай</span> модели и смотри анимации.</p>
+    <div class="model-tabs">
+      <button class="model-tab active" data-model="thomson">🍮 Модель Томсона (1904)</button>
+      <button class="model-tab" data-model="rutherford">☀️ Модель Резерфорда (1911)</button>
+      <button class="model-tab" data-model="bohr">🪐 Модель Бора (1913)</button>
+      <button class="model-tab" data-model="quantum">☁️ Квантовая модель (1920-е)</button>
     </div>
 
-    <h3 class="subhead">🎮 Игра «Куда ушла энергия?»</h3>
-    <p class="game-hint">
-      Перетащи каждую карточку в нужную корзину: в какую форму перешла энергия.
-    </p>
-
-    <div class="game-pool" id="energyPool"></div>
-
-    <div class="triple-basket">
-      <div class="basket" data-cat="heat">
-        <div class="basket-title">🔥 Тепловая</div>
-        <div class="basket-items"></div>
+    <!-- Модель Томсона -->
+    <div class="model-view active" id="model-thomson">
+      <div class="mv-title">🍮 «Пудинг с изюмом» — Джозеф Джон Томсон, 1904</div>
+      <div class="mv-text">
+        Томсон открыл <b>электрон</b> — отрицательно заряженную частицу. Но атом в целом нейтрален,
+        значит, должна быть и положительная часть. Томсон предположил, что атом — это <b>шар</b>
+        из положительно заряженного вещества, в который <b>вкраплены электроны</b>, как изюм в пудинг.
       </div>
-      <div class="basket" data-cat="light">
-        <div class="basket-title">💡 Световая</div>
-        <div class="basket-items"></div>
+      <div class="canvas-wrap cw-plain">
+        <canvas id="thomsonCanvas" width="900" height="340"></canvas>
       </div>
-      <div class="basket" data-cat="mech">
-        <div class="basket-title">🏃 Механическая / Электрическая</div>
-        <div class="basket-items"></div>
+      <div class="canvas-toolbar">
+        <button class="btn red" id="thomsonBtn">🎯 Обстрелять альфа-частицами</button>
+      </div>
+      <div class="mv-problem">
+        <b>Проблема модели:</b> если атом — большой положительный шар, то положительные альфа-частицы
+        должны пролетать почти <b>без отклонений</b>. А эксперимент показал другое!
       </div>
     </div>
 
-    <div class="center-mt16">
-      <button class="reset-btn" id="resetEnergy">↺ Сбросить игру</button>
+    <!-- Модель Резерфорда -->
+    <div class="model-view" id="model-rutherford">
+      <div class="mv-title">☀️ Планетарная модель — Эрнест Резерфорд, 1911</div>
+      <div class="mv-text">
+        Резерфорд провёл знаменитый <b>опыт с золотой фольгой</b>. Он «обстреливал» тончайшую
+        золотую плёнку альфа-частицами и смотрел, как они рассеиваются. Результат был ошеломляющим:
+        большинство частиц пролетало насквозь, но некоторые <b>отскакивали назад</b>!
+        <br><br>
+        Резерфорд воскликнул: «Это так же невероятно, как если бы вы выстрелили из пушки в лист бумаги,
+        а ядро отскочило бы обратно в вас». Он сделал вывод: атом — это <b>пустота</b>, в центре которой
+        крошечное, но очень тяжёлое <b>ядро</b>, а вокруг движутся электроны — как <b>Солнечная система</b> в миниатюре.
+      </div>
+      <div class="canvas-wrap cw-dark">
+        <canvas id="rutherfordCanvas" width="900" height="420"></canvas>
+      </div>
+      <div class="canvas-toolbar">
+        <button class="btn red" id="rutherfordBtn">▶ Запустить опыт</button>
+        <button class="btn ghost" id="rutherfordReset">↺ Сброс</button>
+      </div>
+      <div class="mv-problem">
+        <b>Проблема модели:</b> по законам физики электрон, движущийся вокруг ядра, должен излучать
+        энергию и в итоге упасть на ядро. Но атомы стабильны!
+      </div>
     </div>
 
-    <div class="game-feedback" id="fbEnergy"></div>
+    <!-- Модель Бора -->
+    <div class="model-view" id="model-bohr">
+      <div class="mv-title">🪐 Модель Бора — Нильс Бор, 1913</div>
+      <div class="mv-text">
+        Бор предположил, что электроны могут двигаться только по <b>определённым орбитам</b> —
+        «разрешённым» уровням энергии. Пока электрон на орбите, он <b>не излучает</b> энергию.
+        А когда перескакивает с одной орбиты на другую — <b>поглощает или выделяет</b> энергию
+        порцией (квантом).
+      </div>
+      <div class="canvas-wrap cw-dark">
+        <canvas id="bohrCanvas" width="900" height="380"></canvas>
+      </div>
+      <div class="bohr-controls">
+        <button class="btn cyan" id="bohrUp">⚡ Возбудить атом</button>
+        <button class="btn green" id="bohrDown">💫 Вернуть электрон</button>
+        <button class="btn ghost" id="bohrReset">↺ Сброс</button>
+      </div>
+      <div class="mv-problem">
+        <b>Проблема модели:</b> модель хорошо работала для водорода, но не объясняла строение
+        более сложных атомов.
+      </div>
+    </div>
 
-    <div class="callout callout-idea mt-18">
-      <b>Аналогия с деньгами.</b> Представь, что энергия — это деньги. Ты не можешь взять деньги
-      «из воздуха», но можешь перевести рубли в доллары, положить на карту или потратить.
-      Точно так же энергия: она не исчезает, а <b>переходит из одной формы в другую</b>.
+    <!-- Квантовая модель -->
+    <div class="model-view" id="model-quantum">
+      <div class="mv-title">☁️ Квантовая модель — Шрёдингер, Гейзенберг, 1920-е</div>
+      <div class="mv-text">
+        Современная модель говорит: электрон — это <b>не шарик</b>, который движется по орбите,
+        а <b>«облако вероятности»</b>. Мы не можем точно сказать, где находится электрон в данный момент,
+        но можем указать, где он бывает <b>чаще всего</b>. Это облако называется <b>электронной орбиталью</b>.
+      </div>
+      <div class="canvas-wrap cw-dark">
+        <canvas id="quantumCanvas" width="900" height="380"></canvas>
+      </div>
+      <div class="canvas-toolbar ct-col">
+        <label class="lbl-muted">Энергия / форма орбитали:</label>
+        <input type="range" id="quantumSlider" min="0" max="2" value="0" class="range-wide">
+        <div id="quantumLabel" class="dark-strong">s-орбиталь (сфера)</div>
+      </div>
+      <div class="mv-problem ok">
+        <b>Это — современная модель.</b> Она лучше всего объясняет все эксперименты.
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ==================== УРОК 3: ДВИЖУЩИЕ СИЛЫ РЕАКЦИЙ ==================== -->
+<!-- ==================== УРОК 3: СТРОЕНИЕ АТОМА ==================== -->

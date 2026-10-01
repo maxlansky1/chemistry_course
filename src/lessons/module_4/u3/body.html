@@ -1,170 +1,139 @@
 <header class="hero">
-  <div class="badge">Модуль 4 · Законы сохранения · ~20 минут</div>
-  <h1>Движущие силы реакций</h1>
+  <div class="badge">Модуль 4 · Атомы и химические элементы · ~25 минут</div>
+  <h1>Химический элемент</h1>
 </header>
 <section class="section">
-  <div class="stage s3 fade-in">
+  <div class="stage s1 fade-in">
     <div class="stage-header">
-      <div class="stage-number">3</div>
+      <div class="stage-number">1</div>
       <div>
-        <div class="stage-title">Движущие силы реакций</div>
-        <div class="stage-subtitle">Почему одни реакции идут сами, а другие — нет</div>
+        <div class="stage-title">Химический элемент</div>
+        <div class="stage-subtitle">Как пришли к этому понятию и что такое изотопы</div>
       </div>
     </div>
 
     <p class="prose">
-      Мы знаем, что реакции подчиняются законам сохранения. Но <b>почему</b> одни реакции
-      происходят сами собой (горение, ржавление), а другие — нет? Оказывается, в природе
-      действуют <b>две силы</b>, которые и определяют, пойдёт ли реакция.
+      В Модуле 4а мы узнали, что все вещества состоят из атомов. Но атомы бывают
+      <b>разных видов</b>. Атомы одного вида — с одинаковым зарядом ядра — называются
+      <b>химическим элементом</b>.
     </p>
-
-    <!-- СИЛА 1 -->
-    <h3 class="subhead">⬇️ Сила первая: стремление к снижению энергии</h3>
 
     <div class="callout callout-idea">
-      <b>Всё в природе стремится к покою.</b> Мяч катится с горки вниз, горячий чай остывает,
-      камень падает на землю. Так и вещества: они «скатываются» в состояние
-      с <b>меньшей энергией</b>.
+      <b>Определение:</b> <b>Химический элемент</b> — это вид атомов с одинаковым
+      зарядом ядра. Например, все атомы с зарядом ядра +1 — это водород H.
+      Все атомы с зарядом ядра +8 — это кислород O.
     </div>
 
-    <p class="subhead-sub">
-      <span class="cta">👆 Подвигай ползунок</span>, чтобы увидеть, как мяч «скатывается с горки».
-      Каждое положение — это определённая энергия системы.
+    <h3 class="subhead">📜 Как человечество пришло к понятию «химический элемент»</h3>
+
+    <p class="prose">
+      Это понятие формировалось <b>постепенно, более двух столетий</b>. В античности
+      и в эпоху алхимии учёные считали, что всё состоит из «первоэлементов» —
+      земли, воды, воздуха и огня. Но с развитием химического анализа становилось
+      ясно, что это не так.
     </p>
 
-    <div class="diagram-wrap">
-      <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="hillBg" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fef3c7"/>
-            <stop offset="100%" stop-color="#fffbeb"/>
-          </linearGradient>
-          <linearGradient id="ballGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#f87171"/>
-            <stop offset="100%" stop-color="#dc2626"/>
-          </linearGradient>
-        </defs>
-        <rect x="0" y="0" width="800" height="400" fill="url(#hillBg)"/>
-
-        <!-- Гора -->
-        <path d="M 80 340 Q 200 120 320 280 Q 400 360 480 300 L 720 300" 
-              fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
-
-        <!-- Пунктир уровня -->
-        <line x1="80" y1="340" x2="720" y2="340" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>
-
-        <!-- Метки: реагенты и продукты -->
-        <text x="200" y="120" font-size="14" fill="#b91c1c" font-weight="800">Высокая энергия (реагенты)</text>
-        <text x="620" y="270" font-size="14" fill="#065f46" font-weight="800">Низкая энергия (продукты)</text>
-
-        <!-- Мяч (контролируется ползунком) -->
-        <g id="energyBall">
-          <circle cx="200" cy="150" r="26" fill="url(#ballGrad)" stroke="#991b1b" stroke-width="2"/>
-          <circle cx="190" cy="142" r="6" fill="#fff" opacity="0.5"/>
-        </g>
-
-        <!-- Стрелка вниз -->
-        <path d="M 400 200 L 400 260" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrowDown)"/>
-        <defs>
-          <marker id="arrowDown" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto">
-            <polygon points="0 0, 8 0, 4 8" fill="#8b5cf6"/>
-          </marker>
-        </defs>
-      </svg>
-    </div>
-
-    <div class="slider-control">
-      <label>📍 Положение мяча:</label>
-      <input type="range" id="hillSlider" min="0" max="100" value="0" step="1">
-      <span class="slider-value" id="hillValue">0 %</span>
-    </div>
-
-    <div class="verdict-box" id="hillFeedback">
-      <div class="vb-icon">🔥</div>
-      <div>Мяч на вершине — реагенты обладают большой энергией.</div>
-      <div class="vb-sub">Подвигай ползунок, чтобы увидеть, что произойдёт.</div>
-    </div>
-
-    <div class="callout callout-note mt-16">
-      <b>Как это работает?</b> Когда реагенты превращаются в продукты, система
-      «скатывается» в более устойчивое состояние. При этом <b>выделяется энергия</b> —
-      обычно в виде тепла. Именно поэтому горение, ржавление и другие подобные реакции
-      происходят <b>сами собой</b>.
-    </div>
-
-    <!-- СИЛА 2 -->
-    <h3 class="subhead">⬆️ Сила вторая: стремление к повышению беспорядка (энтропия)</h3>
-
-    <div class="callout callout-idea">
-      <b>Беспорядок растёт сам собой, а порядок нужно наводить руками.</b>
-      Комната сама становится грязной, но не убирается сама. Сахар растворяется в воде сам,
-      но не собирается обратно в кубик. Это и есть <b>энтропия</b> — мера беспорядка.
-    </div>
-
-    <p class="subhead-sub">
-      <span class="cta">👆 Подвигай ползунок</span>, чтобы увидеть, как порядок превращается в беспорядок.
-    </p>
-
-    <div class="canvas-wrap">
-      <canvas id="entropyCanvas" width="900" height="320"></canvas>
-    </div>
-
-    <div class="slider-control">
-      <label>🌀 Беспорядок:</label>
-      <input type="range" id="entropySlider" min="0" max="100" value="0" step="1">
-      <span class="slider-value" id="entropyValue">0 %</span>
-    </div>
-
-    <div class="verdict-box" id="entropyFeedback">
-      <div class="vb-icon">📦</div>
-      <div>Полный порядок: все частицы собраны вместе.</div>
-      <div class="vb-sub">Подвигай ползунок, чтобы увидеть, как растёт беспорядок.</div>
+    <div class="timeline">
+      <div class="timeline-track" id="elemTimelineTrack"></div>
+      <div class="tl-detail" id="elemTlDetail"></div>
     </div>
 
     <div class="callout callout-note">
-      <b>Термин:</b> Энтропия — это мера беспорядка. Чем больше беспорядка в системе,
-      тем выше энтропия. Природа стремится к максимальному беспорядку.
+      <b>Важно понимать:</b> до конца XVIII века под «элементом» часто понимали
+      простое вещество, которое нельзя разложить. Только после работ Дальтона
+      и Берцелиуса в начале XIX века элемент стали связывать с <b>атомами</b>
+      определённого вида. А окончательное понимание элемента как разновидности
+      атомов сформировалось лишь к концу XIX века, после открытия радиоактивности
+      и изотопии.
     </div>
 
-    <!-- СИЛА 3: ВМЕСТЕ -->
-    <h3 class="subhead">🤝 Две силы вместе: пойдёт ли реакция?</h3>
+    <h3 class="subhead">🔬 Изотопы: атомы одного элемента, но разные</h3>
 
     <p class="prose">
-      Чтобы понять, пойдёт ли реакция сама, нужно учесть <b>обе силы сразу</b>.
-      <span class="cta">👆 Подвигай два ползунка</span> и посмотри, что произойдёт.
+      Представь, что у тебя есть два атома водорода. У обоих — по одному протону
+      (заряд ядра +1). Но у одного в ядре есть ещё и нейтрон, а у другого — нет.
+      Это <b>изотопы</b> — разновидности одного химического элемента, которые
+      отличаются числом нейтронов в ядре.
     </p>
 
-    <div class="balance-wrap">
-      <div class="balance-card energy">
-        <div class="bc-title">⬇️ Снижение энергии</div>
-        <p>
-          Насколько сильно система хочет «скатиться с горки»?
-        </p>
-        <input type="range" id="forceEnergy" min="0" max="100" value="50" step="1" class="slider-control">
-        <div class="verdict-exo" id="forceEnergyValue">50 %</div>
-      </div>
-      <div class="balance-card entropy">
-        <div class="bc-title">⬆️ Повышение беспорядка</div>
-        <p>
-          Насколько сильно система хочет «развалиться»?
-        </p>
-        <input type="range" id="forceEntropy" min="0" max="100" value="50" step="1" class="slider-control">
-        <div class="verdict-endo" id="forceEntropyValue">50 %</div>
-      </div>
+    <div class="callout callout-idea">
+      <b>Изотопы</b> — это атомы одного и того же элемента, у которых
+      <b>одинаковое число протонов</b>, но <b>разное число нейтронов</b>.
+      Химические свойства у них почти одинаковые, а вот масса — разная.
     </div>
 
-    <div class="verdict-box" id="balanceVerdict">
-      <div class="vb-icon">🤔</div>
-      <div>Подвигай ползунки, чтобы увидеть, пойдёт ли реакция.</div>
-      <div class="vb-sub">Правило простое: если обе силы «за» — реакция идёт сама.</div>
+    <!-- ДЕТАЛЬНАЯ АНИМАЦИЯ ИЗОТОПОВ С ЭЛЕКТРОНАМИ -->
+    <div class="canvas-wrap cw-dark">
+      <canvas id="isotopeCanvas" width="960" height="440"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn cyan" id="isotopeBtn">▶ Показать три изотопа водорода</button>
+      <button class="btn ghost" id="isotopeStepBtn">🔍 Показать по одному</button>
     </div>
 
-    <div class="callout callout-ok">
-      <b>Главное правило:</b> Реакция идёт <b>сама собой</b>, когда система может
-      <b>одновременно</b> снизить энергию и повысить беспорядок.
-      Если хотя бы одна из сил против — реакция может не пойти без внешней помощи.
+    <!-- СВОДНАЯ ТАБЛИЦА ИЗОТОПОВ -->
+    <h4 class="subhead">📊 Сравнение трёх изотопов водорода</h4>
+    <table class="isotope-table">
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Символ</th>
+          <th>Протоны</th>
+          <th>Нейтроны</th>
+          <th>Электроны</th>
+          <th>Масса (а.е.м.)</th>
+          <th>Распространённость</th>
+          <th>Стабильность</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="iso-name">Протий</td>
+          <td class="iso-symbol">¹H</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1,0078</td>
+          <td>99,985%</td>
+          <td>✅ Стабилен</td>
+        </tr>
+        <tr>
+          <td class="iso-name">Дейтерий</td>
+          <td class="iso-symbol">²H (D)</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>2,0141</td>
+          <td>0,015%</td>
+          <td>✅ Стабилен</td>
+        </tr>
+        <tr>
+          <td class="iso-name">Тритий</td>
+          <td class="iso-symbol">³H (T)</td>
+          <td>1</td>
+          <td>2</td>
+          <td>1</td>
+          <td>3,0160</td>
+          <td>Следы</td>
+          <td>⚠️ Радиоактивен (12,3 года)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-ok mt-16">
+      <b>Что общего?</b> У всех трёх изотопов — <b>один протон</b> (заряд ядра +1)
+      и <b>один электрон</b>. Поэтому все они — <b>водород</b>. Они одинаково
+      вступают в химические реакции. Разница только в массе: чем больше нейтронов,
+      тем тяжелее атом.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Интересный факт:</b> изотопы есть у большинства элементов. Например,
+      углерод существует в виде ¹²C (6 протонов, 6 нейтронов), ¹³C (6 протонов,
+      7 нейтронов) и ¹⁴C (6 протонов, 8 нейтронов). Именно ¹⁴C используется
+      для радиоуглеродного датирования в археологии.
     </div>
   </div>
 </section>
 
-<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
+<!-- ==================== УРОК 2: ИСТОРИЯ ИЗУЧЕНИЯ МОЛЕКУЛ ==================== -->

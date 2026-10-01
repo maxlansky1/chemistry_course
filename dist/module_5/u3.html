@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Урок 3. Что внутри атома?</title>
+<title>Урок 2. Язык химии: как записывать и читать</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -861,7 +861,11 @@
   }
   .map-level-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
 
-/* module_5 (4а) — атомы, модели, строение атома */
+/* module_6 (4б) — элемент, молекулы, язык химии, вещества, аллотропы */
+
+.stage.s5::before{background:linear-gradient(90deg,#06b6d4,#0891b2);}
+
+.stage.s6::before{background:linear-gradient(90deg,#10b981,#059669);}
 
 .canvas-wrap{position:relative;background:linear-gradient(180deg,#f0f9ff 0%,#e0f2fe 100%);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
 
@@ -885,6 +889,8 @@
 
 .btn.green{background:#10b981;box-shadow:0 6px 16px -6px rgba(16,185,129,.5);}
 
+.btn.orange{background:#f59e0b;box-shadow:0 6px 16px -6px rgba(245,158,11,.5);}
+
 .tl-year{flex-shrink:0;scroll-snap-align:start;min-width:160px;background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .25s;text-align:center;}
 
 .tl-year:hover{border-color:var(--accent);transform:translateY(-3px);}
@@ -905,77 +911,17 @@
 
 .tl-detail .tl-d-text{font-size:15.5px;line-height:1.75;color:var(--text);}
 
-.model-tabs{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+.formula-card{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;margin-top:16px;}
 
-.model-tab{padding:10px 20px;border-radius:50px;background:var(--panel-2);border:2px solid var(--border);cursor:pointer;font-size:14px;font-weight:700;transition:all .25s;color:var(--text);}
+.formula-display{font-size:38px;font-weight:900;text-align:center;color:var(--accent);letter-spacing:2px;margin:10px 0;font-family:'Courier New',monospace;}
 
-.model-tab:hover{border-color:var(--accent);}
+.formula-parts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;}
 
-.model-tab.active{background:var(--accent);color:#fff;border-color:var(--accent);box-shadow:0 4px 12px -4px rgba(139,92,246,.5);}
+.formula-part{padding:14px;border-radius:12px;text-align:center;font-size:14.5px;line-height:1.6;}
 
-.model-view{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;}
+.formula-part .fp-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
 
-.model-view.active{display:block;}
-
-.model-view .mv-title{font-size:18px;font-weight:800;margin-bottom:12px;}
-
-.model-view .mv-text{font-size:15.5px;line-height:1.75;}
-
-.model-view .mv-text b{color:var(--accent);}
-
-.model-view .mv-problem{margin-top:14px;padding:12px 16px;background:#fef2f2;border-radius:10px;border-left:4px solid var(--red);font-size:14.5px;color:#991b1b;}
-
-.model-view .mv-problem b{color:#b91c1c;}
-
-.model-view .mv-problem.ok{background:#ecfdf5;border-left-color:var(--green);color:#065f46;}
-
-.atom-3d-wrap{margin-top:16px;background:linear-gradient(135deg,#0f172a,#1e293b);border-radius:14px;padding:30px;text-align:center;position:relative;overflow:hidden;min-height:400px;display:flex;align-items:center;justify-content:center;}
-
-.atom-3d-wrap .atom-svg{width:100%;max-width:520px;height:auto;}
-
-.atom-3d-wrap .atom-label{position:absolute;bottom:16px;left:0;right:0;text-align:center;font-size:14px;font-weight:700;color:#94a3b8;}
-
-@keyframes electronOrbit1{0%{transform:rotate(0)}100%{transform:rotate(360deg)}}
-
-@keyframes electronOrbit2{0%{transform:rotate(60deg)}100%{transform:rotate(420deg)}}
-
-@keyframes electronOrbit3{0%{transform:rotate(120deg)}100%{transform:rotate(480deg)}}
-
-@keyframes nucleusPulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
-
-.electron-orbit-1{animation:electronOrbit1 4s linear infinite;transform-origin:260px 200px;}
-
-.electron-orbit-2{animation:electronOrbit2 5s linear infinite;transform-origin:260px 200px;}
-
-.electron-orbit-3{animation:electronOrbit3 6s linear infinite;transform-origin:260px 200px;}
-
-.nucleus-pulse{animation:nucleusPulse 2s ease-in-out infinite;transform-origin:260px 200px;}
-
-.particles-table{width:100%;border-collapse:collapse;margin-top:14px;background:#fff;border-radius:12px;overflow:hidden;border:2px solid var(--border);}
-
-.particles-table th{background:var(--panel-2);padding:12px;font-size:14px;text-align:left;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.5px;border-bottom:2px solid var(--border);}
-
-.particles-table td{padding:12px;font-size:15px;border-bottom:1px solid var(--border);}
-
-.particles-table tr:last-child td{border-bottom:none;}
-
-.particles-table .pt-pro{background:#fef2f2;font-weight:900;color:#b91c1c;}
-
-.particles-table .pt-neu{background:#f1f5f9;font-weight:900;color:#475569;}
-
-.particles-table .pt-ele{background:#eff6ff;font-weight:900;color:#1d4ed8;}
-
-.johnstone-trio{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:18px;}
-
-.bohr-controls{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
-
-.quark-wrap{margin-top:16px;background:linear-gradient(135deg,#1e1b4b,#312e81);border-radius:14px;padding:24px;text-align:center;color:#e0e7ff;position:relative;overflow:hidden;min-height:320px;}
-
-.quark-wrap canvas{display:block;width:100%;height:auto;}
-
-.scale-wrap{margin-top:16px;background:linear-gradient(180deg,#0f172a,#1e293b);border-radius:14px;padding:24px;color:#e2e8f0;position:relative;overflow:hidden;min-height:420px;}
-
-.scale-wrap canvas{display:block;width:100%;height:auto;}
+.formula-part .fp-value{font-weight:800;color:var(--text);}
 
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
@@ -991,44 +937,74 @@
 
 .practical-step .ps-situation{font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;}
 
-@media (max-width:800px){.dual-basket{grid-template-columns:1fr;}.johnstone-trio{grid-template-columns:1fr;}}
+.isotope-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px;}
+
+.isotope-table th,.isotope-table td{padding:12px 14px;border:1.5px solid var(--border);text-align:left;}
+
+.isotope-table th{background:var(--panel-2);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
+
+.isotope-table tr:hover{background:#f8fafc;}
+
+.isotope-table .iso-name{font-weight:800;}
+
+.isotope-table .iso-symbol{font-family:'Courier New',monospace;font-weight:800;font-size:16px;color:var(--accent);}
+
+.slider-wrap{display:flex;align-items:center;gap:14px;margin:16px 0;flex-wrap:wrap;}
+
+.slider-wrap input[type=range]{flex:1;min-width:200px;accent-color:var(--accent);height:8px;cursor:pointer;}
+
+.slider-label{font-size:14px;font-weight:700;color:var(--muted);min-width:90px;}
+
+.energy-badge{display:inline-block;padding:4px 14px;border-radius:50px;font-size:13px;font-weight:800;transition:all .3s;}
+
+.energy-badge.high{background:#fef2f2;color:#dc2626;}
+
+.energy-badge.low{background:#ecfdf5;color:#059669;}
+
+.reaction-canvas{background:linear-gradient(180deg,#0f172a,#1e293b);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
+
+.reaction-canvas canvas{display:block;width:100%;height:auto;}
+
+@media (max-width:800px){.dual-basket{grid-template-columns:1fr;}.formula-parts{grid-template-columns:1fr;}}
 
 @media (max-width:600px){.container{padding:0 14px;}.hero{padding:40px 0 20px;}.stage{padding:20px;}.card-grid{grid-template-columns:1fr;}body{font-size:16px;}}
 
 /* утилиты (вынесено из инлайн-стилей) */
-.cw-light { background: linear-gradient(180deg, #f0f9ff, #e0f2fe); }
-.cw-plain { background: #f0f9ff; }
 .cw-dark { background: linear-gradient(180deg, #0f172a, #1e293b); }
-.ct-col { flex-direction: column; align-items: center; gap: 8px; }
-.lbl-muted { color: #94a3b8; font-size: 14px; font-weight: 700; }
-.range-wide { width: 300px; accent-color: #8b5cf6; }
-.dark-strong { color: #e0e7ff; font-weight: 800; }
-.note-sm { font-size: 13.5px; color: var(--muted); margin-top: 8px; }
-.center-note { text-align: center; margin-top: 10px; color: #94a3b8; font-size: 14px; }
-.link-strong { color: var(--h-deep); font-weight: 700; }
-.btn-ghost-dark { background: rgba(255,255,255,.1); color: #e0e7ff; border-color: rgba(255,255,255,.3); }
-.stat-card { padding: 20px; border-radius: 14px; text-align: center; }
-.stat-green { border: 2px solid var(--green); background: linear-gradient(180deg, #ecfdf5, #fff); }
-.stat-accent { border: 2px solid var(--accent); background: linear-gradient(180deg, #f5f3ff, #fff); }
-.stat-cyan { border: 2px solid var(--h-color); background: linear-gradient(180deg, #ecfeff, #fff); }
-.stat-emoji { font-size: 40px; line-height: 1; margin-bottom: 10px; }
-.stat-label { font-size: 14px; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
-.stat-green .stat-label { color: #065f46; }
-.stat-accent .stat-label { color: #5b21b6; }
-.stat-cyan .stat-label { color: #0e7490; }
-.stat-text { font-size: 14.5px; line-height: 1.6; }
+.note-sm { font-size: 14px; color: var(--muted); margin-top: 10px; }
+.card-blue { border-color: #3b82f6; }
+.card-violet { border-color: #8b5cf6; }
+.card-green { border-color: #10b981; }
+.card-cyan { border-color: #06b6d4; }
+.card-orange { border-color: #f59e0b; }
+.card-slate { border-color: #94a3b8; }
+.card-dark { border-color: #475569; }
+.fc-warm { background: linear-gradient(180deg, #fffbeb, #fff); border-color: #f59e0b; }
+.tcenter { text-align: center; }
+.fbig { font-size: 52px; font-weight: 900; }
+.fsub { font-size: 32px; font-weight: 900; vertical-align: sub; }
+.c-orange { color: #f59e0b; }
+.c-blue { color: #1e40af; }
+.c-violet { color: #3730a3; }
+.c-red { color: #991b1b; }
+.c-brown { color: #92400e; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.legend-box { padding: 12px; border-radius: 10px; }
+.lb-warm { background: #fffbeb; border-left: 4px solid #f59e0b; }
+.lb-info { background: #f0f9ff; border-left: 4px solid #3b82f6; }
+.fs-14 { font-size: 14px; }
 </style>
 </head>
 <body>
-<!-- built by src/build.py v1 · 2026-09-29 · module_5/u3 · manifest-driven -->
+<!-- built by src/build.py v1 · 2026-10-01 · module_5/u3 · manifest-driven -->
 <header class="hero">
-  <div class="badge">Модуль 5 · Атомы: доказательства и модели · ~20 минут</div>
-  <h1>Что внутри атома?</h1>
+  <div class="badge">Модуль 5 · Символы и формулы · ~25 минут</div>
+  <h1>Язык химии: как записывать и читать</h1>
 </header>
 <div class="container">
 <button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
 <div class="nav-backdrop" id="navBackdrop" hidden></div>
-<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 5. Атомы: доказательства и модели</div><ul class="nav-tree"><li class="nav-lesson"><a href="entry.html">Начало</a></li><li class="nav-lesson"><a href="u1.html">Урок 1</a></li><li class="nav-lesson"><a href="u2.html">Урок 2</a></li><li class="nav-lesson nav-current"><a href="#" aria-current="true">Урок 3</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u3-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u3-2">Что внутри атома?</a></li><li><a class="nav-sub" href="#s-u3-3">Практикум: Модель ядра и электронов</a></li><li><a class="nav-sub" href="#s-u3-4">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="final.html">Тест</a></li></ul></nav>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 5. Символы и формулы</div><ul class="nav-tree"><li class="nav-lesson"><a href="u2.html">Урок 1</a></li><li class="nav-lesson nav-current"><a href="#" aria-current="true">Урок 2</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u3-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u3-2">Язык химии: как записывать и читать</a></li><li><a class="nav-sub" href="#s-u3-3">Практикум: Читаем и записываем формулы</a></li><li><a class="nav-sub" href="#s-u3-4">Домашнее задание</a></li></ul></li></ul></nav>
 <button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
 <section class="section">
   <div id="s-u3-1" data-stage class="stage s-intro fade-in">
@@ -1038,19 +1014,19 @@
         <div class="stage-title">О чём этот урок</div>
       </div>
     </div>
-    <p class="prose">Атом делим: ядро, электроны и почти пустое пространство. Заглянем внутрь.</p>
+    <p class="prose">Химики говорят на своём языке — языке формул. Научимся читать и записывать их.</p>
     <div class="card-grid">
       <div class="card">
-        <div class="c-title">⚛️ Ядро и электроны</div>
-        <div class="c-desc">Что такое ядро и электроны?</div>
+        <div class="c-title">✍️ Как читать формулу</div>
+        <div class="c-desc">Как читать химическую формулу?</div>
       </div>
       <div class="card">
-        <div class="c-title">🔬 Протоны и нейтроны</div>
-        <div class="c-desc">Из чего состоит ядро?</div>
+        <div class="c-title">🔢 Индексы и коэффициенты</div>
+        <div class="c-desc">Что означают индексы и коэффициенты?</div>
       </div>
       <div class="card">
-        <div class="c-title">🕳 Насколько пуст атом</div>
-        <div class="c-desc">Насколько атом «пустой»?</div>
+        <div class="c-title">🧮 Валентность</div>
+        <div class="c-desc">Что такое валентность?</div>
       </div>
     </div>
   </div>
@@ -1061,200 +1037,118 @@
     <div class="stage-header">
       <div class="stage-number">3</div>
       <div>
-        <div class="stage-title">Что внутри атома?</div>
-        <div class="stage-subtitle">Протоны, нейтроны, электроны — и кварки</div>
+        <div class="stage-title">Язык химии: как записывать и читать</div>
+        <div class="stage-subtitle">История символов и правила формул</div>
       </div>
     </div>
 
     <p class="prose">
-      Мы знаем: атом состоит из <b>ядра</b> и <b>электронов</b>. Но из чего состоит само ядро?
-      В 1919 году Резерфорд открыл <b>протон</b>. А в 1932 году Джеймс Чедвик — <b>нейтрон</b>.
+      До начала XIX века химики <b>не имели единого способа</b> записывать состав веществ.
+      Каждый использовал свои обозначения — это была настоящая «вавилонская башня».
+      Всё изменилось благодаря двум учёным: <b>Джону Дальтону</b> и
+      <b>Йёнсу Якобу Берцелиусу</b>.
     </p>
 
-    <!-- 3D атом -->
-    <div class="atom-3d-wrap">
-      <svg class="atom-svg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="nucleusGrad" cx="50%" cy="50%">
-            <stop offset="0%" stop-color="#f87171"/><stop offset="100%" stop-color="#dc2626"/>
-          </radialGradient>
-          <radialGradient id="electronGrad" cx="50%" cy="50%">
-            <stop offset="0%" stop-color="#67e8f9"/><stop offset="100%" stop-color="#06b6d4"/>
-          </radialGradient>
-          <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        </defs>
-        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(30 260 200)"/>
-        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(90 260 200)"/>
-        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(150 260 200)"/>
-        <g class="nucleus-pulse">
-          <circle cx="260" cy="200" r="35" fill="url(#nucleusGrad)" filter="url(#glow)"/>
-          <circle cx="250" cy="190" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="250" y="194" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
-          <circle cx="270" cy="195" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="270" y="199" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
-          <circle cx="260" cy="215" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="260" y="219" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
-          <circle cx="268" cy="210" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="252" cy="205" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="265" cy="185" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
-        </g>
-        <g class="electron-orbit-1"><circle cx="440" cy="200" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="440" y="204" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
-        <g class="electron-orbit-2"><circle cx="260" cy="140" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="260" y="144" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
-        <g class="electron-orbit-3"><circle cx="170" cy="260" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="170" y="264" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
-      </svg>
-      <div class="atom-label">Ядро (протоны + нейтроны) и электроны на орбитах</div>
+    <div class="timeline">
+      <div class="timeline-track" id="langTimelineTrack"></div>
+      <div class="tl-detail" id="langTlDetail"></div>
     </div>
 
-    <!-- ТАБЛИЦА ЧАСТИЦ -->
-    <h3 class="subhead">📋 Три главные частицы</h3>
-    <table class="particles-table">
-      <thead><tr><th>Частица</th><th>Заряд</th><th>Масса</th><th>Где</th><th>Кто открыл</th></tr></thead>
+    <h3 class="subhead">📝 Как записываются химические элементы</h3>
+
+    <p class="prose">
+      Каждый элемент имеет свой <b>химический символ</b> — одну или две буквы
+      латинского названия. Первая буква — <b>всегда заглавная</b>, вторая (если есть) —
+      <b>строчная</b>.
+    </p>
+
+    <table class="isotope-table mt-14">
+      <thead><tr><th>Элемент</th><th>Латинское название</th><th>Символ</th><th>Произношение</th></tr></thead>
       <tbody>
-        <tr><td class="pt-pro">Протон (p⁺)</td><td>+1</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Резерфорд, 1919</td></tr>
-        <tr><td class="pt-neu">Нейтрон (n⁰)</td><td>0</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Чедвик, 1932</td></tr>
-        <tr><td class="pt-ele">Электрон (e⁻)</td><td>−1</td><td>≈1/1836 а.е.м.*</td><td>Вокруг ядра</td><td>Томсон, 1897</td></tr>
+        <tr><td>Водород</td><td>Hydrogenium</td><td><b>H</b></td><td>«аш»</td></tr>
+        <tr><td>Кислород</td><td>Oxygenium</td><td><b>O</b></td><td>«о»</td></tr>
+        <tr><td>Углерод</td><td>Carboneum</td><td><b>C</b></td><td>«цэ»</td></tr>
+        <tr><td>Азот</td><td>Nitrogenium</td><td><b>N</b></td><td>«эн»</td></tr>
+        <tr><td>Железо</td><td>Ferrum</td><td><b>Fe</b></td><td>«феррум»</td></tr>
+        <tr><td>Натрий</td><td>Natrium</td><td><b>Na</b></td><td>«натрий»</td></tr>
+        <tr><td>Золото</td><td>Aurum</td><td><b>Au</b></td><td>«аурум»</td></tr>
+        <tr><td>Серебро</td><td>Argentum</td><td><b>Ag</b></td><td>«аргентум»</td></tr>
       </tbody>
     </table>
-    <p class="note-sm">
-      * <b>а.е.м.</b> — атомная единица массы. Это удобная «единица измерения» для масс атомов и частиц.
-      Мы подробно разберём её в Модуле 4б. Пока просто запомни: <b>протон и нейтрон примерно одинаковы по массе,
-      а электрон в ~1836 раз легче</b>.
-    </p>
 
-    <!-- ЗАРЯД ПО ФЕЙНМАНУ -->
-    <h3 class="subhead">⚡ Откуда взялся заряд? (объяснение по Фейнману)</h3>
+    <div class="callout callout-warn">
+      <b>Важно:</b> символы читаются по-разному. Однобуквенные — просто как буква
+      («аш», «о», «цэ»). Двухбуквенные — как название элемента: Fe = «феррум»,
+      Au = «аурум». Нельзя читать «фэ-е» или «а-у»!
+    </div>
 
-    <p class="prose">
-      Представь, что ты никогда не слышал слово «заряд». Как объяснить его, не используя само слово?
-    </p>
+    <h3 class="subhead">🔢 Индексы и коэффициенты</h3>
 
-    <div class="callout callout-idea">
-      <b>Мысленный эксперимент:</b> возьми два одинаковых шарика. Потри их о шерсть и подвесь рядом.
-      Они <b>оттолкнутся</b> друг от друга. Потри один шарик о шерсть, а другой — о стекло.
-      Теперь они <b>притянутся</b>.
+    <div class="callout callout-warn">
+      <b>Это важно не путать!</b>
       <br><br>
-      Значит, у шариков есть какое-то свойство, которое заставляет их либо отталкиваться, либо притягиваться.
-      Мы назвали это свойство <b>зарядом</b>. Природа выбрала <b>два типа</b> заряда — условно «плюс» и «минус».
-      Одинаковые заряды отталкиваются, разные — притягиваются.
+      <b>Индекс</b> — маленькая цифра <b>справа внизу</b> от символа. Показывает,
+      сколько атомов данного элемента в <b>одной молекуле</b>. Например, H₂O —
+      в одной молекуле 2 атома H.
+      <br><br>
+      <b>Коэффициент</b> — большая цифра <b>слева</b> от формулы. Показывает,
+      сколько <b>молекул</b> взято. Например, 3H₂O — три молекулы воды.
     </div>
 
-    <div class="callout callout-note">
-      <b>Ключевая мысль:</b> заряд — это <b>не вещество</b> и <b>не «придела» к частице</b>.
-      Это <b>фундаментальное свойство</b> материи, такое же, как масса. Ты не можешь объяснить,
-      «почему» у протона именно плюс, а не минус. Мы просто <b>так назвали</b> два противоположных типа взаимодействия.
-      Главное — <b>баланс</b>: в атоме сколько плюсов, столько и минусов.
-    </div>
-
-    <div class="callout callout-warn">
-      <b>Важно:</b> заряд — это <b>не энергия</b> и <b>не «топливо»</b>. Это свойство, которое определяет,
-      как частицы взаимодействуют друг с другом. Электроны удерживаются возле ядра именно потому,
-      что их отрицательный заряд притягивается к положительному заряду протонов.
-    </div>
-
-    <!-- МАСШТАБ -->
-    <h3 class="subhead">📏 Масштаб атома — от кварка до Вселенной</h3>
-    <p class="subhead-sub">
-      Самое сложное в атоме — <b>почувствовать</b> его масштаб. Ядро в 10 000–100 000 раз меньше атома.
-      Мы не можем нарисовать это «в лоб» — понадобится экран размером с дом. Вместо этого мы используем
-      <b>логарифмическую шкалу</b> — как в знаменитом проекте «Scale of the Universe».
-    </p>
-
-    <div class="canvas-wrap cw-dark">
-      <canvas id="scaleCanvas" width="900" height="480"></canvas>
-    </div>
-    <div class="canvas-toolbar">
-      <button class="btn ghost" id="scaleIn">🔍 Приблизить</button>
-      <button class="btn ghost" id="scaleOut">🔭 Отдалить</button>
-      <button class="btn ghost" id="scaleReset">↺ Сброс</button>
-    </div>
-    <div class="center-note" id="scaleInfo">
-      Текущий масштаб: <b>1 метр</b> — человек
-    </div>
-
-    <div class="callout callout-note mt-16">
-      <b>Хочешь больше?</b> Открой <a href="https://universe.pavelfrolov.com/" target="_blank" class="link-strong">интерактивную шкалу масштабов Вселенной</a> —
-      там можно пролететь от кварка до observable universe за 43 порядка величины. Это завораживает.
-    </div>
-
-    <!-- КВАРКИ -->
-    <h3 class="subhead">🌈 Что находится ещё глубже? Кварки, фермионы и бозоны</h3>
-    <p class="prose">
-      Протоны и нейтроны <b>тоже делятся</b>. Они состоят из <b>кварков</b> — самых маленьких
-      известных частиц. Но кварки — не единственные «кирпичики». Современная физика делит все
-      элементарные частицы на <b>два больших класса</b>:
-    </p>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="c-title">🧱 Фермионы — «кирпичики материи»</div>
-        <div class="c-desc">
-          Названы в честь Энрико Ферми. Это частицы, из которых <b>состоит вещество</b>.
-          У них полуцелый спин (это квантовое свойство, подробно — позже).
-          <br><br>
-          <b>Кварки</b> (6 типов: u, d, s, c, b, t) и <b>лептоны</b> (6 типов: электрон, мюон, тау и три нейтрино).
-          <br><br>
-          Протон = u + u + d. Нейтрон = u + d + d.
+    <div class="formula-card fc-warm">
+      <div class="tcenter">
+        <span class="fbig c-orange">3</span>
+        <span class="fbig c-blue">H</span>
+        <span class="fsub c-violet">2</span>
+        <span class="fbig c-red">O</span>
+      </div>
+      <div class="two-col">
+        <div class="legend-box lb-warm">
+          <b class="c-brown">Коэффициент = 3</b><br>
+          <span class="fs-14">Три молекулы воды</span>
+        </div>
+        <div class="legend-box lb-info">
+          <b class="c-blue">Индексы = 2 и 1</b><br>
+          <span class="fs-14">В каждой молекуле 2 H и 1 O</span>
         </div>
       </div>
-      <div class="card">
-        <div class="c-title">🔗 Бозоны — «переносчики сил»</div>
-        <div class="c-desc">
-          Названы в честь Шатьендраната Бозе. Эти частицы <b>не составляют вещество</b> —
-          они <b>переносят взаимодействия</b> между фермионами.
-          <br><br>
-          <b>Фотон</b> — электромагнитная сила. <b>Глюоны</b> (8 типов) — сильная сила,
-          «склеивают» кварки. <b>W и Z-бозоны</b> — слабая сила. <b>Бозон Хиггса</b> — даёт массу.
-        </div>
+      <div class="callout callout-ok mt-14">
+        <b>Итого:</b> запись 3H₂O означает <b>3 молекулы воды</b>, в каждой из которых
+        по 2 атома водорода и 1 атому кислорода. Всего: <b>6 атомов H</b> и <b>3 атома O</b>.
       </div>
     </div>
 
-    <div class="callout callout-warn">
-      <b>Важно:</b> кварки <b>никогда не встречаются поодиночке</b>. Их «склеивают» глюоны,
-      и если попытаться «вытащить» один кварк, энергия натяжения «струны» станет настолько большой,
-      что родится новая пара кварк-антикварк. Это называется <b>конфайнмент</b> (от англ. confinement — удержание).
-    </div>
+    <h3 class="subhead">🗣 Как читать химические формулы</h3>
 
-    <!-- АНИМАЦИЯ КВАРКОВ -->
-    <div class="quark-wrap">
-      <canvas id="quarkCanvas" width="900" height="360"></canvas>
-    </div>
-    <div class="canvas-toolbar mt-14">
-      <button class="btn ghost btn-ghost-dark" id="quarkToggle">⏸ Пауза</button>
-    </div>
-
-    <div class="callout callout-idea mt-16">
-      <b>Зачем это изучают?</b> Чтобы понять, из чего состоит материя на самом фундаментальном уровне.
-      Это не просто любопытство. Знания о кварках и фундаментальных силах уже дали человечеству:
-      <ul class="list-note">
-        <li><b>Ядерную энергетику</b> — понимание ядерных сил позволяет получать энергию из атомов.</li>
-        <li><b>Медицину</b> — ускорители частиц используются для лечения рака.</li>
-        <li><b>Технологии будущего</b> — квантовые компьютеры, сверхпроводники, новые материалы.</li>
-        <li><b>Понимание Вселенной</b> — что было в первые секунды после Большого взрыва.</li>
-      </ul>
-      <br>
-      Этим занимаются на <b>Большом адронном коллайдере</b> (ЦЕРН, Швейцария) и в других лабораториях мира.
-      Возможно, когда ты вырастешь, ты откроешь что-то ещё глубже!
-    </div>
-
-    <div class="callout callout-warn">
-      <b>Важно:</b> в химических реакциях атомы <b>не делятся</b> на кварки. Кварки «работают» только
-      при огромных энергиях — в ускорителях частиц или в звёздах. Для химии атом — это <b>предел деления</b>.
-    </div>
+    <table class="isotope-table mt-14">
+      <thead><tr><th>Формула</th><th>Чтение</th><th>Что означает</th></tr></thead>
+      <tbody>
+        <tr><td><b>H₂O</b></td><td>«аш-два-о»</td><td>Вода: 2 водорода + 1 кислород</td></tr>
+        <tr><td><b>CO₂</b></td><td>«цэ-о-два»</td><td>Углекислый газ: 1 углерод + 2 кислорода</td></tr>
+        <tr><td><b>CH₄</b></td><td>«цэ-аш-четыре»</td><td>Метан: 1 углерод + 4 водорода</td></tr>
+        <tr><td><b>NH₃</b></td><td>«эн-аш-три»</td><td>Аммиак: 1 азот + 3 водорода</td></tr>
+        <tr><td><b>H₂SO₄</b></td><td>«аш-два-эс-о-четыре»</td><td>Серная кислота: 2 H + 1 S + 4 O</td></tr>
+        <tr><td><b>3H₂O</b></td><td>«три-аш-два-о»</td><td>Три молекулы воды</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
-<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== --><section class="section">
+<!-- ==================== УРОК 4: ПРОСТЫЕ И СЛОЖНЫЕ ВЕЩЕСТВА ==================== --><section class="section">
   <div id="s-u3-3" data-stage class="stage s-prac fade-in">
     <div class="stage-header">
       <div class="stage-number">🔬</div>
       <div>
-        <div class="stage-title">Практикум: Модель ядра и электронов</div>
+        <div class="stage-title">Практикум: Читаем и записываем формулы</div>
         <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
       </div>
     </div>
-    <p class="prose">Собери модель атома, показав ядро и электронное облако.</p>
+    <p class="prose">Научись расшифровывать индексы и коэффициенты.</p>
     <p class="subhead-sub">Что понадобится</p>
-    <ul class="list-note"><li>пластилин</li><li>бусины/крупа</li><li>бумага</li></ul>
+    <ul class="list-note"><li>бумага</li><li>ручка</li></ul>
     <p class="subhead-sub">Ход работы</p>
-    <ol class="list-note"><li>Слепи ядро из протонов и нейтронов (два цвета).</li><li>Размести электроны вокруг ядра.</li><li>Отметь, что большая часть атома — пустое пространство.</li><li>Подпиши части и их заряды.</li></ol>
-    <div class="callout callout-note"><b>📝 В тетрадь:</b> схему атома: ядро (протоны + нейтроны) и электроны.</div>
+    <ol class="list-note"><li>Запиши формулу H₂O и посчитай атомы каждого элемента.</li><li>Запиши 3H₂O и объясни, что значит «3».</li><li>Составь формулу CO₂ из символов.</li><li>Прочитай обе формулы вслух.</li></ol>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> разбор двух формул: индексы и коэффициенты.</div>
   </div>
 </section>
 <section class="section">
@@ -1268,12 +1162,12 @@
     </div>
     <div class="homework">
       <ol>
-        <li>Назови части атома и их заряды.</li>
-        <li>Опиши, из чего состоит ядро.</li>
-        <li>Объясни, почему атом «почти пустой».</li>
-        <li>Нарисуй схему атома с подписями.</li>
-        <li><span class="hw-star">★ Что общего у протона и нейтрона и чем они отличаются?</span></li>
-        <li>Объясни, что находится внутри атома, простыми словами.</li>
+        <li>Запиши формулу воды и назови индексы.</li>
+        <li>Объясни разницу между индексом и коэффициентом.</li>
+        <li>Расшифруй запись 3H₂O.</li>
+        <li>Составь формулу CO₂ и прочитай её вслух.</li>
+        <li><span class="hw-star">★ Придумай запись с коэффициентом 4 и объясни её смысл.</span></li>
+        <li>Объясни младшему брату, как читать формулу H₂O и что значит запись 3H₂O.</li>
       </ol>
     </div>
   </div>
@@ -1335,7 +1229,7 @@
 
 <script>
 // ============================================================
-//  module_5 (4а) — внутри атома: шкала масштабов, кварки
+//  module_6 (4б) — lang
 // ============================================================
 /* ============================================================
    УТИЛИТЫ
@@ -1349,256 +1243,46 @@ if (!CanvasRenderingContext2D.prototype.roundRect) {
 var rand = (a,b)=>a+Math.random()*(b-a);
 
 /* ============================================================
-   ДИФФУЗИЯ
+   ИЗОТОПЫ ВОДОРОДА — С ЭЛЕКТРОНАМИ И ОРБИТАМИ
    ============================================================ */
 
 (function(){
-  const canvas = document.getElementById('scaleCanvas');
-  const btnIn = document.getElementById('scaleIn');
-  const btnOut = document.getElementById('scaleOut');
-  const btnReset = document.getElementById('scaleReset');
-  const info = document.getElementById('scaleInfo');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
+  const track = document.getElementById('langTimelineTrack');
+  const detail = document.getElementById('langTlDetail');
+  if (!track) return;
 
-  // Логарифмическая шкала: от 10^-18 м (кварк) до 10^7 м (Земля)
-  // log10 от -18 до 7 = 25 порядков
-  const MIN_LOG = -18, MAX_LOG = 7;
-  let currentLog = 0; // 1 метр
-
-  const OBJECTS = [
-    {log:-18, name:'Кварк', r:2, color:'#a78bfa', label:'< 10⁻¹⁸ м'},
-    {log:-15, name:'Протон', r:4, color:'#f87171', label:'~10⁻¹⁵ м'},
-    {log:-14, name:'Ядро атома', r:6, color:'#ef4444', label:'~10⁻¹⁴ м'},
-    {log:-10, name:'Атом', r:20, color:'#38bdf8', label:'~10⁻¹⁰ м'},
-    {log:-9, name:'Молекула', r:25, color:'#06b6d4', label:'~10⁻⁹ м'},
-    {log:-7, name:'Вирус', r:30, color:'#10b981', label:'~10⁻⁷ м'},
-    {log:-6, name:'Бактерия', r:35, color:'#22c55e', label:'~10⁻⁶ м'},
-    {log:-4, name:'Клетка', r:45, color:'#84cc16', label:'~10⁻⁴ м'},
-    {log:-2, name:'Пылинка', r:50, color:'#eab308', label:'~10⁻² м'},
-    {log:0, name:'Человек', r:70, color:'#f97316', label:'1 м'},
-    {log:4, name:'Гора', r:100, color:'#78716c', label:'~10⁴ м'},
-    {log:7, name:'Земля', r:150, color:'#3b82f6', label:'~10⁷ м'}
+  const EVENTS = [
+    { year:'1803', who:'Джон Дальтон', what:'Первые символы элементов', title:'1803 · Джон Дальтон',
+      text:'Дальтон предложил обозначать каждый элемент особым значком: кислород — кружком, водород — кружком с точкой. Состав соединения он изображал соположением значков. Но значков становилось слишком много, и записывать формулы становилось неудобно.' },
+    { year:'1813', who:'Йёнс Якоб Берцелиус', what:'Буквенные символы и индексы', title:'1813 · Йёнс Якоб Берцелиус',
+      text:'Берцелиус предложил гениально простую систему: обозначать элементы первыми буквами латинских названий (H — Hydrogenium, O — Oxygenium), а число атомов записывать цифрой после буквы. Так вода стала H₂O. Эта система оказалась настолько удобной, что используется до сих пор.' },
+    { year:'1814', who:'Берцелиус', what:'Первая таблица атомных масс', title:'1814 · Таблица атомных масс',
+      text:'Берцелиус опубликовал первую таблицу атомных масс, проанализировав 2000 соединений, образованных 43 элементами. Это была титаническая работа, подтвердившая атомную теорию. Точные атомные массы позволили химикам правильно записывать формулы.' },
+    { year:'1860', who:'Конгресс в Карлсруэ', what:'Единая система формул', title:'1860 · Конгресс в Карлсруэ',
+      text:'Химики разных стран собрались, чтобы договориться о единой системе обозначений. Система Берцелиуса победила — с тех пор все химики мира используют одни и те же символы и формулы. Это был первый международный стандарт в химии.' }
   ];
 
-  // Находим ближайший объект к текущему масштабу
-  function nearestObject(log){
-    let best = OBJECTS[0], bestDist = Infinity;
-    OBJECTS.forEach(o=>{
-      const d = Math.abs(o.log - log);
-      if (d < bestDist){ bestDist = d; best = o; }
-    });
-    return best;
+  track.innerHTML = EVENTS.map((e,i)=>`
+    <div class="tl-year${i===0?' active':''}" data-i="${i}">
+      <div class="tl-num">${e.year}</div>
+      <div class="tl-who">${e.who}</div>
+      <div class="tl-what">${e.what}</div>
+    </div>`).join('');
+
+  function show(i){
+    document.querySelectorAll('#langTimelineTrack .tl-year').forEach(el=>el.classList.remove('active'));
+    track.querySelector(`[data-i="${i}"]`).classList.add('active');
+    const e = EVENTS[i];
+    detail.classList.add('show');
+    detail.innerHTML = `<div class="tl-d-title">${e.title}</div><div class="tl-d-text">${e.text}</div>`;
   }
 
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    const bg = ctx.createLinearGradient(0,0,0,H);
-    bg.addColorStop(0,'#0f172a'); bg.addColorStop(1,'#1e293b');
-    ctx.fillStyle = bg; ctx.fillRect(0,0,W,H);
-
-    // Центральный объект
-    const obj = nearestObject(currentLog);
-    const cx = W/2, cy = H/2 - 20;
-
-    // Пульсация
-    const pulse = 1 + Math.sin(Date.now()*0.003) * 0.05;
-    const radius = obj.r * pulse;
-
-    // Свечение
-    const glow = ctx.createRadialGradient(cx,cy,0,cx,cy,radius*3);
-    glow.addColorStop(0, obj.color + '66');
-    glow.addColorStop(1, obj.color + '00');
-    ctx.beginPath(); ctx.arc(cx,cy,radius*3,0,Math.PI*2);
-    ctx.fillStyle = glow; ctx.fill();
-
-    // Объект
-    ctx.beginPath(); ctx.arc(cx,cy,radius,0,Math.PI*2);
-    ctx.fillStyle = obj.color; ctx.fill();
-    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
-
-    // Название
-    ctx.font = 'bold 24px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#e2e8f0';
-    ctx.fillText(obj.name, cx, cy + radius + 40);
-    ctx.font = '16px Inter, sans-serif';
-    ctx.fillStyle = '#94a3b8';
-    ctx.fillText(obj.label, cx, cy + radius + 65);
-
-    // Шкала (логарифмическая линейка)
-    const barY = H - 60;
-    const barX = 60;
-    const barW = W - 120;
-    const barH = 12;
-
-    ctx.fillStyle = '#334155';
-    ctx.beginPath(); ctx.roundRect(barX, barY, barW, barH, 6); ctx.fill();
-
-    // Заполнение
-    const fillW = ((currentLog - MIN_LOG) / (MAX_LOG - MIN_LOG)) * barW;
-    const grad = ctx.createLinearGradient(barX, 0, barX + barW, 0);
-    grad.addColorStop(0, '#a78bfa');
-    grad.addColorStop(0.5, '#38bdf8');
-    grad.addColorStop(1, '#f97316');
-    ctx.fillStyle = grad;
-    ctx.beginPath(); ctx.roundRect(barX, barY, fillW, barH, 6); ctx.fill();
-
-    // Метки на шкале
-    ctx.font = 'bold 11px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    const marks = [-18, -15, -12, -9, -6, -3, 0, 3, 6];
-    marks.forEach(m=>{
-      const x = barX + ((m - MIN_LOG) / (MAX_LOG - MIN_LOG)) * barW;
-      ctx.fillStyle = '#64748b';
-      ctx.fillRect(x-1, barY+barH, 2, 6);
-      ctx.fillStyle = '#94a3b8';
-      const label = m === 0 ? '1 м' : `10${m < 0 ? '⁻' : ''}${Math.abs(m)} м`;
-      ctx.fillText(label, x, barY + barH + 22);
-    });
-
-    // Подпись
-    ctx.font = 'bold 14px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#8b5cf6';
-    ctx.fillText(`Текущий масштаб: 10${currentLog < 0 ? '⁻' : ''}${Math.abs(Math.round(currentLog))} м`, cx, 40);
-
-    // Инфо
-    info.innerHTML = `Текущий масштаб: <b>${obj.label}</b> — ${obj.name}`;
-  }
-
-  btnIn.addEventListener('click',()=>{ currentLog = Math.max(MIN_LOG, currentLog - 1); draw(); });
-  btnOut.addEventListener('click',()=>{ currentLog = Math.min(MAX_LOG, currentLog + 1); draw(); });
-  btnReset.addEventListener('click',()=>{ currentLog = 0; draw(); });
-
-  draw();
+  track.querySelectorAll('.tl-year').forEach(el=>el.addEventListener('click',()=>show(+el.dataset.i)));
+  show(0);
 })();
 
 /* ============================================================
-   КВАРКИ — АНИМИРОВАННЫЙ ОБМЕН ГЛЮОНАМИ
-   ============================================================ */
-(function(){
-  const canvas = document.getElementById('quarkCanvas');
-  const toggleBtn = document.getElementById('quarkToggle');
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
-  const cx = W/2, cy = H/2;
-  let running = true;
-  let rafId = null;
-  let t = 0;
-
-  // Три кварка
-  const quarks = [
-    {angle: 0, radius: 70, color: '#a78bfa', label: 'u', offset: 0},
-    {angle: 2*Math.PI/3, radius: 70, color: '#a78bfa', label: 'u', offset: Math.PI/3},
-    {angle: 4*Math.PI/3, radius: 70, color: '#7dd3fc', label: 'd', offset: 2*Math.PI/3}
-  ];
-
-  // Глюоны — 6 частиц, которые летают между кварками
-  const gluons = [];
-  for (let i=0;i<6;i++){
-    gluons.push({
-      from: i % 3,
-      to: (i+1) % 3,
-      progress: Math.random(),
-      speed: 0.005 + Math.random()*0.01
-    });
-  }
-
-  function draw(){
-    ctx.clearRect(0,0,W,H);
-    ctx.fillStyle = '#1e1b4b'; ctx.fillRect(0,0,W,H);
-
-    // Свечение протона
-    const g = ctx.createRadialGradient(cx,cy,0,cx,cy,130);
-    g.addColorStop(0,'rgba(167,139,250,.15)');
-    g.addColorStop(1,'rgba(167,139,250,0)');
-    ctx.beginPath(); ctx.arc(cx,cy,130,0,Math.PI*2); ctx.fillStyle = g; ctx.fill();
-
-    // Контур протона
-    ctx.beginPath(); ctx.arc(cx,cy,120,0,Math.PI*2);
-    ctx.strokeStyle = 'rgba(167,139,250,.3)';
-    ctx.lineWidth = 2; ctx.setLineDash([8,6]); ctx.stroke(); ctx.setLineDash([]);
-
-    // Позиции кварков
-    const pos = quarks.map(q=>{
-      const a = q.angle + t * 0.01;
-      return { x: cx + Math.cos(a) * q.radius, y: cy + Math.sin(a) * q.radius };
-    });
-
-    // Глюоны (линии между кварками)
-    gluons.forEach(gl=>{
-      const from = pos[gl.from];
-      const to = pos[gl.to];
-      const gx = from.x + (to.x - from.x) * gl.progress;
-      const gy = from.y + (to.y - from.y) * gl.progress;
-
-      // Линия
-      ctx.beginPath();
-      ctx.moveTo(from.x, from.y);
-      ctx.lineTo(to.x, to.y);
-      ctx.strokeStyle = `rgba(251,191,36,${0.2 + gl.progress * 0.3})`;
-      ctx.lineWidth = 2;
-      ctx.setLineDash([4,4]);
-      ctx.stroke();
-      ctx.setLineDash([]);
-
-      // Глюон (жёлтая точка)
-      ctx.beginPath();
-      ctx.arc(gx, gy, 4, 0, Math.PI*2);
-      ctx.fillStyle = '#fbbf24';
-      ctx.fill();
-      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1; ctx.stroke();
-
-      gl.progress += gl.speed;
-      if (gl.progress > 1){ gl.progress = 0; gl.from = gl.to; gl.to = (gl.to+1)%3; }
-    });
-
-    // Кварки
-    quarks.forEach((q,i)=>{
-      const p = pos[i];
-      ctx.beginPath(); ctx.arc(p.x, p.y, 26, 0, Math.PI*2);
-      const qg = ctx.createRadialGradient(p.x-6,p.y-6,4,p.x,p.y,26);
-      qg.addColorStop(0, q.color);
-      qg.addColorStop(1, q.color === '#a78bfa' ? '#7c3aed' : '#0284c7');
-      ctx.fillStyle = qg; ctx.fill();
-      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
-
-      ctx.fillStyle = '#fff';
-      ctx.font = 'bold 18px Inter, sans-serif';
-      ctx.textAlign = 'center';
-      ctx.fillText(q.label, p.x, p.y + 6);
-    });
-
-    // Подписи
-    ctx.font = 'bold 14px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#c7d2fe';
-    ctx.fillText('Протон: два u-кварка и один d-кварк', cx, 30);
-    ctx.fillStyle = '#fbbf24';
-    ctx.fillText('Жёлтые точки — глюоны, «склеивающие» кварки', cx, H - 20);
-
-    t++;
-  }
-
-  function loop(){
-    if (!running) return;
-    draw();
-    rafId = requestAnimationFrame(loop);
-  }
-
-  toggleBtn.addEventListener('click',()=>{
-    if (running){ running = false; toggleBtn.textContent = '▶ Продолжить'; }
-    else { running = true; toggleBtn.textContent = '⏸ Пауза'; loop(); }
-  });
-
-  loop();
-})();
-
-/* ============================================================
-   ВХОДНОЙ ТЕСТ
+   ИГРА: ПРОСТОЕ ИЛИ СЛОЖНОЕ (РУССКИЕ НАЗВАНИЯ)
    ============================================================ */
 
 // ============================================================

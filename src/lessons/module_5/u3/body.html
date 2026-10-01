@@ -1,189 +1,107 @@
 <header class="hero">
-  <div class="badge">Модуль 5 · Атомы: доказательства и модели · ~20 минут</div>
-  <h1>Что внутри атома?</h1>
+  <div class="badge">Модуль 5 · Символы и формулы · ~25 минут</div>
+  <h1>Язык химии: как записывать и читать</h1>
 </header>
 <section class="section">
   <div class="stage s3 fade-in">
     <div class="stage-header">
       <div class="stage-number">3</div>
       <div>
-        <div class="stage-title">Что внутри атома?</div>
-        <div class="stage-subtitle">Протоны, нейтроны, электроны — и кварки</div>
+        <div class="stage-title">Язык химии: как записывать и читать</div>
+        <div class="stage-subtitle">История символов и правила формул</div>
       </div>
     </div>
 
     <p class="prose">
-      Мы знаем: атом состоит из <b>ядра</b> и <b>электронов</b>. Но из чего состоит само ядро?
-      В 1919 году Резерфорд открыл <b>протон</b>. А в 1932 году Джеймс Чедвик — <b>нейтрон</b>.
+      До начала XIX века химики <b>не имели единого способа</b> записывать состав веществ.
+      Каждый использовал свои обозначения — это была настоящая «вавилонская башня».
+      Всё изменилось благодаря двум учёным: <b>Джону Дальтону</b> и
+      <b>Йёнсу Якобу Берцелиусу</b>.
     </p>
 
-    <!-- 3D атом -->
-    <div class="atom-3d-wrap">
-      <svg class="atom-svg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <radialGradient id="nucleusGrad" cx="50%" cy="50%">
-            <stop offset="0%" stop-color="#f87171"/><stop offset="100%" stop-color="#dc2626"/>
-          </radialGradient>
-          <radialGradient id="electronGrad" cx="50%" cy="50%">
-            <stop offset="0%" stop-color="#67e8f9"/><stop offset="100%" stop-color="#06b6d4"/>
-          </radialGradient>
-          <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
-        </defs>
-        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(30 260 200)"/>
-        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(90 260 200)"/>
-        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(150 260 200)"/>
-        <g class="nucleus-pulse">
-          <circle cx="260" cy="200" r="35" fill="url(#nucleusGrad)" filter="url(#glow)"/>
-          <circle cx="250" cy="190" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="250" y="194" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
-          <circle cx="270" cy="195" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="270" y="199" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
-          <circle cx="260" cy="215" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="260" y="219" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
-          <circle cx="268" cy="210" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="252" cy="205" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
-          <circle cx="265" cy="185" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
-        </g>
-        <g class="electron-orbit-1"><circle cx="440" cy="200" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="440" y="204" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
-        <g class="electron-orbit-2"><circle cx="260" cy="140" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="260" y="144" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
-        <g class="electron-orbit-3"><circle cx="170" cy="260" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="170" y="264" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
-      </svg>
-      <div class="atom-label">Ядро (протоны + нейтроны) и электроны на орбитах</div>
+    <div class="timeline">
+      <div class="timeline-track" id="langTimelineTrack"></div>
+      <div class="tl-detail" id="langTlDetail"></div>
     </div>
 
-    <!-- ТАБЛИЦА ЧАСТИЦ -->
-    <h3 class="subhead">📋 Три главные частицы</h3>
-    <table class="particles-table">
-      <thead><tr><th>Частица</th><th>Заряд</th><th>Масса</th><th>Где</th><th>Кто открыл</th></tr></thead>
+    <h3 class="subhead">📝 Как записываются химические элементы</h3>
+
+    <p class="prose">
+      Каждый элемент имеет свой <b>химический символ</b> — одну или две буквы
+      латинского названия. Первая буква — <b>всегда заглавная</b>, вторая (если есть) —
+      <b>строчная</b>.
+    </p>
+
+    <table class="isotope-table mt-14">
+      <thead><tr><th>Элемент</th><th>Латинское название</th><th>Символ</th><th>Произношение</th></tr></thead>
       <tbody>
-        <tr><td class="pt-pro">Протон (p⁺)</td><td>+1</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Резерфорд, 1919</td></tr>
-        <tr><td class="pt-neu">Нейтрон (n⁰)</td><td>0</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Чедвик, 1932</td></tr>
-        <tr><td class="pt-ele">Электрон (e⁻)</td><td>−1</td><td>≈1/1836 а.е.м.*</td><td>Вокруг ядра</td><td>Томсон, 1897</td></tr>
+        <tr><td>Водород</td><td>Hydrogenium</td><td><b>H</b></td><td>«аш»</td></tr>
+        <tr><td>Кислород</td><td>Oxygenium</td><td><b>O</b></td><td>«о»</td></tr>
+        <tr><td>Углерод</td><td>Carboneum</td><td><b>C</b></td><td>«цэ»</td></tr>
+        <tr><td>Азот</td><td>Nitrogenium</td><td><b>N</b></td><td>«эн»</td></tr>
+        <tr><td>Железо</td><td>Ferrum</td><td><b>Fe</b></td><td>«феррум»</td></tr>
+        <tr><td>Натрий</td><td>Natrium</td><td><b>Na</b></td><td>«натрий»</td></tr>
+        <tr><td>Золото</td><td>Aurum</td><td><b>Au</b></td><td>«аурум»</td></tr>
+        <tr><td>Серебро</td><td>Argentum</td><td><b>Ag</b></td><td>«аргентум»</td></tr>
       </tbody>
     </table>
-    <p class="note-sm">
-      * <b>а.е.м.</b> — атомная единица массы. Это удобная «единица измерения» для масс атомов и частиц.
-      Мы подробно разберём её в Модуле 4б. Пока просто запомни: <b>протон и нейтрон примерно одинаковы по массе,
-      а электрон в ~1836 раз легче</b>.
-    </p>
 
-    <!-- ЗАРЯД ПО ФЕЙНМАНУ -->
-    <h3 class="subhead">⚡ Откуда взялся заряд? (объяснение по Фейнману)</h3>
+    <div class="callout callout-warn">
+      <b>Важно:</b> символы читаются по-разному. Однобуквенные — просто как буква
+      («аш», «о», «цэ»). Двухбуквенные — как название элемента: Fe = «феррум»,
+      Au = «аурум». Нельзя читать «фэ-е» или «а-у»!
+    </div>
 
-    <p class="prose">
-      Представь, что ты никогда не слышал слово «заряд». Как объяснить его, не используя само слово?
-    </p>
+    <h3 class="subhead">🔢 Индексы и коэффициенты</h3>
 
-    <div class="callout callout-idea">
-      <b>Мысленный эксперимент:</b> возьми два одинаковых шарика. Потри их о шерсть и подвесь рядом.
-      Они <b>оттолкнутся</b> друг от друга. Потри один шарик о шерсть, а другой — о стекло.
-      Теперь они <b>притянутся</b>.
+    <div class="callout callout-warn">
+      <b>Это важно не путать!</b>
       <br><br>
-      Значит, у шариков есть какое-то свойство, которое заставляет их либо отталкиваться, либо притягиваться.
-      Мы назвали это свойство <b>зарядом</b>. Природа выбрала <b>два типа</b> заряда — условно «плюс» и «минус».
-      Одинаковые заряды отталкиваются, разные — притягиваются.
+      <b>Индекс</b> — маленькая цифра <b>справа внизу</b> от символа. Показывает,
+      сколько атомов данного элемента в <b>одной молекуле</b>. Например, H₂O —
+      в одной молекуле 2 атома H.
+      <br><br>
+      <b>Коэффициент</b> — большая цифра <b>слева</b> от формулы. Показывает,
+      сколько <b>молекул</b> взято. Например, 3H₂O — три молекулы воды.
     </div>
 
-    <div class="callout callout-note">
-      <b>Ключевая мысль:</b> заряд — это <b>не вещество</b> и <b>не «придела» к частице</b>.
-      Это <b>фундаментальное свойство</b> материи, такое же, как масса. Ты не можешь объяснить,
-      «почему» у протона именно плюс, а не минус. Мы просто <b>так назвали</b> два противоположных типа взаимодействия.
-      Главное — <b>баланс</b>: в атоме сколько плюсов, столько и минусов.
-    </div>
-
-    <div class="callout callout-warn">
-      <b>Важно:</b> заряд — это <b>не энергия</b> и <b>не «топливо»</b>. Это свойство, которое определяет,
-      как частицы взаимодействуют друг с другом. Электроны удерживаются возле ядра именно потому,
-      что их отрицательный заряд притягивается к положительному заряду протонов.
-    </div>
-
-    <!-- МАСШТАБ -->
-    <h3 class="subhead">📏 Масштаб атома — от кварка до Вселенной</h3>
-    <p class="subhead-sub">
-      Самое сложное в атоме — <b>почувствовать</b> его масштаб. Ядро в 10 000–100 000 раз меньше атома.
-      Мы не можем нарисовать это «в лоб» — понадобится экран размером с дом. Вместо этого мы используем
-      <b>логарифмическую шкалу</b> — как в знаменитом проекте «Scale of the Universe».
-    </p>
-
-    <div class="canvas-wrap cw-dark">
-      <canvas id="scaleCanvas" width="900" height="480"></canvas>
-    </div>
-    <div class="canvas-toolbar">
-      <button class="btn ghost" id="scaleIn">🔍 Приблизить</button>
-      <button class="btn ghost" id="scaleOut">🔭 Отдалить</button>
-      <button class="btn ghost" id="scaleReset">↺ Сброс</button>
-    </div>
-    <div class="center-note" id="scaleInfo">
-      Текущий масштаб: <b>1 метр</b> — человек
-    </div>
-
-    <div class="callout callout-note mt-16">
-      <b>Хочешь больше?</b> Открой <a href="https://universe.pavelfrolov.com/" target="_blank" class="link-strong">интерактивную шкалу масштабов Вселенной</a> —
-      там можно пролететь от кварка до observable universe за 43 порядка величины. Это завораживает.
-    </div>
-
-    <!-- КВАРКИ -->
-    <h3 class="subhead">🌈 Что находится ещё глубже? Кварки, фермионы и бозоны</h3>
-    <p class="prose">
-      Протоны и нейтроны <b>тоже делятся</b>. Они состоят из <b>кварков</b> — самых маленьких
-      известных частиц. Но кварки — не единственные «кирпичики». Современная физика делит все
-      элементарные частицы на <b>два больших класса</b>:
-    </p>
-
-    <div class="card-grid">
-      <div class="card">
-        <div class="c-title">🧱 Фермионы — «кирпичики материи»</div>
-        <div class="c-desc">
-          Названы в честь Энрико Ферми. Это частицы, из которых <b>состоит вещество</b>.
-          У них полуцелый спин (это квантовое свойство, подробно — позже).
-          <br><br>
-          <b>Кварки</b> (6 типов: u, d, s, c, b, t) и <b>лептоны</b> (6 типов: электрон, мюон, тау и три нейтрино).
-          <br><br>
-          Протон = u + u + d. Нейтрон = u + d + d.
+    <div class="formula-card fc-warm">
+      <div class="tcenter">
+        <span class="fbig c-orange">3</span>
+        <span class="fbig c-blue">H</span>
+        <span class="fsub c-violet">2</span>
+        <span class="fbig c-red">O</span>
+      </div>
+      <div class="two-col">
+        <div class="legend-box lb-warm">
+          <b class="c-brown">Коэффициент = 3</b><br>
+          <span class="fs-14">Три молекулы воды</span>
+        </div>
+        <div class="legend-box lb-info">
+          <b class="c-blue">Индексы = 2 и 1</b><br>
+          <span class="fs-14">В каждой молекуле 2 H и 1 O</span>
         </div>
       </div>
-      <div class="card">
-        <div class="c-title">🔗 Бозоны — «переносчики сил»</div>
-        <div class="c-desc">
-          Названы в честь Шатьендраната Бозе. Эти частицы <b>не составляют вещество</b> —
-          они <b>переносят взаимодействия</b> между фермионами.
-          <br><br>
-          <b>Фотон</b> — электромагнитная сила. <b>Глюоны</b> (8 типов) — сильная сила,
-          «склеивают» кварки. <b>W и Z-бозоны</b> — слабая сила. <b>Бозон Хиггса</b> — даёт массу.
-        </div>
+      <div class="callout callout-ok mt-14">
+        <b>Итого:</b> запись 3H₂O означает <b>3 молекулы воды</b>, в каждой из которых
+        по 2 атома водорода и 1 атому кислорода. Всего: <b>6 атомов H</b> и <b>3 атома O</b>.
       </div>
     </div>
 
-    <div class="callout callout-warn">
-      <b>Важно:</b> кварки <b>никогда не встречаются поодиночке</b>. Их «склеивают» глюоны,
-      и если попытаться «вытащить» один кварк, энергия натяжения «струны» станет настолько большой,
-      что родится новая пара кварк-антикварк. Это называется <b>конфайнмент</b> (от англ. confinement — удержание).
-    </div>
+    <h3 class="subhead">🗣 Как читать химические формулы</h3>
 
-    <!-- АНИМАЦИЯ КВАРКОВ -->
-    <div class="quark-wrap">
-      <canvas id="quarkCanvas" width="900" height="360"></canvas>
-    </div>
-    <div class="canvas-toolbar mt-14">
-      <button class="btn ghost btn-ghost-dark" id="quarkToggle">⏸ Пауза</button>
-    </div>
-
-    <div class="callout callout-idea mt-16">
-      <b>Зачем это изучают?</b> Чтобы понять, из чего состоит материя на самом фундаментальном уровне.
-      Это не просто любопытство. Знания о кварках и фундаментальных силах уже дали человечеству:
-      <ul class="list-note">
-        <li><b>Ядерную энергетику</b> — понимание ядерных сил позволяет получать энергию из атомов.</li>
-        <li><b>Медицину</b> — ускорители частиц используются для лечения рака.</li>
-        <li><b>Технологии будущего</b> — квантовые компьютеры, сверхпроводники, новые материалы.</li>
-        <li><b>Понимание Вселенной</b> — что было в первые секунды после Большого взрыва.</li>
-      </ul>
-      <br>
-      Этим занимаются на <b>Большом адронном коллайдере</b> (ЦЕРН, Швейцария) и в других лабораториях мира.
-      Возможно, когда ты вырастешь, ты откроешь что-то ещё глубже!
-    </div>
-
-    <div class="callout callout-warn">
-      <b>Важно:</b> в химических реакциях атомы <b>не делятся</b> на кварки. Кварки «работают» только
-      при огромных энергиях — в ускорителях частиц или в звёздах. Для химии атом — это <b>предел деления</b>.
-    </div>
+    <table class="isotope-table mt-14">
+      <thead><tr><th>Формула</th><th>Чтение</th><th>Что означает</th></tr></thead>
+      <tbody>
+        <tr><td><b>H₂O</b></td><td>«аш-два-о»</td><td>Вода: 2 водорода + 1 кислород</td></tr>
+        <tr><td><b>CO₂</b></td><td>«цэ-о-два»</td><td>Углекислый газ: 1 углерод + 2 кислорода</td></tr>
+        <tr><td><b>CH₄</b></td><td>«цэ-аш-четыре»</td><td>Метан: 1 углерод + 4 водорода</td></tr>
+        <tr><td><b>NH₃</b></td><td>«эн-аш-три»</td><td>Аммиак: 1 азот + 3 водорода</td></tr>
+        <tr><td><b>H₂SO₄</b></td><td>«аш-два-эс-о-четыре»</td><td>Серная кислота: 2 H + 1 S + 4 O</td></tr>
+        <tr><td><b>3H₂O</b></td><td>«три-аш-два-о»</td><td>Три молекулы воды</td></tr>
+      </tbody>
+    </table>
   </div>
 </section>
 
-<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->
+<!-- ==================== УРОК 4: ПРОСТЫЕ И СЛОЖНЫЕ ВЕЩЕСТВА ==================== -->

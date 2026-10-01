@@ -1,0 +1,189 @@
+<header class="hero">
+  <div class="badge">Модуль 5 · Атомы: доказательства и модели · ~20 минут</div>
+  <h1>Что внутри атома?</h1>
+</header>
+<section class="section">
+  <div class="stage s3 fade-in">
+    <div class="stage-header">
+      <div class="stage-number">3</div>
+      <div>
+        <div class="stage-title">Что внутри атома?</div>
+        <div class="stage-subtitle">Протоны, нейтроны, электроны — и кварки</div>
+      </div>
+    </div>
+
+    <p class="prose">
+      Мы знаем: атом состоит из <b>ядра</b> и <b>электронов</b>. Но из чего состоит само ядро?
+      В 1919 году Резерфорд открыл <b>протон</b>. А в 1932 году Джеймс Чедвик — <b>нейтрон</b>.
+    </p>
+
+    <!-- 3D атом -->
+    <div class="atom-3d-wrap">
+      <svg class="atom-svg" viewBox="0 0 520 400" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <radialGradient id="nucleusGrad" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#f87171"/><stop offset="100%" stop-color="#dc2626"/>
+          </radialGradient>
+          <radialGradient id="electronGrad" cx="50%" cy="50%">
+            <stop offset="0%" stop-color="#67e8f9"/><stop offset="100%" stop-color="#06b6d4"/>
+          </radialGradient>
+          <filter id="glow"><feGaussianBlur stdDeviation="3" result="coloredBlur"/><feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge></filter>
+        </defs>
+        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(30 260 200)"/>
+        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(90 260 200)"/>
+        <ellipse cx="260" cy="200" rx="180" ry="60" fill="none" stroke="#475569" stroke-width="1.5" stroke-dasharray="6 6" transform="rotate(150 260 200)"/>
+        <g class="nucleus-pulse">
+          <circle cx="260" cy="200" r="35" fill="url(#nucleusGrad)" filter="url(#glow)"/>
+          <circle cx="250" cy="190" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="250" y="194" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
+          <circle cx="270" cy="195" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="270" y="199" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
+          <circle cx="260" cy="215" r="8" fill="#ef4444" stroke="#fff" stroke-width="1.5"/><text x="260" y="219" text-anchor="middle" font-size="10" fill="#fff" font-weight="900">+</text>
+          <circle cx="268" cy="210" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="252" cy="205" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
+          <circle cx="265" cy="185" r="7" fill="#64748b" stroke="#fff" stroke-width="1.5"/>
+        </g>
+        <g class="electron-orbit-1"><circle cx="440" cy="200" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="440" y="204" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
+        <g class="electron-orbit-2"><circle cx="260" cy="140" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="260" y="144" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
+        <g class="electron-orbit-3"><circle cx="170" cy="260" r="10" fill="url(#electronGrad)" filter="url(#glow)"/><text x="170" y="264" text-anchor="middle" font-size="11" fill="#fff" font-weight="900">−</text></g>
+      </svg>
+      <div class="atom-label">Ядро (протоны + нейтроны) и электроны на орбитах</div>
+    </div>
+
+    <!-- ТАБЛИЦА ЧАСТИЦ -->
+    <h3 class="subhead">📋 Три главные частицы</h3>
+    <table class="particles-table">
+      <thead><tr><th>Частица</th><th>Заряд</th><th>Масса</th><th>Где</th><th>Кто открыл</th></tr></thead>
+      <tbody>
+        <tr><td class="pt-pro">Протон (p⁺)</td><td>+1</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Резерфорд, 1919</td></tr>
+        <tr><td class="pt-neu">Нейтрон (n⁰)</td><td>0</td><td>≈1 а.е.м.*</td><td>В ядре</td><td>Чедвик, 1932</td></tr>
+        <tr><td class="pt-ele">Электрон (e⁻)</td><td>−1</td><td>≈1/1836 а.е.м.*</td><td>Вокруг ядра</td><td>Томсон, 1897</td></tr>
+      </tbody>
+    </table>
+    <p class="note-sm">
+      * <b>а.е.м.</b> — атомная единица массы. Это удобная «единица измерения» для масс атомов и частиц.
+      Мы подробно разберём её в Модуле 4б. Пока просто запомни: <b>протон и нейтрон примерно одинаковы по массе,
+      а электрон в ~1836 раз легче</b>.
+    </p>
+
+    <!-- ЗАРЯД ПО ФЕЙНМАНУ -->
+    <h3 class="subhead">⚡ Откуда взялся заряд? (объяснение по Фейнману)</h3>
+
+    <p class="prose">
+      Представь, что ты никогда не слышал слово «заряд». Как объяснить его, не используя само слово?
+    </p>
+
+    <div class="callout callout-idea">
+      <b>Мысленный эксперимент:</b> возьми два одинаковых шарика. Потри их о шерсть и подвесь рядом.
+      Они <b>оттолкнутся</b> друг от друга. Потри один шарик о шерсть, а другой — о стекло.
+      Теперь они <b>притянутся</b>.
+      <br><br>
+      Значит, у шариков есть какое-то свойство, которое заставляет их либо отталкиваться, либо притягиваться.
+      Мы назвали это свойство <b>зарядом</b>. Природа выбрала <b>два типа</b> заряда — условно «плюс» и «минус».
+      Одинаковые заряды отталкиваются, разные — притягиваются.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Ключевая мысль:</b> заряд — это <b>не вещество</b> и <b>не «придела» к частице</b>.
+      Это <b>фундаментальное свойство</b> материи, такое же, как масса. Ты не можешь объяснить,
+      «почему» у протона именно плюс, а не минус. Мы просто <b>так назвали</b> два противоположных типа взаимодействия.
+      Главное — <b>баланс</b>: в атоме сколько плюсов, столько и минусов.
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> заряд — это <b>не энергия</b> и <b>не «топливо»</b>. Это свойство, которое определяет,
+      как частицы взаимодействуют друг с другом. Электроны удерживаются возле ядра именно потому,
+      что их отрицательный заряд притягивается к положительному заряду протонов.
+    </div>
+
+    <!-- МАСШТАБ -->
+    <h3 class="subhead">📏 Масштаб атома — от кварка до Вселенной</h3>
+    <p class="subhead-sub">
+      Самое сложное в атоме — <b>почувствовать</b> его масштаб. Ядро в 10 000–100 000 раз меньше атома.
+      Мы не можем нарисовать это «в лоб» — понадобится экран размером с дом. Вместо этого мы используем
+      <b>логарифмическую шкалу</b> — как в знаменитом проекте «Scale of the Universe».
+    </p>
+
+    <div class="canvas-wrap cw-dark">
+      <canvas id="scaleCanvas" width="900" height="480"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn ghost" id="scaleIn">🔍 Приблизить</button>
+      <button class="btn ghost" id="scaleOut">🔭 Отдалить</button>
+      <button class="btn ghost" id="scaleReset">↺ Сброс</button>
+    </div>
+    <div class="center-note" id="scaleInfo">
+      Текущий масштаб: <b>1 метр</b> — человек
+    </div>
+
+    <div class="callout callout-note mt-16">
+      <b>Хочешь больше?</b> Открой <a href="https://universe.pavelfrolov.com/" target="_blank" class="link-strong">интерактивную шкалу масштабов Вселенной</a> —
+      там можно пролететь от кварка до observable universe за 43 порядка величины. Это завораживает.
+    </div>
+
+    <!-- КВАРКИ -->
+    <h3 class="subhead">🌈 Что находится ещё глубже? Кварки, фермионы и бозоны</h3>
+    <p class="prose">
+      Протоны и нейтроны <b>тоже делятся</b>. Они состоят из <b>кварков</b> — самых маленьких
+      известных частиц. Но кварки — не единственные «кирпичики». Современная физика делит все
+      элементарные частицы на <b>два больших класса</b>:
+    </p>
+
+    <div class="card-grid">
+      <div class="card">
+        <div class="c-title">🧱 Фермионы — «кирпичики материи»</div>
+        <div class="c-desc">
+          Названы в честь Энрико Ферми. Это частицы, из которых <b>состоит вещество</b>.
+          У них полуцелый спин (это квантовое свойство, подробно — позже).
+          <br><br>
+          <b>Кварки</b> (6 типов: u, d, s, c, b, t) и <b>лептоны</b> (6 типов: электрон, мюон, тау и три нейтрино).
+          <br><br>
+          Протон = u + u + d. Нейтрон = u + d + d.
+        </div>
+      </div>
+      <div class="card">
+        <div class="c-title">🔗 Бозоны — «переносчики сил»</div>
+        <div class="c-desc">
+          Названы в честь Шатьендраната Бозе. Эти частицы <b>не составляют вещество</b> —
+          они <b>переносят взаимодействия</b> между фермионами.
+          <br><br>
+          <b>Фотон</b> — электромагнитная сила. <b>Глюоны</b> (8 типов) — сильная сила,
+          «склеивают» кварки. <b>W и Z-бозоны</b> — слабая сила. <b>Бозон Хиггса</b> — даёт массу.
+        </div>
+      </div>
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> кварки <b>никогда не встречаются поодиночке</b>. Их «склеивают» глюоны,
+      и если попытаться «вытащить» один кварк, энергия натяжения «струны» станет настолько большой,
+      что родится новая пара кварк-антикварк. Это называется <b>конфайнмент</b> (от англ. confinement — удержание).
+    </div>
+
+    <!-- АНИМАЦИЯ КВАРКОВ -->
+    <div class="quark-wrap">
+      <canvas id="quarkCanvas" width="900" height="360"></canvas>
+    </div>
+    <div class="canvas-toolbar mt-14">
+      <button class="btn ghost btn-ghost-dark" id="quarkToggle">⏸ Пауза</button>
+    </div>
+
+    <div class="callout callout-idea mt-16">
+      <b>Зачем это изучают?</b> Чтобы понять, из чего состоит материя на самом фундаментальном уровне.
+      Это не просто любопытство. Знания о кварках и фундаментальных силах уже дали человечеству:
+      <ul class="list-note">
+        <li><b>Ядерную энергетику</b> — понимание ядерных сил позволяет получать энергию из атомов.</li>
+        <li><b>Медицину</b> — ускорители частиц используются для лечения рака.</li>
+        <li><b>Технологии будущего</b> — квантовые компьютеры, сверхпроводники, новые материалы.</li>
+        <li><b>Понимание Вселенной</b> — что было в первые секунды после Большого взрыва.</li>
+      </ul>
+      <br>
+      Этим занимаются на <b>Большом адронном коллайдере</b> (ЦЕРН, Швейцария) и в других лабораториях мира.
+      Возможно, когда ты вырастешь, ты откроешь что-то ещё глубже!
+    </div>
+
+    <div class="callout callout-warn">
+      <b>Важно:</b> в химических реакциях атомы <b>не делятся</b> на кварки. Кварки «работают» только
+      при огромных энергиях — в ускорителях частиц или в звёздах. Для химии атом — это <b>предел деления</b>.
+    </div>
+  </div>
+</section>
+
+<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== -->

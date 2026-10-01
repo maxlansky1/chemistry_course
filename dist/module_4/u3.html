@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Урок 3. Движущие силы реакций</title>
+<title>Урок 3. Химический элемент</title>
 <style>
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
@@ -861,306 +861,150 @@
   }
   .map-level-title { font-size: 22px; font-weight: 800; letter-spacing: -.5px; }
 
-/* module_4 (3б) — сохранение массы и энергии, энтропия, баланс */
+/* module_6 (4б) — элемент, молекулы, язык химии, вещества, аллотропы */
 
-.tri-symbol { color: var(--accent); font-weight: 900; font-size: 1.05em; }
+.stage.s5::before{background:linear-gradient(90deg,#06b6d4,#0891b2);}
 
-.triple-basket { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; margin-top: 16px; }
+.stage.s6::before{background:linear-gradient(90deg,#10b981,#059669);}
 
-@keyframes shake {
-    0%,100% { transform: translateX(0); }
-    25% { transform: translateX(-6px); }
-    75% { transform: translateX(6px); }
-  }
+.canvas-wrap{position:relative;background:linear-gradient(180deg,#f0f9ff 0%,#e0f2fe 100%);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
 
-/* Canvas */
-  .canvas-wrap {
-    position: relative;
-    background: linear-gradient(180deg, #f0f9ff 0%, #e0f2fe 100%);
-    border-radius: 14px;
-    overflow: hidden;
-    border: 2px solid var(--border);
-    margin-top: 16px;
-  }
+.canvas-wrap canvas{display:block;width:100%;height:auto;}
 
-.canvas-wrap canvas { display: block; width: 100%; height: auto; }
+.canvas-toolbar{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:12px;}
 
-/* Слайдер */
-  .slider-control {
-    background: var(--panel-2); border-radius: 12px;
-    padding: 16px 20px; margin: 14px 0;
-    display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
-  }
+.btn{padding:10px 22px;border-radius:50px;font-size:14px;font-weight:800;cursor:pointer;transition:all .2s;border:none;color:#fff;background:var(--accent);box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
 
-.slider-control label {
-    font-size: 15px; font-weight: 700; color: var(--text);
-    display: flex; align-items: center; gap: 6px; white-space: nowrap;
-  }
+.btn:hover{transform:translateY(-2px);}
 
-.slider-control input[type="range"] {
-    flex: 1; min-width: 160px; -webkit-appearance: none; appearance: none;
-    height: 8px; border-radius: 4px;
-    background: linear-gradient(90deg, #06b6d4, #8b5cf6, #ef4444);
-    outline: none; cursor: pointer;
-  }
+.btn.ghost{background:var(--panel-2);color:var(--text);border:1.5px solid var(--border);box-shadow:none;}
 
-.slider-control input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none; appearance: none;
-    width: 26px; height: 26px; border-radius: 50%;
-    background: #fff; border: 3px solid var(--h-deep);
-    cursor: pointer; box-shadow: 0 2px 10px rgba(6,182,212,.4);
-  }
+.btn.ghost:hover{border-color:var(--accent);color:var(--accent);}
 
-.slider-control input[type="range"]::-moz-range-thumb {
-    width: 26px; height: 26px; border-radius: 50%;
-    background: #fff; border: 3px solid var(--h-deep); cursor: pointer;
-  }
+.btn.cyan{background:#06b6d4;box-shadow:0 6px 16px -6px rgba(6,182,212,.5);}
 
-.slider-value {
-    font-size: 15px; font-weight: 800; color: var(--h-deep);
-    min-width: 80px; text-align: right;
-    font-variant-numeric: tabular-nums;
-    background: #fff; padding: 5px 12px; border-radius: 8px;
-    border: 1.5px solid var(--border);
-  }
+.btn.violet{background:#8b5cf6;box-shadow:0 6px 16px -6px rgba(139,92,246,.5);}
 
-/* Схема энергии */
-  .energy-cards {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 16px; margin-top: 16px;
-  }
+.btn.red{background:#ef4444;box-shadow:0 6px 16px -6px rgba(239,68,68,.5);}
 
-.energy-card {
-    background: linear-gradient(180deg, #fff, #f8fafc);
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    padding: 16px;
-    text-align: center;
-    transition: all .25s;
-    position: relative;
-    overflow: hidden;
-  }
+.btn.green{background:#10b981;box-shadow:0 6px 16px -6px rgba(16,185,129,.5);}
 
-.energy-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); border-color: var(--h-deep); }
+.btn.orange{background:#f59e0b;box-shadow:0 6px 16px -6px rgba(245,158,11,.5);}
 
-.energy-card .ec-visual {
-    height: 100px; display: flex; align-items: center; justify-content: center;
-    margin-bottom: 10px;
-  }
+.tl-year{flex-shrink:0;scroll-snap-align:start;min-width:160px;background:#fff;border:2px solid var(--border);border-radius:14px;padding:14px;cursor:pointer;transition:all .25s;text-align:center;}
 
-.energy-card .ec-visual svg { width: 100%; height: 100%; max-width: 180px; }
+.tl-year:hover{border-color:var(--accent);transform:translateY(-3px);}
 
-.energy-card .ec-title { font-size: 15px; font-weight: 800; margin-bottom: 4px; }
+.tl-year.active{background:linear-gradient(180deg,#f5f3ff,#fff);border-color:var(--accent);box-shadow:0 8px 20px -8px rgba(139,92,246,.4);}
 
-.energy-card .ec-desc {
-    font-size: 13px; color: var(--muted); line-height: 1.5;
-    display: flex; align-items: center; justify-content: center; gap: 6px; flex-wrap: wrap;
-  }
+.tl-year .tl-num{font-size:22px;font-weight:900;color:var(--accent);}
 
-.energy-card .ec-desc .flow {
-    background: #ecfdf5; color: #065f46;
-    padding: 2px 8px; border-radius: 6px; font-weight: 700;
-    font-size: 12px;
-  }
+.tl-year .tl-who{font-size:13px;font-weight:700;margin:6px 0 4px;color:var(--text);}
 
-.energy-card .ec-desc .arrow { color: var(--accent); font-weight: 900; }
+.tl-year .tl-what{font-size:12px;color:var(--muted);line-height:1.4;}
 
-/* Анимированные сцены (CSS-based) */
-  .scene-svg { overflow: visible; }
+.tl-detail{margin-top:16px;padding:22px;background:linear-gradient(180deg,#f8fafc,#fff);border:2px solid var(--border);border-radius:14px;display:none;animation:fadeSlide .35s ease;}
 
-@keyframes flameFlicker {
-    0%,100% { transform: scaleY(1) scaleX(1); }
-    50% { transform: scaleY(1.15) scaleX(0.95); }
-  }
+.tl-detail.show{display:block;}
 
-@keyframes sparkle {
-    0%,100% { opacity: 0; transform: scale(0.5); }
-    50% { opacity: 1; transform: scale(1); }
-  }
+.tl-detail .tl-d-title{font-size:18px;font-weight:800;margin-bottom:8px;}
 
-@keyframes personRun {
-    0%,100% { transform: translateX(0); }
-    50% { transform: translateX(8px); }
-  }
+.tl-detail .tl-d-text{font-size:15.5px;line-height:1.75;color:var(--text);}
 
-@keyframes electronFlow {
-    0% { stroke-dashoffset: 0; }
-    100% { stroke-dashoffset: -30; }
-  }
+.formula-card{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;margin-top:16px;}
 
-@keyframes lampGlow {
-    0%,100% { opacity: 0.6; }
-    50% { opacity: 1; }
-  }
+.formula-display{font-size:38px;font-weight:900;text-align:center;color:var(--accent);letter-spacing:2px;margin:10px 0;font-family:'Courier New',monospace;}
 
-@keyframes steamRise {
-    0% { transform: translateY(0); opacity: 0.8; }
-    100% { transform: translateY(-15px); opacity: 0; }
-  }
+.formula-parts{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;}
 
-@keyframes ballRoll {
-    0% { transform: translateY(-10px); }
-    100% { transform: translateY(0); }
-  }
+.formula-part{padding:14px;border-radius:12px;text-align:center;font-size:14.5px;line-height:1.6;}
 
-/* Треугольник Джонстона */
-  .johnstone-trio {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    gap: 16px; margin-top: 18px;
-  }
+.formula-part .fp-label{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:6px;}
 
-.johnstone-cell {
-    padding: 20px; border-radius: 14px;
-    border: 2px solid var(--border);
-    background: #fff;
-    text-align: center;
-    transition: all .25s;
-    position: relative;
-  }
+.formula-part .fp-value{font-weight:800;color:var(--text);}
 
-.johnstone-cell:hover { transform: translateY(-3px); box-shadow: var(--shadow); }
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
-.johnstone-cell.macro { border-color: var(--green); background: linear-gradient(180deg, #ecfdf5, #fff); }
+@keyframes fadeSlide{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 
-.johnstone-cell.submicro { border-color: var(--accent); background: linear-gradient(180deg, #f5f3ff, #fff); }
+.practical-step{background:linear-gradient(180deg,#f0f9ff,#fff);border:2px solid var(--border);border-radius:14px;padding:22px;}
 
-.johnstone-cell.symbolic { border-color: var(--h-color); background: linear-gradient(180deg, #ecfeff, #fff); }
+.practical-step .ps-header{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
 
-.johnstone-cell .jc-icon { font-size: 40px; line-height: 1; margin-bottom: 10px; }
+.practical-step .ps-num{width:32px;height:32px;border-radius:50%;background:var(--h-deep);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900;font-size:14px;}
 
-.johnstone-cell .jc-title {
-    font-size: 14px; font-weight: 800; letter-spacing: 1px;
-    text-transform: uppercase; margin-bottom: 8px;
-  }
+.practical-step .ps-title{font-size:13px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--h-deep);}
 
-.johnstone-cell.macro .jc-title { color: #065f46; }
+.practical-step .ps-situation{font-size:16.5px;font-weight:700;margin-bottom:14px;line-height:1.6;}
 
-.johnstone-cell.submicro .jc-title { color: #5b21b6; }
+.isotope-table{width:100%;border-collapse:collapse;margin-top:16px;font-size:15px;}
 
-.johnstone-cell.symbolic .jc-title { color: #0e7490; }
+.isotope-table th,.isotope-table td{padding:12px 14px;border:1.5px solid var(--border);text-align:left;}
 
-.johnstone-cell .jc-text { font-size: 14.5px; line-height: 1.6; color: var(--text); }
+.isotope-table th{background:var(--panel-2);font-weight:800;font-size:13px;text-transform:uppercase;letter-spacing:.5px;color:var(--muted);}
 
-.johnstone-cell.submicro .jc-text .blackbox {
-    display: inline-block; padding: 8px 14px;
-    background: linear-gradient(135deg, #1e293b, #334155);
-    color: #fbbf24; border-radius: 8px;
-    font-weight: 800; font-style: italic;
-    margin: 6px 0;
-  }
+.isotope-table tr:hover{background:#f8fafc;}
 
-/* Диаграмма энергии */
-  .diagram-wrap {
-    background: linear-gradient(180deg, #f0f9ff, #fff);
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
-    margin-top: 16px;
-  }
+.isotope-table .iso-name{font-weight:800;}
 
-.diagram-wrap svg { width: 100%; height: auto; display: block; }
+.isotope-table .iso-symbol{font-family:'Courier New',monospace;font-weight:800;font-size:16px;color:var(--accent);}
 
-/* Весы двух сил */
-  .balance-wrap {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-    margin-top: 16px;
-  }
+.slider-wrap{display:flex;align-items:center;gap:14px;margin:16px 0;flex-wrap:wrap;}
 
-.balance-card {
-    background: linear-gradient(180deg, #fff, #f8fafc);
-    border: 2px solid var(--border);
-    border-radius: 14px;
-    padding: 18px;
-    text-align: center;
-  }
+.slider-wrap input[type=range]{flex:1;min-width:200px;accent-color:var(--accent);height:8px;cursor:pointer;}
 
-.balance-card .bc-title {
-    font-size: 14px; font-weight: 800;
-    text-transform: uppercase; letter-spacing: .5px;
-    margin-bottom: 10px;
-  }
+.slider-label{font-size:14px;font-weight:700;color:var(--muted);min-width:90px;}
 
-.balance-card.energy .bc-title { color: #c2410c; }
+.energy-badge{display:inline-block;padding:4px 14px;border-radius:50px;font-size:13px;font-weight:800;transition:all .3s;}
 
-.balance-card.entropy .bc-title { color: #7c3aed; }
+.energy-badge.high{background:#fef2f2;color:#dc2626;}
 
-/* Общий вывод */
-  .verdict-box {
-    margin-top: 18px;
-    padding: 22px;
-    border-radius: 14px;
-    text-align: center;
-    font-size: 17px;
-    font-weight: 700;
-    background: var(--panel-2);
-    border: 2px solid var(--border);
-    transition: all .4s;
-    min-height: 100px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 6px;
-  }
+.energy-badge.low{background:#ecfdf5;color:#059669;}
 
-.verdict-box.good { background: #ecfdf5; border-color: var(--green); color: #065f46; }
+.reaction-canvas{background:linear-gradient(180deg,#0f172a,#1e293b);border-radius:14px;overflow:hidden;border:2px solid var(--border);margin-top:16px;}
 
-.verdict-box.bad { background: #fef2f2; border-color: var(--red); color: #991b1b; }
+.reaction-canvas canvas{display:block;width:100%;height:auto;}
 
-.verdict-box.mixed { background: #fffbeb; border-color: var(--orange); color: #92400e; }
+@media (max-width:800px){.dual-basket{grid-template-columns:1fr;}.formula-parts{grid-template-columns:1fr;}}
 
-.verdict-box .vb-icon { font-size: 36px; }
+@media (max-width:600px){.container{padding:0 14px;}.hero{padding:40px 0 20px;}.stage{padding:20px;}.card-grid{grid-template-columns:1fr;}body{font-size:16px;}}
 
-.verdict-box .vb-sub { font-size: 14px; font-weight: 600; opacity: .85; }
-
-@keyframes fadeSlide {
-    from { opacity: 0; transform: translateY(-6px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-@media (max-width: 800px) {
-    .triple-basket, .johnstone-trio, .balance-wrap { grid-template-columns: 1fr; }
-  }
-
-@media (max-width: 600px) {
-    .container { padding: 0 14px; }
-    .hero { padding: 40px 0 20px; }
-    .stage { padding: 20px; }
-    .card-grid { grid-template-columns: 1fr; }
-    body { font-size: 16px; }
-  }
-
-/* SVG-анимации (вынесено из инлайн-стилей) */
-.anim-flame { animation: flameFlicker 0.8s ease-in-out infinite; transform-origin: 100px 60px; }
-.anim-spark-1 { animation: sparkle 1.2s ease-in-out infinite; }
-.anim-spark-2 { animation: sparkle 1.5s ease-in-out infinite; animation-delay: 0.4s; }
-.anim-spark-3 { animation: sparkle 1.3s ease-in-out infinite; animation-delay: 0.7s; }
-.anim-spark-4 { animation: sparkle 2s ease-in-out infinite; }
-.anim-spark-5 { animation: sparkle 2s ease-in-out infinite; animation-delay: 0.5s; }
-.anim-run { animation: personRun 0.6s ease-in-out infinite alternate; }
-.anim-glow { animation: lampGlow 1s ease-in-out infinite; }
-.anim-flow { animation: electronFlow 1s linear infinite; }
-.anim-steam { animation: steamRise 1.5s ease-out infinite; }
-.anim-steam-2 { animation: steamRise 1.5s ease-out infinite; animation-delay: 0.5s; }
-.anim-steam-3 { animation: steamRise 1.5s ease-out infinite; animation-delay: 1s; }
-.btn-green { background: var(--green); }
-.verdict-exo { margin-top: 8px; font-weight: 800; color: #c2410c; }
-.verdict-endo { margin-top: 8px; font-weight: 800; color: #7c3aed; }
+/* утилиты (вынесено из инлайн-стилей) */
+.cw-dark { background: linear-gradient(180deg, #0f172a, #1e293b); }
+.note-sm { font-size: 14px; color: var(--muted); margin-top: 10px; }
+.card-blue { border-color: #3b82f6; }
+.card-violet { border-color: #8b5cf6; }
+.card-green { border-color: #10b981; }
+.card-cyan { border-color: #06b6d4; }
+.card-orange { border-color: #f59e0b; }
+.card-slate { border-color: #94a3b8; }
+.card-dark { border-color: #475569; }
+.fc-warm { background: linear-gradient(180deg, #fffbeb, #fff); border-color: #f59e0b; }
+.tcenter { text-align: center; }
+.fbig { font-size: 52px; font-weight: 900; }
+.fsub { font-size: 32px; font-weight: 900; vertical-align: sub; }
+.c-orange { color: #f59e0b; }
+.c-blue { color: #1e40af; }
+.c-violet { color: #3730a3; }
+.c-red { color: #991b1b; }
+.c-brown { color: #92400e; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 16px; }
+.legend-box { padding: 12px; border-radius: 10px; }
+.lb-warm { background: #fffbeb; border-left: 4px solid #f59e0b; }
+.lb-info { background: #f0f9ff; border-left: 4px solid #3b82f6; }
+.fs-14 { font-size: 14px; }
 </style>
 </head>
 <body>
-<!-- built by src/build.py v1 · 2026-09-29 · module_4/u3 · manifest-driven -->
+<!-- built by src/build.py v1 · 2026-10-01 · module_4/u3 · manifest-driven -->
 <header class="hero">
-  <div class="badge">Модуль 4 · Законы сохранения · ~20 минут</div>
-  <h1>Движущие силы реакций</h1>
+  <div class="badge">Модуль 4 · Атомы и химические элементы · ~25 минут</div>
+  <h1>Химический элемент</h1>
 </header>
 <div class="container">
 <button class="nav-trigger" id="navTrigger" aria-controls="navDrawer" aria-expanded="false"><span class="nav-trigger-icon">☰</span><span class="nav-trigger-text">Содержание</span></button>
 <div class="nav-backdrop" id="navBackdrop" hidden></div>
-<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 4. Законы сохранения</div><ul class="nav-tree"><li class="nav-lesson"><a href="entry.html">Начало</a></li><li class="nav-lesson"><a href="u1.html">Урок 1</a></li><li class="nav-lesson"><a href="u2.html">Урок 2</a></li><li class="nav-lesson nav-current"><a href="#" aria-current="true">Урок 3</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u3-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u3-2">Движущие силы реакций</a></li><li><a class="nav-sub" href="#s-u3-3">Практикум: Беспорядок растёт</a></li><li><a class="nav-sub" href="#s-u3-4">Домашнее задание</a></li></ul></li><li class="nav-lesson"><a href="final.html">Тест</a></li></ul></nav>
+<nav class="nav-drawer" id="navDrawer" aria-label="Содержание" aria-hidden="true"><div class="nav-drawer-head">Модуль 4. Атомы и химические элементы</div><ul class="nav-tree"><li class="nav-lesson"><a href="u1.html">Урок 1</a></li><li class="nav-lesson"><a href="u2.html">Урок 2</a></li><li class="nav-lesson nav-current"><a href="#" aria-current="true">Урок 3</a><ul class="nav-subs"><li><a class="nav-sub" href="#s-u3-1">О чём этот урок</a></li><li><a class="nav-sub" href="#s-u3-2">Химический элемент</a></li><li><a class="nav-sub" href="#s-u3-3">Практикум: Символы элементов</a></li><li><a class="nav-sub" href="#s-u3-4">Домашнее задание</a></li></ul></li></ul></nav>
 <button class="to-top" id="toTop" aria-label="Наверх" hidden>↑</button>
 <section class="section">
   <div id="s-u3-1" data-stage class="stage s-intro fade-in">
@@ -1170,204 +1014,173 @@
         <div class="stage-title">О чём этот урок</div>
       </div>
     </div>
-    <p class="prose">Почему одни реакции идут сами, а другие нет? Познакомимся с двумя движущими силами.</p>
+    <p class="prose">Атомы одного вида образуют химический элемент. Разберёмся, что это значит.</p>
     <div class="card-grid">
       <div class="card">
-        <div class="c-title">🎢 Стремление к покою</div>
-        <div class="c-desc">Что такое энтропия?</div>
+        <div class="c-title">📜 Что такое элемент</div>
+        <div class="c-desc">Что такое химический элемент?</div>
       </div>
       <div class="card">
-        <div class="c-title">🌀 Энтропия</div>
-        <div class="c-desc">Почему реакция идёт сама собой?</div>
+        <div class="c-title">🧩 Изотопы</div>
+        <div class="c-desc">Чем изотопы одного элемента отличаются друг от друга?</div>
       </div>
       <div class="card">
-        <div class="c-title">⚖️ Две силы вместе</div>
-        <div class="c-desc">Как энергия и беспорядок вместе управляют реакцией?</div>
+        <div class="c-title">🔤 Символы элементов</div>
+        <div class="c-desc">Как записывают элемент и его заряд?</div>
       </div>
     </div>
   </div>
 </section>
 
 <section class="section">
-  <div id="s-u3-2" data-stage class="stage s3 fade-in">
+  <div id="s-u3-2" data-stage class="stage s1 fade-in">
     <div class="stage-header">
-      <div class="stage-number">3</div>
+      <div class="stage-number">1</div>
       <div>
-        <div class="stage-title">Движущие силы реакций</div>
-        <div class="stage-subtitle">Почему одни реакции идут сами, а другие — нет</div>
+        <div class="stage-title">Химический элемент</div>
+        <div class="stage-subtitle">Как пришли к этому понятию и что такое изотопы</div>
       </div>
     </div>
 
     <p class="prose">
-      Мы знаем, что реакции подчиняются законам сохранения. Но <b>почему</b> одни реакции
-      происходят сами собой (горение, ржавление), а другие — нет? Оказывается, в природе
-      действуют <b>две силы</b>, которые и определяют, пойдёт ли реакция.
+      В Модуле 4а мы узнали, что все вещества состоят из атомов. Но атомы бывают
+      <b>разных видов</b>. Атомы одного вида — с одинаковым зарядом ядра — называются
+      <b>химическим элементом</b>.
     </p>
-
-    <!-- СИЛА 1 -->
-    <h3 class="subhead">⬇️ Сила первая: стремление к снижению энергии</h3>
 
     <div class="callout callout-idea">
-      <b>Всё в природе стремится к покою.</b> Мяч катится с горки вниз, горячий чай остывает,
-      камень падает на землю. Так и вещества: они «скатываются» в состояние
-      с <b>меньшей энергией</b>.
+      <b>Определение:</b> <b>Химический элемент</b> — это вид атомов с одинаковым
+      зарядом ядра. Например, все атомы с зарядом ядра +1 — это водород H.
+      Все атомы с зарядом ядра +8 — это кислород O.
     </div>
 
-    <p class="subhead-sub">
-      <span class="cta">👆 Подвигай ползунок</span>, чтобы увидеть, как мяч «скатывается с горки».
-      Каждое положение — это определённая энергия системы.
+    <h3 class="subhead">📜 Как человечество пришло к понятию «химический элемент»</h3>
+
+    <p class="prose">
+      Это понятие формировалось <b>постепенно, более двух столетий</b>. В античности
+      и в эпоху алхимии учёные считали, что всё состоит из «первоэлементов» —
+      земли, воды, воздуха и огня. Но с развитием химического анализа становилось
+      ясно, что это не так.
     </p>
 
-    <div class="diagram-wrap">
-      <svg viewBox="0 0 800 400" xmlns="http://www.w3.org/2000/svg">
-        <defs>
-          <linearGradient id="hillBg" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#fef3c7"/>
-            <stop offset="100%" stop-color="#fffbeb"/>
-          </linearGradient>
-          <linearGradient id="ballGrad" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stop-color="#f87171"/>
-            <stop offset="100%" stop-color="#dc2626"/>
-          </linearGradient>
-        </defs>
-        <rect x="0" y="0" width="800" height="400" fill="url(#hillBg)"/>
-
-        <!-- Гора -->
-        <path d="M 80 340 Q 200 120 320 280 Q 400 360 480 300 L 720 300" 
-              fill="none" stroke="#f59e0b" stroke-width="4" stroke-linecap="round"/>
-
-        <!-- Пунктир уровня -->
-        <line x1="80" y1="340" x2="720" y2="340" stroke="#94a3b8" stroke-width="1" stroke-dasharray="4 4" opacity="0.5"/>
-
-        <!-- Метки: реагенты и продукты -->
-        <text x="200" y="120" font-size="14" fill="#b91c1c" font-weight="800">Высокая энергия (реагенты)</text>
-        <text x="620" y="270" font-size="14" fill="#065f46" font-weight="800">Низкая энергия (продукты)</text>
-
-        <!-- Мяч (контролируется ползунком) -->
-        <g id="energyBall">
-          <circle cx="200" cy="150" r="26" fill="url(#ballGrad)" stroke="#991b1b" stroke-width="2"/>
-          <circle cx="190" cy="142" r="6" fill="#fff" opacity="0.5"/>
-        </g>
-
-        <!-- Стрелка вниз -->
-        <path d="M 400 200 L 400 260" stroke="#8b5cf6" stroke-width="3" stroke-dasharray="6 4" marker-end="url(#arrowDown)"/>
-        <defs>
-          <marker id="arrowDown" markerWidth="8" markerHeight="8" refX="4" refY="6" orient="auto">
-            <polygon points="0 0, 8 0, 4 8" fill="#8b5cf6"/>
-          </marker>
-        </defs>
-      </svg>
-    </div>
-
-    <div class="slider-control">
-      <label>📍 Положение мяча:</label>
-      <input type="range" id="hillSlider" min="0" max="100" value="0" step="1">
-      <span class="slider-value" id="hillValue">0 %</span>
-    </div>
-
-    <div class="verdict-box" id="hillFeedback">
-      <div class="vb-icon">🔥</div>
-      <div>Мяч на вершине — реагенты обладают большой энергией.</div>
-      <div class="vb-sub">Подвигай ползунок, чтобы увидеть, что произойдёт.</div>
-    </div>
-
-    <div class="callout callout-note mt-16">
-      <b>Как это работает?</b> Когда реагенты превращаются в продукты, система
-      «скатывается» в более устойчивое состояние. При этом <b>выделяется энергия</b> —
-      обычно в виде тепла. Именно поэтому горение, ржавление и другие подобные реакции
-      происходят <b>сами собой</b>.
-    </div>
-
-    <!-- СИЛА 2 -->
-    <h3 class="subhead">⬆️ Сила вторая: стремление к повышению беспорядка (энтропия)</h3>
-
-    <div class="callout callout-idea">
-      <b>Беспорядок растёт сам собой, а порядок нужно наводить руками.</b>
-      Комната сама становится грязной, но не убирается сама. Сахар растворяется в воде сам,
-      но не собирается обратно в кубик. Это и есть <b>энтропия</b> — мера беспорядка.
-    </div>
-
-    <p class="subhead-sub">
-      <span class="cta">👆 Подвигай ползунок</span>, чтобы увидеть, как порядок превращается в беспорядок.
-    </p>
-
-    <div class="canvas-wrap">
-      <canvas id="entropyCanvas" width="900" height="320"></canvas>
-    </div>
-
-    <div class="slider-control">
-      <label>🌀 Беспорядок:</label>
-      <input type="range" id="entropySlider" min="0" max="100" value="0" step="1">
-      <span class="slider-value" id="entropyValue">0 %</span>
-    </div>
-
-    <div class="verdict-box" id="entropyFeedback">
-      <div class="vb-icon">📦</div>
-      <div>Полный порядок: все частицы собраны вместе.</div>
-      <div class="vb-sub">Подвигай ползунок, чтобы увидеть, как растёт беспорядок.</div>
+    <div class="timeline">
+      <div class="timeline-track" id="elemTimelineTrack"></div>
+      <div class="tl-detail" id="elemTlDetail"></div>
     </div>
 
     <div class="callout callout-note">
-      <b>Термин:</b> Энтропия — это мера беспорядка. Чем больше беспорядка в системе,
-      тем выше энтропия. Природа стремится к максимальному беспорядку.
+      <b>Важно понимать:</b> до конца XVIII века под «элементом» часто понимали
+      простое вещество, которое нельзя разложить. Только после работ Дальтона
+      и Берцелиуса в начале XIX века элемент стали связывать с <b>атомами</b>
+      определённого вида. А окончательное понимание элемента как разновидности
+      атомов сформировалось лишь к концу XIX века, после открытия радиоактивности
+      и изотопии.
     </div>
 
-    <!-- СИЛА 3: ВМЕСТЕ -->
-    <h3 class="subhead">🤝 Две силы вместе: пойдёт ли реакция?</h3>
+    <h3 class="subhead">🔬 Изотопы: атомы одного элемента, но разные</h3>
 
     <p class="prose">
-      Чтобы понять, пойдёт ли реакция сама, нужно учесть <b>обе силы сразу</b>.
-      <span class="cta">👆 Подвигай два ползунка</span> и посмотри, что произойдёт.
+      Представь, что у тебя есть два атома водорода. У обоих — по одному протону
+      (заряд ядра +1). Но у одного в ядре есть ещё и нейтрон, а у другого — нет.
+      Это <b>изотопы</b> — разновидности одного химического элемента, которые
+      отличаются числом нейтронов в ядре.
     </p>
 
-    <div class="balance-wrap">
-      <div class="balance-card energy">
-        <div class="bc-title">⬇️ Снижение энергии</div>
-        <p>
-          Насколько сильно система хочет «скатиться с горки»?
-        </p>
-        <input type="range" id="forceEnergy" min="0" max="100" value="50" step="1" class="slider-control">
-        <div class="verdict-exo" id="forceEnergyValue">50 %</div>
-      </div>
-      <div class="balance-card entropy">
-        <div class="bc-title">⬆️ Повышение беспорядка</div>
-        <p>
-          Насколько сильно система хочет «развалиться»?
-        </p>
-        <input type="range" id="forceEntropy" min="0" max="100" value="50" step="1" class="slider-control">
-        <div class="verdict-endo" id="forceEntropyValue">50 %</div>
-      </div>
+    <div class="callout callout-idea">
+      <b>Изотопы</b> — это атомы одного и того же элемента, у которых
+      <b>одинаковое число протонов</b>, но <b>разное число нейтронов</b>.
+      Химические свойства у них почти одинаковые, а вот масса — разная.
     </div>
 
-    <div class="verdict-box" id="balanceVerdict">
-      <div class="vb-icon">🤔</div>
-      <div>Подвигай ползунки, чтобы увидеть, пойдёт ли реакция.</div>
-      <div class="vb-sub">Правило простое: если обе силы «за» — реакция идёт сама.</div>
+    <!-- ДЕТАЛЬНАЯ АНИМАЦИЯ ИЗОТОПОВ С ЭЛЕКТРОНАМИ -->
+    <div class="canvas-wrap cw-dark">
+      <canvas id="isotopeCanvas" width="960" height="440"></canvas>
+    </div>
+    <div class="canvas-toolbar">
+      <button class="btn cyan" id="isotopeBtn">▶ Показать три изотопа водорода</button>
+      <button class="btn ghost" id="isotopeStepBtn">🔍 Показать по одному</button>
     </div>
 
-    <div class="callout callout-ok">
-      <b>Главное правило:</b> Реакция идёт <b>сама собой</b>, когда система может
-      <b>одновременно</b> снизить энергию и повысить беспорядок.
-      Если хотя бы одна из сил против — реакция может не пойти без внешней помощи.
+    <!-- СВОДНАЯ ТАБЛИЦА ИЗОТОПОВ -->
+    <h4 class="subhead">📊 Сравнение трёх изотопов водорода</h4>
+    <table class="isotope-table">
+      <thead>
+        <tr>
+          <th>Название</th>
+          <th>Символ</th>
+          <th>Протоны</th>
+          <th>Нейтроны</th>
+          <th>Электроны</th>
+          <th>Масса (а.е.м.)</th>
+          <th>Распространённость</th>
+          <th>Стабильность</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td class="iso-name">Протий</td>
+          <td class="iso-symbol">¹H</td>
+          <td>1</td>
+          <td>0</td>
+          <td>1</td>
+          <td>1,0078</td>
+          <td>99,985%</td>
+          <td>✅ Стабилен</td>
+        </tr>
+        <tr>
+          <td class="iso-name">Дейтерий</td>
+          <td class="iso-symbol">²H (D)</td>
+          <td>1</td>
+          <td>1</td>
+          <td>1</td>
+          <td>2,0141</td>
+          <td>0,015%</td>
+          <td>✅ Стабилен</td>
+        </tr>
+        <tr>
+          <td class="iso-name">Тритий</td>
+          <td class="iso-symbol">³H (T)</td>
+          <td>1</td>
+          <td>2</td>
+          <td>1</td>
+          <td>3,0160</td>
+          <td>Следы</td>
+          <td>⚠️ Радиоактивен (12,3 года)</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="callout callout-ok mt-16">
+      <b>Что общего?</b> У всех трёх изотопов — <b>один протон</b> (заряд ядра +1)
+      и <b>один электрон</b>. Поэтому все они — <b>водород</b>. Они одинаково
+      вступают в химические реакции. Разница только в массе: чем больше нейтронов,
+      тем тяжелее атом.
+    </div>
+
+    <div class="callout callout-note">
+      <b>Интересный факт:</b> изотопы есть у большинства элементов. Например,
+      углерод существует в виде ¹²C (6 протонов, 6 нейтронов), ¹³C (6 протонов,
+      7 нейтронов) и ¹⁴C (6 протонов, 8 нейтронов). Именно ¹⁴C используется
+      для радиоуглеродного датирования в археологии.
     </div>
   </div>
 </section>
 
-<!-- ==================== РЕФЛЕКСИЯ ПО ФЕЙНМАНУ ==================== --><section class="section">
+<!-- ==================== УРОК 2: ИСТОРИЯ ИЗУЧЕНИЯ МОЛЕКУЛ ==================== --><section class="section">
   <div id="s-u3-3" data-stage class="stage s-prac fade-in">
     <div class="stage-header">
       <div class="stage-number">🔬</div>
       <div>
-        <div class="stage-title">Практикум: Беспорядок растёт</div>
+        <div class="stage-title">Практикум: Символы элементов</div>
         <div class="stage-subtitle">Опыт по теме урока · соблюдай технику безопасности</div>
       </div>
     </div>
-    <p class="prose">Проверь, почему вещества сами смешиваются и растворяются.</p>
+    <p class="prose">Потренируйся пользоваться языком элементов.</p>
     <p class="subhead-sub">Что понадобится</p>
-    <ul class="list-note"><li>стакан с водой</li><li>капля красителя (или чай, сок)</li><li>сахар</li></ul>
+    <ul class="list-note"><li>таблица символов (или память)</li><li>карточки/бумага</li></ul>
     <p class="subhead-sub">Ход работы</p>
-    <ol class="list-note"><li>Капни краситель в воду, не размешивая.</li><li>Наблюдай, как он сам распределяется — беспорядок растёт.</li><li>Насыпь сахар — он растворяется сам.</li><li>Сделай вывод, куда «стремится» система.</li></ol>
-    <div class="callout callout-note"><b>📝 В тетрадь:</b> как меняется беспорядок (энтропия) в опыте.</div>
+    <ol class="list-note"><li>Запиши символы 5 знакомых элементов (H, O, C, Fe, Cu).</li><li>Прочитай их вслух как латинские буквы.</li><li>Соотнеси символ и название элемента.</li><li>Придумай, где в жизни встречается каждый элемент.</li></ol>
+    <div class="callout callout-note"><b>📝 В тетрадь:</b> таблицу: символ → название → где встречается.</div>
   </div>
 </section>
 <section class="section">
@@ -1381,12 +1194,12 @@
     </div>
     <div class="homework">
       <ol>
-        <li>Назови две движущие силы реакций.</li>
-        <li>Объясни простыми словами, что такое энтропия.</li>
-        <li>Приведи пример «снижения энергии» и пример «роста беспорядка».</li>
-        <li>Объясни, когда реакция идёт сама собой.</li>
-        <li><span class="hw-star">★ Почему сахар растворяется сам, хотя это не «скатывание с горки»?</span></li>
-        <li>Объясни, почему реакции идут сами собой: что такое стремление к меньшей энергии и к беспорядку — простыми словами.</li>
+        <li>Дай определение химического элемента.</li>
+        <li>Объясни, что такое изотопы.</li>
+        <li>Запиши символы 5 элементов и их названия.</li>
+        <li>Приведи пример двух изотопов одного элемента.</li>
+        <li><span class="hw-star">★ Почему элемент определяют по заряду ядра, а не по массе?</span></li>
+        <li>Объясни простыми словами, что такое химический элемент и что такое изотопы.</li>
       </ol>
     </div>
   </div>
@@ -1448,307 +1261,240 @@
 
 <script>
 // ============================================================
-//  module_4 (3б) — энтропия · энергетическая горка · баланс сил
+//  module_6 (4б) — element
 // ============================================================
-// ============================================================
-//  УТИЛИТЫ
-// ============================================================
+/* ============================================================
+   УТИЛИТЫ
+   ============================================================ */
 if (!CanvasRenderingContext2D.prototype.roundRect) {
-  CanvasRenderingContext2D.prototype.roundRect = function(x, y, w, h, r) {
-    this.beginPath();
-    this.moveTo(x + r, y);
-    this.arcTo(x + w, y, x + w, y + h, r);
-    this.arcTo(x + w, y + h, x, y + h, r);
-    this.arcTo(x, y + h, x, y, r);
-    this.arcTo(x, y, x + w, y, r);
-    this.closePath();
-    return this;
+  CanvasRenderingContext2D.prototype.roundRect = function(x,y,w,h,r){
+    this.beginPath();this.moveTo(x+r,y);this.arcTo(x+w,y,x+w,y+h,r);this.arcTo(x+w,y+h,x,y+h,r);
+    this.arcTo(x,y+h,x,y,r);this.arcTo(x,y,x+w,y,r);this.closePath();return this;
   };
 }
+var rand = (a,b)=>a+Math.random()*(b-a);
 
-// ============================================================
+/* ============================================================
+   ИЗОТОПЫ ВОДОРОДА — С ЭЛЕКТРОНАМИ И ОРБИТАМИ
+   ============================================================ */
 
-//  ЭНТРОПИЯ — CANVAS С ПОЛЗУНКОМ
-// ============================================================
-(function initEntropyCanvas() {
-  const canvas = document.getElementById('entropyCanvas');
-  const slider = document.getElementById('entropySlider');
-  const value = document.getElementById('entropyValue');
-  const feedback = document.getElementById('entropyFeedback');
-  if (!canvas || !slider) return;
+(function(){
+  const canvas = document.getElementById('isotopeCanvas');
+  const btn = document.getElementById('isotopeBtn');
+  const stepBtn = document.getElementById('isotopeStepBtn');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d'); const W = canvas.width, H = canvas.height;
+  let progress = 0; let running = false; let rafId = null;
+  let stepMode = 0;
 
-  const ctx = canvas.getContext('2d');
-  const W = canvas.width, H = canvas.height;
+  const isotopes = [
+    { name:'Протий ¹H', protons:1, neutrons:0, color:'#3b82f6', abundance:'99,985%' },
+    { name:'Дейтерий ²H (D)', protons:1, neutrons:1, color:'#8b5cf6', abundance:'0,015%' },
+    { name:'Тритий ³H (T)', protons:1, neutrons:2, color:'#ef4444', abundance:'Следы' }
+  ];
 
-  // Частицы: начальное положение — плотный блок слева
-  const N = 80;
-  const particles = [];
-  const cols = 10;
-  const rows = 8;
-  for (let i = 0; i < N; i++) {
-    const col = i % cols;
-    const row = Math.floor(i / cols);
-    particles.push({
-      orderedX: W * 0.15 + col * 14 + 5,
-      orderedY: H * 0.5 - rows * 7 + row * 14 + 5,
-      randomX: W * 0.05 + Math.random() * W * 0.9,
-      randomY: H * 0.15 + Math.random() * H * 0.7,
-      size: 4 + Math.random() * 3,
-      seed: Math.random() * 100
+  function drawNucleus(cx, cy, protons, neutrons, size){
+    const particles = [];
+    for (let i=0; i<protons; i++) particles.push({type:'p', color:'#ef4444'});
+    for (let i=0; i<neutrons; i++) particles.push({type:'n', color:'#64748b'});
+
+    const glowR = size + particles.length * 4 + 6;
+    const grad = ctx.createRadialGradient(cx, cy, 0, cx, cy, glowR);
+    grad.addColorStop(0, 'rgba(239,68,68,.25)');
+    grad.addColorStop(1, 'rgba(239,68,68,0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.arc(cx, cy, glowR, 0, Math.PI*2); ctx.fill();
+
+    particles.forEach((p, i)=>{
+      const angle = (i / particles.length) * Math.PI * 2 + progress * 0.8;
+      const r = size * 0.5 + (i % 2) * size * 0.35;
+      const px = cx + Math.cos(angle) * r;
+      const py = cy + Math.sin(angle) * r;
+      const pr = size * 0.32;
+
+      ctx.beginPath(); ctx.arc(px+2, py+2, pr, 0, Math.PI*2);
+      ctx.fillStyle = 'rgba(0,0,0,.3)'; ctx.fill();
+
+      ctx.beginPath(); ctx.arc(px, py, pr, 0, Math.PI*2);
+      ctx.fillStyle = p.color; ctx.fill();
+      ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.stroke();
+
+      if (p.type === 'p'){
+        ctx.fillStyle = '#fff'; ctx.font = 'bold ' + (pr*1.1) + 'px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('+', px, py+1);
+      } else {
+        ctx.fillStyle = '#cbd5e1'; ctx.font = 'bold ' + (pr*1.1) + 'px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+        ctx.fillText('n', px, py+1);
+      }
     });
   }
 
-  function draw(progress) {
-    ctx.clearRect(0, 0, W, H);
-
-    // Фон
-    const bg = ctx.createLinearGradient(0, 0, W, 0);
-    bg.addColorStop(0, '#f0f9ff');
-    bg.addColorStop(1, '#faf5ff');
-    ctx.fillStyle = bg;
-    ctx.fillRect(0, 0, W, H);
-
-    // Область слева — «порядок»
-    ctx.fillStyle = 'rgba(6,182,212,.06)';
-    ctx.fillRect(0, 0, W * 0.35, H);
-    // Область справа — «беспорядок»
-    ctx.fillStyle = 'rgba(139,92,246,.06)';
-    ctx.fillRect(W * 0.35, 0, W * 0.65, H);
-
-    // Разделитель
-    ctx.strokeStyle = 'rgba(148,163,184,.4)';
-    ctx.lineWidth = 1;
-    ctx.setLineDash([5, 5]);
+  function drawElectronOrbit(cx, cy, radius, angleOffset, scale){
+    // Орбита (пунктирный круг)
     ctx.beginPath();
-    ctx.moveTo(W * 0.35, 0);
-    ctx.lineTo(W * 0.35, H);
+    ctx.arc(cx, cy, radius, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(6,182,212,.4)';
+    ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 6]);
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // Подписи
-    ctx.font = 'bold 14px Inter, sans-serif';
-    ctx.textAlign = 'center';
-    ctx.fillStyle = '#0369a1';
-    ctx.fillText('📦 Порядок', W * 0.175, 25);
-    ctx.fillStyle = '#7c3aed';
-    ctx.fillText('🌀 Беспорядок', W * 0.65, 25);
+    // Электрон
+    const angle = progress * 2 + angleOffset;
+    const ex = cx + Math.cos(angle) * radius;
+    const ey = cy + Math.sin(angle) * radius;
+    const er = 7 * scale;
 
-    // Частицы
-    const eased = progress * progress * (3 - 2 * progress); // smoothstep
+    // Свечение электрона
+    const eGrad = ctx.createRadialGradient(ex, ey, 0, ex, ey, er * 2.5);
+    eGrad.addColorStop(0, 'rgba(6,182,212,.6)');
+    eGrad.addColorStop(1, 'rgba(6,182,212,0)');
+    ctx.fillStyle = eGrad;
+    ctx.beginPath(); ctx.arc(ex, ey, er * 2.5, 0, Math.PI*2); ctx.fill();
 
-    particles.forEach(p => {
-      const x = p.orderedX + (p.randomX - p.orderedX) * eased;
-      const y = p.orderedY + (p.randomY - p.orderedY) * eased;
+    // Электрон
+    ctx.beginPath(); ctx.arc(ex, ey, er, 0, Math.PI*2);
+    ctx.fillStyle = '#06b6d4';
+    ctx.fill();
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 1.5; ctx.stroke();
 
-      // Цвет: от синего к фиолетовому
-      const r = Math.round(6 + (139 - 6) * eased);
-      const g = Math.round(182 + (92 - 182) * eased);
-      const b = Math.round(212 + (246 - 212) * eased);
-
-      ctx.beginPath();
-      ctx.arc(x, y, p.size, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(${r},${g},${b},0.85)`;
-      ctx.fill();
-
-      // Блик
-      ctx.beginPath();
-      ctx.arc(x - 1, y - 1, p.size * 0.35, 0, Math.PI * 2);
-      ctx.fillStyle = 'rgba(255,255,255,0.6)';
-      ctx.fill();
-    });
+    // Знак минус
+    ctx.fillStyle = '#fff'; ctx.font = 'bold ' + (er*0.9) + 'px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+    ctx.fillText('–', ex, ey+1);
   }
 
-  function update() {
-    const val = parseInt(slider.value);
-    value.textContent = val + ' %';
-    draw(val / 100);
+  function drawIsotope(iso, cx, cy, scale){
+    const size = 50 * scale;
 
-    if (val < 20) {
-      feedback.className = 'verdict-box';
-      feedback.innerHTML = `
-        <div class="vb-icon">📦</div>
-        <div>Полный порядок: все частицы собраны в плотный блок.</div>
-        <div class="vb-sub">Такое состояние маловероятно само по себе — нужно «наводить порядок руками».</div>
-      `;
-    } else if (val < 60) {
-      feedback.className = 'verdict-box mixed';
-      feedback.innerHTML = `
-        <div class="vb-icon">🌊</div>
-        <div>Частицы начинают разлетаться: порядок разрушается.</div>
-        <div class="vb-sub">Беспорядок постепенно растёт — это естественный процесс.</div>
-      `;
-    } else if (val < 90) {
-      feedback.className = 'verdict-box good';
-      feedback.innerHTML = `
-        <div class="vb-icon">🌀</div>
-        <div>Сильный беспорядок: большинство частиц разлетелись.</div>
-        <div class="vb-sub">Именно так работает природа: беспорядок растёт сам собой.</div>
-      `;
+    // Название
+    ctx.font = 'bold ' + (16*scale) + 'px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = iso.color;
+    ctx.fillText(iso.name, cx, 40*scale);
+
+    // Электронная орбита (1s)
+    const orbitR = 110 * scale;
+    drawElectronOrbit(cx, cy, orbitR, 0, scale);
+
+    // Ядро
+    drawNucleus(cx, cy, iso.protons, iso.neutrons, size);
+
+    // Подпись состава
+    ctx.font = 'bold ' + (13*scale) + 'px Inter, sans-serif';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+    ctx.fillStyle = '#94a3b8';
+    ctx.fillText(`${iso.protons} протон, ${iso.neutrons} нейтрон${iso.neutrons !== 1 ? 'а' : ''}, 1 электрон`, cx, cy + 135*scale);
+
+    // Распространённость
+    ctx.font = (11*scale) + 'px Inter, sans-serif';
+    ctx.fillStyle = '#64748b';
+    ctx.fillText(`В природе: ${iso.abundance}`, cx, cy + 155*scale);
+  }
+
+  function draw(){
+    ctx.clearRect(0,0,W,H);
+    ctx.fillStyle = '#0f172a'; ctx.fillRect(0,0,W,H);
+
+    if (stepMode === 0){
+      const spacing = W / 3;
+      isotopes.forEach((iso, idx)=>{
+        const cx = spacing * (idx + 0.5);
+        const cy = H/2 - 30;
+        drawIsotope(iso, cx, cy, 0.85);
+      });
+
+      if (progress > 0.7){
+        ctx.font = 'bold 15px Inter, sans-serif';
+        ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = '#fbbf24';
+        ctx.fillText('У всех трёх — 1 протон, 1 электрон. Это изотопы водорода.', W/2, H - 15);
+      }
     } else {
-      feedback.className = 'verdict-box good';
-      feedback.innerHTML = `
-        <div class="vb-icon">💨</div>
-        <div>Максимальный беспорядок: частицы равномерно распределены.</div>
-        <div class="vb-sub">Это самое устойчивое состояние системы. Так сахар растворяется в воде.</div>
-      `;
+      const iso = isotopes[stepMode - 1];
+      const cx = W/2;
+      const cy = H/2 - 30;
+      drawIsotope(iso, cx, cy, 1.3);
+
+      ctx.font = 'bold 15px Inter, sans-serif';
+      ctx.textAlign = 'center'; ctx.textBaseline = 'alphabetic';
+      ctx.fillStyle = iso.color;
+      ctx.fillText(`Изотоп водорода: ${iso.name}`, W/2, H - 20);
     }
   }
 
-  slider.addEventListener('input', update);
-  update();
+  function loop(){
+    if (!running) return;
+    progress += 0.012;
+    if (progress >= 1){ progress = 1; running = false; btn.textContent = '▶ Показать три изотопа водорода'; }
+    draw();
+    if (running) rafId = requestAnimationFrame(loop);
+  }
+
+  btn.addEventListener('click',()=>{
+    if (running){ running = false; btn.textContent = '▶ Продолжить'; return; }
+    if (progress >= 1) progress = 0;
+    stepMode = 0;
+    running = true; btn.textContent = '⏸ Пауза'; loop();
+  });
+
+  stepBtn.addEventListener('click',()=>{
+    stepMode = stepMode >= 3 ? 1 : stepMode + 1;
+    progress = 1;
+    draw();
+    btn.textContent = '▶ Показать три изотопа водорода';
+    running = false;
+    stepBtn.textContent = stepMode === 0 ? '🔍 Показать по одному' :
+      stepMode === 1 ? '🔍 Протий →' :
+      stepMode === 2 ? '🔍 Дейтерий →' : '🔍 Тритий →';
+  });
+
+  draw();
 })();
 
-// ============================================================
-//  ЭНЕРГЕТИЧЕСКАЯ ГОРКА — ПОЛЗУНОК
-// ============================================================
-(function initHillSlider() {
-  const slider = document.getElementById('hillSlider');
-  const value = document.getElementById('hillValue');
-  const ball = document.getElementById('energyBall');
-  const feedback = document.getElementById('hillFeedback');
-  if (!slider || !ball) return;
+/* ============================================================
+   ТАЙМЛАЙН ЭЛЕМЕНТОВ
+   ============================================================ */
+(function(){
+  const track = document.getElementById('elemTimelineTrack');
+  const detail = document.getElementById('elemTlDetail');
+  if (!track) return;
 
-  // Точки горки (x, y) и соответствующие им энергии
-  // Гора: от (80, 340) поднимается до (200, 120), затем спускается до (720, 300)
-  const path = [
-    { x: 80, y: 340 },
-    { x: 120, y: 280 },
-    { x: 160, y: 200 },
-    { x: 200, y: 120 },
-    { x: 240, y: 160 },
-    { x: 280, y: 230 },
-    { x: 320, y: 280 },
-    { x: 400, y: 360 },
-    { x: 480, y: 300 },
-    { x: 560, y: 300 },
-    { x: 640, y: 300 },
-    { x: 720, y: 300 }
+  const EVENTS = [
+    { year:'1661', who:'Роберт Бойль', what:'Понятие химического элемента', title:'1661 · Роберт Бойль',
+      text:'Бойль предложил определение химического элемента как вещества, которое нельзя разложить на более простые части химическими методами. Это был важный шаг от алхимии к настоящей химии. Бойль также ввёл в науку принцип скептицизма: не принимать ничего на веру без экспериментальной проверки.' },
+    { year:'1789', who:'Антуан Лавуазье', what:'Первый список элементов', title:'1789 · Антуан Лавуазье',
+      text:'Лавуазье опубликовал первый научный список химических элементов. Он включил в него 33 вещества, из которых более 20 действительно являются элементами. Лавуазье также дал элементам современные названия и показал, что при химических реакциях масса веществ сохраняется. Именно он превратил химию в точную науку.' },
+    { year:'1803', who:'Джон Дальтон', what:'Атомная теория', title:'1803 · Джон Дальтон',
+      text:'Дальтон предложил атомную теорию: все атомы одного элемента одинаковы по массе и свойствам, а разных — разные. Это связало понятие элемента с конкретными атомами. Дальтон также ввёл первые символы элементов и таблицу атомных масс, хотя его символы были неудобными — каждый элемент обозначался особым значком.' },
+    { year:'1869', who:'Дмитрий Менделеев', what:'Периодическая таблица', title:'1869 · Дмитрий Менделеев',
+      text:'Менделеев расположил элементы в порядке возрастания атомных масс и обнаружил периодический закон. Его таблица предсказала существование ещё не открытых элементов и стала основой современной химии. Периодический закон показал, что элементы связаны между собой, и это окончательно укрепило понятие химического элемента.' }
   ];
 
-  function getPos(progress) {
-    // progress от 0 до 1
-    const seg = progress * (path.length - 1);
-    const i = Math.floor(seg);
-    const t = seg - i;
-    const a = path[Math.min(i, path.length - 2)];
-    const b = path[Math.min(i + 1, path.length - 1)];
-    return {
-      x: a.x + (b.x - a.x) * t,
-      y: a.y + (b.y - a.y) * t
-    };
+  track.innerHTML = EVENTS.map((e,i)=>`
+    <div class="tl-year${i===0?' active':''}" data-i="${i}">
+      <div class="tl-num">${e.year}</div>
+      <div class="tl-who">${e.who}</div>
+      <div class="tl-what">${e.what}</div>
+    </div>`).join('');
+
+  function show(i){
+    document.querySelectorAll('#elemTimelineTrack .tl-year').forEach(el=>el.classList.remove('active'));
+    track.querySelector(`[data-i="${i}"]`).classList.add('active');
+    const e = EVENTS[i];
+    detail.classList.add('show');
+    detail.innerHTML = `<div class="tl-d-title">${e.title}</div><div class="tl-d-text">${e.text}</div>`;
   }
 
-  function update() {
-    const val = parseInt(slider.value);
-    value.textContent = val + ' %';
-    const p = getPos(val / 100);
-    ball.setAttribute('transform', `translate(${p.x - 200}, ${p.y - 150})`);
-
-    if (val < 20) {
-      feedback.className = 'verdict-box bad';
-      feedback.innerHTML = `
-        <div class="vb-icon">⬆️</div>
-        <div><b>Мяч на вершине горки.</b> Реагенты обладают большой энергией.</div>
-        <div class="vb-sub">Система «не хочет» оставаться в таком положении — она стремится скатиться вниз.</div>
-      `;
-    } else if (val < 50) {
-      feedback.className = 'verdict-box mixed';
-      feedback.innerHTML = `
-        <div class="vb-icon">🔄</div>
-        <div><b>Мяч начинает катиться.</b> Реакция пошла!</div>
-        <div class="vb-sub">Система снижает энергию — при этом выделяется тепло или свет.</div>
-      `;
-    } else if (val < 80) {
-      feedback.className = 'verdict-box good';
-      feedback.innerHTML = `
-        <div class="vb-icon">⬇️</div>
-        <div><b>Мяч катится вниз.</b> Реакция идёт сама собой.</div>
-        <div class="vb-sub">Система «скатывается» в состояние с меньшей энергией. Именно так горят дрова и ржавеет железо.</div>
-      `;
-    } else {
-      feedback.className = 'verdict-box good';
-      feedback.innerHTML = `
-        <div class="vb-icon">✅</div>
-        <div><b>Мяч внизу — устойчивое состояние.</b> Реакция завершена.</div>
-        <div class="vb-sub">Продукты обладают меньшей энергией, чем реагенты. Система «успокоилась».</div>
-      `;
-    }
-  }
-
-  slider.addEventListener('input', update);
-  update();
+  track.querySelectorAll('.tl-year').forEach(el=>el.addEventListener('click',()=>show(+el.dataset.i)));
+  show(0);
 })();
 
-// ============================================================
-//  ДВЕ СИЛЫ ВМЕСТЕ — БАЛАНС
-// ============================================================
-(function initBalance() {
-  const energySlider = document.getElementById('forceEnergy');
-  const entropySlider = document.getElementById('forceEntropy');
-  const energyValue = document.getElementById('forceEnergyValue');
-  const entropyValue = document.getElementById('forceEntropyValue');
-  const verdict = document.getElementById('balanceVerdict');
-  if (!energySlider || !entropySlider) return;
-
-  function update() {
-    const e = parseInt(energySlider.value);
-    const s = parseInt(entropySlider.value);
-    energyValue.textContent = e + ' %';
-    entropyValue.textContent = s + ' %';
-
-    // Обновляем стили ползунков
-    energySlider.style.background = `linear-gradient(90deg, #fed7aa 0%, #f97316 ${e}%, #e2e8f0 ${e}%, #e2e8f0 100%)`;
-    entropySlider.style.background = `linear-gradient(90deg, #ddd6fe 0%, #8b5cf6 ${s}%, #e2e8f0 ${s}%, #e2e8f0 100%)`;
-
-    const energyStrong = e >= 60;
-    const entropyStrong = s >= 60;
-    const energyWeak = e < 30;
-    const entropyWeak = s < 30;
-
-    if (energyStrong && entropyStrong) {
-      verdict.className = 'verdict-box good';
-      verdict.innerHTML = `
-        <div class="vb-icon">✅</div>
-        <div><b>Реакция идёт сама!</b></div>
-        <div class="vb-sub">Обе силы «за»: система снижает энергию и повышает беспорядок.</div>
-      `;
-    } else if (energyWeak && entropyWeak) {
-      verdict.className = 'verdict-box bad';
-      verdict.innerHTML = `
-        <div class="vb-icon">❌</div>
-        <div><b>Реакция не пойдёт сама.</b></div>
-        <div class="vb-sub">Обе силы «против»: ни снижения энергии, ни роста беспорядка.</div>
-      `;
-    } else if (energyStrong && entropyWeak) {
-      verdict.className = 'verdict-box mixed';
-      verdict.innerHTML = `
-        <div class="vb-icon">⚡</div>
-        <div><b>Реакция может пойти.</b></div>
-        <div class="vb-sub">Снижение энергии помогает, но беспорядок почти не растёт. Такая реакция идёт, если энергия выделяется очень сильно.</div>
-      `;
-    } else if (energyWeak && entropyStrong) {
-      verdict.className = 'verdict-box mixed';
-      verdict.innerHTML = `
-        <div class="vb-icon">🌪</div>
-        <div><b>Реакция может пойти при нагревании.</b></div>
-        <div class="vb-sub">Беспорядок растёт, но системе не хватает снижения энергии. Нужен подвод тепла извне.</div>
-      `;
-    } else {
-      verdict.className = 'verdict-box';
-      verdict.innerHTML = `
-        <div class="vb-icon">🤔</div>
-        <div>Силы примерно равны — реакция на грани.</div>
-        <div class="vb-sub">Подвигай ползунки, чтобы увидеть, что произойдёт.</div>
-      `;
-    }
-  }
-
-  energySlider.addEventListener('input', update);
-  entropySlider.addEventListener('input', update);
-  update();
-})();
-
-// ============================================================
+/* ============================================================
+   ТАЙМЛАЙН ЯЗЫКА ХИМИИ
+   ============================================================ */
 
 // ============================================================
 //  FADE-IN
