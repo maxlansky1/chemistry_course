@@ -72,7 +72,7 @@ def build_map():
     hero = ('<header class="hero">\n'
             f'  <div class="badge">Единый курс химии · {c.get("year", "")}</div>\n'
             '  <h1>Карта курса</h1>\n'
-            '  <p>14 модулей: от нуля до конца неорганической химии. '
+            f'  <p>{len(modules)} модулей: от нуля до конца неорганической химии. '
             'Иди по порядку или зайди с нужной темы, сдав входной тест.</p>\n'
             '</header>')
     content = hero + '\n<div class="container">\n' + '\n'.join(parts) + '\n</div>'
@@ -92,7 +92,7 @@ def main():
         lines = ['🗺️ <b>Карта курса химии</b>',
                  f'<i>{n} модулей · от фундамента до систематизации</i>', '']
         for lvl in c['levels']:
-            lines.append(f'<b>Уровень {lvl["id"]}. {lvl["title"]}</b>')
+            lines.append(f'<b>Глава {lvl["id"]}. {lvl["title"]}</b>')
             for m in lvl['modules']:
                 lines.append(f'▸ {m.get("icon", "")} {m["title"]} · {m.get("time", "")}')
             lines.append('')
